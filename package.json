@@ -7,7 +7,7 @@
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"start:android": "node node_modules/react-native/local-cli/cli.js run-android",
 		"start:ios": "node node_modules/react-native/local-cli/cli.js run-ios",
-		"test": "jest"
+		"test": "jest --coverage"
 	},
 	"dependencies": {
 		"react": "16.0.0-beta.5",
@@ -42,6 +42,15 @@
 			"<rootDir>/node_modules/",
 			"<rootDir>/lib/"
 		],
-		"cacheDirectory": ".jest/cache"
+		"cacheDirectory": ".jest/cache",
+		"mapCoverage": true,
+		"coverageThreshold": {
+			"global": {
+			  "branches": 100,
+			  "functions": 100,
+			  "lines": 100,
+			  "statements": 100
+			}
+		}
 	}
 }
