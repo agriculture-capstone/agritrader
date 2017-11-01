@@ -14,5 +14,4 @@ Follow these steps to run the application once your development environment has 
 4. Run `npm run start:android` or `npm run start:ios` to run the application 
 
 ### Running Tests
-1. Run `npm test` to execute all unit tests
-
+1. Run `npm test` to execute all unit tests and check code coverage thresholds.
