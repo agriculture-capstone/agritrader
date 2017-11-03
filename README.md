@@ -15,6 +15,7 @@ Follow these steps to run the application once your development environment has 
 
 ### Running Tests
 1. Run `npm test` to execute all unit tests and check code coverage thresholds.
+2. View code coverage in the local `coverage/` directory.
 
 ### Contributing 
 Please label branches using the following format: 
