@@ -1,6 +1,7 @@
 {
 	"name": "agritrader",
 	"version": "0.0.1",
+	"license": "UNLICENSED",
 	"private": true,
 	"scripts": {
 		"build": "node_modules/.bin/tsc",

@@ -59,3 +59,4 @@ lib/
 # Jest
 #
 .jest/
+coverage/
