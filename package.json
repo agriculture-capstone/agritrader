@@ -5,10 +5,13 @@
 	"private": true,
 	"scripts": {
 		"build": "node_modules/.bin/tsc",
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"start:android": "node node_modules/react-native/local-cli/cli.js run-android",
-		"start:ios": "node node_modules/react-native/local-cli/cli.js run-ios",
-		"test": "jest --coverage"
+		"concurrently": "node_modules/.bin/concurrently -k -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
+		"react-native": "node node_modules/react-native/local-cli/cli.js",
+		"start:android": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-android\"",
+		"start:ios": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-ios\"",
+		"start": "npm run react-native -- start",
+		"test": "jest --coverage",
+		"watch": "npm run build -- -w"
 	},
 	"dependencies": {
 		"jest-cli": "^21.2.1",
@@ -22,6 +25,7 @@
 		"@types/react-test-renderer": "^16.0.0",
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
+		"concurrently": "^3.5.0",
 		"jest": "21.2.1",
 		"react-test-renderer": "16.0.0-beta.5",
 		"ts-jest": "^21.1.4",
@@ -48,10 +52,10 @@
 		"mapCoverage": true,
 		"coverageThreshold": {
 			"global": {
-			  "branches": 80,
-			  "functions": 80,
-			  "lines": 80,
-			  "statements": 80
+				"branches": 80,
+				"functions": 80,
+				"lines": 80,
+				"statements": 80
 			}
 		}
 	}
