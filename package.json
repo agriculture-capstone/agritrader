@@ -1,0 +1,62 @@
+{
+	"name": "agritrader",
+	"version": "0.0.1",
+	"license": "UNLICENSED",
+	"private": true,
+	"scripts": {
+		"build": "node_modules/.bin/tsc",
+		"concurrently": "node_modules/.bin/concurrently -k -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
+		"react-native": "node node_modules/react-native/local-cli/cli.js",
+		"start:android": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-android\"",
+		"start:ios": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-ios\"",
+		"start": "npm run react-native -- start",
+		"test": "jest --coverage",
+		"watch": "npm run build -- -w"
+	},
+	"dependencies": {
+		"jest-cli": "^21.2.1",
+		"react": "16.0.0-beta.5",
+		"react-native": "0.49.5"
+	},
+	"devDependencies": {
+		"@types/jest": "^21.1.5",
+		"@types/react": "^16.0.19",
+		"@types/react-native": "^0.49.5",
+		"@types/react-test-renderer": "^16.0.0",
+		"babel-jest": "21.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"concurrently": "^3.5.0",
+		"jest": "21.2.1",
+		"react-test-renderer": "16.0.0-beta.5",
+		"ts-jest": "^21.1.4",
+		"typescript": "^2.6.1"
+	},
+	"jest": {
+		"preset": "react-native",
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js"
+		],
+		"transform": {
+			"^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+			"\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+		},
+		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+		"testPathIgnorePatterns": [
+			"\\.snap$",
+			"<rootDir>/node_modules/",
+			"<rootDir>/lib/"
+		],
+		"cacheDirectory": ".jest/cache",
+		"mapCoverage": true,
+		"coverageThreshold": {
+			"global": {
+				"branches": 80,
+				"functions": 80,
+				"lines": 80,
+				"statements": 80
+			}
+		}
+	}
+}
