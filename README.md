@@ -4,7 +4,16 @@ This project is a mobile application to be used by traders that interact with fa
 
 ## Development
 ### Setting up your Development Environment
-Follow steps found in the [React Native documentation](https://facebook.github.io/react-native/docs/getting-started.html) for installing dependencies and setting up the mobile development environment (ie. the Android SDK and build tools).
+Follow steps found in the `Building Projects with Native Code` tab in the [React Native documentation for Getting Started](https://facebook.github.io/react-native/docs/getting-started.html) for installing dependencies and setting up the mobile development environment (ie. the Android SDK and build tools). 
+
+### Setting up your Device
+To try running the code on a device, follow the steps found in the [React Native documentation for Running your app on a Device](https://facebook.github.io/react-native/docs/running-on-device.html).
+
+#### Common Issues
+- Make sure your `JAVA_HOME` and `ANDROID_HOME` are set in your environment variables.
+- Make sure the `adb` command is available from your terminal. You might have to add the sdk platform tools directory to your path in your environment variables (the platform tools directory can be found in `D:\Users\<your username>\AppData\Local\Android\sdk\platform-tools`)
+- When trying to run the application on your device, make sure your phone is connected. Try running `adb devices` to make sure your phone can be detected.
+
 
 ### Running the Application
 Follow these steps to run the application once your development environment has been set up.
