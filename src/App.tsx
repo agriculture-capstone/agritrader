@@ -9,35 +9,64 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  ToolbarAndroid,
+  TouchableOpacity
 } from 'react-native';
+
+var navigator
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
+  'Cmd+D or shake for dev menu',
   android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+  'Shake or press menu button for dev menu',
 });
 
 export default class App extends React.Component<{}, {}> {
+  _navigateToSettings() {
+    this.props.navigator.push({
+      id: 'settings'
+    });
+  }
+
+  _onActionSelected() {
+    this._navigateToSettings()
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Hello! This is the agritrader app!!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+      <View style={styles.parentContainer}>
+        <ToolbarAndroid
+          title='Home'
+          //logo={require('../images/logo.png')}
+          actions={toolbarActions}
+          style={styles.toolbar}
+          titleColor='white'
+          onActionSelected={() => this._onActionSelected()}
+        />
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              this._navigateToSettings()
+            }
+            }>
+            <Text style={styles.buttonText}>Go to Settings</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
+  parentContainer: {
+    flex: 1,
+  },
+  toolbar: {
+    height: 56,
+    backgroundColor: '#4883da',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
