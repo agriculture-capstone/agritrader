@@ -12,7 +12,10 @@ import {
   View,
   ToolbarAndroid
 } from 'react-native';
-import Toolbar, { LeftButtonTypes} from './Components/Toolbar'
+import Toolbar, { 
+  LeftButtonTypes,
+  ButtonIcons
+} from './Components/Toolbar'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -27,9 +30,9 @@ export default class App extends React.Component<{}, {}> {
       <Toolbar 
         title='Agritrader'
         rightButtons={[
-          {title: 'button1', icon:'../src/Assets/account_white_24dp.png', 
+          {title: 'button1', icon:ButtonIcons.account, 
           action: () => {console.log("Right Button1 Action")}},
-          {title: 'button2', icon:'../src/Assets/settings_white_24dp.png', 
+          {title: 'button2', icon:ButtonIcons.settings, 
           action: () => {console.log("Right Button2 Action")}}
         ]}
         leftButtonType={LeftButtonTypes.menu}

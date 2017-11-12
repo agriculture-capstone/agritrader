@@ -4,15 +4,24 @@ import {
     ToolbarAndroidAction
 } from 'react-native';
 import * as React from 'react';
+import icons, { images } from '../../src/assets/Assets';
+
 
 export enum LeftButtonTypes {
-    menu = "menu",
-    back = "back",
+    menu="menu",
+    back="back",
+}
+
+export enum ButtonIcons{
+    back=icons.back,
+    menu=icons.menu,
+    settings=icons.settings,
+    account=icons.account,
 }
 
 interface RightButtonType {
     title: string;
-    icon?: string;
+    icon?: ButtonIcons;
     action: () => void;
 }
 interface ToolbarProps {
@@ -31,10 +40,10 @@ export default class Toolbar extends React.Component<ToolbarProps, {}>  {
     render() {
         let actionArray = new Array<ToolbarAndroidAction>();
         this.props.rightButtons.map(RightButton => {
-            let action: ToolbarAndroidAction = { title: RightButton.title, show: 'always',}            
+            let action: ToolbarAndroidAction = { title: RightButton.title, show: 'always'}
             if(RightButton.icon){
-                action.icon = require(RightButton.icon)
-            }
+                action.icon = icons.back
+            }          
             actionArray.push(action)
         })
         return (
