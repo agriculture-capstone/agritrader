@@ -13,7 +13,7 @@ it must either be a menu button which has a 'burger' icon
 or a back button which has an arrow icon*/
 export enum LeftButtonTypes {
     menu = "menu",
-        back = "back",
+    back = "back"
 }
 /*Multiple buttons can be added to the right side of the toolbar
 if an icon isn't specified the title will be displayed in its place*/
@@ -32,7 +32,7 @@ interface ToolbarProps {
 
 export default class Toolbar extends React.Component < ToolbarProps, {} > {
     constructor(props: ToolbarProps) {
-        super(props);
+    super(props);
     }
     /*When a button is selected by a user, find its position 
     in the actions array and call specified function*/
