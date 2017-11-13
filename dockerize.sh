@@ -11,6 +11,6 @@ elif [ "$1" == "lint" ]; then
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
 		$IMAGE_NAME tslint -c tslint.json 'src/**/*.ts'
 else
-	echo "usage: docker_build [init | build | run]"
+	echo "usage: docker_build [init | lint]"
 fi
 
