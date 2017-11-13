@@ -17,7 +17,7 @@ To try running the code on a device, follow the steps found in the link:https://
 * Make sure the `JAVA_HOME` and `ANDROID_HOME` environment variables are set.
 
 * Make sure the `adb` command is available from the terminal.
-he sdk platform tools directory may have to be added to the `PATH` environment variables.
+The sdk platform tools directory may have to be added to the `PATH` environment variables.
 The platform tools directory can be found in `D:\Users\<your username>\AppData\Local\Android\sdk\platform-tools`.
 
 * When trying to run the application on a device, make sure a phone is connected.
@@ -26,10 +26,10 @@ Use `adb devices` to check for a connected device.
 
 === Running the Application
 
-Once a development environment has been setup, the applicatoin can be run with the following steps.
+Once a development environment has been setup, the application can be run with the following steps.
 
 . Clone the repository.
-. Run `npm install` to install the dependencies.
+. Run `yarn install` to install the dependencies.
 . Ensure a device is connected to the computer or an emulator is set up.
 . Run `npm run start:android` or `npm run start:ios` to run the application.
 
