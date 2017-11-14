@@ -7,9 +7,12 @@ ARG_NUM=2
 
 if [ "$1" == "init" ]; then
 	docker build -t $IMAGE_NAME $DIR
+elif [ "$1" == "install" ]; then
+	docker run --rm -v $DIR:$DOCKER_HOME -t \
+		$IMAGE_NAME yarn install
 elif [ "$1" == "lint" ]; then
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
-		$IMAGE_NAME tslint -c tslint.json 'src/**/*.ts'
+		$IMAGE_NAME ./format.sh
 else
 	echo "usage: docker_build [init | lint]"
 fi
