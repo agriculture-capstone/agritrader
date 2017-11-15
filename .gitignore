@@ -60,3 +60,6 @@ lib/
 #
 .jest/
 coverage/
+
+# Keystore
+*.keystore

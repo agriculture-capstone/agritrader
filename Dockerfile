@@ -1,12 +1,24 @@
-FROM node:4.1.1
-
-# Setup environment variables
-ENV PATH $PATH:node_modules/.bin
-
+FROM node:8.9.1
 
 # Install Java
-RUN apt-get update -q && \
-    apt-get install -qy --no-install-recommends python-dev default-jdk
+RUN \
+    echo "===> add webupd8 repository..."  && \
+    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list  && \
+    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list  && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886  && \
+    apt-get update  && \
+    \
+    \
+    echo "===> install Java"  && \
+    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections  && \
+    echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections  && \
+    DEBIAN_FRONTEND=noninteractive  apt-get install -y --force-yes oracle-java8-installer oracle-java8-set-default  && \
+    \
+    \
+    echo "===> clean up..."  && \
+    rm -rf /var/cache/oracle-jdk8-installer  && \
+    apt-get clean  && \
+    rm -rf /var/lib/apt/lists/*
 
 
 # Install Android SDK
@@ -35,47 +47,41 @@ RUN cd /usr/local && \
 ENV PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/23.0.1
 RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter platform-tools,android-23,build-tools-23.0.1,extra-android-support,extra-android-m2repository,sys-img-x86_64-android-23,extra-google-m2repository
 
-
 # Install node modules
-
-## Install yarn
-RUN npm install -g yarn
+COPY 51-android.rules /etc/udev/rules.d/51-android.rules
 
 ## Install react native
-RUN npm install -g react-native-cli@1.0.0
+# RUN npm install -g react-native-cli@1.0.0
+
 
 ## Clean up when done
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    npm cache clear
+# RUN apt-get clean && \
+#     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+#     npm cache clear
 
 
 # Install watchman
-RUN git clone https://github.com/facebook/watchman.git
-RUN cd watchman && git checkout v4.7.0 && ./autogen.sh && ./configure && make && make install
-RUN rm -rf watchman
+# RUN git clone https://github.com/facebook/watchman.git
+# RUN cd watchman && git checkout v4.7.0 && ./autogen.sh && ./configure && make && make install
+# RUN rm -rf watchman
 
 # Default react-native web server port
-EXPOSE 8081
+# EXPOSE 8081
 
 
 # User creation
-ENV USERNAME boresha
+# ENV USERNAME boresha
 
-RUN adduser --disabled-password --gecos '' $USERNAME
+# RUN adduser --disabled-password --gecos '' $USERNAME
 
 
 # Add Tini
-ENV TINI_VERSION v0.10.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
+# ENV TINI_VERSION v0.10.0
+# ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+# RUN chmod +x /tini
 
-USER $USERNAME
+# USER $USERNAME
 
 # Set workdir
 # You'll need to run this image with a volume mapped to /home/dev (i.e. -v $(pwd):/home/dev) or override this value
-WORKDIR /home/$USERNAME/agritrader
-
-# Tell gradle to store dependencies in a sub directory of the android project
-# this persists the dependencies between builds
-ENV GRADLE_USER_HOME /home/$USERNAME/app/android/gradle_deps
+WORKDIR /agritrader
