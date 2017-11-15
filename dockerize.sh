@@ -10,9 +10,9 @@ if [ "$1" == "init" ]; then
 elif [ "$1" == "install" ]; then
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
 		$IMAGE_NAME yarn install
-elif [ "$1" == "lint" ]; then
+elif [ "$1" == "run" ]; then
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
-		$IMAGE_NAME ./format.sh
+		$IMAGE_NAME npm run "${@:2}"
 else
 	echo "usage: docker_build [init | lint]"
 fi

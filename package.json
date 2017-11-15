@@ -11,8 +11,14 @@
 		"start:ios": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-ios\"",
 		"start": "npm run react-native -- start",
 		"test": "jest --coverage",
-		"watch": "npm run build -- -w"
-	},
+		"watch": "npm run build -- -w",
+    	"lint": "npm run lint:src && npm run lint:test",
+    	"lint:fix": "npm run lint:src-fix && npm run lint:test-fix",
+    	"lint:src": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tslint.json",
+    	"lint:src-fix": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --fix --project ./tslint.json",
+    	"lint:test": "node_modules/.bin/tslint \"test/**/*.ts?(x)\" --project ./tslint.json",
+    	"lint:test-fix": "node_modules/.bin/tslint \"test/**/*.ts?(x)\" --fix --project ./tslint.json"
+   	},
 	"dependencies": {
 		"jest-cli": "^21.2.1",
 		"react": "16.0.0-beta.5",
@@ -30,6 +36,7 @@
 		"react-test-renderer": "16.0.0-beta.5",
 		"ts-jest": "^21.1.4",
 		"tslint": "5.8.0",
+		"tslint-config-airbnb": "5.3.1",
 		"tslint-react": "3.2.0",
 		"typescript": "^2.6.1"
 	},
