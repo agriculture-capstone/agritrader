@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"build": "node_modules/.bin/tsc",
-		"concurrently": "node_modules/.bin/concurrently -k -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
+		"concurrently": "node_modules/.bin/concurrently --kill-others-on-fail -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
 		"react-native": "node node_modules/react-native/local-cli/cli.js",
 		"start:android": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-android\"",
 		"start:ios": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-ios\"",
