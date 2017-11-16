@@ -13,11 +13,11 @@
 		"test": "jest --coverage",
 		"watch": "npm run build -- -w",
 		"lint": "npm run lint:src && npm run lint:test",
-		"lint:fix": "npm run lint:src-fix && npm run lint:test-fix",
+		"lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
 		"lint:src": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:src-fix": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --fix --project ./tsconfig.json",
+		"lint:src:fix": "npm run lint:src -- --fix",
 		"lint:test": "node_modules/.bin/tslint \"test/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:test-fix": "node_modules/.bin/tslint \"test/**/*.ts?(x)\" --fix --project ./tsconfig.json"
+		"lint:test:fix": "npm run lint:test -- --fix"
 	},
 	"dependencies": {
 		"jest-cli": "^21.2.1",
@@ -29,6 +29,7 @@
 		"@types/react": "^16.0.19",
 		"@types/react-native": "^0.49.5",
 		"@types/react-test-renderer": "^16.0.0",
+		"babel-core": "^6.26.0",
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
 		"concurrently": "^3.5.0",
