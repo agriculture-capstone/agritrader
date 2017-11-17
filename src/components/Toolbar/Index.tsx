@@ -6,11 +6,10 @@ import {
 import * as React from 'react';
 import icons, {
     images
-} from '../../assets/index';
+} from '../../assets/';
 
 /*Only one button is permitted on the left
-it must either be a menu button which has a 'burger' icon
-or a back button which has an arrow icon*/
+it must either be a menu button or back button */
 export enum LeftButtonTypes {
     menu = "menu",
     back = "back"
@@ -22,8 +21,7 @@ interface RightButtonType {
     icon ? : any;
     action: () => void;
 }
-/*This specifies the toolbar properties we intend to allow the pages to control
-currently the title, left button type (menu or back) and right buttons can be specified*/
+//This specifies the toolbar properties we intend to allow the pages to control
 interface ToolbarProps {
     title: string;
     leftButtonType: LeftButtonTypes;
@@ -65,12 +63,12 @@ export default class Toolbar extends React.Component < ToolbarProps, {} > {
             /*If the left button specified on the page is a 'menu' type
             use the menu icon otherwise use the 'back' icon*/
             navIcon = {
-                (this.props.leftButtonType == "menu") ? icons.menu : icons.back
+                (this.props.leftButtonType == LeftButtonTypes.menu) ? icons.menu : icons.back
             }
             /*If the left button specified on the page is a 'menu' type
             use the menu function otherwise use the 'back' function*/
             onIconClicked = {
-                (this.props.leftButtonType == "menu") ? () => console.log("menu icon selected") :
+                (this.props.leftButtonType == LeftButtonTypes.menu) ? () => console.log("menu icon selected") :
                     () => console.log("back icon selected")
             }
             onActionSelected = {

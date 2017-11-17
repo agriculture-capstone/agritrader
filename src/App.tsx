@@ -9,7 +9,6 @@ import {
     StyleSheet,
     Text,
     View,
-    ToolbarAndroid
 } from 'react-native';
 import Toolbar, {
     LeftButtonTypes,
