@@ -35,6 +35,7 @@
     "member-ordering": [ true, { "order": "fields-first" } ],
     "unified-signatures": true,
     "await-promise": true,
-    "no-empty-interface": false
+    "no-empty-interface": false,
+    "import-name": false
   }
 }
