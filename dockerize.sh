@@ -11,20 +11,20 @@ elif [ "$1" == "install" ]; then
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
 		$IMAGE_NAME yarn install
 elif [ "$1" == "adb" ]; then
+	adb stop-server
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
 		--device=${@:2} \
 		$IMAGE_NAME adb devices
-elif [ "$1" == "apk" ]; then
+elif [ "$1" == "android" ]; then
+	adb stop-server
 	docker run --rm -v $DIR:$DOCKER_HOME -t \
 		--device=${@:2} \
 		$IMAGE_NAME ./build-apk.sh
-elif [ "$1" == "run" ]; then
-	docker run --rm -v $DIR:$DOCKER_HOME -t \
-		$IMAGE_NAME npm run "${@:2}"
 elif [ "$1" == "bash" ]; then
-	docker run --rm -v $DIR:$DOCKER_HOME -it \
+	docker run --rm \
+		-v $DIR:$DOCKER_HOME  \
 		--device=${@:2} \
-		$IMAGE_NAME /bin/bash
+		-it $IMAGE_NAME /bin/bash
 else
 	echo "usage: docker_build [init | lint]"
 fi
