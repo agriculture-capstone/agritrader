@@ -63,3 +63,6 @@ coverage/
 
 # Keystore
 *.keystore
+
+# Generated
+android/app/src/main/assets/
