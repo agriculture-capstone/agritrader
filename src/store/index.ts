@@ -1,7 +1,5 @@
 import { createStore } from 'redux';
+import reducer from './reducer';
+import { State } from './types';
 
-const reducers = {};
-
-export default createStore<{}>(reducers);
-
-
+export default createStore<State>(reducer);
