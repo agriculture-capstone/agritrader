@@ -50,38 +50,5 @@ RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force
 # Install node modules
 COPY 51-android.rules /etc/udev/rules.d/51-android.rules
 
-## Install react native
-# RUN npm install -g react-native-cli@1.0.0
-
-
-## Clean up when done
-# RUN apt-get clean && \
-#     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-#     npm cache clear
-
-
-# Install watchman
-# RUN git clone https://github.com/facebook/watchman.git
-# RUN cd watchman && git checkout v4.7.0 && ./autogen.sh && ./configure && make && make install
-# RUN rm -rf watchman
-
-# Default react-native web server port
-# EXPOSE 8081
-
-
-# User creation
-# ENV USERNAME boresha
-
-# RUN adduser --disabled-password --gecos '' $USERNAME
-
-
-# Add Tini
-# ENV TINI_VERSION v0.10.0
-# ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-# RUN chmod +x /tini
-
-# USER $USERNAME
-
 # Set workdir
-# You'll need to run this image with a volume mapped to /home/dev (i.e. -v $(pwd):/home/dev) or override this value
 WORKDIR /agritrader

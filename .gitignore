@@ -66,3 +66,4 @@ coverage/
 
 # Generated
 android/app/src/main/assets/
+.fuse_hidden*

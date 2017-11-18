@@ -8,6 +8,7 @@ ARG_NUM=2
 if [ "$1" == "init" ]; then
 	docker build -t $IMAGE_NAME $DIR
 elif [ "$1" == "install" ]; then
+<<<<<<< HEAD
 	docker run --rm \
 		-v $DIR:$DOCKER_HOME \
 		$IMAGE_NAME yarn install
@@ -22,7 +23,11 @@ elif [ "$1" == "android" ]; then
 		-v $DIR:$DOCKER_HOME \
 		--device=${@:2} \
 		-t $IMAGE_NAME ./start-android.sh
+elif [ "$1" == "run" ]; then
+	docker run --rm \
+		-v $DIR:$DOCKER_HOME \
+		$IMAGE_NAME npm run "${@:2}"
 else
-	echo "usage: docker_build [init|install|adb|android] "
+	echo "usage: dockerize.sh [init|install|adb|android|run] "
 fi
 

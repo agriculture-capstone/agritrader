@@ -19,7 +19,13 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+/**
+ * Container for application
+ */
 export default class App extends React.Component<{}, {}> {
+  /**
+   * Render method for App
+   */
   public render() {
     return (
       <View style={styles.container}>
