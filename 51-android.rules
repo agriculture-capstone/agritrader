@@ -1,3 +1,5 @@
+# Taken from https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/android/51-android.rules
+
 # udev rule to detect android devices
 # These rules refer to http://developer.android.com/tools/device.html
 
