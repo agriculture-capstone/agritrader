@@ -5,10 +5,17 @@
  */
 import * as React from 'react';
 import {
+<<<<<<< HEAD
     Platform,
     StyleSheet,
     Text,
     View,
+=======
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+>>>>>>> master
 } from 'react-native';
 import Toolbar, {
     LeftButtonTypes,
@@ -25,6 +32,7 @@ const instructions = Platform.select({
         'Shake or press menu button for dev menu',
 });
 
+<<<<<<< HEAD
 export default class App extends React.Component < {}, {} > {
     render() {
         return ( <
@@ -54,6 +62,30 @@ export default class App extends React.Component < {}, {} > {
             />
         )
     }
+=======
+/**
+ * Container for application
+ */
+export default class App extends React.Component<{}, {}> {
+  /**
+   * Render method for App
+   */
+  public render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Hello! This is the agritrader app!!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit App.js
+        </Text>
+        <Text style={styles.instructions}>
+          {instructions}
+        </Text>
+      </View>
+    );
+  }
+>>>>>>> master
 }
 
 

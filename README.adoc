@@ -1,0 +1,50 @@
+= agritrader
+
+This project is a mobile application to be used by traders that interact with farmers to collect agricultural goods.
+
+== Development
+
+=== Setting up a Development Environment
+
+Follow steps found in the `Building Projects with Native Code` tab in the link:https://facebook.github.io/react-native/docs/getting-started.html[React Native documentation for Getting Started] for installing dependencies and setting up the mobile development environment, such as the Android SDK and build tools.
+
+=== Setting up a Device
+
+To try running the code on a device, follow the steps found in the link:https://facebook.github.io/react-native/docs/running-on-device.html[React Native documentation for Running your app on a Device].
+
+==== Common Issues
+
+* Make sure the `JAVA_HOME` and `ANDROID_HOME` environment variables are set.
+
+* Make sure the `adb` command is available from the terminal.
+The sdk platform tools directory may have to be added to the `PATH` environment variables.
+The platform tools directory can be found in `D:\Users\<your username>\AppData\Local\Android\sdk\platform-tools`.
+
+* When trying to run the application on a device, make sure a phone is connected.
+Use `adb devices` to check for a connected device.
+
+
+=== Running the Application
+
+Once a development environment has been setup, the application can be run with the following steps.
+
+. Clone the repository.
+. Run `yarn install` to install the dependencies.
+. Ensure a device is connected to the computer or an emulator is set up.
+. Run `npm run start:android` or `npm run start:ios` to run the application.
+
+=== Running Tests
+
+. Run `npm test` to execute all unit tests and check code coverage thresholds.
+. View code coverage in the local `coverage/` directory.
+
+=== Contributing
+
+Please label branches using the following format:
+
+	<full name>/AT-<issue number>/<feature name>
+
+
+Please write commit messages using the following format:
+
+	AT-<issue number> <commit message>
