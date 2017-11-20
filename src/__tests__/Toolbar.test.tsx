@@ -1,8 +1,11 @@
 // Toolbar.test.tsx
 import 'react-native';
 import * as React from 'react';
-import Toolbar from '../components/Toolbar';
+import Toolbar, {
+    LeftButtonTypes,    
+} from '../components/Toolbar';
 import * as renderer from 'react-test-renderer';
+import images from '../assets';
 
 it('renders correctly', () => {
   const component = renderer.create(
@@ -12,14 +15,14 @@ it('renders correctly', () => {
         rightButtons = {
             [{
                     title: 'button1',
-                    icon: icons.account,
+                    icon: images.account,
                     action: () => {
                         console.log("Right Button1 Action")
                     }
                 },
                 {
                     title: 'button2',
-                    icon: icons.settings,
+                    icon: images.settings,
                     action: () => {
                         console.log("Right Button2 Action")
                     }
