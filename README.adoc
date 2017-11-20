@@ -9,8 +9,7 @@ This project is a mobile application to be used by traders that interact with fa
 A Docker development environment has been made available, to use it follow the steps below.
 
 IMPORTANT: This does not work on native docker for Windows and OS X.
-This works natively on Linux.
-It can work on Docker Toolbox by link:https://gist.github.com/stonehippo/e33750f185806924f1254349ea1a4e68[passing the USB device through to VirtualBox] first.
+This works natively on Linux and it can work on Docker Toolbox by link:https://gist.github.com/stonehippo/e33750f185806924f1254349ea1a4e68[passing the USB device through to VirtualBox] first.
 
 . Install Docker using the instructions on the link:https://docs.docker.com/engine/installation/[official website].
 Do not use a package manager as you will get an outdated version of Docker.
@@ -23,7 +22,7 @@ This may take a while.
 . Install the node modules using `./dockerize.sh install`.
 
 . Plug in your phone to your computer and allow access to your phone.
-Allowing access to your phone varies on the phone but is commonly a pop-up shortly after plugging in a phone to a computer.
+Allowing access to your phone varies per phone, but is common for a pop-up to show on a device shortly after plugging it in to a computer.
 Ensure the cable connecting the phone and computer is capable of data transfer and not just power.
 
 . Identify the path to your phone.
@@ -45,7 +44,7 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 +
 The path would then be `/dev/bus/usb/001/055` for the Samsung device (phone).
 
-. Check that the Docker image can find your phone using `./dockerize.sh adb /path/to/device/`.
+. Check that the Docker image can find your phone using `./dockerize.sh adb-devices /path/to/device/`.
 The output should include a device.
 +
 [source,bash]
@@ -63,6 +62,9 @@ This should take a few minutes before anything shows up on your phone.
 . Once the app is running on your phone, enable hot reloading by shaking your phone and selecting _Enable Hot Reloading_.
 
 NOTE: The phone will need to be disconnected and reconnected for every build (`./dockerize.sh android /path/to/device`).
+
+Any other actions can be done with the `run` action.
+`./dockerize.sh run` and `npm run` are equivalent except that the former runs the environment in docker.
 
 === Setting up a Development Environment Locally
 

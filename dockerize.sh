@@ -10,7 +10,7 @@ elif [ "$1" == "install" ]; then
 	docker run --rm \
 		-v "$DIR":"$DOCKER_HOME" \
 		"$IMAGE_NAME" yarn install
-elif [ "$1" == "adb" ]; then
+elif [ "$1" == "adb-devices" ]; then
 	# Useful to check if docker image can detect your phone at all
 	docker run --rm \
 		-v "$DIR":"$DOCKER_HOME" \
