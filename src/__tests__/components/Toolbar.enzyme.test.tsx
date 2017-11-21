@@ -9,6 +9,8 @@ import { shallow } from 'enzyme';
 import CheckboxWithLabel from '../CheckboxWithLabel';
 
 test('test that ', () => {
+  b1 = 0;
+  b2 = 0;
   const toolbar = shallow(
     <Toolbar 
         title="Agritrader"
@@ -17,14 +19,14 @@ test('test that ', () => {
           title: 'button1',
           icon: assets.account,
           action: () => {
-              console.log('Right Button1 Action');
+              b1 = 1;
         },
         },
         {
           title: 'button2',
           icon: assets.settings,
           action: () => {
-          console.log('Right Button2 Action');
+            b2 = 1;
           },
         },
         ]
@@ -40,4 +42,11 @@ test('test that ', () => {
   expect(toolbar.rightButtons[1].title).toEqual('button2');
   expect(toolbar.rightButtons[1].icon).toEqual(assets.settings);
   expect(toolbar.leftButtonTypes).toEqual(LeftButtonTypes.menu);
+
+
+  toolbar.rightButtons[0].find('input').simulate('change');
+  expect(b1).toEqual(1);
+
+  toolbar.rightButtons[1].find('input').simulate('change');
+  expect(b2).toEqual(1);
 });
