@@ -19,16 +19,16 @@ test('test that ', () => {
           title: 'button1',
           icon: assets.account,
           action: () => {
-              b1 = 1;
-        },
-        },
-        {
-          title: 'button2',
-          icon: assets.settings,
-          action: () => {
-            b2 = 1;
+            b1 = 1;
           },
         },
+          {
+            title: 'button2',
+            icon: assets.settings,
+            action: () => {
+            b2 = 1;
+          },
+          },
         ]
         }
         leftButtonType={
