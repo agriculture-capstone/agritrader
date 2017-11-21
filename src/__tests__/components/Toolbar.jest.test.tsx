@@ -19,7 +19,7 @@ it('renders correctly', () => {
               console.log('Right Button1 Action');
             },
           },
-           {
+            {
               title: 'button2',
               icon: assets.settings,
               action: () => {

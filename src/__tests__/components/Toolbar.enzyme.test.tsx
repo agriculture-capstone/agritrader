@@ -26,8 +26,8 @@ test('test that ', () => {
             title: 'button2',
             icon: assets.settings,
             action: () => {
-            b2 = 1;
-          },
+              b2 = 1;
+            },
           },
         ]
         }
