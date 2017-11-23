@@ -47,18 +47,18 @@ export default class Toolbar extends React.Component<ToolbarProps, {}> {
    * Render method for Toolbar
    */
   public render() {
-    const actionArray = ToolbarAndroidAction[]();
+    const actionArray = new Array <ToolbarAndroidAction>();
     this.props.rightButtons.map(rightButton => {
       const action: ToolbarAndroidAction = {
-        title: RightButton.title,
+        title: rightButton.title,
         show: 'ifRoom',
       };
-      if (RightButton.icon) {
-        action.icon = RightButton.icon;
+      if (rightButton.icon) {
+        action.icon = rightButton.icon;
       }
       actionArray.push(action);
-    })
-  private return(<
+    });
+    return(<
     ToolbarAndroid title= {
       this.props.title
     }
@@ -77,7 +77,7 @@ export default class Toolbar extends React.Component<ToolbarProps, {}> {
       actionArray
     }
   />
-  );
+  )
 }
 }
 
