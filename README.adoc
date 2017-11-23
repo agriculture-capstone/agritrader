@@ -12,12 +12,12 @@ IMPORTANT: This does not work on native docker for Windows and OS X.
 This works natively on Linux and it can work on Docker Toolbox by link:https://gist.github.com/stonehippo/e33750f185806924f1254349ea1a4e68[passing the USB device through to VirtualBox] first.
 
 . Install Docker using the instructions on the link:https://docs.docker.com/engine/installation/[official website].
-Do not use a package manager as you will get an outdated version of Docker.
+Do not use a package manager as this results in installing an outdated version of Docker.
 
 . Give executable permissions to the utility script using `chmod +x dockerize.sh`.
 
 . Build the image using `./dockerize.sh init`.
-This may take a while.
+This may take a while (15 - 30 minutes).
 
 . Install the node modules using `./dockerize.sh install`.
 
