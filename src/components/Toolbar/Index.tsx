@@ -1,79 +1,84 @@
 import {
-    StyleSheet,
-    ToolbarAndroid,
-    ToolbarAndroidAction,
+  StyleSheet,
+  ToolbarAndroid,
+  ToolbarAndroidAction,
 } from 'react-native';
 import * as React from 'react';
-import *from '../../assets/';
+import { icons } from '../../assets/';
 
 /**
- * Types of permitted left toolbar buttons
- */
+  * Types of permitted left toolbar buttons
+  */
 export enum LeftButtonTypes {
-    menu = 'menu',
-    back = 'back',
+  menu = 'menu',
+  back = 'back',
 }
-
-interface RightButtonType {
+/**
+  * action menu properties
+  */
+export interface RightButtonType {
   title: string;
-  icon ? : any;
+  icon?: any;
   action: () => void;
 }
 
 interface ToolbarProps {
   title: string;
   leftButtonType: LeftButtonTypes;
-  rightButtons: Array < RightButtonType > ;
+  rightButtons: RightButtonType[];
 }
-
-export default class Toolbar extends React.Component < ToolbarProps, {} > {
+/**
+ * Class representing a Toolbar
+ * @extends React.Component<ToolbarProps, {}>
+ */
+export default class Toolbar extends React.Component<ToolbarProps, {}> {
   constructor(props: ToolbarProps) {
     super(props);
+    this.onActionSelected = this.onActionSelected.bind(this);
   }
-    /* When a button is selected by a user, find its position in the actions
-     array and call specified function*/
-  public onActionSelected = (position: number) => {
+  /**
+   * When a button is selected by a user, find its position in the actions
+   * array and call specified function
+   */
+  public onActionSelected(position: number) {
     this.props.rightButtons[position].action();
   }
+  /**
+   * Render method for Toolbar
+   */
   public render() {
-        //array to hold all action (right buttons) for the page
-    const actionArray = new Array < ToolbarAndroidAction > ();
-        /*Iterate through right buttons added to the page build action objects 
-        based on the props and push them to the actionArray*/
-    this.props.rightButtons.map(RightButton => {
+    const actionArray = ToolbarAndroidAction[]();
+    this.props.rightButtons.map(rightButton => {
       const action: ToolbarAndroidAction = {
         title: RightButton.title,
-        show: 'always',
+        show: 'ifRoom',
       };
       if (RightButton.icon) {
         action.icon = RightButton.icon;
       }
       actionArray.push(action);
-    });
-    return (<
-            ToolbarAndroid title={
-                this.props.title
-            }
-            titleColor="white"
-            style={
-                styles.toolbar
-            }
-            navIcon={
-                (this.props.leftButtonType == LeftButtonTypes.menu) ? assets.menu : assets.back
-            }
-            onIconClicked={
-                (this.props.leftButtonType == LeftButtonTypes.menu) ? () => console.log('menu icon selected') :
-                    () => console.log('back icon selected')
-            }
-            onActionSelected={
-                this.onActionSelected
-            }
-            actions={
-                actionArray
-            }
-            />
-    );
-  }
+    })
+  private return(<
+    ToolbarAndroid title= {
+      this.props.title
+    }
+    titleColor="white"
+    style={
+      styles.toolbar
+    }
+    navIcon={(this.props.leftButtonType == LeftButtonTypes.menu) ? icons.menu : icons.back
+    }
+    onIconClicked={(this.props.leftButtonType == LeftButtonTypes.menu) ? () => { } : () => { }
+    }
+    onActionSelected={
+      this.onActionSelected
+    }
+    actions={
+      actionArray
+    }
+  />
+  );
+}
 }
 
 const styles = StyleSheet.create({
