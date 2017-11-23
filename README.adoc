@@ -4,11 +4,73 @@ This project is a mobile application to be used by traders that interact with fa
 
 == Development
 
-=== Setting up a Development Environment
+=== Setting up a Development Environment via Docker
+
+A Docker development environment has been made available, to use it follow the steps below.
+
+IMPORTANT: This does not work on native docker for Windows and OS X.
+This works natively on Linux and it can work on Docker Toolbox by link:https://gist.github.com/stonehippo/e33750f185806924f1254349ea1a4e68[passing the USB device through to VirtualBox] first.
+
+. Install Docker using the instructions on the link:https://docs.docker.com/engine/installation/[official website].
+Do not use a package manager as you will get an outdated version of Docker.
+
+. Give executable permissions to the utility script using `chmod +x dockerize.sh`.
+
+. Build the image using `./dockerize.sh init`.
+This may take a while.
+
+. Install the node modules using `./dockerize.sh install`.
+
+. Plug in your phone to your computer and allow access to your phone.
+Allowing access to your phone varies per phone, but is common for a pop-up to show on a device shortly after plugging it in to a computer.
+Ensure the cable connecting the phone and computer is capable of data transfer and not just power.
+
+. Identify the path to your phone.
+This can be done using `lsusb`.
+For example the output could be:
++
+[source,bash]
+----
+user@user-pc ~/boresha/agritrader $ lsusb
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 003 Device 003: ID 093a:2521 Pixart Imaging, Inc. Optical Mouse
+Bus 003 Device 002: ID 0534:0002 Motorola, Inc.
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 055: ID 04e8:6860 Samsung Electronics Co., Ltd Galaxy (MTP)
+Bus 001 Device 002: ID 046d:0a03 Logitech, Inc. Logitech USB Microphone
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+----
++
+The path would then be `/dev/bus/usb/001/055` for the Samsung device (phone).
+
+. Check that the Docker image can find your phone using `./dockerize.sh adb-devices /path/to/device/`.
+The output should include a device.
++
+[source,bash]
+----
+user@user-pc ~/boresha/agritrader $ ./dockerize.sh adb /dev/bus/usb/001/055
+List of devices attached
+* daemon not running. starting it now at tcp:5037 *
+* daemon started successfully *
+ce12160cdb9b2f1905	device
+----
+
+. Build the package and deploy it to your phone using `./dockerize.sh android /path/to/device`.
+This should take a few minutes before anything shows up on your phone.
+
+. Once the app is running on your phone, enable hot reloading by shaking your phone and selecting _Enable Hot Reloading_.
+
+NOTE: The phone will need to be disconnected and reconnected for every build (`./dockerize.sh android /path/to/device`).
+
+Any other actions can be done with the `run` action.
+`./dockerize.sh run` and `npm run` are equivalent except that the former runs the environment in docker.
+
+=== Setting up a Development Environment Locally
 
 Follow steps found in the `Building Projects with Native Code` tab in the link:https://facebook.github.io/react-native/docs/getting-started.html[React Native documentation for Getting Started] for installing dependencies and setting up the mobile development environment, such as the Android SDK and build tools.
 
-=== Setting up a Device
+==== Setting up a Device
 
 To try running the code on a device, follow the steps found in the link:https://facebook.github.io/react-native/docs/running-on-device.html[React Native documentation for Running your app on a Device].
 
@@ -24,7 +86,7 @@ The platform tools directory can be found in `D:\Users\<your username>\AppData\L
 Use `adb devices` to check for a connected device.
 
 
-=== Running the Application
+==== Running the Application
 
 Once a development environment has been setup, the application can be run with the following steps.
 
@@ -33,7 +95,7 @@ Once a development environment has been setup, the application can be run with t
 . Ensure a device is connected to the computer or an emulator is set up.
 . Run `npm run start:android` or `npm run start:ios` to run the application.
 
-=== Running Tests
+==== Running Tests
 
 . Run `npm test` to execute all unit tests and check code coverage thresholds.
 . View code coverage in the local `coverage/` directory.
@@ -48,3 +110,4 @@ Please label branches using the following format:
 Please write commit messages using the following format:
 
 	AT-<issue number> <commit message>
+``
