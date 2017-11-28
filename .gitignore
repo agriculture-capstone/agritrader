@@ -60,3 +60,10 @@ lib/
 #
 .jest/
 coverage/
+
+# Keystore
+*.keystore
+
+# Generated
+android/app/src/main/assets/
+.fuse_hidden*
