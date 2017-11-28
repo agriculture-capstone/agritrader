@@ -9,7 +9,7 @@ import {
 import Toolbar, {
     LeftButtonTypes,
 } from './Components/Toolbar';
-import Assets from './Assets';
+import { icons } from './Assets';
 
 
 const instructions = Platform.select({

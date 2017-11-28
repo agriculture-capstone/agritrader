@@ -4,5 +4,3 @@ export const icons = {
   menu: require('../../src/assets/menu_white_24dp.png'),
   settings: require('../../src/assets/settings_white_24dp.png'),
 };
-
-export default icons;

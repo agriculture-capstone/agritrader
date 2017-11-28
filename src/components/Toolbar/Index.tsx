@@ -58,25 +58,26 @@ export default class Toolbar extends React.Component<ToolbarProps, {}> {
       }
       actionArray.push(action);
     });
-    return(<
-    ToolbarAndroid title= {
-      this.props.title
-    }
-    titleColor="white"
-    style={
-      styles.toolbar
-    }
-    navIcon={(this.props.leftButtonType == LeftButtonTypes.menu) ? icons.menu : icons.back
-    }
-    onIconClicked={(this.props.leftButtonType == LeftButtonTypes.menu) ? () => { } : () => { }
-    }
-    onActionSelected={
-      this.onActionSelected
-    }
-    actions={
-      actionArray
-    }
-  />
+    return(
+    <ToolbarAndroid 
+      title= {
+        this.props.title
+      }
+      titleColor="white"
+      style={
+        styles.toolbar
+      }
+      navIcon={(this.props.leftButtonType == LeftButtonTypes.menu) ? icons.menu : icons.back
+      }
+      onIconClicked={(this.props.leftButtonType == LeftButtonTypes.menu) ? () => { } : () => { }
+      }
+      onActionSelected={
+        this.onActionSelected
+      }
+      actions={
+        actionArrayS
+      }
+    />
   )
 }
 }
