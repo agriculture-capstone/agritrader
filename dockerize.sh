@@ -21,6 +21,10 @@ elif [ "$1" == "android" ]; then
 		-v "$DIR":"$DOCKER_HOME" \
 		--device="$2" \
 		-t "$IMAGE_NAME" ./start-android.sh
+elif [ "$1" == "apk" ]; then
+	docker run --rm \
+		-v "$DIR":"$DOCKER_HOME" \
+		-t "$IMAGE_NAME" ./build-apk.sh
 elif [ "$1" == "bash" ]; then
 	docker run --rm \
 		-v "$DIR":"$DOCKER_HOME" \
