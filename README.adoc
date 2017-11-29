@@ -66,6 +66,22 @@ NOTE: The phone will need to be disconnected and reconnected for every build (`.
 Any other actions can be done with the `run` action.
 `./dockerize.sh run` and `npm run` are equivalent except that the former runs the environment in docker.
 
+==== Building a Signed APK
+
+. Ensure the image is initalized with `./dockerize.sh init` and dependencies installed with `./dockerize.sh install`.
+
+. Copy the `gradle.properties.tmpl` file to `gradle.properties`, `gradle.properties` is the file that will actually be used.
+Fill in the `AGRITRADER_DEPLOY_UNSTABLE_STORE_PASSWORD` and `AGRITRADER_DEPLOY_UNSTABLE_KEY_PASSWORD` fields with the password.
+Ask someone for the password, it is not version controlled.
++
+IMPORTANT: Be very careful not to commit the passwords to version control.
+
+. Ask for the `agritrader-deploy-unstable.keystore` keystore and copy it to the `android/app` directory.
+
+. Build the signed APK using `./dockerize.sh apk`.
+
+. The output file will be `android/app/build/outputs/apk/app-release.apk`.
+
 === Setting up a Development Environment Locally
 
 Follow steps found in the `Building Projects with Native Code` tab in the link:https://facebook.github.io/react-native/docs/getting-started.html[React Native documentation for Getting Started] for installing dependencies and setting up the mobile development environment, such as the Android SDK and build tools.
