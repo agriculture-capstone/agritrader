@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Toolbar/> rendering 1 right button creates valid snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignSelf": "flex-start",
+        "borderColor": "red",
+        "borderWidth": 1,
+      },
+      Object {
+        "backgroundColor": "#4883da",
+        "height": 56,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`<Toolbar/> rendering 2 right button creates valid snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignSelf": "flex-start",
+        "borderColor": "red",
+        "borderWidth": 1,
+      },
+      Object {
+        "backgroundColor": "#4883da",
+        "height": 56,
+      },
+    ]
+  }
+/>
+`;
+
+exports[`<Toolbar/> rendering left button and 0 right buttons creates valid snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignSelf": "flex-start",
+        "borderColor": "red",
+        "borderWidth": 1,
+      },
+      Object {
+        "backgroundColor": "#4883da",
+        "height": 56,
+      },
+    ]
+  }
+/>
+`;
