@@ -32,9 +32,19 @@
       }
     ],
     "member-access": true,
-    "member-ordering": [ true, { "order": "fields-first" } ],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "instance-field",
+          "constructor",
+          "instance-method"
+        ]
+      }
+    ],
     "unified-signatures": true,
     "await-promise": true,
-    "no-empty-interface": false
+    "no-empty-interface": false,
+    "variable-name": false
   }
 }
