@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Root } from 'native-base';
 import { View } from 'react-native';
 
-import { Drawer } from './components/Drawer';
-import { Header } from './components/Header';
+import Drawer from './components/Drawer';
+import Header from './components/Header';
 
 /**
  * Container for application

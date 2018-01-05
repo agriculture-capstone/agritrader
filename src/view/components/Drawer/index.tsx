@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Drawer as BaseDrawer } from 'native-base';
-import { connect } from 'react-redux';
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
+
+import { State } from '../../../store/types';
 
 export interface OwnProps {}
 export interface OwnState {}
@@ -30,17 +32,22 @@ class Drawer extends React.Component<Props, OwnState> {
 
   /****************************** Redux ******************************/
 
-  public static mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = () => {
-
+  public static mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
+    return {
+      open: state.app.drawerShown,
+    };
   }
 
-  public static mapDispatchToProps: MapDispatchToProps<> = () => {
+  public static mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+    return {
 
+    };
   }
 }
 
-const DrawerContainer = connect<>(
+const DrawerContainer = connect(
   Drawer.mapStateToProps,
   Drawer.mapDispatchToProps,
 )(Drawer);
 
+export default DrawerContainer;
