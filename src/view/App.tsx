@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Root } from 'native-base';
+import { Root, Container, Header, Content } from 'native-base';
 import { View } from 'react-native';
 import { Provider } from 'react-redux';
 
 import Drawer from './components/Drawer';
-import Header from './components/Header';
 import store from '../store';
+
+import Farmer from './pages/Farmer';
 
 /**
  * Container for application
@@ -16,16 +17,13 @@ export default class App extends React.Component<{}, {}> {
    */
   public render() {
     return (
-      <Provider store={store}>
-        <Root>
-          <Drawer>
-            <View>
-              <Header />
-              <Drawer />
-            </View>
-          </Drawer>
-        </Root>
-      </Provider>
+      <Container>
+        <Header/>
+          <Content>
+            <Farmer />
+          </Content>
+        
+      </Container>
     );
   }
 }
