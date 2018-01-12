@@ -14,9 +14,7 @@ export default class App extends React.Component<{}, {}> {
   public render() {
     return (
       <Provider store={store}>
-        <Root>
           <Login />
-        </Root>
       </Provider>
     );
   }
