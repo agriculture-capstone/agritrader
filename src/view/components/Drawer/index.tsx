@@ -3,6 +3,8 @@ import { Drawer as BaseDrawer } from 'native-base';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
 import { State } from '../../../store/types';
+import appActions from '../../../store/modules/app/actions';
+import DrawerContents from './DrawerContents';
 
 export interface OwnProps {}
 export interface OwnState {}
@@ -11,12 +13,17 @@ interface StoreProps {
   open: boolean;
 }
 
-interface DispatchProps {}
+interface DispatchProps {
+  closeDrawer(): void;
+}
 
 export type Props = OwnProps & StoreProps & DispatchProps;
 
 class Drawer extends React.Component<Props, OwnState> {
-  private drawer: BaseDrawer;
+
+  /************************* Member Variables ************************/
+
+  /************************* Member Functions ************************/
 
   /****************************** React ******************************/
 
@@ -24,8 +31,10 @@ class Drawer extends React.Component<Props, OwnState> {
     return (
       <BaseDrawer
         open={this.props.open}
+        onClose={this.props.closeDrawer}
+        content={<DrawerContents />}
       >
-        {this.props.children}
+      {this.props.children}
       </BaseDrawer>
     );
   }
@@ -40,7 +49,7 @@ class Drawer extends React.Component<Props, OwnState> {
 
   public static mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
     return {
-
+      closeDrawer: () => dispatch(appActions.setDrawerShown(false)),
     };
   }
 }
