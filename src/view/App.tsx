@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import Drawer from './components/Drawer';
 import Header from './components/Header';
 import store from '../store';
+import Login from './pages/Login';
 
 /**
  * Container for application
@@ -18,12 +19,7 @@ export default class App extends React.Component<{}, {}> {
     return (
       <Provider store={store}>
         <Root>
-          <Drawer>
-            <View>
-              <Header />
-              <Drawer />
-            </View>
-          </Drawer>
+          <Login />
         </Root>
       </Provider>
     );
