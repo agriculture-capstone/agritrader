@@ -7,6 +7,8 @@ import Drawer from './components/Drawer';
 import Header from './components/Header';
 import store from '../store';
 
+import FarmerInformation from './pages/FarmerInformation';
+
 /**
  * Container for application
  */
@@ -18,12 +20,7 @@ export default class App extends React.Component<{}, {}> {
     return (
       <Provider store={store}>
         <Root>
-          <Drawer>
-            <View>
-              <Header />
-              <Drawer />
-            </View>
-          </Drawer>
+          <FarmerInformation />
         </Root>
       </Provider>
     );
