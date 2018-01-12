@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label, Button, Text, Thumbnail } from 'native-base';
+import { icons } from '../../assets/';
 export default class Login extends React.Component {
   public render() {
+    const logoSize = 80;
     return (
       <Container>
         <Header />
         <Content>
+          <Thumbnail square size={logoSize} source={require(icons.logo)} /> 
           <Form>
             <Item floatingLabel>
               <Label>Username</Label>
