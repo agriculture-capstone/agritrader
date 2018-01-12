@@ -39,3 +39,4 @@ const NavContainer = connect(
   AppNavigation.mapStateToProps,
 )(AppNavigation);
 
+export default NavContainer;

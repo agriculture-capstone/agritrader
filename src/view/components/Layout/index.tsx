@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { Container } from 'native-base';
 
 import Header from '../Header';
 
@@ -24,9 +24,7 @@ export class Name extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     return (
-      <View>
-
-      </View>
+      <Container />
     );
   }
 
