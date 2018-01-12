@@ -1,11 +1,28 @@
 import * as React from 'react';
-import { Container, Header, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker } from 'native-base';
+import { Container, Header, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker } 
+from 'native-base';
 import { View, Text } from 'react-native';
 
 /**
  * Container for application
  */
 export default class FarmerInformation extends React.Component<{}, {}> {
+
+  public state = {
+    selectedPaymentCycle: 'Weekly',
+    selectedPaymentMethod: 'Mobile',
+  };
+
+  private updatePaymentCycle(value: string) {
+    // this.setState({ selectedPaymentCycle: value });
+    this.state.selectedPaymentCycle = value;
+  }
+
+  private updatePaymentMethod(value: string) {
+    // this.setState({ selectedPaymentMethod: value });
+    this.state.selectedPaymentMethod = value;
+  }
+
   /**
    * Render method for App
    */
@@ -35,7 +52,7 @@ export default class FarmerInformation extends React.Component<{}, {}> {
                 <Col>
                     <Item floatingLabel>
                       <Label>Phone Number</Label>
-                      <Input />
+                      <Input keyboardType={'numeric'}/>
                     </Item>
                 </Col>
               </Row>
@@ -55,14 +72,14 @@ export default class FarmerInformation extends React.Component<{}, {}> {
                 <Col>
                   <Picker
                     style={{ paddingTop: 77 }}
-                    iosHeader="Select one"
+                    iosHeader="Select payment cycle"
                     mode="dropdown"
-                    selectedValue={() => {}}
-                    onValueChange={() => {}}
-                    >
-                      <Item label="Weekly" value="key0" />
-                      <Item label="Bi-Weekly" value="key1" />
-                      <Item label="Monthly" value="key2" />
+                    selectedValue={this.state.selectedPaymentCycle}
+                    onValueChange={this.updatePaymentCycle}
+                  >
+                      <Picker.Item label="Weekly" value="Weekly" />
+                      <Picker.Item label="Bi-Weekly" value="Bi-weekly" />
+                      <Picker.Item label="Monthly" value="Monthly" />
                   </Picker>
                 </Col>
               </Row>
@@ -73,14 +90,14 @@ export default class FarmerInformation extends React.Component<{}, {}> {
                 <Col>
                   <Picker
                     style={{ paddingTop: 77 }}
-                    iosHeader="Select one"
+                    iosHeader="Select payment method"
                     mode="dropdown"
-                    selectedValue={() => {}}
-                    onValueChange={() => {}}
-                    >
-                      <Item label="Mobile" value="key0" />
-                      <Item label="Cash" value="key1" />
-                    </Picker>
+                    selectedValue={this.state.selectedPaymentMethod}
+                    onValueChange={this.updatePaymentMethod}
+                  >
+                      <Picker.Item label="Mobile" value="Mobile" />
+                      <Picker.Item label="Cash" value="Cash" />
+                  </Picker>
                 </Col>
                 </Row>
               <Row>
@@ -92,14 +109,10 @@ export default class FarmerInformation extends React.Component<{}, {}> {
                 </Col>
               </Row>
               <Row style={{ paddingTop: 77 }}>
-                <Col size={1}>
-                </Col>
-                <Col size={2}>
+                <Col>
                   <Button block success>
                     <Text style={{ fontWeight: 'bold', color: 'white' }}>ADD</Text>
                   </Button>
-                </Col>
-                <Col size={1}>
                 </Col>
                 </Row>
             </Grid> 
