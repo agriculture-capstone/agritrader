@@ -1,8 +1,11 @@
+import { Container, Content } from 'native-base';
 import { NavigationState, addNavigationHelpers } from 'react-navigation';
 import { connect, DispatchProp, MapStateToProps } from 'react-redux';
 import * as React from 'react';
 
-import { State } from '../store/types';
+import Header from '../components/Header';
+import Drawer from '../components/Drawer';
+import { State } from '../../store/types';
 import Navigator from './navigator';
 
 interface StoreProps {
@@ -22,7 +25,14 @@ class AppNavigation extends React.Component<Props, {}> {
 
   /** Render the navigator */
   public render () {
-    return <Navigator navigation={this.navHelpers()}/>;
+    return (
+      <Container>
+        <Drawer>
+          <Header />
+          <Navigator navigation={this.navHelpers()} />
+        </Drawer>
+      </Container>
+    );
   }
 
   /****************************** Redux ******************************/

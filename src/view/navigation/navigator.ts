@@ -1,9 +1,11 @@
 import { StackNavigator } from 'react-navigation';
 
-import { FakePage } from '../view/pages/FakePage';
+import { FakePage } from '../pages/FakePage';
 
 export default StackNavigator({
-  Main: { screen: FakePage },
+  Main: {
+    screen: FakePage,
+  },
 }, {
   headerMode: 'none',
 });

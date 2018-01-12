@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Container } from 'native-base';
 
-import Header from '../Header';
-
 export interface Props {}
 
 export interface State {}

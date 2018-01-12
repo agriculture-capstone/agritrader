@@ -4,6 +4,7 @@ import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
 import { State } from '../../../store/types';
 import appActions from '../../../store/modules/app/actions';
+import DrawerContents from './DrawerContents';
 
 export interface OwnProps {}
 export interface OwnState {}
@@ -19,7 +20,10 @@ interface DispatchProps {
 export type Props = OwnProps & StoreProps & DispatchProps;
 
 class Drawer extends React.Component<Props, OwnState> {
-  private drawer: BaseDrawer;
+
+  /************************* Member Variables ************************/
+
+  /************************* Member Functions ************************/
 
   /****************************** React ******************************/
 
@@ -28,6 +32,7 @@ class Drawer extends React.Component<Props, OwnState> {
       <BaseDrawer
         open={this.props.open}
         onClose={this.props.closeDrawer}
+        content={<DrawerContents />}
       >
       {this.props.children}
       </BaseDrawer>
