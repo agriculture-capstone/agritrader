@@ -42,7 +42,7 @@ class Header extends React.Component<Props, OwnState> {
 
   private backButton() {
     return (
-      <Button onPress={this.onBackClick}>
+      <Button onPress={this.onBackClick} transparent>
         <Icon name="arrow-back" />
       </Button>
     );
@@ -50,7 +50,7 @@ class Header extends React.Component<Props, OwnState> {
 
   private menuButton() {
     return (
-      <Button onPress={this.onMenuClick}>
+      <Button onPress={this.onMenuClick} transparent>
         <Icon name="menu" />
       </Button>
     );
