@@ -1,0 +1,31 @@
+import * as React from 'react';
+import { Root } from 'native-base';
+import { View } from 'react-native';
+import { Provider } from 'react-redux';
+
+import Drawer from './components/Drawer';
+import Header from './components/Header';
+import store from '../store';
+
+/**
+ * Container for application
+ */
+export default class App extends React.Component<{}, {}> {
+  /**
+   * Render method for App
+   */
+  public render() {
+    return (
+      <Provider store={store}>
+        <Root>
+          <Drawer>
+            <View>
+              <Header />
+              <Drawer />
+            </View>
+          </Drawer>
+        </Root>
+      </Provider>
+    );
+  }
+}
