@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import { Spinner } from 'native-base';
 
+/** FakePage props */
 export interface Props {}
 
+/** FakePage state */
 export interface State {}
 
 /**
@@ -21,6 +23,7 @@ export class FakePage extends React.Component<Props, State> {
 
   /************************* React Lifecycle *************************/
 
+  /** React render method */
   public render(): JSX.Element {
     return (
       <Spinner color="red" />

@@ -3,17 +3,19 @@ import { NavigationState, addNavigationHelpers } from 'react-navigation';
 import { connect, DispatchProp, MapStateToProps } from 'react-redux';
 import * as React from 'react';
 
-import Header from '../components/Header';
-import Drawer from '../components/Drawer';
-import { State } from '../../store/types';
+import Header from '@/view//components/Header';
+import Drawer from '@/view/components/Drawer';
+import { State } from '@/store/types';
 import Navigator from './navigator';
 
 interface StoreProps {
   nav: NavigationState;
 }
 
+/** AppNavigation props */
 type Props = DispatchProp<State> & StoreProps;
 
+/** Container wrapping app with react-navigation */
 class AppNavigation extends React.Component<Props, {}> {
 
   private navHelpers() {
@@ -34,19 +36,19 @@ class AppNavigation extends React.Component<Props, {}> {
       </Container>
     );
   }
-
-  /****************************** Redux ******************************/
-
-  public static mapStateToProps: MapStateToProps<StoreProps, {}, State> = (state, ownProps) => {
-    return {
-      nav: state.nav,
-    };
-  }
 }
+
+/****************************** Redux ******************************/
+
+const mapStateToProps: MapStateToProps<StoreProps, {}, State> = (state, ownProps) => {
+  return {
+    nav: state.nav,
+  };
+};
 
 // Tie navigation into redux store
 const NavContainer = connect(
-  AppNavigation.mapStateToProps,
+  mapStateToProps,
 )(AppNavigation);
 
 export default NavContainer;

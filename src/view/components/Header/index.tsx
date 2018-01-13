@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import {
   Header as BaseHeader,
   Left,
@@ -9,8 +10,8 @@ import {
   Title,
 } from 'native-base';
 
-import { State } from '../../../store/types';
-import appActions from '../../../store/modules/app/actions';
+import { State } from '@/store/types';
+import appActions from '@/store/modules/app/actions';
 
 interface OwnProps {}
 interface OwnState {}
@@ -22,17 +23,19 @@ interface StoreProps {
 
 interface DispatchProps {
   openDrawer(): void;
+  goBack(): void;
 }
 
-export type Props = OwnProps & StoreProps & DispatchProps;
+/** Header props */
+type Props = OwnProps & StoreProps & DispatchProps;
 
+/** Header component */
 class Header extends React.Component<Props, OwnState> {
 
   public constructor(props: Props) {
     super(props);
 
     // Bindings
-    this.onBackClick = this.onBackClick.bind(this);
     this.onMenuClick = this.onMenuClick.bind(this);
   }
 
@@ -42,7 +45,7 @@ class Header extends React.Component<Props, OwnState> {
 
   private backButton() {
     return (
-      <Button onPress={this.onBackClick} transparent>
+      <Button onPress={this.props.goBack} transparent>
         <Icon name="arrow-back" />
       </Button>
     );
@@ -56,16 +59,13 @@ class Header extends React.Component<Props, OwnState> {
     );
   }
 
-  private onBackClick() {
-
-  }
-
   private onMenuClick() {
     this.props.openDrawer();
   }
 
   /****************************** React ******************************/
 
+  /** React render method */
   public render() {
     return (
       <BaseHeader>
@@ -78,26 +78,27 @@ class Header extends React.Component<Props, OwnState> {
       </BaseHeader>
     );
   }
-
-  /****************************** Redux ******************************/
-
-  public static mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
-    return {
-      drawerLocked: state.app.drawerLocked,
-      title: state.app.title,
-    };
-  }
-
-  public static mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
-    return {
-      openDrawer: () => dispatch(appActions.setDrawerShown(true)),
-    };
-  }
 }
 
+/****************************** Redux ******************************/
+
+const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
+  return {
+    drawerLocked: state.app.drawerLocked,
+    title: state.app.title,
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+  return {
+    openDrawer: () => dispatch(appActions.setDrawerShown(true)),
+    goBack: () => dispatch(NavigationActions.back()),
+  };
+};
+
 const HeaderContainer = connect(
-  Header.mapStateToProps,
-  Header.mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(Header);
 
 export default HeaderContainer;

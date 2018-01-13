@@ -17,12 +17,8 @@
 		"start": "npm run react-native -- start",
 		"test": "jest --coverage",
 		"watch": "npm run build -- -w",
-		"lint": "npm run lint:src && npm run lint:test",
-		"lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
-		"lint:src": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:src:fix": "npm run lint:src -- --fix",
-		"lint:test": "node_modules/.bin/tslint \"test/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:test:fix": "npm run lint:test -- --fix"
+		"lint": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
+		"lint:fix": "npm run lint -- --fix"
 	},
 	"dependencies": {
 		"jest-cli": "^21.2.1",

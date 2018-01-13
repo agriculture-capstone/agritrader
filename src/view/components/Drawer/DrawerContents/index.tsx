@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Grid, Row } from 'react-native-easy-grid';
 
+/** DrawerContents props */
 export interface Props {}
 
 const DrawerContents: React.StatelessComponent<Props> = () => {
