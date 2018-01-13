@@ -13,14 +13,12 @@ export default class FarmerInformation extends React.Component<{}, {}> {
     selectedPaymentMethod: 'Mobile',
   };
 
-  private updatePaymentCycle(value: string) {
-    // this.setState({ selectedPaymentCycle: value });
-    this.state.selectedPaymentCycle = value;
+  private updatePaymentCycle = (value: string) => {
+    this.setState({ selectedPaymentCycle: value });
   }
 
-  private updatePaymentMethod(value: string) {
-    // this.setState({ selectedPaymentMethod: value });
-    this.state.selectedPaymentMethod = value;
+  private updatePaymentMethod = (value: string) => {
+    this.setState({ selectedPaymentMethod: value });
   }
 
   /**
@@ -67,7 +65,7 @@ export default class FarmerInformation extends React.Component<{}, {}> {
               </Row>
               <Row>
                 <Col>
-                  <Label style={{ paddingTop: 28, paddingLeft: 14 }}>Payment Cycle</Label>
+                  <Label style={{ color: 'black', paddingTop: 28, paddingLeft: 14 }}>Payment Cycle</Label>
                 </Col>
                 <Col>
                   <Picker
@@ -85,7 +83,7 @@ export default class FarmerInformation extends React.Component<{}, {}> {
               </Row>
               <Row>
                 <Col>
-                  <Label style={{ paddingTop: 28, paddingLeft: 14  }}>Payment Method</Label>
+                  <Label style={{ color: 'black', paddingTop: 28, paddingLeft: 14 }}>Payment Method</Label>
                 </Col>
                 <Col>
                   <Picker
@@ -109,9 +107,14 @@ export default class FarmerInformation extends React.Component<{}, {}> {
                 </Col>
               </Row>
               <Row style={{ paddingTop: 77 }}>
-                <Col>
+              <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
+                  <Button block danger>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>CANCEL</Text>
+                  </Button>
+                </Col>
+                <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
                   <Button block success>
-                    <Text style={{ fontWeight: 'bold', color: 'white' }}>ADD</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>ADD</Text>
                   </Button>
                 </Col>
                 </Row>
