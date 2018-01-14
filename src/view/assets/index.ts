@@ -1,3 +1,3 @@
 export const icons = {
-  logo: require('../../src/assets/boresha_circular_logo.png'),    
+  logo: require('../../../src/view/assets/boresha_circular_logo.png'),    
 };
