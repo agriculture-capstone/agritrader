@@ -20,9 +20,12 @@ export default class App extends React.Component<{}, {}> {
     return (
       <Provider store={store}>
         <Root>
-          <FarmerInformation 
-            mode={modes.add}
-          />
+          <Header />
+          <Drawer>
+            <FarmerInformation 
+              mode={modes.edit}
+            />
+          </Drawer>
         </Root>
       </Provider>
     );
