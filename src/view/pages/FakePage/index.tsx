@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import { Spinner } from 'native-base';
 
+import { MutableList } from '../../components/MutableList';
+
 export interface Props {}
 
 export interface State {}
@@ -23,7 +25,10 @@ export class FakePage extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     return (
-      <Spinner color="red" />
+      <MutableList
+        listData={[{ mainTitle:'Nick', secondTitle:'1234', id:1 },{ mainTitle:'John', secondTitle:'1234', id:2 }]}
+        displayRowFunc={{}}
+      />
     );
   }
 

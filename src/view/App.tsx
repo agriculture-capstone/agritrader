@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 
 import store from '../store';
 import Login from './pages/Login';
+import { FakePage } from './pages/FakePage';
+import { StartSession } from './pages/StartSession';
 
 /**
  * Container for application
@@ -14,7 +16,7 @@ export default class App extends React.Component<{}, {}> {
   public render() {
     return (
       <Provider store={store}>
-          <Login />
+          <StartSession />
       </Provider>
     );
   }

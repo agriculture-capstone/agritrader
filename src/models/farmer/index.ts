@@ -14,11 +14,11 @@ enum payCycleEnum {
 /*
  * The actual farmer interface
  */
-export interface farmer {
-    name: string;
-    phoneNumber: string;
-    payCash: boolean;
-    payCycle: payCycleEnum;
-    notes: string;
-    farmerID: string;
+export interface Farmer {
+  name: string;
+  phoneNumber: string;
+  payCash: boolean;
+  payCycle: payCycleEnum;
+  notes: string;
+  farmerID: string;
 }
