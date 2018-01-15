@@ -91,14 +91,6 @@
 			"node_modules/(?!react-native|native-base|react-navigation)"
 		],
 		"cacheDirectory": ".jest/cache",
-		"mapCoverage": true,
-		"coverageThreshold": {
-			"global": {
-				"branches": 80,
-				"functions": 80,
-				"lines": 80,
-				"statements": 80
-			}
-		}
+		"mapCoverage": true
 	}
 }
