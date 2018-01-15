@@ -25,6 +25,19 @@ export default class DataTable extends React.Component<DataTablePropsType, {}> {
   }
 
 
+  renderSectionHeader(sectionData: any, sectionId: any) {
+    return (
+      <ListItem itemHeader first>
+        <Grid>
+          {
+            this.props.headers.map((x) => { 
+              return <Col><Text>{x}</Text></Col>
+            })
+          }
+        </Grid>
+      </ListItem>
+    );
+  }
 
   
   /**
@@ -35,6 +48,7 @@ export default class DataTable extends React.Component<DataTablePropsType, {}> {
       <List 
         dataArray={this.props.values}
         renderRow={this.renderRow}
+        renderSectionHeader={this.renderSectionHeader.bind(this)}
         
       />
     );
