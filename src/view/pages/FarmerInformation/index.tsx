@@ -13,6 +13,11 @@ interface FarmerInformationPropsType {
 export class FarmerInformation extends React.Component<FarmerInformationPropsType, {}> {
   
   public state = {
+    farmerFirstName: 'Patrick',
+    farmerLastName: 'Keenan',
+    farmerPhoneNumber: '123-456-7890',
+    farmerBusinessName: 'Farmer with coolest hat',
+    farmerNotes: 'Doctor from village A',
     selectedPaymentCycle: 'Weekly',
     selectedPaymentMethod: 'Mobile',
   };
@@ -35,13 +40,19 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
           <Content padder>
           <Grid>
             <Row style={styles.name}>
-              <H1>Patrick Keenan</H1>
+              <H1>{this.state.farmerFirstName} {this.state.farmerLastName}</H1>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Phone Number</Label>
             </Row>
             <Row style={styles.infoLabel}>
-              <H2>123-456-7890</H2>
+              <H2>{this.state.farmerPhoneNumber}</H2>
+            </Row>
+            <Row style={styles.infoLabel}>
+              <Label>Business Name</Label>
+            </Row>
+            <Row style={styles.infoLabel}>
+              <H2>{this.state.farmerBusinessName}</H2>
             </Row>
             <Row style={styles.infoLabel}>
               <Col>
@@ -53,17 +64,17 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
             </Row>
             <Row style={styles.infoLabel}>
               <Col>
-                <H2>Weekly</H2>
+                <H2>{this.state.selectedPaymentCycle}</H2>
               </Col> 
               <Col>
-                <H2>Cash</H2>
+                <H2>{this.state.selectedPaymentMethod}</H2>
               </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Notes</Label>
             </Row>
             <Row style={styles.infoLabel}>
-              <H2>Doctor from village A</H2>
+              <H2>{this.state.farmerNotes}</H2>
             </Row>
           </Grid>
           </Content>
@@ -172,14 +183,37 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
         <Container>
           <Content padder>
           <Grid>
-            <Row style={styles.name}>
-              <H1>Patrick Keenan</H1>
+            <Row style={styles.infoLabel}>
+              <Col>
+                <Label>First Name</Label>
+              </Col>
+              <Col>
+                <Label>Last Name</Label>
+              </Col>
+            </Row>
+            <Row style={styles.input}>
+                <Col>
+                  <Input>
+                    <H2></H2>
+                  </Input>
+                </Col>
+                <Col>
+                  <Input placeholder="Keenan"/>
+                </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Phone Number</Label>
             </Row>
             <Row style={styles.infoLabel}>
-              <H2>123-456-7890</H2>
+              <Input>
+                <H2>123-456-7890</H2>
+              </Input>
+            </Row>
+            <Row style={styles.infoLabel}>
+              <Label>Business Name</Label>
+            </Row>
+            <Row style={styles.infoLabel}>
+              <H2>Farmer with coolest hat</H2>
             </Row>
             <Row style={styles.infoLabel}>
               <Col>
@@ -220,8 +254,11 @@ export const modes = {
 const styles = StyleSheet.create({
   name: {
     alignSelf: 'center',
-    paddingTop: 14,
+    paddingTop: 28,
     paddingBottom: 14,
+  },
+  input: {
+    paddingLeft: 21,
   },
   infoLabel: {
     paddingLeft: 21,

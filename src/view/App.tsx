@@ -21,7 +21,7 @@ export default class App extends React.Component<{}, {}> {
       <Provider store={store}>
         <Root>
           <FarmerInformation 
-            mode={modes.view}
+            mode={modes.edit}
           />
         </Root>
       </Provider>
