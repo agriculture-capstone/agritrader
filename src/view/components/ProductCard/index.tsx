@@ -12,8 +12,15 @@ export default class ProductCard extends React.Component<{}, {}> {
   * Render method for App
   */
   public render() {
+    var headers = ['Date','AM', 'PM'];
+    //var values = [{date:'Jan 1', am: 2, pm:2}];
+    var values = [{date:'Jan 1', am: 2, pm:2}, {date:'Jan 1', am: 2, pm:2}];
+    // const values = ['hello', 'hi'];
     return (
-      <DataTable />
+      <DataTable
+        headers={headers} 
+        values={values} 
+       />
     );
   }
 }
