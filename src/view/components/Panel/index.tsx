@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 
-import { Container, Header, Content, List, ListItem, Grid, Row, Col } from 'native-base';
+import { Container, Header, Content, List, ListItem, Grid, Row, Col, Icon } from 'native-base';
 import {StyleSheet,Text,View,Image,TouchableHighlight,Animated} from 'react-native'; //Step 1
 
 interface PanelStateType {
@@ -9,6 +9,7 @@ interface PanelStateType {
     animation?: Animated.Value,
     maxHeight?: any,
     minHeight?: any,
+    arrowHeight?: any
 }
 interface PanelPropsType {
     title: string
@@ -32,9 +33,8 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
     }
 
     toggle(){
-        let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
-            finalValue      = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
-
+        let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight + this.state.arrowHeight: this.state.minHeight + this.state.arrowHeight,
+            finalValue      = this.state.expanded? this.state.minHeight + this.state.arrowHeight : this.state.maxHeight + this.state.minHeight + this.state.arrowHeight;
         this.setState({
             expanded : !this.state.expanded
         });
@@ -54,9 +54,9 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
     }
 
     _setMaxHeight(event:any){
-        this.setState({
+        if (this.state.expanded) {this.setState({
             maxHeight   : event.nativeEvent.layout.height
-        });
+        });}
     }
 
     _setMinHeight(event:any){
@@ -65,11 +65,17 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
         });
     }
 
+    _setArrowHeight(event:any) {
+        this.setState({
+            arrowHeight   : event.nativeEvent.layout.height
+        });
+    }
+
     render(){
-        let icon = this.icons['down'];
+        let icon = <Icon name="ios-arrow-down"/>;
 
         if(this.state.expanded){
-            icon = this.icons['up'];
+            icon = <Icon name="ios-arrow-up"/>;
         }
 
         return (
@@ -77,17 +83,21 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
                 style={[styles.container,{height: this.state.animation}]}>
                 <View style={styles.titleContainer} onLayout={this._setMinHeight.bind(this)}>
                     <Text style={styles.title}>{this.props.title}</Text>
-                    <TouchableHighlight 
-                        style={styles.button} 
-                        onPress={this.toggle.bind(this)}
-                        underlayColor="#f1f1f1">
-                        <Text>{icon}</Text>
-                    </TouchableHighlight>
+                    
                 </View>
                 
-                <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
+                <View style={[styles.body, this.state.expanded? styles.show : styles.hide]} onLayout={this._setMaxHeight.bind(this)}>
                     {this.props.children}
                 </View>
+                <TouchableHighlight 
+                        style={styles.button} 
+                        onPress={this.toggle.bind(this)}
+                        underlayColor="#f1f1f1"
+                        onLayout={this._setArrowHeight.bind(this)}
+                        activeOpacity={0}
+                        >
+                        {icon}
+                    </TouchableHighlight>
 
             </Animated.View>
         );
@@ -114,15 +124,18 @@ var styles = StyleSheet.create({
         
     },
     button      : {
-
-    },
-    buttonImage : {
-        width   : 30,
-        height  : 25
+        alignItems: 'center',
+        
     },
     body        : {
         padding     : 10,
         paddingTop  : 0
+    },
+    hide : {
+        display: 'none'
+    },
+    show : {
+        display: 'flex'
     }
 });
 
