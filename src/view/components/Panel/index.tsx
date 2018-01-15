@@ -98,7 +98,8 @@ var styles = StyleSheet.create({
     container   : {
         backgroundColor: '#fff',
         margin:10,
-        overflow:'hidden'
+        overflow:'hidden', 
+        flex: 1,
     },
     titleContainer : {
         flexDirection: 'row'
