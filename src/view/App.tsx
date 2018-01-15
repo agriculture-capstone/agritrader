@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { Root } from 'native-base';
-import { View } from 'react-native';
 import { Provider } from 'react-redux';
 
-import Drawer from './components/Drawer';
-import Header from './components/Header';
 import store from '../store';
+import NavContainer from './navigation';
 
 import { modes, FarmerInformation } from './pages/FarmerInformation';
 
@@ -18,14 +15,7 @@ export default class App extends React.Component<{}, {}> {
   public render() {
     return (
       <Provider store={store}>
-        <Root>
-          <Header />
-          <Drawer>
-            <FarmerInformation 
-              mode={modes.view}
-            />
-          </Drawer>
-        </Root>
+        <NavContainer />
       </Provider>
     );
   }

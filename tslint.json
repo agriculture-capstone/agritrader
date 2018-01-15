@@ -47,6 +47,7 @@
     "no-empty-interface": false,
     "variable-name": false,
     "import-name": false,
-    "jsx-boolean-value": false
+    "jsx-boolean-value": false,
+    "strict-boolean-expressions": false
   }
 }

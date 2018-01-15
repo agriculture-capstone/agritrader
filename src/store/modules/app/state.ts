@@ -1,5 +1,5 @@
 const appState = {
-  title: 'agriTrader',
+  title: 'AgriTrader',
   drawerShown: false,
   drawerLocked: false,
 };
