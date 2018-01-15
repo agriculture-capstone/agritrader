@@ -109,7 +109,6 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                       </Item>
                   </Col>
                 </Row>
-  
                 <Row>
                   <Col>
                       <Item floatingLabel>
@@ -118,9 +117,26 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                       </Item>
                   </Col>
                 </Row>
-                <Row>
+                <Row style={{ paddingTop: 28, paddingLeft: 14 }}>
                   <Col>
-                    <Label style={{ color: 'black', paddingTop: 28, paddingLeft: 14 }}>Payment Cycle</Label>
+                    <Label style={styles.label}>Payment Cycle</Label>
+                  </Col>
+                  <Col>
+                    <Label style={styles.label}>Payment Method</Label>
+                  </Col>
+                </Row>
+                <Row style={styles.picker}>
+                  <Col>
+                    <Picker
+                      style={{ paddingTop: 77 }}
+                      iosHeader="Select payment method"
+                      mode="dropdown"
+                      selectedValue={this.state.selectedPaymentMethod}
+                      onValueChange={this.updatePaymentMethod}
+                    >
+                        <Picker.Item label="Mobile" value="Mobile" />
+                        <Picker.Item label="Cash" value="Cash" />
+                    </Picker>
                   </Col>
                   <Col>
                     <Picker
@@ -133,23 +149,6 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                         <Picker.Item label="Weekly" value="Weekly" />
                         <Picker.Item label="Bi-Weekly" value="Bi-weekly" />
                         <Picker.Item label="Monthly" value="Monthly" />
-                    </Picker>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Label style={{ color: 'black', paddingTop: 28, paddingLeft: 14 }}>Payment Method</Label>
-                  </Col>
-                  <Col>
-                    <Picker
-                      style={{ paddingTop: 77 }}
-                      iosHeader="Select payment method"
-                      mode="dropdown"
-                      selectedValue={this.state.selectedPaymentMethod}
-                      onValueChange={this.updatePaymentMethod}
-                    >
-                        <Picker.Item label="Mobile" value="Mobile" />
-                        <Picker.Item label="Cash" value="Cash" />
                     </Picker>
                   </Col>
                   </Row>
@@ -285,5 +284,11 @@ const styles = StyleSheet.create({
   infoLabel: {
     paddingLeft: 21,
     paddingTop: 14,
+  },
+  label: {
+    color: 'black',
+  },
+  picker: {
+    paddingLeft: 14,
   },
 });
