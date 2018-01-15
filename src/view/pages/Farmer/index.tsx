@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Root, Grid, Row, Col } from 'native-base';
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import ProductCard from '../../components/ProductCard';
@@ -16,18 +16,19 @@ class FarmerCardInfo extends React.Component<{}, {}> {
    */
   public render() {
     return (
-      <Grid>
+      
+      <Grid >
         <Row>
           <Col>
-            <Text> Hi </Text>
+            <Text style={styles.info}>This Week: 105.4L</Text>
           </Col>
           <Col>
-            <Text> Hello </Text>
+            <Text style={styles.info}>This Month: 405.5L</Text>
           </Col>
         </Row>
         <Row>
-          <Text> Last </Text>
-          </Row>
+          <Col><Text style={styles.info}>All-Time Total Amount: 2304.9L </Text></Col>
+        </Row>
       </Grid>
     );
   }
@@ -52,3 +53,9 @@ export default class Farmer extends React.Component<{}, {}> {
     );
   }
 }
+
+var styles = StyleSheet.create({
+  info: {
+    textAlign: "center",
+  }
+});

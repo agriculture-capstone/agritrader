@@ -108,7 +108,10 @@ var styles = StyleSheet.create({
         flex    : 1,
         padding : 10,
         color   :'#2a2f43',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign: 'center',
+        fontSize: 32
+        
     },
     button      : {
 
