@@ -7,7 +7,7 @@ import Drawer from './components/Drawer';
 import Header from './components/Header';
 import store from '../store';
 
-import ViewFarmerInformation from './pages/ViewFarmerInformation';
+import { modes, FarmerInformation } from './pages/FarmerInformation';
 
 /**
  * Container for application
@@ -20,7 +20,9 @@ export default class App extends React.Component<{}, {}> {
     return (
       <Provider store={store}>
         <Root>
-          <ViewFarmerInformation />
+          <FarmerInformation 
+            mode={modes.view}
+          />
         </Root>
       </Provider>
     );
