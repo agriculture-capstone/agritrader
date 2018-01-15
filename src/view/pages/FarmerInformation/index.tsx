@@ -76,6 +76,13 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
             <Row style={styles.infoLabel}>
               <H2>{this.state.farmerNotes}</H2>
             </Row>
+            <Row style={styles.editButton}>
+              <Col>
+                <Button block danger>
+                  <Text style={styles.buttonText}>Edit</Text>
+                </Button>
+              </Col>
+            </Row>
           </Grid>
           </Content>
         </Container>
@@ -163,12 +170,12 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                 <Row style={{ paddingTop: 77 }}>
                   <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
                     <Button block danger>
-                      <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>CANCEL</Text>
+                      <Text style={styles.buttonText}>CANCEL</Text>
                     </Button>
                   </Col>
                   <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
                     <Button block success>
-                      <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>ADD</Text>
+                      <Text style={styles.buttonText}>ADD</Text>
                     </Button>
                   </Col>
                 </Row>
@@ -249,12 +256,12 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
             <Row style={{ paddingTop: 77 }}>
               <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
                 <Button block danger>
-                  <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>CANCEL</Text>
+                  <Text style={styles.buttonText}>CANCEL</Text>
                 </Button>
               </Col>
               <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
                 <Button block success>
-                  <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>SAVE</Text>
+                  <Text style={styles.buttonText}>SAVE</Text>
                 </Button>
               </Col>
             </Row>
@@ -290,5 +297,15 @@ const styles = StyleSheet.create({
   },
   picker: {
     paddingLeft: 14,
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'white',
+  },
+  editButton: {
+    paddingLeft: 21,
+    paddingRight: 21,
+    paddingTop: 21,
   },
 });

@@ -10,12 +10,11 @@ import store from '../store';
 import { modes, FarmerInformation } from './pages/FarmerInformation';
 
 /**
- * Container for application
+ * Entry point for application
  */
 export default class App extends React.Component<{}, {}> {
-  /**
-   * Render method for App
-   */
+
+  /** Render the application */
   public render() {
     return (
       <Provider store={store}>
@@ -23,7 +22,7 @@ export default class App extends React.Component<{}, {}> {
           <Header />
           <Drawer>
             <FarmerInformation 
-              mode={modes.edit}
+              mode={modes.view}
             />
           </Drawer>
         </Root>
@@ -31,3 +30,4 @@ export default class App extends React.Component<{}, {}> {
     );
   }
 }
+
