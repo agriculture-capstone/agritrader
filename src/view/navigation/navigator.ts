@@ -12,7 +12,7 @@ export enum Route {
 }
 
 /** Initial route for appplication */
-export const INITIAL_ROUTE = Route.HOME;
+export const INITIAL_ROUTE = Route.FARMER_INFORMATION;
 
 /** Top-level navigator for application */
 export default StackNavigator({

@@ -11,7 +11,7 @@ interface FarmerInformationPropsType {
  * Container for application
  */
 export class FarmerInformation extends React.Component<FarmerInformationPropsType, {}> {
-  
+
   public state = {
     farmerFirstName: 'Patrick',
     farmerLastName: 'Keenan',
@@ -34,7 +34,9 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
    * Render method for Farmer
    */
   public render() {
-    if (this.props.mode === modes.view) {
+    const page = 'view';
+
+    if (page === modes.view) {
       return (
         <Container>
           <Content padder>
@@ -87,7 +89,7 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
           </Content>
         </Container>
       );
-    } else if (this.props.mode === modes.add) {
+    } else if (page === modes.add) {
       return (
         <Container>
           <Content>
@@ -184,7 +186,7 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
           </Content>
           </Container>
       );
-    } else if (this.props.mode === modes.edit) {
+    } else if (page === modes.edit) {
       return (
         <Container>
           <Content padder>
