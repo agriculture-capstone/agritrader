@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Drawer as BaseDrawer } from 'native-base';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
-import { State } from '@/store/types';
-import appActions from '@/store/modules/app/actions';
+import { State } from '../../../store/types';
+import appActions from '../../../store/modules/app/actions';
 import DrawerContents from './DrawerContents';
 
 /** Drawer OwnProps */

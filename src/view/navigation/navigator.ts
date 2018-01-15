@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 
-import { FakePage } from '@/view/pages/FakePage';
+import { FakePage } from '../../view/pages/FakePage';
 
 /** Named routes in the application */
 export enum Route {
@@ -8,6 +8,9 @@ export enum Route {
   LOGIN = 'Login',
   FARMER = 'Farmer',
 }
+
+/** Initial route for appplication */
+export const INITIAL_ROUTE = Route.HOME;
 
 /** Top-level navigator for application */
 export default StackNavigator({

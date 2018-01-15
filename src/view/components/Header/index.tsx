@@ -10,8 +10,8 @@ import {
   Title,
 } from 'native-base';
 
-import { State } from '@/store/types';
-import appActions from '@/store/modules/app/actions';
+import { State } from '../../../store/types';
+import appActions from '../../../store/modules/app/actions';
 
 interface OwnProps {}
 interface OwnState {}
