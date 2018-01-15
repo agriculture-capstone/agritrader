@@ -17,12 +17,8 @@
 		"start": "npm run react-native -- start",
 		"test": "jest --coverage",
 		"watch": "npm run build -- -w",
-		"lint": "npm run lint:src && npm run lint:test",
-		"lint:fix": "npm run lint:src:fix && npm run lint:test:fix",
-		"lint:src": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:src:fix": "npm run lint:src -- --fix",
-		"lint:test": "node_modules/.bin/tslint \"test/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:test:fix": "npm run lint:test -- --fix"
+		"lint": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
+		"lint:fix": "npm run lint -- --fix"
 	},
 	"dependencies": {
 		"jest-cli": "^21.2.1",
@@ -32,7 +28,8 @@
 		"react-native-vector-icons": "^4.4.3",
 		"react-navigation": "^1.0.0-beta.22",
 		"react-redux": "^5.0.6",
-		"redux": "^3.7.2"
+		"redux": "^3.7.2",
+		"redux-logger": "^3.0.6"
 	},
 	"devDependencies": {
 		"@types/jest": "^21.1.5",
@@ -41,6 +38,7 @@
 		"@types/react-navigation": "^1.0.26",
 		"@types/react-redux": "^5.0.14",
 		"@types/react-test-renderer": "^16.0.0",
+		"@types/redux-logger": "^3.0.5",
 		"babel-core": "^6.26.0",
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
