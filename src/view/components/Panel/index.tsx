@@ -4,8 +4,6 @@ import { Provider } from 'react-redux';
 import { Container, Header, Content, List, ListItem, Grid, Row, Col } from 'native-base';
 import {StyleSheet,Text,View,Image,TouchableHighlight,Animated} from 'react-native'; //Step 1
 
-// take in a grid
-
 interface PanelStateType {
     expanded: boolean,
     animation?: Animated.Value,
@@ -16,6 +14,7 @@ interface PanelPropsType {
     title: string
 }
 
+// Following this as a guide: https://moduscreate.com/blog/expanding-and-collapsing-elements-using-animations-in-react-native/
 class Panel extends React.Component<PanelPropsType, PanelStateType> {
     
     icons: any;
