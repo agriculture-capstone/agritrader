@@ -8,7 +8,7 @@ import {StyleSheet,Text,View,Image,TouchableHighlight,Animated} from 'react-nati
 
 interface PanelStateType {
     expanded: boolean,
-    animation: Animated.Value,
+    animation?: Animated.Value,
     maxHeight?: any,
     minHeight?: any,
 }
@@ -28,8 +28,7 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
         };
 
         this.state = {
-            expanded    : true,
-            animation   : new Animated.Value(50)
+            expanded    : true
         };
     }
 
@@ -41,13 +40,18 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
             expanded : !this.state.expanded
         });
 
-        this.state.animation.setValue(initialValue);
-        Animated.spring(
-            this.state.animation,
-            {
-                toValue: finalValue
-            }
-        ).start();
+        if (!this.state.animation) 
+        {
+            this.setState({ animation: new Animated.Value(initialValue)});
+        } else {
+            this.state.animation.setValue(initialValue);
+            Animated.spring(
+                this.state.animation,
+                {
+                    toValue: finalValue
+                }
+            ).start();
+        }
     }
 
     _setMaxHeight(event:any){
