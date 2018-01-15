@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Header, H1, H2, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker } 
+import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker } 
 from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -162,7 +162,7 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                   </Col>
                 </Row>
                 <Row style={{ paddingTop: 77 }}>
-                <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
+                  <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
                     <Button block danger>
                       <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>CANCEL</Text>
                     </Button>
@@ -172,7 +172,7 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                       <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>ADD</Text>
                     </Button>
                   </Col>
-                  </Row>
+                </Row>
               </Grid> 
             </Form>
           </Content>
@@ -194,26 +194,30 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
             <Row style={styles.input}>
                 <Col>
                   <Input>
-                    <H2></H2>
+                    <H3>{this.state.farmerFirstName}</H3>
                   </Input>
                 </Col>
                 <Col>
-                  <Input placeholder="Keenan"/>
+                  <Input>
+                    <H3>{this.state.farmerLastName}</H3>
+                  </Input>
                 </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Phone Number</Label>
             </Row>
-            <Row style={styles.infoLabel}>
+            <Row style={styles.input}>
               <Input>
-                <H2>123-456-7890</H2>
+                <H3>{this.state.farmerPhoneNumber}</H3>
               </Input>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Business Name</Label>
             </Row>
-            <Row style={styles.infoLabel}>
-              <H2>Farmer with coolest hat</H2>
+            <Row style={styles.input}>
+              <Input>
+                <H3>{this.state.farmerBusinessName}</H3>
+              </Input>
             </Row>
             <Row style={styles.infoLabel}>
               <Col>
@@ -223,19 +227,37 @@ export class FarmerInformation extends React.Component<FarmerInformationPropsTyp
                 <Label>Payment Method</Label>
               </Col>
             </Row>
-            <Row style={styles.infoLabel}>
+            <Row style={styles.input}>
               <Col>
-                <H2>Weekly</H2>
+                <Input>
+                  <H3>{this.state.selectedPaymentCycle}</H3>
+                </Input>
               </Col> 
               <Col>
-                <H2>Cash</H2>
+                <Input>
+                  <H3>{this.state.selectedPaymentMethod}</H3>
+                </Input>
               </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Notes</Label>
             </Row>
-            <Row style={styles.infoLabel}>
-              <H2>Doctor from village A</H2>
+            <Row style={styles.input}>
+              <Input>
+                  <H3>{this.state.farmerNotes}</H3>
+              </Input>
+            </Row>
+            <Row style={{ paddingTop: 77 }}>
+              <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
+                <Button block danger>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>CANCEL</Text>
+                </Button>
+              </Col>
+              <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
+                <Button block success>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'white' }}>SAVE</Text>
+                </Button>
+              </Col>
             </Row>
           </Grid>
           </Content>
