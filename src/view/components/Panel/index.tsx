@@ -6,7 +6,7 @@ import {StyleSheet,Text,View,Image,TouchableHighlight,Animated} from 'react-nati
 
 interface PanelStateType {
     expanded: boolean,
-    animation?: Animated.Value,
+    animation: Animated.Value,
     maxHeight?: any,
     minHeight?: any,
     arrowHeight?: any
@@ -28,21 +28,18 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
         };
 
         this.state = {
-            expanded    : true
+            expanded    : true,
+             animation: new Animated.Value(0)
         };
     }
 
     toggle(){
-        let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight + this.state.arrowHeight: this.state.minHeight + this.state.arrowHeight,
-            finalValue      = this.state.expanded? this.state.minHeight + this.state.arrowHeight : this.state.maxHeight + this.state.minHeight + this.state.arrowHeight;
+        let initialValue    = this.state.expanded ? this.state.maxHeight + this.state.minHeight + this.state.arrowHeight: this.state.minHeight + this.state.arrowHeight,
+            finalValue      = this.state.expanded ? this.state.minHeight + this.state.arrowHeight : this.state.maxHeight + this.state.minHeight + this.state.arrowHeight;
         this.setState({
             expanded : !this.state.expanded
         });
 
-        if (!this.state.animation) 
-        {
-            this.setState({ animation: new Animated.Value(initialValue)});
-        } else {
             this.state.animation.setValue(initialValue);
             Animated.spring(
                 this.state.animation,
@@ -50,7 +47,13 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
                     toValue: finalValue
                 }
             ).start();
-        }
+        
+    }
+
+    componentDidMount() {
+        let initialValue    = this.state.expanded ? this.state.maxHeight + this.state.minHeight + this.state.arrowHeight: this.state.minHeight + this.state.arrowHeight;
+        this.setState({ animation: new Animated.Value(initialValue)});
+
     }
 
     _setMaxHeight(event:any){
