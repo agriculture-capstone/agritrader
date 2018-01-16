@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 
 import { Container, Header, Content, List, ListItem, Text, Grid, Row, Col } from 'native-base';
-import DataTable from '../DataTable';
+import DataTable from '../../../../components/DataTable';
 
 /**
 * Container for Product Card
