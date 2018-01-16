@@ -3,38 +3,51 @@ import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Inp
 from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
-interface FarmerInformationPropsType {
+interface OwnProps {
   mode: string;
+}
+
+interface OwnState {
+  farmerFirstName: string;
+  farmerLastName: string;
+  farmerPhoneNumber: string;
+  farmerBusinessName: string;
+  farmerNotes: string;
+  selectedPaymentCycle: string;
+  selectedPaymentMethod: string;
 }
 
 /**
  * Container for application
  */
-export class FarmerInformation extends React.Component<FarmerInformationPropsType, {}> {
+export class FarmerInformation extends React.Component<OwnProps, OwnState> {
 
-  public state = {
-    farmerFirstName: 'Patrick',
-    farmerLastName: 'Keenan',
-    farmerPhoneNumber: '123-456-7890',
-    farmerBusinessName: 'Farmer with coolest hat',
-    farmerNotes: 'Doctor from village A',
-    selectedPaymentCycle: 'Weekly',
-    selectedPaymentMethod: 'Mobile',
-  };
+  constructor(props: OwnProps) {
+    super(props);
+    this.state = {
+      farmerFirstName: 'Patrick',
+      farmerLastName: 'Keenan',
+      farmerPhoneNumber: '123-456-7890',
+      farmerBusinessName: 'Farmer with coolest hat',
+      farmerNotes: 'Doctor from village A',
+      selectedPaymentCycle: 'Weekly',
+      selectedPaymentMethod: 'Mobile',
+    };
+  }
 
   private updatePaymentCycle = (value: string) => {
-    this.setState({ selectedPaymentCycle: value });
+    this.setState(() => ({ selectedPaymentCycle: value }));
   }
 
   private updatePaymentMethod = (value: string) => {
-    this.setState({ selectedPaymentMethod: value });
+    this.setState(() => ({ selectedPaymentMethod: value }));
   }
 
   /**
    * Render method for Farmer
    */
   public render() {
-    const page = 'view';
+    const page = 'add';
 
     if (page === modes.view) {
       return (
