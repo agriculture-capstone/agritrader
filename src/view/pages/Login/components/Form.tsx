@@ -36,7 +36,7 @@ export default class Form extends React.Component<{}, OwnState> {
   public render() {
     return (
       <KeyboardAvoidingView
-        behavior="padding"
+        behavior="height"
         style={styles.formContainer}
       >
         <UserInput 

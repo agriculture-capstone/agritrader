@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   /* ButtonSubmit styling */
   submitContainer: {
     flex: 1,
-    bottom: 40,
+    bottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -66,9 +66,9 @@ export const styles = StyleSheet.create({
 
   /*Form styling*/
   formContainer: {
-    flex: 2,
+    flex: 1,
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 20,
   },
   btnEye: {
     position: 'absolute',
