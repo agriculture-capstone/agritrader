@@ -1,8 +1,8 @@
-import { Action, Tab, TabList, StoreTabMap } from './types';
+import { Action, Tab, TabList, StoreTabList } from './types';
 
 const tabActions = {
 
-  setTabs: (tabs: StoreTabMap, activeTab: Tab): Action => ({
+  setTabs: (tabs: StoreTabList, activeTab: Tab): Action => ({
     tabs,
     activeTab,
     type: 'SET_TABS',

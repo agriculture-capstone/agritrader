@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps, DispatchProp } from 'react-redux';
 import { Tabs as NativeTabs, Text } from 'native-base';
 
-import { Tab, TabList, ElementTab, ElementTabList, StoreTabMap } from '../../../store/modules/tabs/types';
+import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
 import tabActions from '../../../store/modules/tabs/actions';
 import { State } from '../../../store/types';
 
@@ -18,7 +18,7 @@ interface DispatchProps extends DispatchProp<State> {
   setActiveTab: (activeTab: ElementTab) => void;
 }
 
-export interface OwnState {}
+interface OwnState {}
 
 /** TabManager props */
 export type Props = OwnProps & StoreProps & DispatchProps;
@@ -57,10 +57,12 @@ function createSimpleComponent(tabs: ElementTabList) {
 
     /************************* React Lifecycle *************************/
 
+    /** React componentDidMount */
     public componentDidMount() {
       this.props.setTabs(this.tabs, this.tabs[0]);
     }
 
+    /** React render */
     public render(): JSX.Element {
       return this.getActiveElement();
     }
@@ -69,11 +71,13 @@ function createSimpleComponent(tabs: ElementTabList) {
 }
 /******************************* Redux *******************************/
 
-function toTabs(tabList: TabList<ElementTab>): TabList<Tab> {
+/** Convert TabList to ElementTabList */
+export function toTabs(tabList: ElementTabList): StoreTabList {
   return tabList.map(toTab);
 }
 
-function toTab(tab: ElementTab): Tab {
+/** Convert ElementTab to Tab */
+export function toTab(tab: ElementTab): Tab {
   const {
     element,
     ...rest,
@@ -95,7 +99,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
   };
 };
 
-function createTabManager(tabs: ElementTabList) {
+/** Creation utility for a TabManager */
+export default function createTabManager(tabs: ElementTabList) {
   return connect(
     mapStateToProps,
     mapDispatchToProps,

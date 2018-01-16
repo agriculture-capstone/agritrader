@@ -1,6 +1,6 @@
 /*----------------------- Models -----------------------*/
 
-// Basic model for tab data
+/** Basic model for tab data */
 export interface Tab {
   name: string;
 }
@@ -14,7 +14,7 @@ export interface ElementTab extends Tab {
 export interface TabList<T extends Tab> extends Array<T> {}
 
 /** Model for tabs data in store */
-export type StoreTabMap = TabList<Tab>;
+export type StoreTabList = TabList<Tab>;
 
 /** Model for TabMap containing elements */
 export type ElementTabList = TabList<ElementTab>;
@@ -23,7 +23,7 @@ export type ElementTabList = TabList<ElementTab>;
 
 /** Tab module state */
 export interface TabState {
-  tabs: StoreTabMap;
+  tabs: StoreTabList;
   activeTab: Tab | null;
 }
 
@@ -33,7 +33,7 @@ export interface TabState {
 export type Action = {
   type: 'SET_TABS',
   activeTab: Tab,
-  tabs: StoreTabMap,
+  tabs: StoreTabList,
 } | {
   type: 'CLEAR_TABS',
 } | {
