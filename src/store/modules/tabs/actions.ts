@@ -1,5 +1,4 @@
 import { Action, Tab, TabMap, StoreTabMap } from './types';
-import { Actions } from '../../types';
 
 const tabActions = {
 
