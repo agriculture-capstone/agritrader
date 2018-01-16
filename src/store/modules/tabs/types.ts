@@ -7,26 +7,24 @@ export interface Tab {
 
 /** Specialized tab containing JSX.Element reference */
 export interface ElementTab extends Tab {
-  component: () => JSX.Element;
+  element: () => JSX.Element;
 }
 
 /** Model for an object containing Tab-like values */
-export interface TabMap<T extends Tab> {
-  [key: string]: T;
-}
+export interface TabList<T extends Tab> extends Array<T> {}
 
 /** Model for tabs data in store */
-export type StoreTabMap = TabMap<Tab>;
+export type StoreTabMap = TabList<Tab>;
 
 /** Model for TabMap containing elements */
-export type ElementTabMap = TabMap<ElementTab>;
+export type ElementTabList = TabList<ElementTab>;
 
 /*----------------------- State -----------------------*/
 
 /** Tab module state */
 export interface TabState {
   tabs: StoreTabMap;
-  activeTab: Tab;
+  activeTab: Tab | null;
 }
 
 /*----------------------- Actions -----------------------*/

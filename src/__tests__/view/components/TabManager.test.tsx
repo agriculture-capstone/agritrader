@@ -1,7 +1,7 @@
 import 'react-native';
 import * as React from 'react';
 
-import TabNavigator from '../../../view/components/TabNavigator';
+import TabNavigator from '../../../view/components/TabManager';
 
 // Note: test renderer must be required after react-native.
 import * as renderer from 'react-test-renderer';
@@ -9,10 +9,10 @@ import * as renderer from 'react-test-renderer';
 describe('TabNavigator', () => {
 
   describe('#toTabs', () => {
-    let toTabs: (o: any) => any;
+    let toTab: (o: any) => any;
 
     beforeEach(() => {
-      toTabs = (TabNavigator as any).toTabs;
+      toTab = (TabNavigator as any).toTab;
     });
 
     it('should properly deconstruct object w/o element property', () => {
@@ -27,7 +27,7 @@ describe('TabNavigator', () => {
       };
 
       // Act
-      const after = toTabs(before);
+      const after = toTab(before);
       // tslint:disable-next-line:no-console
       console.log(after.name);
 

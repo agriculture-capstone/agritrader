@@ -1,4 +1,4 @@
-import { Action, Tab, TabMap, StoreTabMap } from './types';
+import { Action, Tab, TabList, StoreTabMap } from './types';
 
 const tabActions = {
 
