@@ -21,7 +21,7 @@ export default class Farmer extends React.Component<{}, {}> {
         allTimeTotal="3944.L"
         currentWeekTotal="3.4L"
         currentMonthTotal="0.2L"
-        collectionValues={ [{date:'Jan 1', am: 2, pm:2}, {date:'Jan 1', am: 2, pm:2}]}
+        collectionValues={[{ date:'Jan 1', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
       />
     );
   }

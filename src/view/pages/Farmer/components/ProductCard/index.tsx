@@ -5,10 +5,10 @@ import { Container, Header, Content, List, ListItem, Text, Grid, Row, Col } from
 import DataTable from '../../../../components/DataTable';
 
 interface ProductCardPropsType {
-  values: Array<any>
+  values: Array<any>;
 }
 
-const PRODUCT_CARD_HEADERS = ["Date", "AM", "PM"];
+const PRODUCT_CARD_HEADERS = ['Date', 'AM', 'PM'];
 
 /**
 * Container for Product Card

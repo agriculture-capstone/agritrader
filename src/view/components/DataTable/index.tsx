@@ -4,34 +4,34 @@ import { Provider } from 'react-redux';
 import { Container, Header, Content, List, ListItem, Text, Grid, Row, Col } from 'native-base';
 
 interface DataTablePropsType {
-  headers: Array<string>,
-  values: Array<any>
+  headers: Array<string>;
+  values: Array<any>;
 }
 /**
 * Container for DataTable
 */
 export default class DataTable extends React.Component<DataTablePropsType, {}> {
   
-  renderRow(item: any) {
+  public renderRow(item: any) {
     const keys = Object.keys(item); 
-          return (
+    return (
             <ListItem>
               <Grid>
                 {keys.map((x) => {
-                return (<Col><Text>{item[x]}</Text></Col>)})}
+                  return (<Col><Text>{item[x]}</Text></Col>);})}
                 </Grid>
             </ListItem>
-          );
+    );
   }
 
 
-  renderSectionHeader(sectionData: any, sectionId: any) {
+  public renderSectionHeader(sectionData: any, sectionId: any) {
     return (
       <ListItem itemHeader first>
         <Grid>
           {
             this.props.headers.map((x) => { 
-              return <Col><Text>{x}</Text></Col>
+              return <Col><Text>{x}</Text></Col>;
             })
           }
         </Grid>

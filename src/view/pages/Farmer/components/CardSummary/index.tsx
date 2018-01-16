@@ -6,10 +6,10 @@ import { Provider } from 'react-redux';
 import Panel from '../../../../components/Panel';
 
 interface CardSummaryPropsType {
-    title: string,
-    currentWeekTotal: string, 
-    currentMonthTotal: string,
-    allTimeTotal: string
+  title: string;
+  currentWeekTotal: string; 
+  currentMonthTotal: string;
+  allTimeTotal: string;
 }
 
 /**
@@ -19,7 +19,7 @@ export default class CardSummary extends React.Component<CardSummaryPropsType, {
     /**
      * Render method for CardSummary
      */
-    public render() {
+  public render() {
       return (
         <Panel title={this.props.title}>
         <Grid >
@@ -49,15 +49,15 @@ export default class CardSummary extends React.Component<CardSummaryPropsType, {
         </Panel>
       );
     }
-  }
+}
 
   
-var styles = StyleSheet.create({
-    info: {
-      textAlign: "center",
-      padding: 5
+let styles = StyleSheet.create({
+  info: {
+      textAlign: 'center',
+      padding: 5,
     },
-    label: {
-      fontWeight: "bold",
-    }
-  });
+  label: {
+      fontWeight: 'bold',
+    },
+});

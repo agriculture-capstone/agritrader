@@ -6,12 +6,12 @@ import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
 
 interface CollectPropsType {
-    farmerName: string,
-    allTimeTotal: string,
-    currentWeekTotal: string,
-    currentMonthTotal: string
+  farmerName: string;
+  allTimeTotal: string;
+  currentWeekTotal: string;
+  currentMonthTotal: string;
 
-    collectionValues: Array<any>
+  collectionValues: Array<any>;
 }
 
 
@@ -23,8 +23,8 @@ export default class Collect extends React.Component<CollectPropsType, {}> {
     /**
      * Render method for Farmer
      */
-    public render() {
-        return (
+  public render() {
+      return (
             <Grid>
                 <Row>
                     <CardSummary 
