@@ -1,6 +1,7 @@
 import { Action } from './types';
 import { Actions } from '../../types';
 
+// TODO: Convert to normal
 function createAppActions(): Actions<Action> {
   return {
     setDrawerShown: (shown: boolean): Action => ({
