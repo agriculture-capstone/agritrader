@@ -1,5 +1,6 @@
 import { AppState, Action as AppAction } from './modules/app/types';
 import { NavState, Action as NavAction } from './modules/nav/types';
+import { ActionCreator } from 'redux';
 
 /** Global redux state */
 export interface State {
@@ -11,3 +12,8 @@ export interface State {
 export type Action
   = AppAction
   | NavAction;
+
+/** Generic type for actions object */
+export interface Actions<T> {
+  [key: string]: ActionCreator<T>;
+}

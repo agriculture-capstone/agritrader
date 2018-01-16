@@ -1,24 +1,27 @@
 import { Action } from './types';
+import { Actions } from '../../types';
 
-const actions = {
-  setDrawerShown: (shown: boolean): Action => ({
-    shown,
-    type: 'SET_DRAWER_SHOWN',
-  }),
+function createAppActions(): Actions<Action> {
+  return {
+    setDrawerShown: (shown: boolean): Action => ({
+      shown,
+      type: 'SET_DRAWER_SHOWN',
+    }),
 
-  toggleDrawerShown: (): Action => ({
-    type: 'TOGGLE_DRAWER_SHOWN',
-  }),
-  
-  setDrawerLocked: (locked: boolean): Action => ({
-    locked,
-    type: 'SET_DRAWER_LOCKED',
-  }),
+    toggleDrawerShown: (): Action => ({
+      type: 'TOGGLE_DRAWER_SHOWN',
+    }),
 
-  setTitle: (title: string): Action => ({
-    title,
-    type: 'SET_TITLE',
-  }),
-};
+    setDrawerLocked: (locked: boolean) => ({
+      locked,
+      type: 'SET_DRAWER_LOCKED',
+    }),
 
-export default actions;
+    setTitle: (title: string): Action => ({
+      title,
+      type: 'SET_TITLE',
+    }),
+  };
+}
+
+export default createAppActions;

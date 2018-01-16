@@ -3,7 +3,7 @@ import { Drawer as BaseDrawer } from 'native-base';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
 import { State } from '../../../store/types';
-import appActions from '../../../store/modules/app/actions';
+import createAppActions from '../../../store/modules/app/actions';
 import DrawerContents from './DrawerContents';
 
 /** Drawer OwnProps */
@@ -63,6 +63,8 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+  const appActions = createAppActions();
+
   return {
     closeDrawer: () => dispatch(appActions.setDrawerShown(false)),
     openDrawer: () => dispatch(appActions.setDrawerShown(true)),

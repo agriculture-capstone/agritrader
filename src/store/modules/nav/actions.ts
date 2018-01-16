@@ -2,13 +2,15 @@ import { NavigationActions } from 'react-navigation';
 
 import { Route } from '../../../view/navigation/navigator';
 
-const actions = {
+function createNavActions() {
+  return {
 
-  goBack: () => NavigationActions.back(),
+    goBack: () => NavigationActions.back(),
 
-  test: (route: Route) => NavigationActions.navigate({
-    routeName: route,
-  }),
-};
+    test: (route: Route) => NavigationActions.navigate({
+      routeName: route,
+    }),
+  };
+}
 
-export default actions;
+export default createNavActions;

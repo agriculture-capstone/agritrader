@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 
 import { State } from '../../../store/types';
-import appActions from '../../../store/modules/app/actions';
+import createAppActions from '../../../store/modules/app/actions';
 
 interface OwnProps {}
 interface OwnState {}
@@ -90,6 +90,8 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+  const appActions = createAppActions();
+
   return {
     openDrawer: () => dispatch(appActions.setDrawerShown(true)),
     goBack: () => dispatch(NavigationActions.back()),
