@@ -7,7 +7,7 @@ import {
 
 const Wallpaper: React.StatelessComponent = (props) => {
   return (
-    <View style={{ flex: 1, backgroundColor: '#0fc6ce' }}>
+    <View style={styles.wallpaper}>
       {props.children}
     </View>
   );

@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 const Logo: React.StatelessComponent = (props) => {

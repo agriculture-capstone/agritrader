@@ -8,13 +8,14 @@ export const styles = StyleSheet.create({
   /*Logo styling*/
   container: {
     flex: 2,
+    top: 25,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   image: {
     width: 200,
-    height: 120,
+    height: 200,
   },
 
   text: {
@@ -31,9 +32,9 @@ export const styles = StyleSheet.create({
   /* ButtonSubmit styling */
   submitContainer: {
     flex: 1,
-    top: -0,
+    bottom: 40,
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   button: {
     alignItems: 'center',
@@ -54,11 +55,9 @@ export const styles = StyleSheet.create({
 
   /*ForgotPassword styling*/
   forgotPasswordContainer: {
-    flex: 2,
-    top: -10,
-    width: deviceWidth,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flex: 1,
+    left: 210,
+    bottom: 25,
   },
   forgotPasswordText: {
     color: 'white',
@@ -69,6 +68,7 @@ export const styles = StyleSheet.create({
   formContainer: {
     flex: 2,
     alignItems: 'center',
+    paddingTop: 30,
   },
   btnEye: {
     position: 'absolute',

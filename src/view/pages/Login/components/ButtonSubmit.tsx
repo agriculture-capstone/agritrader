@@ -4,7 +4,6 @@ import { icons } from '../../../assets';
 import {
   StyleSheet,
   TouchableOpacity,
-  Animated,
   Text,
   Easing,
   Image,
@@ -34,7 +33,6 @@ export default class ButtonSubmit extends React.Component <{},OwnState>{
   public render() {
     return (
       <View style={styles.submitContainer}>
-      	<Animated.View>
           <TouchableOpacity 
             style={styles.button}
             onPress={this.onPress}
@@ -43,7 +41,6 @@ export default class ButtonSubmit extends React.Component <{},OwnState>{
             <Text style={styles.submitText}>LOGIN</Text>
             {/* {this.state.isLoading ? <Image source={icons.loading} style={styles.submitImage} /> :<Text style={styles.submitText}>LOGIN</Text>} */}
           </TouchableOpacity>
-        </Animated.View>
       </View>
     );
   }
