@@ -44,7 +44,7 @@ export class FarmerInformation extends React.Component<OwnProps, OwnState> {
   }
 
   /**
-   * Render method for Farmer
+   * Render method for Farmer Information
    */
   public render() {
     const page = 'add';
