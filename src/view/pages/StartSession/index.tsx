@@ -23,18 +23,18 @@ interface FarmerModel {
 const farmerList: FarmerModel[] = [{ name: 'Nick', phone: '1234', id: 1, notes: 'No notes' },
                                    { name: 'Nick2', phone: '1234', id: 2, notes: 'No notes' }];
 
-const listFarmers = (item: FarmerModel): JSX.Element => {
-  return (
-    <ListItem key={item.id}>
-      <Text style={{ fontWeight: 'bold', fontSize: 10 }}>
-        {item.name + '\n'}
-      </Text>
-      <Text style={{ fontSize: 10 }}>
-        {'Tel: ' + item.phone}
-      </Text>
-    </ListItem>
-  );
-};
+// const listFarmers = (item: FarmerModel): JSX.Element => {
+//   return (
+//     <ListItem key={item.id}>
+//       <Text style={{ fontWeight: 'bold', fontSize: 10 }}>
+//         {item.name + '\n'}
+//       </Text>
+//       <Text style={{ fontSize: 10, left: -10 }}>
+//         {'Tel: ' + item.phone}
+//       </Text>
+//     </ListItem>
+//   );
+// };
 
 // interface OwnProps<T>{
 //   listData: T[];
@@ -72,7 +72,7 @@ export class StartSession extends React.Component<Props, State> {
         <Content>
           <MutableList
             listData={farmerList}
-            displayRowFunc={(t) => listFarmers{}}
+            displayRowFunc={this.listFarmers}
           />
         </Content>
       </Container>
@@ -80,16 +80,16 @@ export class StartSession extends React.Component<Props, State> {
   }
   
   /************************* Static Functions ************************/
-  // public listFarmers(farmers: FarmerModel): JSX.Element {
-  //   return (
-  //     <ListItem key={farmers.id}>
-  //       <Text style={{ fontWeight: 'bold', fontSize: 10 }}>
-  //         {farmers.name + '\n'}
-  //       </Text>
-  //       <Text style={{ fontSize: 10 }}>
-  //         {'Tel: ' + farmers.phone}
-  //       </Text>
-  //     </ListItem>
-  //   );
-  // }
+  public listFarmers(farmers: FarmerModel): JSX.Element {
+    return (
+      <ListItem key={farmers.id}>
+        <Text style={{ fontWeight: 'bold', fontSize: 10 }}>
+          {farmers.name + '\n'}
+        </Text>
+        <Text style={{ fontSize: 10 }}>
+          {'Tel: ' + farmers.phone}
+        </Text>
+      </ListItem>
+    );
+  }
 }
