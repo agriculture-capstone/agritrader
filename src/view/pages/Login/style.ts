@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
   /* ButtonSubmit styling */
   submitContainer: {
     flex: 1,
-    top: -30,
+    top: -0,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
@@ -40,32 +40,22 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     height: 40,
-    borderRadius: 20,
-    zIndex: 100,
+    width: 150,
+    borderRadius: 40,
   },
-  circle: {
-    height: 40,
-    width: 200,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 100,
-    alignSelf: 'center',
-    zIndex: 99,
-    backgroundColor: 'white',
-  },
-  textButtonSubmit: {
+  submittext: {
     color: 'white',
     backgroundColor: 'transparent',
   },
   submitImage: {
-    width: 24,
-    height: 24,
+    width: 100,
+    height: 100,
   },
 
   /*ForgotPassword styling*/
   forgotPasswordContainer: {
     flex: 2,
-    top: 1,
+    top: -10,
     width: deviceWidth,
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -77,7 +67,7 @@ export const styles = StyleSheet.create({
 
   /*Form styling*/
   formContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
   },
   btnEye: {

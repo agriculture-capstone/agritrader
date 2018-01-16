@@ -36,8 +36,8 @@ export default class Form extends React.Component<{}, OwnState> {
   public render() {
     return (
       <KeyboardAvoidingView
-        behavior="padding"
-        style={styles.container}
+        behavior="position"
+        style={styles.formContainer}
       >
         <UserInput 
           source={icons.username}
