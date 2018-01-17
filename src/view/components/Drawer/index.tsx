@@ -9,8 +9,7 @@ import DrawerContents from './DrawerContents';
 /** Drawer OwnProps */
 export interface OwnProps {}
 
-/** Drawer State */
-export interface State {}
+interface OwnState {}
 
 interface StoreProps {
   open: boolean;
@@ -26,7 +25,7 @@ interface DispatchProps {
 type Props = OwnProps & StoreProps & DispatchProps;
 
 /** Drawer component for navigation */
-class Drawer extends React.Component<Props, State> {
+class Drawer extends React.Component<Props, OwnState> {
 
   /************************* Member Variables ************************/
 
