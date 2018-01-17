@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 import { TabState, Action } from './types';
 import initialState from './state';
 
-const reducer: Reducer<TabState> = (state = initialState, action: Action) => {
+const tabsReducer: Reducer<TabState> = (state = initialState, action: Action) => {
   switch (action.type) {
 
     case 'CLEAR_TABS':
