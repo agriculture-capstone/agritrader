@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Image,
-  TouchableHighlight,
 } from 'react-native';
 import {
   Container,
@@ -18,8 +17,6 @@ import {
 } from 'native-base';
 import { images } from '../../assets/';
 import { styles } from './style';
-
-
 
 export default class Login extends React.Component<{}, {}>{
 
@@ -38,11 +35,10 @@ export default class Login extends React.Component<{}, {}>{
 
   private loginPress = () => {
     alert(`Login Pressed - username:${this.state.username} password:${this.state.password}`);
-    //
+    // place holder for DB Auth and redirect to new page
   }
 
   public render() {
-    const logoSize = 100;
     return (
       <Container style={styles.container}>
         <Content padder>
