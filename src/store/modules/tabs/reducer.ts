@@ -23,10 +23,12 @@ const reducer: Reducer<TabState> = (state = initialState, action: Action) => {
       return {
         ...state,
         tabs: action.tabs,
-        activeTab: action.activeTab,
+        activeTab: action.tabs[0],
       };
 
     default:
       return state;
   }
 };
+
+export default reducer;

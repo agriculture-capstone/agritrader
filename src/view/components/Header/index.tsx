@@ -19,6 +19,7 @@ interface OwnState {}
 interface StoreProps {
   drawerLocked: boolean;
   title: string;
+  tabbedHeader: boolean;
 }
 
 interface DispatchProps {
@@ -68,7 +69,7 @@ class Header extends React.Component<Props, OwnState> {
   /** React render method */
   public render() {
     return (
-      <BaseHeader>
+      <BaseHeader hasTabs={!!this.props.tabbedHeader}>
         <Left>
           {this.leftButton()}
         </Left>
@@ -86,6 +87,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
   return {
     drawerLocked: state.app.drawerLocked,
     title: state.app.title,
+    tabbedHeader: !!state.tabs.tabs.length,
   };
 };
 

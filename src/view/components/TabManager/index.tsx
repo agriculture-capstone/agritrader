@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps, DispatchProp } from 'react-redux';
-import { Tabs as NativeTabs, Text } from 'native-base';
+import { Text, Tab as NativeTab, Tabs as NativeTabs } from 'native-base';
 
 import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
 import tabActions from '../../../store/modules/tabs/actions';
@@ -45,11 +45,16 @@ function createSimpleComponent(tabs: ElementTabList) {
         throw new Error('Cannot create TabNavigator with no tabs');
       }
 
+      // Initialization
       this.tabs = tabs;
     }
 
+    private createTab(tab: ElementTab) {
+      return <NativeTab heading={tab.name} key={tab.name}>{tab.element()}</NativeTab>;
+    }
+
     private getActiveElement() {
-      const tab = this.tabs.find(t => t.name === this.props.activeTab);
+      const tab = (this.props.activeTab) ? this.tabs.find(t => t.name === this.props.activeTab) : this.tabs[0];
       if (!tab) throw new Error('Active tab is not a valid tab');
 
       return tab.element();
@@ -64,7 +69,11 @@ function createSimpleComponent(tabs: ElementTabList) {
 
     /** React render */
     public render(): JSX.Element {
-      return this.getActiveElement();
+      return (
+        <NativeTabs>
+          {this.tabs.map(this.createTab)}
+        </NativeTabs>
+      );
     }
 
   };
@@ -95,7 +104,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
     setActiveTab: tab => dispatch(tabActions.setActiveTab(tab)),
-    setTabs: (tabs, activeTab) => dispatch(tabActions.setTabs(toTabs(tabs), activeTab)),
+    setTabs: (tabs, activeTab) => dispatch(tabActions.setTabs(toTabs(tabs))),
   };
 };
 

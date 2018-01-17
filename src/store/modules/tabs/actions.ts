@@ -2,9 +2,8 @@ import { Action, Tab, TabList, StoreTabList } from './types';
 
 const tabActions = {
 
-  setTabs: (tabs: StoreTabList, activeTab: Tab): Action => ({
+  setTabs: (tabs: StoreTabList): Action => ({
     tabs,
-    activeTab,
     type: 'SET_TABS',
   }),
 

@@ -32,7 +32,6 @@ export interface TabState {
 /** Tab module action */
 export type Action = {
   type: 'SET_TABS',
-  activeTab: Tab,
   tabs: StoreTabList,
 } | {
   type: 'CLEAR_TABS',
