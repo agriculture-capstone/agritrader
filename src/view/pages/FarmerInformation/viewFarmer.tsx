@@ -4,29 +4,30 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
+import { OwnState } from './index';
 
 /**
  * Stateless component for viewing farmer information
  */
-const ViewFarmer = (props) => {
+const ViewFarmer = (props: OwnState) => {
   return (
     <Container>
         <Content padder>
         <Grid>
           <Row style={styles.name}>
-            <H1>{this.state.farmerFirstName} {this.state.farmerLastName}</H1>
+            <H1>{props.farmerFirstName} {props.farmerLastName}</H1>
           </Row>
           <Row style={styles.infoLabel}>
             <Label>Phone Number</Label>
           </Row>
           <Row style={styles.infoLabel}>
-            <H2>{this.state.farmerPhoneNumber}</H2>
+            <H2>{props.farmerPhoneNumber}</H2>
           </Row>
           <Row style={styles.infoLabel}>
             <Label>Business Name</Label>
           </Row>
           <Row style={styles.infoLabel}>
-            <H2>{this.state.farmerBusinessName}</H2>
+            <H2>{props.farmerBusinessName}</H2>
           </Row>
           <Row style={styles.infoLabel}>
             <Col>
@@ -38,17 +39,17 @@ const ViewFarmer = (props) => {
           </Row>
           <Row style={styles.infoLabel}>
             <Col>
-              <H2>{this.state.selectedPaymentCycle}</H2>
+              <H2>{props.selectedPaymentCycle}</H2>
             </Col> 
             <Col>
-              <H2>{this.state.selectedPaymentMethod}</H2>
+              <H2>{props.selectedPaymentMethod}</H2>
             </Col>
           </Row>
           <Row style={styles.infoLabel}>
             <Label>Notes</Label>
           </Row>
           <Row style={styles.infoLabel}>
-            <H2>{this.state.farmerNotes}</H2>
+            <H2>{props.farmerNotes}</H2>
           </Row>
           <Row style={styles.editButton}>
             <Col>

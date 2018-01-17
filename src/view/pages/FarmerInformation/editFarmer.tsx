@@ -4,11 +4,12 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
+import { OwnState } from './index';
 
 /**
  * Stateless component for viewing farmer information
  */
-const EditFarmer = (props) => {
+const EditFarmer = (props: OwnState) => {
   return (
     <Container>
       <Content padder>
@@ -24,12 +25,12 @@ const EditFarmer = (props) => {
         <Row style={styles.input}>
           <Col>
             <Input>
-            <H3>{this.state.farmerFirstName}</H3>
+            <H3>{props.farmerFirstName}</H3>
             </Input>
           </Col>
           <Col>
             <Input>
-            <H3>{this.state.farmerLastName}</H3>
+            <H3>{props.farmerLastName}</H3>
             </Input>
           </Col>
         </Row>
@@ -38,7 +39,7 @@ const EditFarmer = (props) => {
         </Row>
         <Row style={styles.input}>
           <Input>
-          <H3>{this.state.farmerPhoneNumber}</H3>
+          <H3>{props.farmerPhoneNumber}</H3>
           </Input>
         </Row>
         <Row style={styles.infoLabel}>
@@ -46,7 +47,7 @@ const EditFarmer = (props) => {
         </Row>
         <Row style={styles.input}>
           <Input>
-          <H3>{this.state.farmerBusinessName}</H3>
+          <H3>{props.farmerBusinessName}</H3>
           </Input>
         </Row>
         <Row style={styles.infoLabel}>
@@ -60,12 +61,12 @@ const EditFarmer = (props) => {
         <Row style={styles.input}>
           <Col>
           <Input>
-              <H3>{this.state.selectedPaymentCycle}</H3>
+              <H3>{props.selectedPaymentCycle}</H3>
           </Input>
           </Col> 
           <Col>
           <Input>
-              <H3>{this.state.selectedPaymentMethod}</H3>
+              <H3>{props.selectedPaymentMethod}</H3>
           </Input>
           </Col>
         </Row>
@@ -74,7 +75,7 @@ const EditFarmer = (props) => {
         </Row>
         <Row style={styles.input}>
           <Input>
-            <H3>{this.state.farmerNotes}</H3>
+            <H3>{props.farmerNotes}</H3>
           </Input>
         </Row>
         <Row style={{ paddingTop: 77 }}>
