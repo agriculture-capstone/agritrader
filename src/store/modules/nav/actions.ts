@@ -2,7 +2,7 @@ import { NavigationActions } from 'react-navigation';
 
 import { Route } from '../../../view/navigation/navigator';
 
-const actions = {
+const navActions = {
 
   goBack: () => NavigationActions.back(),
 
@@ -11,4 +11,5 @@ const actions = {
   }),
 };
 
-export default actions;
+
+export default navActions;
