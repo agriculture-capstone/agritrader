@@ -21,6 +21,7 @@ const fakeTabs: ElementTabList = [
   },
 ];
 
+/** FakePage */
 export const FakePage = createTabManager(fakeTabs);
 
 /**

@@ -14,8 +14,9 @@ interface StoreProps {
 }
 
 interface DispatchProps extends DispatchProp<State> {
-  setTabs: (tabs: ElementTabList, activeTab: ElementTab) => void;
-  setActiveTab: (activeTab: ElementTab) => void;
+  setTabs(tabs: ElementTabList, activeTab: ElementTab): void;
+  setActiveTab(activeTab: ElementTab): void;
+  clearTabs(): void;
 }
 
 interface OwnState {}
@@ -67,6 +68,11 @@ function createSimpleComponent(tabs: ElementTabList) {
       this.props.setTabs(this.tabs, this.tabs[0]);
     }
 
+    /** React componentWillUnmount */
+    public componentWillUnmount() {
+      this.props.clearTabs();
+    }
+
     /** React render */
     public render(): JSX.Element {
       return (
@@ -105,10 +111,23 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
   return {
     setActiveTab: tab => dispatch(tabActions.setActiveTab(tab)),
     setTabs: (tabs, activeTab) => dispatch(tabActions.setTabs(toTabs(tabs))),
+    clearTabs: () => dispatch(tabActions.clearTabs()),
   };
 };
 
-/** Creation utility for a TabManager */
+/**
+ * Create a React Component class to manage the navigation between provided tabs
+ *
+ * The first tab in the 'tabs' list will be rendered on the far left, and the last
+ * will be rendered on the far right.
+ *
+ * @example
+ * const ExampleTabManager = createTabManager(exampleTabs);
+ * export default ExampleTabManager
+ *
+ * @param {ElementTabList} [tabs] The tabs this component should render
+ * @returns {React.ComponentClass}
+ */
 export default function createTabManager(tabs: ElementTabList) {
   return connect(
     mapStateToProps,
