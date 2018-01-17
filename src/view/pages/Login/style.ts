@@ -15,26 +15,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    alignSelf: 'stretch',
-    height: deviceHeight / 3.5,
-    width: deviceHeight / 3.5,
-    position: 'relative',
-    marginBottom: 10,
+    height: 200, 
+    width: 200,
   },
-  textFields: {
-    width: deviceWidth/1.25,
+  label: {
     left: -8,
   },
-  
-  forgotPassword: {
-    paddingLeft: deviceWidth/1.8,
-  },
   loginButton: {
-    width: deviceWidth/1.3,
     backgroundColor: 'white',
-    top: 10 ,
   },
-
+  buttonRow: {
+    paddingTop: 14,
+  },
   buttonText: {
     color: 'black',
   },

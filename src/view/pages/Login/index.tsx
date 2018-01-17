@@ -1,11 +1,9 @@
 import * as React from 'react';
 import {
   Image,
-  View,
 } from 'react-native';
 import {
   Container,
-  Header,
   Content,
   Form,
   Item,
@@ -13,37 +11,49 @@ import {
   Label,
   Button,
   Text,
-  Right,
   Grid,
   Row,
   Col,
-  Icon,
 } from 'native-base';
-import { icons } from '../../assets/';
+import { images } from '../../assets/';
 import { styles } from './style';
 
 export default class Login extends React.Component {
   public render() {
     const logoSize = 100;
     return (
-      <Container>
+      <Container style={styles.container}>
         <Content padder>
           <Form>
             <Grid>
               <Row>
-                <Image style={{ height: 200, width: 200 }} source={icons.logo} />
+                <Col style={styles.centerContent}>
+                  <Image style={styles.logo} source={images.logo} />
+                </Col>
               </Row>
-              <Item floatingLabel >
-                <Label >Username</Label>
-                <Input />
-              </Item>
-              <Item floatingLabel>
-                <Label >Password</Label>
-                <Input />
-              </Item>
-              <Button block primary >
-                <Text >Login</Text>
-              </Button>
+              <Row>
+                <Col>
+                  <Item floatingLabel style={styles.label} >
+                    <Label style={styles.labelText}>Username</Label>
+                    <Input />
+                  </Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Item floatingLabel style={styles.label}>
+                    <Label style={styles.labelText}>Password</Label>
+                    <Input />
+                  </Item>
+                </Col>
+              </Row>
+              <Row style={styles.buttonRow}>
+                <Col>
+                  <Button block primary style={styles.loginButton}>
+                    <Text style={styles.buttonText}>Login</Text>
+                  </Button>
+                </Col>
+              </Row>
             </Grid>
           </Form>
         </Content>
