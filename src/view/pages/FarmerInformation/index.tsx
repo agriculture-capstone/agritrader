@@ -3,6 +3,11 @@ import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Inp
 from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
+import ViewFarmer from './viewFarmer';
+import EditFarmer from './editFarmer';
+
+import styles from './style';
+
 interface OwnProps {
   mode: string;
 }
@@ -47,61 +52,10 @@ export class FarmerInformation extends React.Component<OwnProps, OwnState> {
    * Render method for Farmer Information
    */
   public render() {
-    const page = 'add';
+    const page = 'edit';
 
     if (page === modes.view) {
-      return (
-        <Container>
-          <Content padder>
-          <Grid>
-            <Row style={styles.name}>
-              <H1>{this.state.farmerFirstName} {this.state.farmerLastName}</H1>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Phone Number</Label>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <H2>{this.state.farmerPhoneNumber}</H2>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Business Name</Label>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <H2>{this.state.farmerBusinessName}</H2>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <Label>Payment Cycle</Label>
-              </Col> 
-              <Col>
-                <Label>Payment Method</Label>
-              </Col>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <H2>{this.state.selectedPaymentCycle}</H2>
-              </Col> 
-              <Col>
-                <H2>{this.state.selectedPaymentMethod}</H2>
-              </Col>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Notes</Label>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <H2>{this.state.farmerNotes}</H2>
-            </Row>
-            <Row style={styles.editButton}>
-              <Col>
-                <Button block danger>
-                  <Text style={styles.buttonText}>Edit</Text>
-                </Button>
-              </Col>
-            </Row>
-          </Grid>
-          </Content>
-        </Container>
-      );
+      return <ViewFarmer />;
     } else if (page === modes.add) {
       return (
         <Container>
@@ -200,90 +154,7 @@ export class FarmerInformation extends React.Component<OwnProps, OwnState> {
           </Container>
       );
     } else if (page === modes.edit) {
-      return (
-        <Container>
-          <Content padder>
-          <Grid>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <Label>First Name</Label>
-              </Col>
-              <Col>
-                <Label>Last Name</Label>
-              </Col>
-            </Row>
-            <Row style={styles.input}>
-                <Col>
-                  <Input>
-                    <H3>{this.state.farmerFirstName}</H3>
-                  </Input>
-                </Col>
-                <Col>
-                  <Input>
-                    <H3>{this.state.farmerLastName}</H3>
-                  </Input>
-                </Col>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Phone Number</Label>
-            </Row>
-            <Row style={styles.input}>
-              <Input>
-                <H3>{this.state.farmerPhoneNumber}</H3>
-              </Input>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Business Name</Label>
-            </Row>
-            <Row style={styles.input}>
-              <Input>
-                <H3>{this.state.farmerBusinessName}</H3>
-              </Input>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <Label>Payment Cycle</Label>
-              </Col> 
-              <Col>
-                <Label>Payment Method</Label>
-              </Col>
-            </Row>
-            <Row style={styles.input}>
-              <Col>
-                <Input>
-                  <H3>{this.state.selectedPaymentCycle}</H3>
-                </Input>
-              </Col> 
-              <Col>
-                <Input>
-                  <H3>{this.state.selectedPaymentMethod}</H3>
-                </Input>
-              </Col>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Notes</Label>
-            </Row>
-            <Row style={styles.input}>
-              <Input>
-                  <H3>{this.state.farmerNotes}</H3>
-              </Input>
-            </Row>
-            <Row style={{ paddingTop: 77 }}>
-              <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
-                <Button block danger>
-                  <Text style={styles.buttonText}>CANCEL</Text>
-                </Button>
-              </Col>
-              <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
-                <Button block success>
-                  <Text style={styles.buttonText}>SAVE</Text>
-                </Button>
-              </Col>
-            </Row>
-          </Grid>
-          </Content>
-        </Container>
-      );
+      return <EditFarmer />;
     }
   }
 }
@@ -293,34 +164,3 @@ export const modes = {
   edit: 'edit',
   view: 'view',
 };
-
-const styles = StyleSheet.create({
-  name: {
-    alignSelf: 'center',
-    paddingTop: 28,
-    paddingBottom: 14,
-  },
-  input: {
-    paddingLeft: 21,
-  },
-  infoLabel: {
-    paddingLeft: 21,
-    paddingTop: 14,
-  },
-  label: {
-    color: 'black',
-  },
-  picker: {
-    paddingLeft: 14,
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: 'white',
-  },
-  editButton: {
-    paddingLeft: 21,
-    paddingRight: 21,
-    paddingTop: 21,
-  },
-});
