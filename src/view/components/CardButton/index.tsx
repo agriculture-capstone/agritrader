@@ -21,7 +21,7 @@ export default class CardButton extends React.Component<CardButtonPropsType, {}>
             <Card >
                 <CardItem>
 
-                    <Left ><Icon name={this.props.iconName}  />
+                    <Left ><Icon style={{fontSize: 40}} name={this.props.iconName}  />
 
                     <Body>
                         <Text>
