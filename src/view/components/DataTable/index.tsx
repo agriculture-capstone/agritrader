@@ -15,7 +15,7 @@ export default class DataTable extends React.Component<DataTablePropsType, {}> {
   public renderRow(item: any) {
     const keys = Object.keys(item); 
     return (
-            <ListItem style={{ justifyContent:'center', alignItems: 'center', right: 16, width: 400, flex:1 }}>
+            <ListItem style={{ justifyContent:'center', alignItems: 'center', right: 17, width: 360, flex:1 }}>
               <Grid>
                 {keys.map((x) => {
                   return (<Col size={33.33}><Text>{item[x]}</Text></Col>);})}

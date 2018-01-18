@@ -24,7 +24,7 @@ export default class Export extends React.Component<ExportPropTypes, {}> {
    */
   public render() {
     return (
-      <Content>
+      <Content padder>
         <Grid>
           <Col style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Row>
