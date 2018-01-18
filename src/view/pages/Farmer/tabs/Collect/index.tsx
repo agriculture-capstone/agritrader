@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col, Content, Button } from 'native-base';
-import { Text, StyleSheet } from 'react-native';
+import { Root, Grid, Row, Col, Content, Button, Text } from 'native-base';
+import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
@@ -16,7 +16,7 @@ interface CollectPropsType {
 
 
 /**
- * Container for Farmer
+ * Collect Tab Component
  */
 export default class Collect extends React.Component<CollectPropsType, {}> {
     // TODO need to connect this to the redux state
