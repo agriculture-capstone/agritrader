@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {
   Container,
@@ -54,9 +55,11 @@ export default class Login extends React.Component<{}, {}>{
 
   public render() {
     return (
-      <Container style={styles.container}>
+      <KeyboardAvoidingView 
+        style={{ backgroundColor: '#0fc6ce', flex: 1 }}
+      >
         <Content padder>
-          <Form>
+          <Form >
             <Grid>
               <Row>
                 <Col style={styles.centerContent}>
@@ -94,7 +97,8 @@ export default class Login extends React.Component<{}, {}>{
             </Grid>
           </Form>
         </Content>
-      </Container >
+      </KeyboardAvoidingView>
+
     );
   }
 }
