@@ -27,8 +27,8 @@ export const routes: RouteInfo[] = [
     inDrawer: true,
   },
   {
-    name: Route.HOME,
-    icon: 'home',
+    name: Route.LOGIN,
+    icon: 'person',
     component: FakePage,
     inDrawer: true,
   },

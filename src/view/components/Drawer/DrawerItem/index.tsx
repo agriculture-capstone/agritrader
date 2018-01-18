@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ListItem, Icon, Text, Left, Body } from 'native-base';
+import { Row } from 'react-native-easy-grid';
 
 /** DrawerItem props */
 export interface OwnProps {
@@ -10,7 +11,7 @@ export interface OwnProps {
 /** Navigational item in the drawer */
 const DrawerItem: React.StatelessComponent<OwnProps> = (props) => {
   return (
-    <ListItem>
+    <ListItem icon>
       <Left>
         <Icon name={props.icon} />
       </Left>

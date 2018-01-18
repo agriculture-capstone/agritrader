@@ -1,18 +1,23 @@
 import * as React from 'react';
 import { Grid, Row } from 'react-native-easy-grid';
+import { Content, List } from 'native-base';
 
 import { routes, RouteInfo } from '../../../navigation/navigator';
-import DrawerItem from './DrawerItem';
+import style from './style';
+import DrawerItem from '../DrawerItem';
+import DrawerHeader from '../DrawerHeader';
 
 /** DrawerContents props */
 export interface OwnProps {}
 
 const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
   return (
-    <Grid>
-      <Row style={{ backgroundColor: 'blue' }} />
-      {getDrawerItems(routes)}
-    </Grid>
+    <Content style={style.content} >
+      <DrawerHeader />
+      <List>
+        {getDrawerItems(routes)}
+      </List>
+    </Content>
   );
 };
 
