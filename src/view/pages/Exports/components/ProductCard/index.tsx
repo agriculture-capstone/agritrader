@@ -8,7 +8,7 @@ interface ProductCardPropsType {
   values: Array<any>;
 }
 
-const PRODUCT_CARD_HEADERS = ['Date', 'Licence Plate', 'Volume'];
+const PRODUCT_CARD_HEADERS = ['Date/Time', 'Licence Plate #', 'Volume (L)'];
 
 /**
 * Container for Product Card

@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import NavContainer from './navigation';
 
-import Farmer from './pages/Farmer';
 
 /**
  * Entry point for application

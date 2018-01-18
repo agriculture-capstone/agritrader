@@ -11,27 +11,27 @@ interface DataTablePropsType {
 * Container for DataTable
 */
 export default class DataTable extends React.Component<DataTablePropsType, {}> {
-  
+//Render function for data rows
   public renderRow(item: any) {
     const keys = Object.keys(item); 
     return (
-            <ListItem>
+            <ListItem style={{ justifyContent:'center', alignItems: 'center', right: 16, width: 400, flex:1 }}>
               <Grid>
                 {keys.map((x) => {
-                  return (<Col><Text>{item[x]}</Text></Col>);})}
+                  return (<Col size={33.33}><Text>{item[x]}</Text></Col>);})}
                 </Grid>
             </ListItem>
     );
   }
 
-
+//Render function for the header
   public renderSectionHeader(sectionData: any, sectionId: any) {
     return (
       <ListItem itemHeader first>
         <Grid>
           {
             this.props.headers.map((x) => { 
-              return <Col><Text>{x}</Text></Col>;
+              return <Col size={33.33}><Text style={{fontSize: 15}}>{x}</Text></Col>;
             })
           }
         </Grid>
@@ -49,7 +49,6 @@ export default class DataTable extends React.Component<DataTablePropsType, {}> {
         dataArray={this.props.values}
         renderRow={this.renderRow}
         renderSectionHeader={this.renderSectionHeader.bind(this)}
-        
       />
     );
   }
