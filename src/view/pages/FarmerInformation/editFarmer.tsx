@@ -77,13 +77,13 @@ const EditFarmer = (props: FarmerOwnState) => {
             <H3>{props.farmerNotes}</H3>
           </Input>
         </Row>
-        <Row style={{ paddingTop: 77 }}>
-          <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
+        <Row style={styles.farmerInfoButtonRow}>
+          <Col style={styles.farmerInfoButtonCol}>
           <Button block danger>
             <Text style={styles.buttonText}>CANCEL</Text>
           </Button>
           </Col>
-          <Col style={{ paddingLeft: 7 , paddingRight: 7 }}>
+          <Col style={styles.farmerInfoButtonCol}>
           <Button block success>
             <Text style={styles.buttonText}>SAVE</Text>
           </Button>

@@ -18,12 +18,11 @@ const styles = StyleSheet.create({
   },
   picker: {
     paddingLeft: 14,
+  },
+  farmerInfoButtonRow: {
     paddingTop: 77,
   },
-  addFarmerButtonRow: {
-    paddingTop: 77,
-  },
-  addFarmerButtonCol: {
+  farmerInfoButtonCol: {
     paddingLeft: 7,
     paddingRight: 7,
   },

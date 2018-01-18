@@ -91,13 +91,13 @@ const AddFarmer = (props: OwnProps) => {
               </Item>
             </Col>
           </Row>
-          <Row style={styles.addFarmerButtonRow}>
-            <Col style={styles.addFarmerButtonCol}>
+          <Row style={styles.farmerInfoButtonRow}>
+            <Col style={styles.farmerInfoButtonCol}>
               <Button block danger>
                 <Text style={styles.buttonText}>CANCEL</Text>
               </Button>
             </Col>
-            <Col style={styles.addFarmerButtonCol}>
+            <Col style={styles.farmerInfoButtonCol}>
               <Button block success>
                 <Text style={styles.buttonText}>ADD</Text>
               </Button>
