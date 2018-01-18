@@ -4,15 +4,14 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-import { OwnState } from './index';
+import { OwnState as FarmerOwnState } from './index';
 
 /**
  * Stateless component for viewing farmer information
  */
-const EditFarmer = (props: OwnState) => {
+const EditFarmer = (props: FarmerOwnState) => {
   return (
-    <Container>
-      <Content padder>
+    <Content padder>
       <Grid>
         <Row style={styles.infoLabel}>
           <Col>
@@ -91,8 +90,7 @@ const EditFarmer = (props: OwnState) => {
           </Col>
         </Row>
       </Grid>
-      </Content>
-    </Container>
+    </Content>
   );
 };
 

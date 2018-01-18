@@ -23,6 +23,7 @@ export interface OwnState {
   selectedPaymentMethod: string;
 }
 
+
 /**
  * Container for application
  */
@@ -53,12 +54,12 @@ export class FarmerInformation extends React.Component<OwnProps, OwnState> {
    * Render method for Farmer Information
    */
   public render() {
-    const page = 'edit';
+    const page = 'view';
 
     if (page === modes.view) {
       return <ViewFarmer {...this.state} />;
     } else if (page === modes.add) {
-      return <AddFarmer {...this.state} />;
+      return <AddFarmer {...this.state} updatePaymentCycle={this.updatePaymentCycle} updatePaymentMethod={this.updatePaymentMethod} />;
     } else if (page === modes.edit) {
       return <EditFarmer {...this.state} />;
     }

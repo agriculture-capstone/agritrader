@@ -4,24 +4,18 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-import { OwnState, FarmerInformation } from './index';
+import { OwnState as FarmerOwnState, FarmerInformation } from './index';
 
-// TODO
-const updatePaymentCycle = (value: string) => {
-  // OwnState.setState(() => ({ selectedPaymentCycle: value }));
-};
-
-// TODO
-const updatePaymentMethod = (value: string) => {
-  // OwnState.setState(() => ({ selectedPaymentMethod: value }));
-};
+interface OwnProps extends FarmerOwnState {
+  updatePaymentCycle(value: string): void;
+  updatePaymentMethod(value: string): void;
+}
 
 /**
  * Stateless component for viewing farmer information
  */
-const AddFarmer = (props: OwnState) => {
+const AddFarmer = (props: OwnProps) => {
   return (
-    <Container>
     <Content>
       <Form>
         <Grid>
@@ -71,7 +65,7 @@ const AddFarmer = (props: OwnState) => {
                 iosHeader="Select payment method"
                 mode="dropdown"
                 selectedValue={props.selectedPaymentMethod}
-                onValueChange={updatePaymentMethod}
+                onValueChange={props.updatePaymentMethod}
               >
                 <Picker.Item label="Mobile" value="Mobile" />
                 <Picker.Item label="Cash" value="Cash" />
@@ -83,7 +77,7 @@ const AddFarmer = (props: OwnState) => {
                 iosHeader="Select payment cycle"
                 mode="dropdown"
                 selectedValue={props.selectedPaymentCycle}
-                onValueChange={updatePaymentCycle}
+                onValueChange={props.updatePaymentCycle}
               >
                 <Picker.Item label="Weekly" value="Weekly" />
                 <Picker.Item label="Bi-Weekly" value="Bi-weekly" />
@@ -114,7 +108,6 @@ const AddFarmer = (props: OwnState) => {
         </Grid> 
       </Form>
     </Content>
-    </Container>
   );
 };
 
