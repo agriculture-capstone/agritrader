@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import { Spinner } from 'native-base';
+import createTabManager from '../../components/TabManager/index';
+import { ElementTabList } from '../../../store/modules/tabs/types';
 
 /** FakePage props */
 export interface Props {}
@@ -8,10 +10,24 @@ export interface Props {}
 /** FakePage state */
 export interface State {}
 
+const fakeTabs: ElementTabList = [
+  {
+    element: () => <SpinnerPage />,
+    name: 'Test',
+  },
+  {
+    element: () => <SpinnerPage />,
+    name: 'Hello',
+  },
+];
+
+/** FakePage */
+export const FakePage = createTabManager(fakeTabs);
+
 /**
  * TODO: Documentation
  */
-export class FakePage extends React.Component<Props, State> {
+export class SpinnerPage extends React.Component<Props, State> {
 
   /************************* Member Variables ************************/
 
