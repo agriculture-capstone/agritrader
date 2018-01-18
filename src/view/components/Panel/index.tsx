@@ -95,7 +95,7 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
                 <TouchableHighlight 
                         style={styles.button} 
                         onPress={this.toggle.bind(this)}
-                        underlayColor="#f1f1f1"
+                        underlayColor="#fff"
                         onLayout={this._setArrowHeight.bind(this)}
                         activeOpacity={0}
                         >
