@@ -42,11 +42,11 @@ export class FarmerInformation extends React.Component<OwnProps, OwnState> {
     };
   }
 
-  public updatePaymentCycle = (value: string) => {
+  private updatePaymentCycle = (value: string) => {
     this.setState(() => ({ selectedPaymentCycle: value }));
   }
 
-  public updatePaymentMethod = (value: string) => {
+  private updatePaymentMethod = (value: string) => {
     this.setState(() => ({ selectedPaymentMethod: value }));
   }
 
