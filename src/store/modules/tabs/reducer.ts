@@ -31,4 +31,4 @@ const tabsReducer: Reducer<TabState> = (state = initialState, action: Action) =>
   }
 };
 
-export default tabReducer;
+export default tabsReducer;
