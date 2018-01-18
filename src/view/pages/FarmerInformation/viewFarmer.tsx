@@ -13,7 +13,7 @@ const ViewFarmer = (props: FarmerOwnState) => {
   return (
     <Content padder>
       <Grid>
-        <Row style={styles.name}>
+        <Row style={styles.farmerName}>
           <H1>{props.farmerFirstName} {props.farmerLastName}</H1>
         </Row>
         <Row style={styles.infoLabel}>

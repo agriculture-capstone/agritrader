@@ -50,7 +50,7 @@ const AddFarmer = (props: OwnProps) => {
               </Item>
             </Col>
           </Row>
-          <Row style={{ paddingTop: 28, paddingLeft: 14 }}>
+          <Row style={styles.paymentLabel}>
             <Col>
               <Label style={styles.label}>Payment Cycle</Label>
             </Col>
@@ -61,7 +61,6 @@ const AddFarmer = (props: OwnProps) => {
           <Row style={styles.picker}>
             <Col>
               <Picker
-                style={{ paddingTop: 77 }}
                 iosHeader="Select payment method"
                 mode="dropdown"
                 selectedValue={props.selectedPaymentMethod}
@@ -73,7 +72,6 @@ const AddFarmer = (props: OwnProps) => {
             </Col>
             <Col>
               <Picker
-                style={{ paddingTop: 77 }}
                 iosHeader="Select payment cycle"
                 mode="dropdown"
                 selectedValue={props.selectedPaymentCycle}

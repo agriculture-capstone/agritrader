@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  name: {
+  farmerName: {
     alignSelf: 'center',
     paddingTop: 28,
     paddingBottom: 14,
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     paddingLeft: 14,
+    paddingTop: 77,
   },
   buttonText: {
     fontWeight: 'bold',
@@ -28,6 +29,10 @@ const styles = StyleSheet.create({
     paddingLeft: 21,
     paddingRight: 21,
     paddingTop: 21,
+  },
+  paymentLabel: {
+    paddingTop: 28,
+    paddingLeft: 14,
   },
 });
 

@@ -54,7 +54,7 @@ export class FarmerInformation extends React.Component<OwnProps, OwnState> {
    * Render method for Farmer Information
    */
   public render() {
-    const page = 'view';
+    const page = 'add';
 
     if (page === modes.view) {
       return <ViewFarmer {...this.state} />;
