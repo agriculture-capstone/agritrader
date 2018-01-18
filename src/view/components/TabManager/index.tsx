@@ -3,7 +3,7 @@ import { connect, MapStateToProps, MapDispatchToProps, DispatchProp } from 'reac
 import { Text, Tab as NativeTab, Tabs as NativeTabs } from 'native-base';
 
 import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
-import tabActions from '../../../store/modules/tabs/actions';
+import tabsActions from '../../../store/modules/tabs/actions';
 import { State } from '../../../store/types';
 
 /** TabManager OwnProps */
@@ -109,9 +109,9 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    setActiveTab: tab => dispatch(tabActions.setActiveTab(tab)),
-    setTabs: (tabs, activeTab) => dispatch(tabActions.setTabs(toTabs(tabs))),
-    clearTabs: () => dispatch(tabActions.clearTabs()),
+    setActiveTab: tab => dispatch(tabsActions.setActiveTab(tab)),
+    setTabs: (tabs, activeTab) => dispatch(tabsActions.setTabs(toTabs(tabs))),
+    clearTabs: () => dispatch(tabsActions.clearTabs()),
   };
 };
 

@@ -1,6 +1,6 @@
 import { Action, Tab, TabList, StoreTabList } from './types';
 
-const tabActions = {
+const tabsActions = {
 
   setTabs: (tabs: StoreTabList): Action => ({
     tabs,
@@ -17,4 +17,4 @@ const tabActions = {
   }),
 };
 
-export default tabActions;
+export default tabsActions;
