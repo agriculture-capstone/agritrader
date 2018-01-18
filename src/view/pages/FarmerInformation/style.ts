@@ -20,6 +20,13 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
     paddingTop: 77,
   },
+  addFarmerButtonRow: {
+    paddingTop: 77,
+  },
+  addFarmerButtonCol: {
+    paddingLeft: 7,
+    paddingRight: 7,
+  },
   buttonText: {
     fontWeight: 'bold',
     fontSize: 16,
