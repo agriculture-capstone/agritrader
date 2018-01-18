@@ -21,7 +21,7 @@ export default class CardSummary extends React.Component<CardSummaryPropsType, {
      */
   public render() {
       return (
-        <Panel title={this.props.title}>
+        <Panel title={this.props.title} expandable={true}>
         <Grid >
           <Row>
             <Col>

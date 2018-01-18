@@ -13,6 +13,7 @@ interface PanelStateType {
 }
 interface PanelPropsType {
   title: string;
+  expandable: boolean
 }
 
 // Following this as a guide: https://moduscreate.com/blog/expanding-and-collapsing-elements-using-animations-in-react-native/
@@ -93,7 +94,7 @@ class Panel extends React.Component<PanelPropsType, PanelStateType> {
                     {this.props.children}
                 </View>
                 <TouchableHighlight 
-                        style={styles.button} 
+                        style={this.props.expandable ? styles.button : styles.hiddenButton} 
                         onPress={this.toggle.bind(this)}
                         underlayColor="#fff"
                         onLayout={this._setArrowHeight.bind(this)}
@@ -140,6 +141,9 @@ let styles = StyleSheet.create({
   show : {
       display: 'flex',
     },
+  hiddenButton: {
+    display: 'none'
+  }
 });
 
 export default Panel;
