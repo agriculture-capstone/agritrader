@@ -25,6 +25,8 @@ export default class Login extends React.Component<{}, {}>{
     password: '',
   };
 
+  //const store =the applications store;
+
   private updateUsername = (value: string) => {
     this.setState({ username: value });
   }
@@ -35,7 +37,19 @@ export default class Login extends React.Component<{}, {}>{
 
   private loginPress = () => {
     alert(`Login Pressed - username:${this.state.username} password:${this.state.password}`);
-    // place holder for DB Auth and redirect to new page
+    /*
+    auth: boolean = authenticate(this.state.username, this.state.password); 
+    if(auth){
+      this.updatePassord('');
+      save username to redux state
+      store.dispatch({type: string, username: this.state.username})
+      redirect to landing page
+    }
+    else {
+      alert('incorrect username or password')
+    }
+    */
+
   }
 
   public render() {
