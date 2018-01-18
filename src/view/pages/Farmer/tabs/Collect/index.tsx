@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col } from 'native-base';
+import { Root, Grid, Row, Col, Content } from 'native-base';
 import { Text, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import CardSummary from '../../components/CardSummary';
@@ -25,7 +25,7 @@ export default class Collect extends React.Component<CollectPropsType, {}> {
      */
   public render() {
       return (
-            <Grid>
+            <Content><Grid>
                 <Row>
                     <CardSummary 
                         title={this.props.farmerName}
@@ -40,6 +40,7 @@ export default class Collect extends React.Component<CollectPropsType, {}> {
                     />
                 </Row>
             </Grid>
+            </Content>
         );
     }
 }
