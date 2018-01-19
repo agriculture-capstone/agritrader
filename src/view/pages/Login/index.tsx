@@ -56,21 +56,21 @@ export default class Login extends React.Component<{}, {}>{
   public render() {
     return (
       <KeyboardAvoidingView 
-        style={{ backgroundColor: '#0fc6ce', flex: 1 }}
+        style={{ backgroundColor: '#3F51B5', flex: 1 }}
       >
         <Content padder>
           <Form >
             <Grid>
               <Row>
                 <Col style={styles.centerContent}>
-                  <Image style={styles.logo} source={images.logo} />
+                  <Image style={styles.logo} source={images.logo_dark} />
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <Item floatingLabel style={styles.label} >
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Username</Label>
-                    <Input onChangeText={this.updateUsername} />
+                    <Input onChangeText={this.updateUsername} style={{ color:'white' }} />
                   </Item>
                 </Col>
               </Row>
@@ -78,7 +78,7 @@ export default class Login extends React.Component<{}, {}>{
                 <Col>
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
-                    <Input onChangeText={this.updatePassword} secureTextEntry={true} />
+                    <Input onChangeText={this.updatePassword} secureTextEntry={true} style={{ color:'white' }} />
                   </Item>
                 </Col>
               </Row>

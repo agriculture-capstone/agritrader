@@ -8,7 +8,7 @@ export const deviceHeight = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0fc6ce',
+    backgroundColor: '#3F51B5',
   },
   centerContent: {
     justifyContent: 'center',
