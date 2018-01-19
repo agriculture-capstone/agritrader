@@ -8,6 +8,9 @@ import {
   Icon,
   Body,
   Title,
+  Input,
+  Item,
+  View,
 } from 'native-base';
 
 import { State } from '../../../store/types';
@@ -19,6 +22,7 @@ interface OwnState {}
 interface StoreProps {
   drawerLocked: boolean;
   title: string;
+  searchBarShown: boolean;
 }
 
 interface DispatchProps {
@@ -46,7 +50,7 @@ class Header extends React.Component<Props, OwnState> {
   private backButton() {
     return (
       <Button onPress={this.props.goBack} transparent>
-        <Icon name="arrow-back" />
+        {this.leftIcon()}
       </Button>
     );
   }
@@ -54,13 +58,40 @@ class Header extends React.Component<Props, OwnState> {
   private menuButton() {
     return (
       <Button onPress={this.onMenuClick} transparent>
-        <Icon name="menu" />
+        {this.leftIcon()}
       </Button>
     );
   }
 
+  private leftIcon(listener?: () => void) {
+    return <Icon name={this.props.drawerLocked ? 'arrow-back' : 'menu'} onPress={listener} />;
+  }
+
   private onMenuClick() {
     this.props.openDrawer();
+  }
+
+  private createSearchBar() {
+    return (
+      <Item>
+        {this.leftIcon(this.props.drawerLocked ? undefined : this.onMenuClick)}
+        <Input placeholder="Search" />
+        <Icon name="search" />
+      </Item>
+    );
+  }
+
+  private createTitle() {
+    return (
+      <View>
+        <Left>
+          {this.leftButton()}
+        </Left>
+        <Body>
+          <Title>{this.props.title}</Title>
+        </Body>
+      </View>
+    );
   }
 
   /****************************** React ******************************/
@@ -68,13 +99,8 @@ class Header extends React.Component<Props, OwnState> {
   /** React render method */
   public render() {
     return (
-      <BaseHeader>
-        <Left>
-          {this.leftButton()}
-        </Left>
-        <Body>
-          <Title>{this.props.title}</Title>
-        </Body>
+      <BaseHeader searchBar={this.props.searchBarShown} rounded={this.props.searchBarShown}>
+        {(this.props.searchBarShown) ? this.createSearchBar() : this.createTitle()}
       </BaseHeader>
     );
   }
@@ -86,6 +112,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
   return {
     drawerLocked: state.app.drawerLocked,
     title: state.app.title,
+    searchBarShown: state.searchBar.shown,
   };
 };
 
