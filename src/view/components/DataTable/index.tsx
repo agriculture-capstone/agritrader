@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-
+import { Dimensions } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Grid, Row, Col } from 'native-base';
+
+
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 interface DataTablePropsType {
   headers: Array<string>;
   values: Array<any>;
 }
-
 
 /**
 * Container for DataTable
@@ -17,7 +20,7 @@ export default class DataTable extends React.Component<DataTablePropsType, {}> {
   public renderRow(item: any) {
     const keys = Object.keys(item); 
     return (
-            <ListItem style={{ right: 15, width: 370 }}>
+            <ListItem style={{ right: 17, width: deviceWidth }}>
               <Grid>
                 {keys.map((x) => {
                   return (<Col size={33.33}><Text>{item[x]}</Text></Col>);})}
@@ -29,7 +32,7 @@ export default class DataTable extends React.Component<DataTablePropsType, {}> {
 //Render function for the header
   public renderSectionHeader(sectionData: any, sectionId: any) {
     return (
-      <ListItem itemHeader first style={{ right: 15, width: 380 }}>
+      <ListItem itemHeader first style={{ right: 15, width: deviceWidth }}>
         <Grid>
           {
             this.props.headers.map((x) => { 
