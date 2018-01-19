@@ -21,8 +21,9 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { images } from '../../assets/';
 import { styles } from './style';
 import { State } from '../../../store/types';
-import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
+import navActions from '../../../store/modules/nav/actions';
+import headerActions from '../../../store/modules/header/actions';
 
 interface OwnState {
   username: string;
@@ -39,6 +40,8 @@ interface StoreProps {
 
 interface DispatchProps {
   navigateToHome(): void;
+  hideHeader(): void;
+  showHeader(): void;
 }
 
 export type Props = OwnProps & StoreProps & DispatchProps;
@@ -65,6 +68,7 @@ class Login extends React.Component<Props, OwnState>{
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
+    this.props.showHeader();
     /*
     auth: boolean = authenticate(this.state.username, this.state.password);
     if(auth){
@@ -78,6 +82,10 @@ class Login extends React.Component<Props, OwnState>{
     }
     */
 
+  }
+
+  public componentWillMount() {
+    this.props.hideHeader();
   }
 
   public render() {
@@ -137,6 +145,8 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) =>
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
     navigateToHome: () => dispatch(navActions.navigateTo(Route.HOME)),
+    hideHeader: () => dispatch(headerActions.setHeaderShown(false)),
+    showHeader: () => dispatch(headerActions.setHeaderShown(true)),
   };
 };
 

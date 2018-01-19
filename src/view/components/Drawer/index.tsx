@@ -3,8 +3,9 @@ import { Drawer as BaseDrawer } from 'native-base';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
 import { State } from '../../../store/types';
-import appActions from '../../../store/modules/app/actions';
+import drawerActions from '../../../store/modules/drawer/actions';
 import navActions from '../../../store/modules/nav/actions';
+import headerActions from '../../../store/modules/header/actions';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
@@ -23,6 +24,7 @@ interface DispatchProps {
   closeDrawer(): void;
   openDrawer(): void;
   navigate(route: Route): void;
+  showHeader(): void;
 }
 
 /** Drawer props */
@@ -45,6 +47,7 @@ class Drawer extends React.Component<Props, OwnState> {
 
   private onPress(route: Route) {
     this.props.navigate(route);
+    this.props.showHeader();
     this.props.closeDrawer();
   }
 
@@ -73,16 +76,17 @@ class Drawer extends React.Component<Props, OwnState> {
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
   return {
-    open: state.app.drawerShown,
-    locked: state.app.drawerLocked,
+    open: state.drawer.drawerShown,
+    locked: state.drawer.drawerLocked,
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    closeDrawer: () => dispatch(appActions.setDrawerShown(false)),
-    openDrawer: () => dispatch(appActions.setDrawerShown(true)),
+    closeDrawer: () => dispatch(drawerActions.setDrawerShown(false)),
+    openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    showHeader: () => dispatch(headerActions.setHeaderShown(true)),
   };
 };
 

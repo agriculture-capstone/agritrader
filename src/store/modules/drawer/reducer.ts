@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
 
-import { AppState, Action } from './types';
+import { DrawerState, Action } from './types';
 import initialState from './state';
 
-const appReducer: Reducer<AppState> = (state = initialState, action: Action) => {
+const drawerReducer: Reducer<DrawerState> = (state = initialState, action: Action) => {
   switch (action.type) {
     case 'SET_DRAWER_SHOWN':
       return {
@@ -25,15 +25,9 @@ const appReducer: Reducer<AppState> = (state = initialState, action: Action) => 
         drawerShown: false,
       };
 
-    case 'SET_TITLE':
-      return {
-        ...state,
-        title: action.title,
-      };
-
     default:
       return state;
   }
 };
 
-export default appReducer;
+export default drawerReducer;

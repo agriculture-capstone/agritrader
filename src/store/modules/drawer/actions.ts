@@ -1,6 +1,6 @@
 import { Action } from './types';
 
-const appActions = {
+const drawerActions = {
   setDrawerShown: (shown: boolean): Action => ({
     shown,
     type: 'SET_DRAWER_SHOWN',
@@ -14,11 +14,6 @@ const appActions = {
     locked,
     type: 'SET_DRAWER_LOCKED',
   }),
-
-  setTitle: (title: string): Action => ({
-    title,
-    type: 'SET_TITLE',
-  }),
 };
 
-export default appActions;
+export default drawerActions;

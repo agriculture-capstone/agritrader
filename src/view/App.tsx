@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Root } from 'native-base';
+import { Root, Toast, ActionSheet } from 'native-base';
 import { View } from 'react-native';
 import { Provider } from 'react-redux';
 
@@ -16,12 +16,19 @@ import Farmer from './pages/Farmer';
  */
 export default class App extends React.Component<{}, {}> {
 
+  public componentWillUnmount() {
+    (Toast as any).toastInstance = null;
+    (ActionSheet as any).actionsheetInstance = null;
+  }
+
   /** Render the application */
   public render() {
     return (
-      <Provider store={store}>
-        <NavContainer />
-      </Provider>
+      <Root>
+        <Provider store={store}>
+            <NavContainer />
+        </Provider>
+      </Root>
     );
   }
 }

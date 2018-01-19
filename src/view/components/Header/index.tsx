@@ -14,7 +14,7 @@ import {
 } from 'native-base';
 
 import { State } from '../../../store/types';
-import appActions from '../../../store/modules/app/actions';
+import drawerActions from '../../../store/modules/drawer/actions';
 import searchBarActions from '../../../store/modules/searchBar/actions';
 
 interface OwnProps {}
@@ -27,6 +27,7 @@ interface StoreProps {
   searchBarShown: boolean;
   searchPlaceholder: string;
   searchBarValue: string;
+  headerShown: boolean;
 }
 
 interface DispatchProps {
@@ -123,18 +124,19 @@ class Header extends React.Component<Props, OwnState> {
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
   return {
-    drawerLocked: state.app.drawerLocked,
-    title: state.app.title,
+    drawerLocked: state.drawer.drawerLocked,
+    title: state.header.title,
     tabbedHeader: !!state.tabs.tabs.length,
     searchBarShown: state.searchBar.shown,
     searchPlaceholder: state.searchBar.placeholder,
     searchBarValue: state.searchBar.value,
+    headerShown: state.header.shown,
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    openDrawer: () => dispatch(appActions.setDrawerShown(true)),
+    openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),
     goBack: () => dispatch(NavigationActions.back()),
     onSearchChange: (value: string) => dispatch(searchBarActions.setSearchBarValue(value)),
   };
