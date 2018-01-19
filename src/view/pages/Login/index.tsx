@@ -90,7 +90,7 @@ export default class Login extends React.Component<{}, {}>{
                     style={styles.loginButton}
                     onPress={this.loginPress}
                   >
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>Sign In</Text>
                   </Button>
                 </Col>
               </Row>
