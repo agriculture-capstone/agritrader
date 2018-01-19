@@ -4,7 +4,7 @@ import * as React from 'react';
 import HomePage from '../pages/Home';
 import FarmerPage from '../pages/Farmer';
 import LoginPage from '../pages/Login';
-// import FarmerSearch from '../pages/FarmerSearch';
+import FarmerSearch from '../pages/FarmerSearch';
 
 /** Information for each route in app */
 export interface RouteInfo {
@@ -42,12 +42,12 @@ export const routes: RouteInfo[] = [
     component: FarmerPage,
     inDrawer: true,
   },
-  // {
-  //   name: Route.SEARCH_FARMER,
-  //   icon: 'search',
-  //   component: FarmerSearch,
-  //   inDrawer: true,
-  // },
+  {
+    name: Route.SEARCH_FARMER,
+    icon: 'search',
+    component: FarmerSearch,
+    inDrawer: true,
+  },
 ];
 
 /** Convert IRoute[] to a NavigationRouteConfigMap */

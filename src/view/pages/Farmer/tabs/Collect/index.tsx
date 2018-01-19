@@ -17,7 +17,7 @@ interface CollectPropsType {
 /**
  * Collect Tab Component
  */
-export default class Collect extends React.Component<CollectPropsType, {}> {
+class Collect extends React.Component<CollectPropsType, {}> {
 
   // TODO: need to connect this to the redux state
   /**
@@ -51,4 +51,4 @@ export default class Collect extends React.Component<CollectPropsType, {}> {
   }
 }
 
-// export default createPage(Collect, 'menu');
+export default createPage(Collect, 'menu');

@@ -28,7 +28,7 @@ export interface OwnState {
 /**
  * Container for application
  */
-export default class FarmerInformation extends React.Component<OwnProps, OwnState> {
+class FarmerInformation extends React.Component<OwnProps, OwnState> {
 
   public static defaultProps = {
     mode: 'view',
@@ -77,4 +77,4 @@ export const modes = {
   view: 'view',
 };
 
-// export default createPage(FarmerInformation, 'menu');
+export default createPage(FarmerInformation, 'menu');

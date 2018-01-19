@@ -71,7 +71,7 @@ class Home extends React.Component<HomePropsType, {}> {
     }
 }
 
-// const HomePage = createPage<HomePropsType>(Home, 'menu');
+const HomePage = createPage<HomePropsType>(Home, 'menu');
 
 
 let styles = StyleSheet.create({
@@ -98,4 +98,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(HomePage);

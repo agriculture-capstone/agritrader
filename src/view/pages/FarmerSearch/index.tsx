@@ -41,7 +41,7 @@ const farmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id: 1 },
                     { name: 'Farmer 239-XB4', phoneNumber: '1-011-101-1001', id: 2 }];
 
 
-export default class FarmerSearch extends React.Component<Props, State> {
+class FarmerSearch extends React.Component<Props, State> {
 
   public static defaultProps = {
     listItems: farmerList,
@@ -84,4 +84,4 @@ export default class FarmerSearch extends React.Component<Props, State> {
   /************************* Static Functions ************************/
 }
 
-// export default createSearchPage<OwnProps>(FarmerSearch, 'back', 'Search Farmers');
+export default createSearchPage<OwnProps>(FarmerSearch, 'back', 'Search Farmers');
