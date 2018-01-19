@@ -7,6 +7,14 @@ import { FakePage } from './pages/FakePage';
 import { StartSession } from './pages/StartSession';
 
 /**
+ * Test data to pass in as list
+ */
+
+const farmerList = [{ name: 'Nick', phoneNumber: '1234', id: 1 },
+                    { name: 'Nick2', phoneNumber: '1234', id: 2 }];
+
+
+/**
  * Container for application
  */
 export default class App extends React.Component<{}, {}> {
@@ -16,7 +24,7 @@ export default class App extends React.Component<{}, {}> {
   public render() {
     return (
       <Provider store={store}>
-          <StartSession />
+          <StartSession listItems={farmerList}/>
       </Provider>
     );
   }
