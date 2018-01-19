@@ -14,18 +14,20 @@ interface OwnProps {
 const DrawerHeader: React.StatelessComponent<OwnProps> = (props) => {
   return (
     <Grid style={style.container}>
-      <View style={style.logo} >
+      <Row><View style={style.logo} >
       <Image source={images.truck_icon} style={style.logoicon}/>
       </View>
+      </Row>
+      <Row>
       <View style={style.user}>
         <Text style={style.userFullName}>
           Trader Joe
           </Text>
           <Text style={style.username}>
-          traderjoe
+          myusername
           </Text></View>
      
-      
+      </Row>
     </Grid>
   );
 };
