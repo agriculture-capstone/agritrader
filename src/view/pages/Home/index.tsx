@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import CardButton from '../../components/CardButton';
 import Panel from '../../components/Panel';
 
+import StatisicsBlock from './components/StatisticsBlock';
+
 
 /**
  * Home Page Component
@@ -19,17 +21,31 @@ export default class Home extends React.Component<{}, {}> {
             <Panel title="Trader Joe" expandable={false}> 
                 <Grid>
                     <Row>
-                        <Col>
-                        <Row><Text>1, 175 L</Text></Row>
-                        <Row><Text>TODAY</Text></Row>
+                        <StatisicsBlock /> 
+                        <Col >
+                        <Text   style={styles.stats}>1,175</Text>
+                        <Text   style={styles.stats}>L</Text>
+                        <Text  style={[styles.stats, styles.statsLabel]}>Today</Text>
                         </Col>
                         <Col>
-                        <Row><Text>2,250 L</Text></Row>
-                        <Row><Text>AVERAGE DAY</Text></Row>
+                        <Text  style={styles.stats}>2,250</Text>
+                        <Text   style={styles.stats}>L</Text>
+                        <Text  style={[styles.stats, styles.statsLabel]}>Average Daily</Text>
                         </Col>
+                        <Col >
+                        <Text   style={styles.stats}>7.4M</Text>
+                        <Text   style={styles.stats}>UGX</Text>
+                        <Text  style={[styles.stats, styles.statsLabel]}>All Farmers Balance</Text>
+                        </Col>
+                        <Col>
+                        <Text  style={styles.stats}>1.1M</Text>
                         
+                        <Text   style={styles.stats}>UGX</Text>
+                        <Text  style={[styles.stats, styles.statsLabel]}>Farmer Debts</Text>
+                        </Col>
                         </Row>
                         <Row>
+                       
                             </Row>
 
                     </Grid>
@@ -51,5 +67,11 @@ let styles = StyleSheet.create({
     menuButtons : {
         marginRight: 10,
         marginLeft: 10
+    },
+    stats: {
+        textAlign: "center"
+    },
+    statsLabel: {
+        color: "gray"
     }
 });    
