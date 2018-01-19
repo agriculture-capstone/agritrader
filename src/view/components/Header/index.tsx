@@ -33,6 +33,11 @@ interface DispatchProps {
 /** Header props */
 type Props = OwnProps & StoreProps & DispatchProps;
 
+interface LeftButtonInfo {
+  icon: 'arrow-back' | 'menu';
+  listener(): void;
+}
+
 /** Header component */
 class Header extends React.Component<Props, OwnState> {
 
@@ -43,38 +48,42 @@ class Header extends React.Component<Props, OwnState> {
     this.onMenuClick = this.onMenuClick.bind(this);
   }
 
-  private leftButton() {
-    return this.props.drawerLocked ? this.backButton() : this.menuButton();
-  }
-
-  private backButton() {
-    return (
-      <Button onPress={this.props.goBack} transparent>
-        {this.leftIcon()}
-      </Button>
-    );
-  }
-
-  private menuButton() {
-    return (
-      <Button onPress={this.onMenuClick} transparent>
-        {this.leftIcon()}
-      </Button>
-    );
-  }
-
-  private leftIcon(listener?: () => void) {
-    return <Icon name={this.props.drawerLocked ? 'arrow-back' : 'menu'} onPress={listener} />;
-  }
-
   private onMenuClick() {
     this.props.openDrawer();
+  }
+
+  private onBackClick() {
+    return;
+  }
+
+  private leftButtonInfo(): LeftButtonInfo {
+    return this.props.drawerLocked ? {
+      icon: 'arrow-back',
+      listener: this.onBackClick,
+    } : {
+      icon: 'menu',
+      listener: this.onMenuClick,
+    };
+  }
+
+  private leftToolbarButton() {
+    const { icon, listener } = this.leftButtonInfo();
+    return (
+      <Button onPress={listener} transparent>
+        <Icon name={icon} />
+      </Button>
+    );
+  }
+
+  private leftSearchIcon() {
+    const { icon, listener } = this.leftButtonInfo();
+    return <Icon name={icon} onPress={listener} />;
   }
 
   private createSearchBar() {
     return (
       <Item>
-        {this.leftIcon(this.props.drawerLocked ? undefined : this.onMenuClick)}
+        {this.leftSearchIcon()}
         <Input placeholder="Search" />
         <Icon name="search" />
       </Item>
@@ -85,7 +94,7 @@ class Header extends React.Component<Props, OwnState> {
     return (
       <View>
         <Left>
-          {this.leftButton()}
+          {this.leftToolbarButton()}
         </Left>
         <Body>
           <Title>{this.props.title}</Title>

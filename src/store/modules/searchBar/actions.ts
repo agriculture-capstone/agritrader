@@ -15,7 +15,7 @@ const searchBarActions = {
     };
   },
 
-  hideSearchBar(): Action {
+  clearSearchBar(): Action {
     return {
       type: 'HIDE_SEARCH_BAR',
     };

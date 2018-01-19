@@ -11,6 +11,7 @@ interface StoreProps {}
 
 interface DispatchProps {
   showSearchBar(): void;
+  clearSearchBar(): void;
 }
 
 /** FakePage state */
@@ -38,6 +39,10 @@ export class Intermediate extends React.Component<Props, State> {
     this.props.showSearchBar();
   }
 
+  public componentWillUnmount() {
+    this.props.clearSearchBar();
+  }
+
   /** React render method */
   public render(): JSX.Element {
     return (
@@ -55,6 +60,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
     showSearchBar: () => dispatch(searchBarActions.showSearchBar()),
+    clearSearchBar: () => dispatch(searchBarActions.clearSearchBar()),
   };
 };
 
