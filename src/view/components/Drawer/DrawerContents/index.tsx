@@ -19,7 +19,7 @@ const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
       </List>
       <View>
       <Button danger full>
-      <Text> Logout </Text>
+      <Text> Sign out </Text>
       </Button>
       </View>
     </Content>
