@@ -46,7 +46,6 @@ class Drawer extends React.Component<Props, OwnState> {
         type="overlay"
         panOpenMask={this.PAN_OPEN_MASK}
         disabled={this.props.locked}
-        captureGestures
         acceptPan
       >
       {this.props.children}
