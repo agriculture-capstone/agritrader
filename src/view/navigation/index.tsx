@@ -28,12 +28,12 @@ class AppNavigation extends React.Component<Props, {}> {
   /** Render the navigator */
   public render () {
     return (
-      <Container>
-        <Drawer>
+      <Drawer>
+        <Container>
           <Header />
           <Navigator navigation={this.navHelpers()} />
-        </Drawer>
-      </Container>
+        </Container>
+      </Drawer>
     );
   }
 }

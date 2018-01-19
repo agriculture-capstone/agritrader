@@ -30,6 +30,8 @@ class Drawer extends React.Component<Props, OwnState> {
 
   /************************* Member Variables ************************/
 
+  private PAN_OPEN_MASK = .10;
+
   /************************* Member Functions ************************/
 
   /****************************** React ******************************/
@@ -43,9 +45,9 @@ class Drawer extends React.Component<Props, OwnState> {
         onOpen={this.props.openDrawer}
         content={<DrawerContents />}
         type="overlay"
+        panOpenMask={this.PAN_OPEN_MASK}
         disabled={this.props.locked}
         acceptPan
-        captureGestures
       >
       {this.props.children}
       </BaseDrawer>
