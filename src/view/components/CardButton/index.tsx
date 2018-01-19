@@ -1,18 +1,31 @@
 import * as React from 'react';
 import { Root, Grid, Row, Col, Content, Button, Text, Card, Body, CardItem, Icon, Right, Left } from 'native-base';
 import { StyleSheet, Alert } from 'react-native';
+import { Route } from '../../navigation/navigator';
 
 
 interface CardButtonPropsType {
-    title: string,
-    iconName: string,
-    iconColor: string
+  title: string;
+  iconName: string;
+  iconColor: string;
+  route: Route;
+  onPress(route: Route): void;
 }
 /**
  * Home Page Component
  */
 export default class CardButton extends React.Component<CardButtonPropsType, {}> {
-    // TODO need to connect this to the redux state
+  public constructor(props: CardButtonPropsType) {
+    super(props);
+
+    this.onPress = this.onPress.bind(this);
+  }
+
+  private onPress() {
+    this.props.onPress(this.props.route);
+  }
+
+  // TODO need to connect this to the redux state
     /**
      * Render method for Farmer
      */
@@ -20,15 +33,15 @@ export default class CardButton extends React.Component<CardButtonPropsType, {}>
         return (
 
             <Card >
-                <CardItem button onPress={() => Alert.alert('hi')}>
+                <CardItem button onPress={this.onPress}>
 
                     <Left >
-                        <Icon 
+                        <Icon
                             style={{
-                                fontSize: 40, 
+                                fontSize: 40,
                                 color: this.props.iconColor
-                            }} 
-                            name={this.props.iconName} 
+                            }}
+                            name={this.props.iconName}
                         />
 
                     <Body>
@@ -56,4 +69,4 @@ let styles = StyleSheet.create({
     card: {
         padding: 5
     }
-});    
+});

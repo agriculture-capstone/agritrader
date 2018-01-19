@@ -6,7 +6,7 @@ const navActions = {
 
   goBack: () => NavigationActions.back(),
 
-  test: (route: Route) => NavigationActions.navigate({
+  navigateTo: (route: Route) => NavigationActions.navigate({
     routeName: route,
   }),
 };
