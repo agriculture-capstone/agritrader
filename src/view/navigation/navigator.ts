@@ -1,7 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 
-import { FakePage } from '../pages/FakePage';
-import { FarmerInformation } from '../pages/FarmerInformation';
+import { FakePage } from '../../view/pages/FakePage';
+import { FarmerInformation } from '../../view/pages/FarmerInformation';
 
 /** Named routes in the application */
 export enum Route {
@@ -10,6 +10,9 @@ export enum Route {
   FARMER = 'Farmer',
   FARMER_INFORMATION = 'FarmerInformation',
 }
+
+/** Initial route for appplication */
+export const INITIAL_ROUTE = Route.FARMER_INFORMATION;
 
 /** Top-level navigator for application */
 export default StackNavigator({

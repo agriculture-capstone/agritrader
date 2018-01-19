@@ -3,8 +3,8 @@ import { NavigationState, addNavigationHelpers } from 'react-navigation';
 import { connect, DispatchProp, MapStateToProps } from 'react-redux';
 import * as React from 'react';
 
-import Header from '../components/Header';
-import Drawer from '../components/Drawer';
+import Header from '../../view//components/Header';
+import Drawer from '../../view/components/Drawer';
 import { State } from '../../store/types';
 import Navigator from './navigator';
 

@@ -9,29 +9,42 @@
 		"yarn": ">= 1.3.0"
 	},
 	"scripts": {
-		"clean": "node_modules/.bin/rimraf lib/",
+		"clean": "npm run clean:lib && npm run clean:gradle && npm run clean:android:build && npm run clean:app:build && npm run clean:app:assets",
+		"clean:lib": "npm run rimraf -- lib/",
+		"clean:gradle": "npm run rimraf -- android/.gradle",
+		"clean:android:build": "npm run rimraf -- android/build/",
+		"clean:app:build": "npm run rimraf -- android/app/build/",
+		"clean:app:assets": "npm run rimraf android/app/src/main/assets/",
 		"build": "node_modules/.bin/tsc",
 		"rebuild": "npm run clean && npm run build",
-		"concurrently": "node_modules/.bin/concurrently --kill-others-on-fail -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
-		"react-native": "node node_modules/react-native/local-cli/cli.js",
-		"start:android": "npm run rebuild && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-android\"",
-		"start:ios": "npm run build && npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-ios\"",
+		"start:android": "npm run build && npm run concurrently:android",
+		"start:ios": "npm run build && npm run concurrently:ios",
 		"start": "npm run react-native -- start",
+		"android": "npm run start:android",
+		"android:unix": "npm run clean:app:assets && npm run build && npm run create:assets && npm run bundle:android && npm run concurrently:android",
 		"test": "jest --coverage",
 		"watch": "npm run build -- -w",
 		"lint": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
-		"lint:fix": "npm run lint -- --fix"
+		"lint:fix": "npm run lint -- --fix",
+		"create:assets": "npm run mkdirp -- android/app/src/main/assets",
+		"bundle:android": "npm run react-native -- bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+		"concurrently": "node_modules/.bin/concurrently --kill-others-on-fail -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
+		"concurrently:android": "npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-android\"",
+		"concurrently:ios": "npm run concurrently -- \"npm run watch\" \"npm run react-native -- run-ios\"",
+		"react-native": "node node_modules/react-native/local-cli/cli.js",
+		"rimraf": "node_modules/.bin/rimraf",
+		"mkdirp": "node_modules/.bin/mkdirp"
 	},
 	"dependencies": {
 		"jest-cli": "^21.2.1",
 		"native-base": "^2.3.4",
 		"react": "16.0.0-beta.5",
 		"react-native": "0.49.5",
-		"react-native-vector-icons": "^4.4.3",
 		"react-navigation": "^1.0.0-beta.22",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",
-		"redux-logger": "^3.0.6"
+		"redux-logger": "^3.0.6",
+		"rimraf": "^2.6.2"
 	},
 	"devDependencies": {
 		"@types/jest": "^21.1.5",
@@ -42,10 +55,11 @@
 		"@types/react-test-renderer": "^16.0.0",
 		"@types/redux-logger": "^3.0.5",
 		"babel-core": "^6.26.0",
-		"babel-jest": "21.2.0",
+		"babel-jest": "^22.1.0",
 		"babel-preset-react-native": "4.0.0",
 		"concurrently": "^3.5.0",
 		"jest": "21.2.1",
+		"mkdirp": "^0.5.1",
 		"react-test-renderer": "16.0.0-beta.5",
 		"rimraf": "^2.6.2",
 		"ts-jest": "^21.1.4",
@@ -59,27 +73,25 @@
 		"moduleFileExtensions": [
 			"ts",
 			"tsx",
-			"js"
+			"js",
+			"jsx",
+			"json",
+			"node"
 		],
 		"transform": {
-			"^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-			"\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+			"^.+\\.tsx?$": "ts-jest",
+			"^.+\\.jsx?$": "babel-jest"
 		},
-		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
 		"testPathIgnorePatterns": [
 			"\\.snap$",
 			"<rootDir>/node_modules/",
 			"<rootDir>/lib/"
 		],
+		"transformIgnorePatterns": [
+			"node_modules/(?!react-native|native-base|react-navigation)"
+		],
 		"cacheDirectory": ".jest/cache",
-		"mapCoverage": true,
-		"coverageThreshold": {
-			"global": {
-				"branches": 80,
-				"functions": 80,
-				"lines": 80,
-				"statements": 80
-			}
-		}
+		"mapCoverage": true
 	}
 }
