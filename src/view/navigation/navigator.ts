@@ -2,6 +2,7 @@ import { StackNavigator, NavigationRouteConfigMap } from 'react-navigation';
 import * as React from 'react';
 
 import { FakeTabManager } from '../pages/FakePage';
+import HomePage from '../pages/Home';
 
 /** Information for each route in app */
 export interface RouteInfo {
@@ -23,7 +24,7 @@ export const routes: RouteInfo[] = [
   {
     name: Route.HOME,
     icon: 'home',
-    component: FakeTabManager,
+    component: HomePage,
     inDrawer: true,
   },
   {
@@ -49,7 +50,7 @@ export const INITIAL_ROUTE = Route.HOME;
 /** Top-level navigator for application */
 const navigator = StackNavigator(toNavigatorRoutes(routes), {
   headerMode: 'none',
-  initialRouteName: Route.HOME,
+  initialRouteName: INITIAL_ROUTE,
 });
 
 export default navigator;

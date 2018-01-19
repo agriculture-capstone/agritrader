@@ -93,16 +93,18 @@ class Header extends React.Component<Props, OwnState> {
   }
 
   private createTitle() {
-    return (
-      <View>
-        <Left>
+    return [
+      (
+        <Left key="button">
           {this.leftToolbarButton()}
         </Left>
-        <Body>
+      ),
+      (
+        <Body key="title">
           <Title>{this.props.title}</Title>
         </Body>
-      </View>
-    );
+      ),
+    ];
   }
 
   /****************************** React ******************************/
