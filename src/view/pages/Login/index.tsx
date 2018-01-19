@@ -92,6 +92,11 @@ class Login extends React.Component<Props, OwnState> {
 
   }
 
+  public componentWillMount() {
+    this.props.hideHeader();
+    this.props.lockDrawer();
+  }
+
   public render() {
     return (
       <KeyboardAvoidingView
