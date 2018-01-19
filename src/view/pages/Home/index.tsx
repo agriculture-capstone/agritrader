@@ -35,11 +35,11 @@ export default class Home extends React.Component<{}, {}> {
                     </Grid>
             </Panel>
             <View style={styles.menuButtons} >
-            <CardButton title="Farmer Manager" iconName="people"/>
-            <CardButton title="Exports" iconName="car"/>
-            <CardButton title="Warehouse Products" iconName="cart"/>
+            <CardButton title="Farmer Manager" iconName="people" iconColor="#383838"/>
+            <CardButton title="Exports" iconName="car" iconColor="#383838" />
+            <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838"/>
             
-            <CardButton title="View Records" iconName="stats" />
+            <CardButton title="View Records" iconName="stats" iconColor="#383838" />
                 
             </View>
         </Content>

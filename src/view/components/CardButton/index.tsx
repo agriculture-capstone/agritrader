@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 interface CardButtonPropsType {
     title: string,
     iconName: string,
+    iconColor: string
 }
 /**
  * Home Page Component
@@ -21,7 +22,14 @@ export default class CardButton extends React.Component<CardButtonPropsType, {}>
             <Card >
                 <CardItem>
 
-                    <Left ><Icon style={{fontSize: 40}} name={this.props.iconName}  />
+                    <Left >
+                        <Icon 
+                            style={{
+                                fontSize: 40, 
+                                color: this.props.iconColor
+                            }} 
+                            name={this.props.iconName} 
+                        />
 
                     <Body>
                         <Text>
