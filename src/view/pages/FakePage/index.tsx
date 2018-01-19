@@ -1,34 +1,31 @@
 import * as React from 'react';
+import { Text, Content } from 'native-base';
 
-import { Spinner } from 'native-base';
+import searchBarActions from '../../../store/modules/searchBar/actions';
+import SearchPage, { SearchPageState, SearchPageProps } from '../../lib/baseComponents/SearchPage';
 
-/** FakePage props */
-export interface Props {}
+interface OwnProps extends SearchPageProps {}
 
 /** FakePage state */
-export interface State {}
+export interface OwnState extends SearchPageState {}
 
-/**
- * TODO: Documentation
- */
-export class FakePage extends React.Component<Props, State> {
+/** FakePage props */
+export type Props = OwnProps;
 
-  /************************* Member Variables ************************/
-
-  /************************* Member Functions ************************/
+/** Fake page */
+export class FakePage extends SearchPage<Props, OwnState> {
 
   constructor(props: Props) {
-    super(props);
+    super(props, 'My Fake Page Yass');
   }
 
-  /************************* React Lifecycle *************************/
-
-  /** React render method */
   public render(): JSX.Element {
     return (
-      <Spinner color="red" />
+      <Content>
+        <Text>
+          {this.state.searchBarValue}
+        </Text>
+      </Content>
     );
   }
-
-  /************************* Static Functions ************************/
 }
