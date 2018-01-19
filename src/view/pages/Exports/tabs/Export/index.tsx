@@ -23,7 +23,8 @@ export default class Export extends React.Component<ExportPropTypes, {}> {
    */
   public render() {
     return (
-      <Content>
+      <Content scrollEnabled={true}>
+
         <View style={{ flex: 1 }}>
           <ScrollView>
             <Grid>
