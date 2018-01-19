@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Root, Grid, Row, Col, Content, Button, Text, Card, Body, CardItem, Icon, Right, Left } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 
 
 interface CardButtonPropsType {
@@ -20,7 +20,7 @@ export default class CardButton extends React.Component<CardButtonPropsType, {}>
         return (
 
             <Card >
-                <CardItem>
+                <CardItem button onPress={() => Alert.alert('hi')}>
 
                     <Left >
                         <Icon 
