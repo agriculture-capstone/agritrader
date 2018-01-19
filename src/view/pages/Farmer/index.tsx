@@ -4,8 +4,9 @@ import { Text, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import ProductCard from './components/ProductCard';
-import Collect from './tabs/Collect';
 import createTabManager from '../../lib/generators/TabManager';
+import Collect from './tabs/Collect';
+import FarmerInformation from './tabs/FarmerInformation';
 
 const createCollect = () => (
   <Collect
@@ -22,6 +23,10 @@ export default createTabManager(
     {
       name: 'Collect',
       element: createCollect,
+    },
+    {
+      name: 'Information',
+      element: () => <FarmerInformation />,
     },
   ],
 );

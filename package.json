@@ -61,6 +61,7 @@
 		"jest": "21.2.1",
 		"mkdirp": "^0.5.1",
 		"react-test-renderer": "16.0.0-beta.5",
+		"rimraf": "^2.6.2",
 		"ts-jest": "^21.1.4",
 		"tslint": "5.8.0",
 		"tslint-config-airbnb": "5.3.1",
