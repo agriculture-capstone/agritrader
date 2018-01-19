@@ -8,6 +8,7 @@ import EditFarmer from './editFarmer';
 import AddFarmer from './addFarmer';
 
 import styles from './style';
+import Page from '../../../../lib/baseComponents/Page/index';
 
 interface OwnProps {
   mode?: string;
@@ -27,7 +28,7 @@ export interface OwnState {
 /**
  * Container for application
  */
-export default class FarmerInformation extends React.Component<OwnProps, OwnState> {
+export default class FarmerInformation extends Page<OwnProps, OwnState> {
 
   private static defaultProps = {
     mode: 'view',

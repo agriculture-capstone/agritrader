@@ -9,6 +9,7 @@ import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
+import Page from '../../lib/baseComponents/Page/index';
 
 interface OwnPropsType {}
 
@@ -23,7 +24,7 @@ export type HomePropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 /**
  * Home Page Component
  */
-class Home extends React.Component<HomePropsType, {}> {
+class Home extends Page<HomePropsType, {}> {
 
   public constructor(props: HomePropsType) {
     super(props);

@@ -25,6 +25,7 @@ import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
 import headerActions from '../../../store/modules/header/actions';
 import drawerActions from '../../../store/modules/drawer/actions';
+import Page from '../../lib/baseComponents/Page/index';
 
 interface OwnState {
   username: string;
@@ -49,14 +50,17 @@ interface DispatchProps {
 
 export type Props = OwnProps & StoreProps & DispatchProps;
 
-class Login extends React.Component<Props, OwnState>{
+class Login extends Page<Props, OwnState>{
 
-  // TODO: Move into constructor
-  // TODO: Should not be storing password in memory if we can help it
-  public state = {
-    username: '',
-    password: '',
-  };
+  public constructor(props: Props) {
+    super(props, 'empty');
+
+    // TODO: Should not be storing password in memory if we can help it
+    this.state = {
+      username: '',
+      password: '',
+    };
+  }
 
   private updateUsername = (value: string) => {
     // TODO: Use function argument
@@ -86,11 +90,6 @@ class Login extends React.Component<Props, OwnState>{
     }
     */
 
-  }
-
-  public componentWillMount() {
-    this.props.hideHeader();
-    this.props.lockDrawer();
   }
 
   public render() {

@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import store from '../../../../store';
 import searchBarActions from '../../../../store/modules/searchBar/actions';
+import Page, { PageType } from '../Page';
 
 export interface SearchPageProps {}
 
@@ -32,11 +33,11 @@ export interface SearchPageState {
   }
  *
  */
-export default abstract class SearchPage<P extends SearchPageProps, S extends SearchPageState> extends React.Component<P, S> {
+export default abstract class SearchPage<P extends SearchPageProps, S extends SearchPageState> extends Page<P, S> {
   private placeholder: string | undefined;
 
-  public constructor(props: P, placeholder?: string) {
-    super(props);
+  public constructor(props: P, type?: PageType, placeholder?: string) {
+    super(props, type);
 
     // Initialize
     this.placeholder = placeholder;
@@ -63,10 +64,16 @@ export default abstract class SearchPage<P extends SearchPageProps, S extends Se
 
     // Enable search bar
     store.dispatch(searchBarActions.showSearchBar(this.placeholder));
+
+    // Call super
+    super.componentWillMount && super.componentWillMount();
   }
 
   public componentWillUnmount() {
     // Disable the search bar
     store.dispatch(searchBarActions.removeSearchBar());
+
+    // Call super
+    super.componentWillUnmount && super.componentWillUnmount();
   }
 }
