@@ -59,7 +59,7 @@ class Home extends React.Component<HomePropsType, {}> {
                     </Grid>
             </Panel>
             <View style={styles.menuButtons} >
-            <CardButton title="Farmer Manager" iconName="people" iconColor="#383838" route={Route.FARMER} onPress={this.onCardPress} />
+            <CardButton title="Farmer Manager" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
             <CardButton title="Exports" iconName="car" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
             <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
 
@@ -71,7 +71,7 @@ class Home extends React.Component<HomePropsType, {}> {
     }
 }
 
-const HomePage = createPage<HomePropsType>(Home, 'menu');
+// const HomePage = createPage<HomePropsType>(Home, 'menu');
 
 
 let styles = StyleSheet.create({
@@ -98,4 +98,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HomePage);
+)(Home);

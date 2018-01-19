@@ -36,7 +36,7 @@ export type InjectedSearchProps = SearchPageState;
   export default createPage(MyPage, 'back', 'Search Farmers');
 *
 */
-function createSearchPage<InjectedProps>(
+export default function createSearchPage<InjectedProps>(
   WrappedComponent: React.ComponentType<InjectedProps & InjectedSearchProps>,
   type: PageType = 'menu',
   placeholder = 'Search',
