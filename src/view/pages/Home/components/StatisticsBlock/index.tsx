@@ -3,10 +3,15 @@ import { Root, Grid, Row, Col, Content, Button, Text, Card, Body, CardItem } fro
 import { StyleSheet, View } from 'react-native';
 
 
+interface StatisticsBlockPropsType {
+    value: string,
+    units: string,
+    label: string
+}
 /**
- * Home Page Component
+ * StatisticsBlock Component
  */
-export default class StatisticsBlock extends React.Component<{}, {}> {
+export default class StatisticsBlock extends React.Component<StatisticsBlockPropsType, {}> {
     // TODO need to connect this to the redux state
     /**
      * Render method for Farmer
@@ -14,10 +19,11 @@ export default class StatisticsBlock extends React.Component<{}, {}> {
   public render() {
       return (
        
-                        <Col >
-                        <Text   style={[styles.stats, styles.value]}>1,175</Text>
-                        <Text   style={[styles.stats, styles.unit]}>L</Text>
-                        <Text  style={[styles.stats, styles.label]}>Today</Text>
+                        <Col style={styles.content} >
+                        <Text   style={[styles.stats, styles.value]}>{this.props.value} <Text   style={[styles.stats, styles.unit]}>{this.props.units}</Text></Text>
+                        
+                        <Text  style={[styles.stats, styles.label]}>{this.props.label.toUpperCase()}</Text>
+                        
                         </Col>
                         
         );
@@ -34,12 +40,16 @@ let styles = StyleSheet.create({
         textAlign: "center"
     },
     label: {
-        color: "gray"
+        color: "gray", 
+        fontSize: 12,
     },
     unit : {
 
     }, 
     value : {
-
+        fontSize: 28
+    },
+    content: {
+        padding: 5
     }
 });    

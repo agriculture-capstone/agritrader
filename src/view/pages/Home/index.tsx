@@ -21,39 +21,24 @@ export default class Home extends React.Component<{}, {}> {
             <Panel title="Trader Joe" expandable={false}> 
                 <Grid>
                     <Row>
-                        <StatisicsBlock /> 
-                        <Col >
-                        <Text   style={styles.stats}>1,175</Text>
-                        <Text   style={styles.stats}>L</Text>
-                        <Text  style={[styles.stats, styles.statsLabel]}>Today</Text>
-                        </Col>
-                        <Col>
-                        <Text  style={styles.stats}>2,250</Text>
-                        <Text   style={styles.stats}>L</Text>
-                        <Text  style={[styles.stats, styles.statsLabel]}>Average Daily</Text>
-                        </Col>
-                        <Col >
-                        <Text   style={styles.stats}>7.4M</Text>
-                        <Text   style={styles.stats}>UGX</Text>
-                        <Text  style={[styles.stats, styles.statsLabel]}>All Farmers Balance</Text>
-                        </Col>
-                        <Col>
-                        <Text  style={styles.stats}>1.1M</Text>
-                        
-                        <Text   style={styles.stats}>UGX</Text>
-                        <Text  style={[styles.stats, styles.statsLabel]}>Farmer Debts</Text>
-                        </Col>
+                        <Col><Text style={styles.label}> {"Friday, January 19, 2018".toUpperCase()}</Text></Col>
                         </Row>
-                        <Row>
-                       
-                            </Row>
-
+                    <Row>
+                        <StatisicsBlock value='1,175' units="L" label="Today"/> 
+                        <StatisicsBlock value='2,250' units="L" label="Average Daily"/> 
+                        
+                        </Row>
+<Row>
+<StatisicsBlock value='7.4M' units="UGX" label="All Farmers Balance"/> 
+                        <StatisicsBlock value='1.1M' units="UGX" label="Farmer Debts"/> 
+                        </Row>
                     </Grid>
             </Panel>
             <View style={styles.menuButtons} >
             <CardButton title="Farmer Manager" iconName="people"/>
-            <CardButton title="Warehouse Products" iconName="basket"/>
             <CardButton title="Exports" iconName="car"/>
+            <CardButton title="Warehouse Products" iconName="cart"/>
+            
             <CardButton title="View Records" iconName="stats" />
                 
             </View>
@@ -68,10 +53,8 @@ let styles = StyleSheet.create({
         marginRight: 10,
         marginLeft: 10
     },
-    stats: {
-        textAlign: "center"
-    },
-    statsLabel: {
-        color: "gray"
+    label: {
+        textAlign: "center",
+        color: "#383838"
     }
 });    
