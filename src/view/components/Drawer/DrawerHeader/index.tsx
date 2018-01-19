@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { Text } from 'native-base';
-import { Grid } from 'react-native-easy-grid';
+import { Text, Grid, Row, Col, Icon } from 'native-base';
+import { images } from '../../../assets';
+import {
+  Image, View
+} from 'react-native';
 
 import style from './style';
 
@@ -11,7 +14,18 @@ interface OwnProps {
 const DrawerHeader: React.StatelessComponent<OwnProps> = (props) => {
   return (
     <Grid style={style.container}>
-      <Text>Hello</Text>
+      <View style={style.logo} >
+      <Image source={images.truck_icon} style={style.logoicon}/>
+      </View>
+      <View style={style.user}>
+        <Text style={style.userFullName}>
+          Trader Joe
+          </Text>
+          <Text style={style.username}>
+          traderjoe
+          </Text></View>
+     
+      
     </Grid>
   );
 };
