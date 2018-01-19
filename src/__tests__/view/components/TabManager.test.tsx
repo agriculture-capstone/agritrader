@@ -1,7 +1,7 @@
 import 'react-native';
 import * as React from 'react';
 
-import { toTab } from '../../../view/components/TabManager';
+import { toTab } from '../../../view/lib/generators/TabManager';
 
 // Note: test renderer must be required after react-native.
 import * as renderer from 'react-test-renderer';

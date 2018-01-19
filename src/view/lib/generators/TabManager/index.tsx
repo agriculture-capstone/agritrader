@@ -2,9 +2,10 @@ import * as React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps, DispatchProp } from 'react-redux';
 import { Text, Tab as NativeTab, Tabs as NativeTabs } from 'native-base';
 
-import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
-import tabsActions from '../../../store/modules/tabs/actions';
-import { State } from '../../../store/types';
+import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../../store/modules/tabs/types';
+import tabsActions from '../../../../store/modules/tabs/actions';
+import searchBarActions from '../../../../store/modules/searchBar/actions';
+import { State } from '../../../../store/types';
 
 /** TabManager OwnProps */
 interface OwnProps {}
@@ -17,6 +18,7 @@ interface DispatchProps extends DispatchProp<State> {
   setTabs(tabs: ElementTabList, activeTab: ElementTab): void;
   setActiveTab(activeTab: ElementTab): void;
   clearTabs(): void;
+  clearSearchValue(): void;
 }
 
 interface OwnState {}
@@ -46,12 +48,20 @@ function createSimpleComponent(tabs: ElementTabList) {
         throw new Error('Cannot create TabNavigator with no tabs');
       }
 
+      // Bindings
+      this.onChangeTab = this.onChangeTab.bind(this);
+
       // Initialization
       this.tabs = tabs;
     }
 
+    private onChangeTab(i: number) {
+      this.props.setActiveTab(this.tabs[i]);
+      this.props.clearSearchValue();
+    }
+
     private createTab(tab: ElementTab) {
-      return <NativeTab heading={tab.name} key={tab.name}>{tab.element()}</NativeTab>;
+      return <NativeTab heading={tab.name} key={tab.name} >{tab.element()}</NativeTab>;
     }
 
     private getActiveElement() {
@@ -76,7 +86,7 @@ function createSimpleComponent(tabs: ElementTabList) {
     /** React render */
     public render(): JSX.Element {
       return (
-        <NativeTabs>
+        <NativeTabs onChangeTab={this.onChangeTab}>
           {this.tabs.map(this.createTab)}
         </NativeTabs>
       );
@@ -86,7 +96,7 @@ function createSimpleComponent(tabs: ElementTabList) {
 }
 /******************************* Redux *******************************/
 
-/** Convert TabList to ElementTabList */
+/** Convert ElementTabList to TabList */
 export function toTabs(tabList: ElementTabList): StoreTabList {
   return tabList.map(toTab);
 }
@@ -112,6 +122,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
     setActiveTab: tab => dispatch(tabsActions.setActiveTab(tab)),
     setTabs: (tabs, activeTab) => dispatch(tabsActions.setTabs(toTabs(tabs))),
     clearTabs: () => dispatch(tabsActions.clearTabs()),
+    clearSearchValue: () => dispatch(searchBarActions.clearSearchValue()),
   };
 };
 

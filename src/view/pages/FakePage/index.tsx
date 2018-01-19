@@ -1,50 +1,46 @@
 import * as React from 'react';
+import { Text, Content } from 'native-base';
 
-import { Spinner } from 'native-base';
-import createTabManager from '../../components/TabManager/index';
+import searchBarActions from '../../../store/modules/searchBar/actions';
+import SearchPage, { SearchPageState, SearchPageProps } from '../../lib/baseComponents/SearchPage';
+import createTabManager from '../../lib/generators/TabManager';
 import { ElementTabList } from '../../../store/modules/tabs/types';
 
-/** FakePage props */
-export interface Props {}
+interface OwnProps extends SearchPageProps {}
 
 /** FakePage state */
-export interface State {}
+export interface OwnState extends SearchPageState {}
 
-const fakeTabs: ElementTabList = [
+/** FakePage props */
+export type Props = OwnProps;
+
+/** Fake page */
+export class FakePage extends SearchPage<Props, OwnState> {
+
+  constructor(props: Props) {
+    super(props, 'My Fake Page Yass');
+  }
+
+  public render(): JSX.Element {
+    return (
+      <Content>
+        <Text>
+          {this.state.searchBarValue}
+        </Text>
+      </Content>
+    );
+  }
+}
+
+const tabs: ElementTabList = [
   {
-    element: () => <SpinnerPage />,
-    name: 'Test',
+    name: 'Page1',
+    element: () => <FakePage />,
   },
   {
-    element: () => <SpinnerPage />,
-    name: 'Hello',
+    name: 'Page2',
+    element: () => <Content />,
   },
 ];
 
-/** FakePage */
-export const FakePage = createTabManager(fakeTabs);
-
-/**
- * TODO: Documentation
- */
-export class SpinnerPage extends React.Component<Props, State> {
-
-  /************************* Member Variables ************************/
-
-  /************************* Member Functions ************************/
-
-  constructor(props: Props) {
-    super(props);
-  }
-
-  /************************* React Lifecycle *************************/
-
-  /** React render method */
-  public render(): JSX.Element {
-    return (
-      <Spinner color="red" />
-    );
-  }
-
-  /************************* Static Functions ************************/
-}
+export const FakeTabManager = createTabManager(tabs);
