@@ -1,8 +1,8 @@
 import { StackNavigator, NavigationRouteConfigMap } from 'react-navigation';
 import * as React from 'react';
 
-import { FakeTabManager } from '../pages/FakePage';
 import HomePage from '../pages/Home';
+import FarmerPage from '../pages/Farmer';
 
 /** Information for each route in app */
 export interface RouteInfo {
@@ -28,9 +28,9 @@ export const routes: RouteInfo[] = [
     inDrawer: true,
   },
   {
-    name: Route.LOGIN,
+    name: Route.FARMER,
     icon: 'person',
-    component: FakeTabManager,
+    component: FarmerPage,
     inDrawer: true,
   },
 ];
