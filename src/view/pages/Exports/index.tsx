@@ -21,11 +21,12 @@ export default class Farmer extends React.Component<{}, {}> {
         currentWeekTotal="60L"
         currentMonthTotal="180L"
         exportValues={[
-          { date: 'Jan 1 07:30', plate:'BRI8932', vol: 10 }, 
-          { date: 'Jan 1 14:05', plate:'TJI6782', vol: 20 },
-          { date: 'Jan 2 07:30', plate:'BRI8932', vol: 5 },
-          { date: 'Jan 2 11:43', plate:'TIF6571', vol: 13 },
-          { date: 'Jan 2 14:20', plate:'TJI6782', vol: 21 },
+          {date: 'Jan 18 17:31', plate:'BRI8932', vol: 10 }, 
+          {date: 'Jan 18 14:02', plate:'TJI6782', vol: 20 },
+          {date: 'Jan 17 17:33', plate:'BRI8932', vol: 5 },
+          {date: 'Jan 17 11:44', plate:'TIF6571', vol: 13 },
+          {date: 'Jan 16 14:25', plate:'TJI6782', vol: 21 },
+
         ]}
       />
     );
