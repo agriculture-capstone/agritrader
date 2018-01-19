@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker } 
+import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker }
 from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-import { OwnState as FarmerOwnState, FarmerInformation } from './index';
+import FarmerInformation, { OwnState as FarmerOwnState } from '.';
 
 interface OwnProps extends FarmerOwnState {
   updatePaymentCycle(value: string): void;
@@ -103,7 +103,7 @@ const AddFarmer = (props: OwnProps) => {
               </Button>
             </Col>
           </Row>
-        </Grid> 
+        </Grid>
       </Form>
     </Content>
   );

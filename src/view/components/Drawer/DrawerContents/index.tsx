@@ -29,7 +29,9 @@ const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
 };
 
 function getDrawerItems(props: OwnProps, routes: RouteInfo[]): JSX.Element[] {
-  return routes.map(route => <DrawerItem icon={route.icon} key={route.name} name={route.name} onPress={props.onPress} />);
+  return routes
+    .filter(route => route.inDrawer)
+    .map(route => <DrawerItem icon={route.icon} key={route.name} name={route.name} onPress={props.onPress} />);
 }
 
 export default DrawerContents;

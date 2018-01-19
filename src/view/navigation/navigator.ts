@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import HomePage from '../pages/Home';
 import FarmerPage from '../pages/Farmer';
+import LoginPage from '../pages/Login';
 
 /** Information for each route in app */
 export interface RouteInfo {
@@ -33,6 +34,12 @@ export const routes: RouteInfo[] = [
     component: FarmerPage,
     inDrawer: true,
   },
+  {
+    name: Route.LOGIN,
+    icon: 'person',
+    component: LoginPage,
+    inDrawer: false,
+  },
 ];
 
 /** Convert IRoute[] to a NavigationRouteConfigMap */
@@ -45,7 +52,7 @@ function toNavigatorRoutes(routes: RouteInfo[]): NavigationRouteConfigMap {
 }
 
 /** Initial route for appplication */
-export const INITIAL_ROUTE = Route.HOME;
+export const INITIAL_ROUTE = Route.LOGIN;
 
 /** Top-level navigator for application */
 const navigator = StackNavigator(toNavigatorRoutes(routes), {

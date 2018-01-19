@@ -7,8 +7,7 @@ import NavContainer from './navigation';
 import Drawer from './components/Drawer';
 import Header from './components/Header';
 import store from '../store';
-
-import { modes, FarmerInformation } from './pages/FarmerInformation';
+import Login from './pages/Login';
 
 import Farmer from './pages/Farmer';
 
