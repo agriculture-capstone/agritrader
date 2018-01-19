@@ -109,7 +109,11 @@ android {
     }
     // signingConfigs {
     //     release {
+<<<<<<< HEAD
     //         storeFile file(AGRITRADER_DEPLOY_UNSTABLE_STORE_FILE)
+=======
+    //         storeFile file(project.property(AGRITRADER_DEPLOY_UNSTABLE_STORE_FILE))
+>>>>>>> james/AT-62/exports-page
     //         storePassword AGRITRADER_DEPLOY_UNSTABLE_STORE_PASSWORD
     //         keyAlias AGRITRADER_DEPLOY_UNSTABLE_KEY_ALIAS
     //         keyPassword AGRITRADER_DEPLOY_UNSTABLE_KEY_PASSWORD

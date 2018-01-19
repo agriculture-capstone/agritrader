@@ -9,7 +9,6 @@ import Header from './components/Header';
 import store from '../store';
 import Login from './pages/Login';
 
-import Farmer from './pages/Farmer';
 
 /**
  * Entry point for application
