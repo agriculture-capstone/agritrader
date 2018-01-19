@@ -2,8 +2,9 @@ import { Action } from './types';
 
 const searchBarActions = {
 
-  showSearchBar(): Action {
+  showSearchBar(placeholder = 'Search'): Action {
     return {
+      placeholder,
       type: 'SHOW_SEARCH_BAR',
     };
   },

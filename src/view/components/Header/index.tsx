@@ -15,6 +15,7 @@ import {
 
 import { State } from '../../../store/types';
 import appActions from '../../../store/modules/app/actions';
+import searchBarActions from '../../../store/modules/searchBar/actions';
 
 interface OwnProps {}
 interface OwnState {}
@@ -23,11 +24,13 @@ interface StoreProps {
   drawerLocked: boolean;
   title: string;
   searchBarShown: boolean;
+  searchPlaceholder: string;
 }
 
 interface DispatchProps {
   openDrawer(): void;
   goBack(): void;
+  onSearchChange(value: string): void;
 }
 
 /** Header props */
@@ -46,6 +49,7 @@ class Header extends React.Component<Props, OwnState> {
 
     // Bindings
     this.onMenuClick = this.onMenuClick.bind(this);
+    this.onBackClick = this.onBackClick.bind(this);
   }
 
   private onMenuClick() {
@@ -84,7 +88,7 @@ class Header extends React.Component<Props, OwnState> {
     return (
       <Item>
         {this.leftSearchIcon()}
-        <Input placeholder="Search" />
+        <Input placeholder={this.props.searchPlaceholder} onChangeText={this.props.onSearchChange} />
         <Icon name="search" />
       </Item>
     );
@@ -122,6 +126,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ow
     drawerLocked: state.app.drawerLocked,
     title: state.app.title,
     searchBarShown: state.searchBar.shown,
+    searchPlaceholder: state.searchBar.placeholder,
   };
 };
 
@@ -129,6 +134,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
   return {
     openDrawer: () => dispatch(appActions.setDrawerShown(true)),
     goBack: () => dispatch(NavigationActions.back()),
+    onSearchChange: (value: string) => dispatch(searchBarActions.setSearchBarValue(value)),
   };
 };
 

@@ -1,70 +1,31 @@
 import * as React from 'react';
-import { Spinner } from 'native-base';
-import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
+import { Text, Content } from 'native-base';
 
-import { State } from '../../../store/types';
 import searchBarActions from '../../../store/modules/searchBar/actions';
+import SearchPage, { SearchPageState, SearchPageProps } from '../../lib/baseComponents/SearchPage';
 
-interface OwnProps {}
-
-interface StoreProps {}
-
-interface DispatchProps {
-  showSearchBar(): void;
-  clearSearchBar(): void;
-}
+interface OwnProps extends SearchPageProps {}
 
 /** FakePage state */
-export interface State {}
+export interface OwnState extends SearchPageState {}
 
 /** FakePage props */
-export type Props = OwnProps & StoreProps & DispatchProps;
+export type Props = OwnProps;
 
-/**
- * TODO: Documentation
- */
-export class Intermediate extends React.Component<Props, State> {
-
-  /************************* Member Variables ************************/
-
-  /************************* Member Functions ************************/
+/** Fake page */
+export class FakePage extends SearchPage<Props, OwnState> {
 
   constructor(props: Props) {
-    super(props);
+    super(props, 'My Fake Page Yass');
   }
 
-  /************************* React Lifecycle *************************/
-
-  public componentWillMount() {
-    this.props.showSearchBar();
-  }
-
-  public componentWillUnmount() {
-    this.props.clearSearchBar();
-  }
-
-  /** React render method */
   public render(): JSX.Element {
     return (
-      <Spinner color="red" />
+      <Content>
+        <Text>
+          {this.state.searchBarValue}
+        </Text>
+      </Content>
     );
   }
-
-  /************************* Static Functions ************************/
 }
-
-const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
-  return {};
-};
-
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
-  return {
-    showSearchBar: () => dispatch(searchBarActions.showSearchBar()),
-    clearSearchBar: () => dispatch(searchBarActions.clearSearchBar()),
-  };
-};
-
-export const FakePage = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Intermediate);

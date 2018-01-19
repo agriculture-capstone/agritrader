@@ -10,6 +10,7 @@ const searchBarReducer: Reducer<SearchBarState> = (state = initialState, action:
       return {
         ...state,
         shown: true,
+        placeholder: action.placeholder,
         value: '',
       };
 
