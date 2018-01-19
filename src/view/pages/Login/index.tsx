@@ -50,10 +50,10 @@ interface DispatchProps {
 
 export type Props = OwnProps & StoreProps & DispatchProps;
 
-class Login extends Page<Props, OwnState>{
+class Login extends React.Component<Props, OwnState> {
 
   public constructor(props: Props) {
-    super(props, 'empty');
+    super(props);
 
     // TODO: Should not be storing password in memory if we can help it
     this.state = {

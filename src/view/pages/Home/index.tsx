@@ -24,7 +24,7 @@ export type HomePropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 /**
  * Home Page Component
  */
-class Home extends Page<HomePropsType, {}> {
+class Home extends React.Component<HomePropsType, {}> {
 
   public constructor(props: HomePropsType) {
     super(props);

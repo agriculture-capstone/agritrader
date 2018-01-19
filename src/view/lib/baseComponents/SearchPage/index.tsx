@@ -33,11 +33,11 @@ export interface SearchPageState {
   }
  *
  */
-export default abstract class SearchPage<P extends SearchPageProps, S extends SearchPageState> extends Page<P, S> {
+export default abstract class SearchPage<P extends SearchPageProps, S extends SearchPageState> extends React.Component<P, S> {
   private placeholder: string | undefined;
 
   public constructor(props: P, type?: PageType, placeholder?: string) {
-    super(props, type);
+    super(props);
 
     // Initialize
     this.placeholder = placeholder;
