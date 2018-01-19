@@ -10,6 +10,7 @@ import DrawerHeader from '../DrawerHeader';
 /** DrawerContents props */
 export interface OwnProps {
   onPress(route: Route): void;
+  onLogout(): void;
 }
 
 const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
@@ -20,9 +21,9 @@ const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
         {getDrawerItems(props, routes)}
       </List>
       <View>
-      <Button danger full>
-      <Text> Logout </Text>
-      </Button>
+        <Button onPress={props.onLogout} danger full>
+          <Text> Logout </Text>
+        </Button>
       </View>
     </Content>
   );
