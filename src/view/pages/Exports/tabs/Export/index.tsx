@@ -13,9 +13,8 @@ interface ExportPropTypes {
   exportValues: Array<any>;
 }
 
-
 /**
- * Container for Farmer
+ * Container for Exports
  */
 export default class Export extends React.Component<ExportPropTypes, {}> {
   // TODO need to connect this to the redux state
@@ -24,30 +23,32 @@ export default class Export extends React.Component<ExportPropTypes, {}> {
    */
   public render() {
     return (
-      <View style={{ flex:1 }}>
-        <ScrollView>
-          <Grid>
-            <Row style={{ right: 10, width: 380  }}>
-              <CardSummary
-                title={'Milk Exports'}
-                allTimeTotal={this.props.allTimeTotal}
-                currentWeekTotal={this.props.currentWeekTotal}
-                currentMonthTotal={this.props.currentMonthTotal}
-              />
-            </Row>
-            <Row>
-              <ProductCard
-                values={this.props.exportValues}
-              />
-            </Row>
-          </Grid>
-        </ScrollView>
-        <View style={{ height: 40 }}>
-          <Button full primary active style={{ flex: 1 }}>
-            <Text style={{ fontSize: 20, color: 'white' }}>New Entry</Text>
-          </Button>
+      <Content>
+        <View style={{ flex: 1 }}>
+          <ScrollView>
+            <Grid>
+              <Row style={{ right: 10, width: 380 }}>
+                <CardSummary
+                  title={'Milk Exports'}
+                  allTimeTotal={this.props.allTimeTotal}
+                  currentWeekTotal={this.props.currentWeekTotal}
+                  currentMonthTotal={this.props.currentMonthTotal}
+                />
+              </Row>
+              <Row>
+                <ProductCard
+                  values={this.props.exportValues}
+                />
+              </Row>
+            </Grid>
+          </ScrollView>
+          <View style={{ height: 40 }}>
+            <Button full primary active style={{ flex: 1 }}>
+              <Text style={{ fontSize: 20, color: 'white' }}>New Entry</Text>
+            </Button>
+          </View>
         </View>
-      </View>
+      </Content>
     );
   }
 }
