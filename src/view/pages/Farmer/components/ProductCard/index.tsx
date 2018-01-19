@@ -19,11 +19,11 @@ export default class ProductCard extends React.Component<ProductCardPropsType, {
   /**
   * Render method for Product Card
   */
-  public render() {    
+  public render() {
     return (
       <DataTable
-        headers={PRODUCT_CARD_HEADERS} 
-        values={this.props.values} 
+        headers={PRODUCT_CARD_HEADERS}
+        values={this.props.values}
        />
     );
   }

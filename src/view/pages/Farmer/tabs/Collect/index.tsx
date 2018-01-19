@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
-import Page from '../../../../lib/baseComponents/Page/index';
+import createPage from '../../../../lib/generators/Page/index';
 
 interface CollectPropsType {
   farmerName: string;
@@ -17,7 +17,7 @@ interface CollectPropsType {
 /**
  * Collect Tab Component
  */
-export default class Collect extends React.Component<CollectPropsType, {}> {
+class Collect extends React.Component<CollectPropsType, {}> {
 
   // TODO: need to connect this to the redux state
   /**
@@ -50,3 +50,5 @@ export default class Collect extends React.Component<CollectPropsType, {}> {
     );
   }
 }
+
+export default createPage(Collect, 'menu');

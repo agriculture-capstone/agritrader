@@ -25,7 +25,7 @@ import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
 import headerActions from '../../../store/modules/header/actions';
 import drawerActions from '../../../store/modules/drawer/actions';
-import Page from '../../lib/baseComponents/Page/index';
+import createPage from '../../lib/generators/Page/index';
 
 interface OwnState {
   username: string;
@@ -92,11 +92,6 @@ class Login extends React.Component<Props, OwnState> {
 
   }
 
-  public componentWillMount() {
-    this.props.hideHeader();
-    this.props.lockDrawer();
-  }
-
   public render() {
     return (
       <KeyboardAvoidingView
@@ -147,6 +142,8 @@ class Login extends React.Component<Props, OwnState> {
   }
 }
 
+const LoginPage = createPage(Login, 'empty');
+
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
   return {};
 };
@@ -164,4 +161,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Login);
+)(LoginPage);
