@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col, Content, Button, Fab, Icon } from 'native-base';
-import { Text, StyleSheet } from 'react-native';
+import { Root, Grid, Row, Col, Content, Button, Fab, Icon, Footer, FooterTab } from 'native-base';
+import { Text, StyleSheet, ScrollView, View } from 'react-native';
 import { Provider } from 'react-redux';
 import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
@@ -20,33 +20,34 @@ interface ExportPropTypes {
 export default class Export extends React.Component<ExportPropTypes, {}> {
   // TODO need to connect this to the redux state
   /**
-   * Render method for Farmer
+   * Render method for Exports
    */
   public render() {
     return (
-      <Content padder scrollEnabled={true}>
-
-        <Grid>
-          <Row style={{ right: 17, width: 370 }}>
-            <CardSummary
-              title={'Milk Exports'}
-              allTimeTotal={this.props.allTimeTotal}
-              currentWeekTotal={this.props.currentWeekTotal}
-              currentMonthTotal={this.props.currentMonthTotal}
-            />
-          </Row>
-          <Row>
-            <ProductCard
-              values={this.props.exportValues}
-            />
-          </Row>
-          <Row >
-            <Button full primary style={{ flex: 1 }}>
-              <Text style={{ fontSize: 20, color: 'white' }}>New Entry</Text>
-            </Button>
-          </Row>
-        </Grid>
-      </Content>
+      <View style={{ flex:1 }}>
+        <ScrollView>
+          <Grid>
+            <Row style={{ right: 10, width: 380  }}>
+              <CardSummary
+                title={'Milk Exports'}
+                allTimeTotal={this.props.allTimeTotal}
+                currentWeekTotal={this.props.currentWeekTotal}
+                currentMonthTotal={this.props.currentMonthTotal}
+              />
+            </Row>
+            <Row>
+              <ProductCard
+                values={this.props.exportValues}
+              />
+            </Row>
+          </Grid>
+        </ScrollView>
+        <View style={{ height: 40 }}>
+          <Button full primary active style={{ flex: 1 }}>
+            <Text style={{ fontSize: 20, color: 'white' }}>New Entry</Text>
+          </Button>
+        </View>
+      </View>
     );
   }
 }
@@ -54,7 +55,7 @@ export default class Export extends React.Component<ExportPropTypes, {}> {
 const styles = StyleSheet.create({
   addEntryBtn: {
     //top: 195,
-    right: -20
+    right: -20,
     backgroundColor: 'red',
   },
 
