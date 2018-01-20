@@ -20,7 +20,7 @@ const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
       <List>
         {getDrawerItems(props, routes)}
       </List>
-      <Button danger full>
+      <Button danger full onPress={props.onLogout}>
       <Text> Sign out </Text>
       </Button>
     </Content>
