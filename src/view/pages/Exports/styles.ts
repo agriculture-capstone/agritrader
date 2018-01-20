@@ -9,10 +9,4 @@ export const styles = StyleSheet.create({
   container: {
     backgroundColor: '#3F51B5',
   },
-
-  addEntryBtn: {
-    //top: 195,
-    right: -20,
-    backgroundColor: 'red',
-  },
 });

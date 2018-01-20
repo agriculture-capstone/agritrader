@@ -1,9 +1,9 @@
 import { StackNavigator, NavigationRouteConfigMap } from 'react-navigation';
 import * as React from 'react';
 
-<<<<<<< HEAD
 import HomePage from '../pages/Home';
 import FarmerPage from '../pages/Farmer';
+import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 
 /** Information for each route in app */
@@ -13,12 +13,6 @@ export interface RouteInfo {
   component: React.ComponentClass | React.StatelessComponent;
   inDrawer: boolean;
 }
-=======
-import { FakePage } from '../../view/pages/FakePage';
-import Farmer from '../../view/pages/Farmer';
-import Exports from '../../view/pages/Exports';
-
->>>>>>> james/AT-62/exports-page
 
 /** Named routes in the application */
 export enum Route {
@@ -43,6 +37,12 @@ export const routes: RouteInfo[] = [
     inDrawer: true,
   },
   {
+    name: Route.EXPORTS,
+    icon: 'person',
+    component: ExportsPage,
+    inDrawer: true,
+  },
+  {
     name: Route.LOGIN,
     icon: 'person',
     component: LoginPage,
@@ -60,29 +60,13 @@ function toNavigatorRoutes(routes: RouteInfo[]): NavigationRouteConfigMap {
 }
 
 /** Initial route for appplication */
-<<<<<<< HEAD
 export const INITIAL_ROUTE = Route.LOGIN;
 
 /** Top-level navigator for application */
 const navigator = StackNavigator(toNavigatorRoutes(routes), {
-=======
-export const INITIAL_ROUTE = Route.EXPORTS;
-
-/** Top-level navigator for application */
-export default StackNavigator({
-  [Route.HOME]: {
-    screen: FakePage,
-  },
-  [Route.FARMER]: {
-    screen: Farmer,
-  },
-  [Route.EXPORTS]: {
-    screen: Exports,
-  },
-}, {
->>>>>>> james/AT-62/exports-page
   headerMode: 'none',
   initialRouteName: INITIAL_ROUTE,
 });
 
 export default navigator;
+
