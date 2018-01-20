@@ -18,10 +18,38 @@ const createCollect = () => (
   />
 );
 
+const createLoan = () => (
+  <Collect
+    farmerName="Bradley the Farmer"
+    allTimeTotal="3944.L"
+    currentWeekTotal="3.4L"
+    currentMonthTotal="0.2L"
+    collectionValues={[{ date:'Jan 1', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
+  />
+);
+
+const createBuy = () => (
+  <Collect
+    farmerName="Bradley the Farmer"
+    allTimeTotal="3944.L"
+    currentWeekTotal="3.4L"
+    currentMonthTotal="0.2L"
+    collectionValues={[{ date:'Jan 1', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
+  />
+);
+
 export default createTabManager(
   [
     {
       name: 'Collect',
+      element: createCollect,
+    },
+    {
+      name: 'Loan',
+      element: createCollect,
+    },
+    {
+      name: 'Buy',
       element: createCollect,
     },
     {
