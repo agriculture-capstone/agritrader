@@ -3,7 +3,7 @@ import { Root, Grid, Row, Col, Content, Button, Text } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import CardSummary from '../../components/CardSummary';
-import ProductCard from '../../components/ProductCard';
+import DataTable from '../../../../components/DataTable';
 import createPage from '../../../../generators/Page/index';
 
 interface CollectPropsType {
@@ -36,7 +36,8 @@ class Collect extends React.Component<CollectPropsType, {}> {
             />
           </Row>
           <Row>
-            <ProductCard
+            <DataTable
+              headers={["Date", "Product", "Quantity", "Price"]}
               values={this.props.collectionValues}
             />
           </Row>

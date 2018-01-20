@@ -8,9 +8,8 @@ import createPage from '../../../../generators/Page/index';
 
 interface CollectPropsType {
   farmerName: string;
-  allTimeTotal: string;
-  currentWeekTotal: string;
-  currentMonthTotal: string;
+  totalRemainingBalance: string,
+  totalWeeklyPaymentBalence: string,
   collectionValues: any[];
 }
 
@@ -29,9 +28,9 @@ class Collect extends React.Component<CollectPropsType, {}> {
         <Grid>
           <Row>
             <LoanSummary 
-                title="Bradley the Farmer"
-                totalRemainingBalance="$35"
-                totalWeeklyPaymentBalence="$5"
+                title={this.props.farmerName}
+                totalRemainingBalance={this.props.totalRemainingBalance}
+                totalWeeklyPaymentBalence={this.props.totalWeeklyPaymentBalence}
             />
           </Row>
           <Row>
