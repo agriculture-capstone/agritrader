@@ -77,4 +77,4 @@ export const modes = {
   view: 'view',
 };
 
-export default createPage(FarmerInformation, 'menu');
+export default createPage(FarmerInformation);

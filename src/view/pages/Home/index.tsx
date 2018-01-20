@@ -71,7 +71,7 @@ class Home extends React.Component<HomePropsType, {}> {
     }
 }
 
-const HomePage = createPage<HomePropsType>(Home, 'menu');
+const HomePage = createPage<HomePropsType>(Home);
 
 
 let styles = StyleSheet.create({

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import store from '../../../../store';
 import searchBarActions from '../../../../store/modules/searchBar/actions';
-import createPage, { PageType }from '../../generators/Page/index';
+import createPage from '../../generators/Page/index';
 
 export interface SearchPageProps { }
 
@@ -38,7 +38,6 @@ export type InjectedSearchProps = SearchPageState;
 */
 export default function createSearchPage<InjectedProps>(
   WrappedComponent: React.ComponentType<InjectedProps & InjectedSearchProps>,
-  type: PageType = 'menu',
   placeholder = 'Search',
 ) {
 
@@ -87,5 +86,5 @@ export default function createSearchPage<InjectedProps>(
   }
 
   // Wrap in page and return
-  return createPage(SearchPage, type);
+  return createPage(SearchPage);
 }

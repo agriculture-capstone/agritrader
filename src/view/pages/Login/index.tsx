@@ -134,7 +134,7 @@ class Login extends React.Component<Props, OwnState> {
   }
 }
 
-const LoginPage = createPage(Login, 'empty');
+const LoginPage = createPage(Login);
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
   return {};

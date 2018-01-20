@@ -84,4 +84,4 @@ class FarmerSearch extends React.Component<Props, State> {
   /************************* Static Functions ************************/
 }
 
-export default createSearchPage<OwnProps>(FarmerSearch, 'back', 'Search Farmers');
+export default createSearchPage<OwnProps>(FarmerSearch, 'Search Farmers');

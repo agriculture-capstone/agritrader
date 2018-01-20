@@ -51,4 +51,4 @@ class Collect extends React.Component<CollectPropsType, {}> {
   }
 }
 
-export default createPage(Collect, 'menu');
+export default createPage(Collect);

@@ -6,12 +6,16 @@ import FarmerPage from '../pages/Farmer';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
 
+/** Different types of pages */
+export type PageType = 'menu' | 'back' | 'empty';
+
 /** Information for each route in app */
 export interface RouteInfo {
   name: Route;
   icon: string;
   component: React.ComponentClass | React.StatelessComponent;
   inDrawer: boolean;
+  type: PageType;
 }
 
 /** Named routes in the application */
@@ -29,24 +33,28 @@ export const routes: RouteInfo[] = [
     icon: 'person',
     component: LoginPage,
     inDrawer: false,
+    type: 'empty',
   },
   {
     name: Route.HOME,
     icon: 'home',
     component: HomePage,
     inDrawer: true,
+    type: 'menu',
   },
   {
     name: Route.FARMER,
     icon: 'person',
     component: FarmerPage,
     inDrawer: true,
+    type: 'menu',
   },
   {
     name: Route.SEARCH_FARMER,
     icon: 'search',
     component: FarmerSearch,
     inDrawer: true,
+    type: 'back',
   },
 ];
 
