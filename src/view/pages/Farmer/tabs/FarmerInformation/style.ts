@@ -40,6 +40,12 @@ const styles = StyleSheet.create({
     paddingTop: 28,
     paddingLeft: 14,
   },
+  addEntryButton: {
+    paddingLeft: 21,
+    paddingRight: 21,
+    paddingTop: 21,
+    paddingBottom: 21,
+  },
 });
 
 export default styles;

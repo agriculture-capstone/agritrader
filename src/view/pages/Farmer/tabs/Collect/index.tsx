@@ -6,6 +6,8 @@ import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
 import createPage from '../../../../generators/Page/index';
 
+import styles from '../FarmerInformation/style';
+
 interface CollectPropsType {
   farmerName: string;
   allTimeTotal: string;
@@ -40,12 +42,17 @@ class Collect extends React.Component<CollectPropsType, {}> {
               values={this.props.collectionValues}
             />
           </Row>
+          <Row style={styles.addEntryButton}>
+            <Col>
+              <Button block info >
+                <Text>
+                  ADD ENTRY
+                </Text>
+              </Button>
+            </Col>
+          </Row>
         </Grid>
-        <Button block info>
-          <Text>
-            ADD ENTRY
-          </Text>
-        </Button>
+
       </Content>
     );
   }
