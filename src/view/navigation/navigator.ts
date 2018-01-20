@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import HomePage from '../pages/Home';
 import FarmerPage from '../pages/Farmer';
+import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
 
@@ -20,6 +21,7 @@ export enum Route {
   LOGIN = 'Login',
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmer',
+  EXPORTS = 'Exports',
 }
 
 /** App route information */
@@ -48,6 +50,18 @@ export const routes: RouteInfo[] = [
     component: FarmerSearch,
     inDrawer: true,
   },
+  {
+    name: Route.EXPORTS,
+    icon: 'person',
+    component: ExportsPage,
+    inDrawer: true,
+  },
+  {
+    name: Route.LOGIN,
+    icon: 'person',
+    component: LoginPage,
+    inDrawer: false,
+  },
 ];
 
 /** Convert IRoute[] to a NavigationRouteConfigMap */
@@ -69,3 +83,4 @@ const navigator = StackNavigator(toNavigatorRoutes(routes), {
 });
 
 export default navigator;
+
