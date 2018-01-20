@@ -43,7 +43,7 @@ class Collect extends React.Component<CollectPropsType, {}> {
         </Grid>
         <Button block info>
           <Text>
-            ADD ENTRY
+            BUY PRODUCTS
           </Text>
         </Button>
       </Content>

@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps, DispatchProp } from 'react-redux';
 import { Text, Tab as NativeTab, Tabs as NativeTabs } from 'native-base';
 
-import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../../store/modules/tabs/types';
-import tabsActions from '../../../../store/modules/tabs/actions';
-import searchBarActions from '../../../../store/modules/searchBar/actions';
-import { State } from '../../../../store/types';
+import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
+import tabsActions from '../../../store/modules/tabs/actions';
+import searchBarActions from '../../../store/modules/searchBar/actions';
+import { State } from '../../../store/types';
 
 /** TabManager OwnProps */
 interface OwnProps {}

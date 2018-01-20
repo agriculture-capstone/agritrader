@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Grid, Row } from 'react-native-easy-grid';
-import { Content, List, Button, Text } from 'native-base';
+import { Content, List, Button, Text, ListItem } from 'native-base';
 import { View } from 'react-native';
 import { routes, RouteInfo, Route } from '../../../navigation/navigator';
 import style from './style';
@@ -17,14 +17,12 @@ const DrawerContents: React.StatelessComponent<OwnProps> = (props) => {
   return (
     <Content style={style.content} >
       <DrawerHeader />
-      <List style={{ height: 470 }}>
+      <List>
         {getDrawerItems(props, routes)}
       </List>
-      <View>
-        <Button onPress={props.onLogout} danger full>
-          <Text> Logout </Text>
-        </Button>
-      </View>
+      <Button danger full onPress={props.onLogout}>
+      <Text> Sign out </Text>
+      </Button>
     </Content>
   );
 };

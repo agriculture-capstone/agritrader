@@ -1,21 +1,38 @@
 import { Container, Toast } from 'native-base';
 import { BackHandler } from 'react-native';
 import { NavigationState, addNavigationHelpers, NavigationActions } from 'react-navigation';
-import { connect, DispatchProp, MapStateToProps } from 'react-redux';
+import { connect, DispatchProp, MapStateToProps, MapDispatchToProps } from 'react-redux';
 import * as React from 'react';
 
-import Header from '../../view//components/Header';
+import Header from '../../view/components/Header';
 import Drawer from '../../view/components/Drawer';
 import { State } from '../../store/types';
-import Navigator, { Route } from './navigator';
+import Navigator, { routes, PageType, Route } from './navigator';
+import headerActions from '../../store/modules/header/actions';
+import drawerActions from '../../store/modules/drawer/actions';
+import searchBarActions from '../../store/modules/searchBar/actions';
+import navActions from '../../store/modules/nav/actions';
+import store from '../../store';
 
 interface StoreProps {
   nav: NavigationState;
   headerShown: boolean;
+  routeType: PageType | undefined;
+  searchBarShown: boolean;
+}
+
+interface DispatchProps {
+  lockDrawer(): void;
+  unlockDrawer(): void;
+  hideHeader(): void;
+  showHeader(): void;
+  goBack(): void;
+  showSearch(): void;
+  hideSearch(): void;
 }
 
 /** AppNavigation props */
-type Props = DispatchProp<State> & StoreProps;
+type Props = StoreProps & DispatchProps;
 
 /** Container wrapping app with react-navigation */
 class AppNavigation extends React.Component<Props, {}> {
@@ -31,7 +48,7 @@ class AppNavigation extends React.Component<Props, {}> {
   }
 
   private onBackPress() {
-    const { dispatch, nav } = this.props;
+    const { nav } = this.props;
     if (nav.index === 0 || nav.routes[nav.index - 1].routeName === Route.LOGIN) {
       if (nav.index === 0 || this.closeApp) {
         return false;
@@ -46,15 +63,46 @@ class AppNavigation extends React.Component<Props, {}> {
         return true;
       }
     }
-    dispatch && dispatch(NavigationActions.back());
+    this.props.goBack();
     return true;
   }
 
   private navHelpers() {
     return addNavigationHelpers({
-      dispatch: (this.props.dispatch as any),
+      dispatch: (store.dispatch as any),
       state: this.props.nav,
     });
+  }
+
+  private setHeaderAndDrawer(type: PageType | undefined) {
+    switch (type) {
+      case 'back':
+        this.props.showHeader();
+        this.props.lockDrawer();
+        break;
+
+      case 'menu':
+        this.props.showHeader();
+        this.props.unlockDrawer();
+        break;
+
+      case 'empty':
+        this.props.hideHeader();
+        this.props.lockDrawer();
+        break;
+
+      default:
+        throw new Error('should not be default case');
+    }
+  }
+
+  private setSearchBar(searchBarShown: boolean) {
+    searchBarShown ? this.props.showSearch() : this.props.hideSearch();
+  }
+
+  public componentWillMount() {
+    this.setHeaderAndDrawer(this.props.routeType);
+    this.setSearchBar(this.props.searchBarShown);
   }
 
   public componentDidMount() {
@@ -63,6 +111,17 @@ class AppNavigation extends React.Component<Props, {}> {
 
   public componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+  }
+
+  public componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.routeType !== this.props.routeType) {
+      const type = nextProps.routeType;
+      this.setHeaderAndDrawer(type);
+    }
+
+    if (nextProps.searchBarShown !== this.props.searchBarShown) {
+      this.setSearchBar(nextProps.searchBarShown);
+    }
   }
 
   /** Render the navigator */
@@ -81,13 +140,31 @@ class AppNavigation extends React.Component<Props, {}> {
 /****************************** Redux ******************************/
 
 const mapStateToProps: MapStateToProps<StoreProps, {}, State> = (state, ownProps) => {
+  const routeName = state.nav.routes[state.nav.index].routeName;
+  const currentRoute = routes.find(r => r.name === routeName);
+
   return {
     nav: state.nav,
     headerShown: state.header.shown,
+    routeType: currentRoute && currentRoute.type,
+    searchBarShown: !!currentRoute && currentRoute.search,
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => {
+  return {
+    hideHeader: () => dispatch(headerActions.setHeaderShown(false)),
+    showHeader: () => dispatch(headerActions.setHeaderShown(true)),
+    lockDrawer: () => dispatch(drawerActions.setDrawerLocked(true)),
+    unlockDrawer: () => dispatch(drawerActions.setDrawerLocked(false)),
+    goBack: () => dispatch(navActions.goBack()),
+    showSearch: () => dispatch(searchBarActions.showSearchBar()),
+    hideSearch: () => dispatch(searchBarActions.removeSearchBar()),
   };
 };
 
 // Tie navigation into redux store
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(AppNavigation);

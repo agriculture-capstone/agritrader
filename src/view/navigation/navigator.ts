@@ -7,21 +7,26 @@ import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
 
+/** Different types of pages */
+export type PageType = 'menu' | 'back' | 'empty';
+
 /** Information for each route in app */
 export interface RouteInfo {
   name: Route;
   icon: string;
   component: React.ComponentClass | React.StatelessComponent;
   inDrawer: boolean;
+  type: PageType;
+  search: boolean;
 }
 
 /** Named routes in the application */
 export enum Route {
   HOME = 'Home',
   LOGIN = 'Login',
-  FARMER = 'Farmer',
-  SEARCH_FARMER = 'SearchFarmer',
   EXPORTS = 'Exports',
+  FARMER = 'FarmerInfo',
+  SEARCH_FARMER = 'Farmers',
 }
 
 /** App route information */
@@ -31,36 +36,40 @@ export const routes: RouteInfo[] = [
     icon: 'person',
     component: LoginPage,
     inDrawer: false,
+    type: 'empty',
+    search: false,
   },
   {
     name: Route.HOME,
     icon: 'home',
     component: HomePage,
     inDrawer: true,
+    type: 'menu',
+    search: false,
   },
   {
     name: Route.FARMER,
     icon: 'person',
     component: FarmerPage,
-    inDrawer: true,
+    inDrawer: false,
+    type: 'menu',
+    search: false,
   },
   {
     name: Route.SEARCH_FARMER,
-    icon: 'search',
+    icon: 'people',
     component: FarmerSearch,
     inDrawer: true,
+    type: 'back',
+    search: true,
   },
   {
     name: Route.EXPORTS,
     icon: 'person',
     component: ExportsPage,
     inDrawer: true,
-  },
-  {
-    name: Route.LOGIN,
-    icon: 'person',
-    component: LoginPage,
-    inDrawer: false,
+    type: 'menu',
+    search: false,
   },
 ];
 

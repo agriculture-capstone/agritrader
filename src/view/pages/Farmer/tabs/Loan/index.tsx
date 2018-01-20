@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Root, Grid, Row, Col, Content, Button, Text } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
-import CardSummary from '../../components/CardSummary';
-import ProductCard from '../../components/ProductCard';
+import LoanSummary from '../../components/LoanSummary';
+import LoansTable from '../../components/LoansTable';
 import createPage from '../../../../generators/Page/index';
 
 interface CollectPropsType {
@@ -28,24 +28,30 @@ class Collect extends React.Component<CollectPropsType, {}> {
       <Content>
         <Grid>
           <Row>
-            <CardSummary
-              title={this.props.farmerName}
-              allTimeTotal={this.props.allTimeTotal}
-              currentWeekTotal={this.props.currentWeekTotal}
-              currentMonthTotal={this.props.currentMonthTotal}
+            <LoanSummary 
+                title="Bradley the Farmer"
+                totalRemainingBalance="$35"
+                totalWeeklyPaymentBalence="$5"
             />
           </Row>
           <Row>
-            <ProductCard
+            <LoansTable
               values={this.props.collectionValues}
             />
           </Row>
         </Grid>
-        <Button block info>
+        <Row>
+            <Col>
+                 
+                <Button danger block style={{margin: 5}}>
+                    <Text style={{color: "white"}}> PAY </Text>
+                </Button>
+            
+            </Col><Col><Button block info style={{margin: 5}}>
           <Text>
-            ADD ENTRY
+            ADD LOAN
           </Text>
-        </Button>
+        </Button></Col></Row>
       </Content>
     );
   }

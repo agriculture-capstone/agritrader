@@ -23,7 +23,7 @@ import { styles } from './style';
 import { State } from '../../../store/types';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
-import createPage from '../../lib/generators/Page/index';
+import createPage from '../../generators/Page/index';
 
 interface OwnState {
   username: string;
@@ -134,7 +134,7 @@ class Login extends React.Component<Props, OwnState> {
   }
 }
 
-const LoginPage = createPage(Login, 'empty');
+const LoginPage = createPage(Login);
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
   return {};

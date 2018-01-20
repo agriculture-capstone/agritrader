@@ -9,7 +9,7 @@ import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
-import createPage from '../../lib/generators/Page/index';
+import createPage from '../../generators/Page/index';
 
 interface OwnPropsType {}
 
@@ -71,7 +71,7 @@ class Home extends React.Component<HomePropsType, {}> {
     }
 }
 
-const HomePage = createPage<HomePropsType>(Home, 'menu');
+const HomePage = createPage<HomePropsType>(Home);
 
 
 let styles = StyleSheet.create({

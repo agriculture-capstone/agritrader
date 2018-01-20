@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import store from '../../../../store';
-import searchBarActions from '../../../../store/modules/searchBar/actions';
-import createPage, { PageType }from '../../generators/Page/index';
+import store from '../../../store';
+import searchBarActions from '../../../store/modules/searchBar/actions';
+import createPage from '../Page/index';
 
 export interface SearchPageProps { }
 
@@ -38,7 +38,6 @@ export type InjectedSearchProps = SearchPageState;
 */
 export default function createSearchPage<InjectedProps>(
   WrappedComponent: React.ComponentType<InjectedProps & InjectedSearchProps>,
-  type: PageType = 'menu',
   placeholder = 'Search',
 ) {
 
@@ -61,7 +60,7 @@ export default function createSearchPage<InjectedProps>(
 
     /************************* React Lifecycle *************************/
 
-    public componentWillMount() {
+    public componentDidMount() {
       // Listen to updates to search bar value and propogate to local state
       store.subscribe(() => {
         const newSearchValue = store.getState().searchBar.value;
@@ -71,14 +70,6 @@ export default function createSearchPage<InjectedProps>(
           }));
         }
       });
-
-      // Enable search bar
-      store.dispatch(searchBarActions.showSearchBar(this.placeholder));
-    }
-
-    public componentWillUnmount() {
-      // Disable the search bar
-      store.dispatch(searchBarActions.removeSearchBar());
     }
 
     public render() {
@@ -87,5 +78,5 @@ export default function createSearchPage<InjectedProps>(
   }
 
   // Wrap in page and return
-  return createPage(SearchPage, type);
+  return createPage(SearchPage);
 }
