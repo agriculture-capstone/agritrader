@@ -4,9 +4,22 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-import FarmerInformation, { OwnState as FarmerOwnState } from '.';
+// import FarmerInformation, { OwnProps as FarmerOwnProps } from '.';
 
-interface OwnProps extends FarmerOwnState {
+// interface OwnProps extends FarmerOwnProps {
+//   updatePaymentCycle(value: string): void;
+//   updatePaymentMethod(value: string): void;
+// }
+
+export interface OwnProps {
+  farmerFirstName: string;
+  farmerLastName: string;
+  farmerPhoneNumber: string;
+  farmerBusinessName: string;
+  farmerNotes: string;
+  selectedPaymentCycle: string;
+  selectedPaymentMethod: string;
+  modeHandler: Function;
   updatePaymentCycle(value: string): void;
   updatePaymentMethod(value: string): void;
 }
@@ -15,6 +28,11 @@ interface OwnProps extends FarmerOwnState {
  * Stateless component for viewing farmer information
  */
 const AddFarmer = (props: OwnProps) => {
+  
+  const modeHandler = () => {
+    props.modeHandler('view');
+  };
+
   return (
     <Content>
       <Form>
@@ -98,7 +116,7 @@ const AddFarmer = (props: OwnProps) => {
               </Button>
             </Col>
             <Col style={styles.farmerInfoButtonCol}>
-              <Button block success>
+              <Button block success onPress={modeHandler}>
                 <Text style={styles.buttonText}>ADD</Text>
               </Button>
             </Col>

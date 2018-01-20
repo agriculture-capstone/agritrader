@@ -10,65 +10,19 @@ import AddFarmer from './addFarmer';
 import styles from './style';
 import createPage from '../../../../lib/generators/Page/index';
 
-interface OwnProps {
+interface OwnState {
   mode?: string;
 }
 
-export interface OwnState {
-  farmerFirstName: string;
-  farmerLastName: string;
-  farmerPhoneNumber: string;
-  farmerBusinessName: string;
-  farmerNotes: string;
-  selectedPaymentCycle: string;
-  selectedPaymentMethod: string;
-}
-
-
-/**
- * Container for application
- */
-class FarmerInformation extends React.Component<OwnProps, OwnState> {
-
-  public static defaultProps = {
-    mode: 'view',
-  };
-
-  constructor(props: OwnProps) {
-    super(props);
-    this.state = {
-      farmerFirstName: 'Patrick',
-      farmerLastName: 'Keenan',
-      farmerPhoneNumber: '123-456-7890',
-      farmerBusinessName: 'Farmer with coolest hat',
-      farmerNotes: 'Doctor from village A',
-      selectedPaymentCycle: 'Weekly',
-      selectedPaymentMethod: 'Mobile',
-    };
-  }
-
-  private updatePaymentCycle = (value: string) => {
-    this.setState(() => ({ selectedPaymentCycle: value }));
-  }
-
-  private updatePaymentMethod = (value: string) => {
-    this.setState(() => ({ selectedPaymentMethod: value }));
-  }
-
-  /**
-   * Render method for Farmer Information
-   */
-  public render() {
-    const page = 'view';
-
-    if (page === modes.view) {
-      return <ViewFarmer {...this.state} />;
-    } else if (page === modes.add) {
-      return <AddFarmer {...this.state} updatePaymentCycle={this.updatePaymentCycle} updatePaymentMethod={this.updatePaymentMethod} />;
-    } else if (page === modes.edit) {
-      return <EditFarmer {...this.state} />;
-    }
-  }
+export interface OwnProps {
+  // farmerFirstName: string;
+  // farmerLastName: string;
+  // farmerPhoneNumber: string;
+  // farmerBusinessName: string;
+  // farmerNotes: string;
+  // selectedPaymentCycle: string;
+  // selectedPaymentMethod: string;
+  // modeHandler?: Function;
 }
 
 export const modes = {
@@ -76,5 +30,62 @@ export const modes = {
   edit: 'edit',
   view: 'view',
 };
+
+/**
+ * Container for application
+ */
+class FarmerInformation extends React.Component<OwnProps, OwnState> {
+
+  private initialProps: any;
+
+  public static defaultProps = {
+    mode: 'view',
+  };
+
+  constructor(props: OwnProps) {
+    super(props);
+    this.state = { 
+      mode: 'view',
+    };
+    
+    this.initialProps = {
+      farmerFirstName: 'Patrick',
+      farmerLastName: 'Keenan',
+      farmerPhoneNumber: '123-456-7890',
+      farmerBusinessName: 'Farmer with coolest hat',
+      farmerNotes: 'Doctor from village A',
+      selectedPaymentCycle: 'Weekly',
+      selectedPaymentMethod: 'Mobile',
+      // modeHandler:
+    };
+
+    this.changeMode.bind(this);
+  }
+
+  private changeMode = (newMode: string) => {
+    this.setState(() => ({ mode: newMode }));
+  }
+
+  private updatePaymentCycle = (value: string) => {
+    // this.setState(() => ({ selectedPaymentCycle: value }));
+  }
+
+  private updatePaymentMethod = (value: string) => {
+    // this.setState(() => ({ selectedPaymentMethod: value }));
+  }
+
+  /**
+   * Render method for Farmer Information
+   */
+  public render() {
+    if (this.state.mode === modes.view) {
+      return <ViewFarmer {...this.initialProps} modeHandler={this.changeMode} />;
+    } else if (this.state.mode === modes.add) {
+      return <AddFarmer {...this.initialProps} modeHandler={this.changeMode} updatePaymentCycle={this.updatePaymentCycle} updatePaymentMethod={this.updatePaymentMethod} />;
+    } else if (this.state.mode === modes.edit) {
+      return <EditFarmer {...this.initialProps} modeHandler={this.changeMode} />;
+    }
+  }
+}
 
 export default createPage(FarmerInformation, 'menu');

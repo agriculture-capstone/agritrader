@@ -4,12 +4,28 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-import { OwnState as FarmerOwnState }  from './index';
+// import { OwnProps as FarmerOwnProps }  from './index';
+
+interface OwnProps {
+  farmerFirstName: string;
+  farmerLastName: string;
+  farmerPhoneNumber: string;
+  farmerBusinessName: string;
+  farmerNotes: string;
+  selectedPaymentCycle: string;
+  selectedPaymentMethod: string;
+  modeHandler: Function;
+}
 
 /**
  * Stateless component for viewing farmer information
  */
-const ViewFarmer = (props: FarmerOwnState) => {
+const ViewFarmer = (props: OwnProps) => {
+
+  const modeHandler = () => {
+    props.modeHandler('edit');
+  };
+
   return (
     <Content padder>
       <Grid>
@@ -52,7 +68,7 @@ const ViewFarmer = (props: FarmerOwnState) => {
         </Row>
         <Row style={styles.editButton}>
           <Col>
-            <Button block danger>
+            <Button block danger onPress={modeHandler}>
               <Text style={styles.buttonText}>Edit</Text>
             </Button>
           </Col>
