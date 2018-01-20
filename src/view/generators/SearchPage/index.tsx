@@ -60,7 +60,7 @@ export default function createSearchPage<InjectedProps>(
 
     /************************* React Lifecycle *************************/
 
-    public componentWillMount() {
+    public componentDidMount() {
       // Listen to updates to search bar value and propogate to local state
       store.subscribe(() => {
         const newSearchValue = store.getState().searchBar.value;
@@ -70,14 +70,6 @@ export default function createSearchPage<InjectedProps>(
           }));
         }
       });
-
-      // Enable search bar
-      store.dispatch(searchBarActions.showSearchBar(this.placeholder));
-    }
-
-    public componentWillUnmount() {
-      // Disable the search bar
-      store.dispatch(searchBarActions.removeSearchBar());
     }
 
     public render() {

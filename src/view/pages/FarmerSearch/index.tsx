@@ -2,8 +2,13 @@ import * as React from 'react';
 
 import { Content, List, ListItem } from 'native-base';
 import { ScrollView, Text } from 'react-native';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
+import navActions from '../../../store/modules/nav/actions';
+import { Route } from '../../navigation/navigator';
+import createPage from '../../generators/Page/index';
+import { State } from '../../../store/types';
 
 /**
  * This is the basic model for the type of farmer object that
@@ -22,12 +27,14 @@ export interface OwnProps {
   listItems?: farmerList[];
 }
 
-/**
- * The internal state of the list
- */
-interface State {}
+interface StoreProps {}
 
-type Props = OwnProps & InjectedSearchProps;
+interface DispatchProps {
+  navigateToFarmer(): void;
+}
+
+type FarmerSearchProps = StoreProps & DispatchProps & OwnProps;
+type Props = FarmerSearchProps & InjectedSearchProps;
 
 const farmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id: 1 },
                     { name: 'James', phoneNumber: '1-526-123-8123', id: 2 },
@@ -41,7 +48,7 @@ const farmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id: 1 },
                     { name: 'Farmer 239-XB4', phoneNumber: '1-011-101-1001', id: 2 }];
 
 
-class FarmerSearch extends React.Component<Props, State> {
+class FarmerSearch extends React.Component<Props, {}> {
 
   public static defaultProps = {
     listItems: farmerList,
@@ -53,35 +60,54 @@ class FarmerSearch extends React.Component<Props, State> {
 
   public constructor (props: Props) {
     super(props);
+
+    this.renderItem = this.renderItem.bind(this);
+    this.itemClicked = this.itemClicked.bind(this);
+  }
+
+  private itemClicked() {
+    this.props.navigateToFarmer();
   }
 
   /************************* React Lifecycle *************************/
   public render (): JSX.Element {
     return (
       <Content>
-        <ScrollView
-          scrollEnabled={true}
-          alwaysBounceVertical={true}
-        >
+
           <List
             dataArray={this.props.listItems}
             renderRow={this.renderItem}
           />
-        </ScrollView>
+
       </Content>
     );
   }
 
   private renderItem(info: farmerList) {
     return (
-      <ListItem key={info.id}>
+      <ListItem key={info.id} onPress={this.itemClicked} >
         <Text>{info.name}</Text>
         <Text>Phone: {info.phoneNumber}</Text>
       </ListItem>
     );
   }
-
-  /************************* Static Functions ************************/
 }
 
-export default createSearchPage<OwnProps>(FarmerSearch, 'Search Farmers');
+const FarmerSearchPage = createSearchPage<FarmerSearchProps>(FarmerSearch, 'Search Farmers');
+
+/************************* Redux ************************/
+
+const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
+  return {};
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+  return {
+    navigateToFarmer: () => dispatch(navActions.navigateTo(Route.FARMER)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FarmerSearchPage);

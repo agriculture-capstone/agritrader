@@ -10,6 +10,7 @@ import { State } from '../../store/types';
 import Navigator, { routes, PageType, Route } from './navigator';
 import headerActions from '../../store/modules/header/actions';
 import drawerActions from '../../store/modules/drawer/actions';
+import searchBarActions from '../../store/modules/searchBar/actions';
 import navActions from '../../store/modules/nav/actions';
 import store from '../../store';
 
@@ -17,6 +18,7 @@ interface StoreProps {
   nav: NavigationState;
   headerShown: boolean;
   routeType: PageType | undefined;
+  searchBarShown: boolean;
 }
 
 interface DispatchProps {
@@ -25,6 +27,8 @@ interface DispatchProps {
   hideHeader(): void;
   showHeader(): void;
   goBack(): void;
+  showSearch(): void;
+  hideSearch(): void;
 }
 
 /** AppNavigation props */
@@ -79,26 +83,32 @@ class AppNavigation extends React.Component<Props, {}> {
   }
 
   public componentWillReceiveProps(nextProps: Props) {
-    const type = nextProps.routeType;
+    if (nextProps.routeType !== this.props.routeType) {
+      const type = nextProps.routeType;
 
-    switch (type) {
-      case 'back':
-        this.props.showHeader();
-        this.props.lockDrawer();
-        break;
+      switch (type) {
+        case 'back':
+          this.props.showHeader();
+          this.props.lockDrawer();
+          break;
 
-      case 'menu':
-        this.props.showHeader();
-        this.props.unlockDrawer();
-        break;
+        case 'menu':
+          this.props.showHeader();
+          this.props.unlockDrawer();
+          break;
 
-      case 'empty':
-        this.props.hideHeader();
-        this.props.lockDrawer();
-        break;
+        case 'empty':
+          this.props.hideHeader();
+          this.props.lockDrawer();
+          break;
 
-      default:
-        throw new Error('should not be default case');
+        default:
+          throw new Error('should not be default case');
+      }
+    }
+
+    if (nextProps.searchBarShown !== this.props.searchBarShown) {
+      nextProps.searchBarShown ? this.props.showSearch() : this.props.hideSearch();
     }
   }
 
@@ -125,6 +135,7 @@ const mapStateToProps: MapStateToProps<StoreProps, {}, State> = (state, ownProps
     nav: state.nav,
     headerShown: state.header.shown,
     routeType: currentRoute && currentRoute.type,
+    searchBarShown: !!currentRoute && currentRoute.search,
   };
 };
 
@@ -135,6 +146,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => 
     lockDrawer: () => dispatch(drawerActions.setDrawerLocked(true)),
     unlockDrawer: () => dispatch(drawerActions.setDrawerLocked(false)),
     goBack: () => dispatch(navActions.goBack()),
+    showSearch: () => dispatch(searchBarActions.showSearchBar()),
+    hideSearch: () => dispatch(searchBarActions.removeSearchBar()),
   };
 };
 

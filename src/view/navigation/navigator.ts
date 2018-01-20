@@ -16,6 +16,7 @@ export interface RouteInfo {
   component: React.ComponentClass | React.StatelessComponent;
   inDrawer: boolean;
   type: PageType;
+  search: boolean;
 }
 
 /** Named routes in the application */
@@ -34,6 +35,7 @@ export const routes: RouteInfo[] = [
     component: LoginPage,
     inDrawer: false,
     type: 'empty',
+    search: false,
   },
   {
     name: Route.HOME,
@@ -41,6 +43,7 @@ export const routes: RouteInfo[] = [
     component: HomePage,
     inDrawer: true,
     type: 'menu',
+    search: false,
   },
   {
     name: Route.FARMER,
@@ -48,6 +51,7 @@ export const routes: RouteInfo[] = [
     component: FarmerPage,
     inDrawer: true,
     type: 'menu',
+    search: false,
   },
   {
     name: Route.SEARCH_FARMER,
@@ -55,6 +59,7 @@ export const routes: RouteInfo[] = [
     component: FarmerSearch,
     inDrawer: true,
     type: 'back',
+    search: true,
   },
 ];
 
