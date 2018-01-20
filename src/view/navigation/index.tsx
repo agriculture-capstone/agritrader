@@ -19,6 +19,7 @@ interface StoreProps {
   headerShown: boolean;
   routeType: PageType | undefined;
   searchBarShown: boolean;
+  searchPlaceholder: string | undefined;
 }
 
 interface DispatchProps {
@@ -27,7 +28,7 @@ interface DispatchProps {
   hideHeader(): void;
   showHeader(): void;
   goBack(): void;
-  showSearch(): void;
+  showSearch(placeholder?: string): void;
   hideSearch(): void;
 }
 
@@ -96,13 +97,13 @@ class AppNavigation extends React.Component<Props, {}> {
     }
   }
 
-  private setSearchBar(searchBarShown: boolean) {
-    searchBarShown ? this.props.showSearch() : this.props.hideSearch();
+  private setSearchBar(searchBarShown: boolean, placeholder?: string) {
+    searchBarShown ? this.props.showSearch(placeholder) : this.props.hideSearch();
   }
 
   public componentWillMount() {
     this.setHeaderAndDrawer(this.props.routeType);
-    this.setSearchBar(this.props.searchBarShown);
+    this.setSearchBar(this.props.searchBarShown, this.props.searchPlaceholder);
   }
 
   public componentDidMount() {
@@ -120,7 +121,7 @@ class AppNavigation extends React.Component<Props, {}> {
     }
 
     if (nextProps.searchBarShown !== this.props.searchBarShown) {
-      this.setSearchBar(nextProps.searchBarShown);
+      this.setSearchBar(nextProps.searchBarShown, nextProps.searchPlaceholder);
     }
   }
 
@@ -148,6 +149,7 @@ const mapStateToProps: MapStateToProps<StoreProps, {}, State> = (state, ownProps
     headerShown: state.header.shown,
     routeType: currentRoute && currentRoute.type,
     searchBarShown: !!currentRoute && currentRoute.search,
+    searchPlaceholder: currentRoute && currentRoute.searchPlaceholder,
   };
 };
 
@@ -158,7 +160,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => 
     lockDrawer: () => dispatch(drawerActions.setDrawerLocked(true)),
     unlockDrawer: () => dispatch(drawerActions.setDrawerLocked(false)),
     goBack: () => dispatch(navActions.goBack()),
-    showSearch: () => dispatch(searchBarActions.showSearchBar()),
+    showSearch: (placeholder?: string) => dispatch(searchBarActions.showSearchBar(placeholder)),
     hideSearch: () => dispatch(searchBarActions.removeSearchBar()),
   };
 };

@@ -38,18 +38,14 @@ export type InjectedSearchProps = SearchPageState;
 */
 export default function createSearchPage<InjectedProps>(
   WrappedComponent: React.ComponentType<InjectedProps & InjectedSearchProps>,
-  placeholder = 'Search',
+  placeholder?: string,
 ) {
 
   /** Higher order class for wrapping search pages */
   class SearchPage extends React.Component<InjectedProps, SearchPageState> {
-    private placeholder: string;
 
     public constructor(props: InjectedProps) {
       super(props);
-
-      // Initialize
-      this.placeholder = placeholder;
 
       // Initialize state
       const reduxState = store.getState();

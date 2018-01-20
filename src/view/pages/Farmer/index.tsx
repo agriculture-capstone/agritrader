@@ -55,7 +55,7 @@ export default createTabManager(
       element: createBuy,
     },
     {
-      name: 'Information',
+      name: 'Info',
       element: () => <FarmerInformation />,
     },
   ],
