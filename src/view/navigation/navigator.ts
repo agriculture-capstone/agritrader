@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import HomePage from '../pages/Home';
 import FarmerPage from '../pages/Farmer';
+import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
 
@@ -24,6 +25,7 @@ export interface RouteInfo {
 export enum Route {
   HOME = 'Home',
   LOGIN = 'Login',
+  EXPORTS = 'Exports',
   FARMER = 'FarmerInfo',
   SEARCH_FARMER = 'Farmers',
 }
@@ -63,6 +65,14 @@ export const routes: RouteInfo[] = [
     search: true,
     searchPlaceholder: 'Search Farmers',
   },
+  {
+    name: Route.EXPORTS,
+    icon: 'person',
+    component: ExportsPage,
+    inDrawer: true,
+    type: 'menu',
+    search: false,
+  },
 ];
 
 /** Convert IRoute[] to a NavigationRouteConfigMap */
@@ -84,3 +94,4 @@ const navigator = StackNavigator(toNavigatorRoutes(routes), {
 });
 
 export default navigator;
+
