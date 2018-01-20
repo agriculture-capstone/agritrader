@@ -4,7 +4,7 @@ import { Text, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import ProductCard from './components/ProductCard';
-import createTabManager from '../../lib/generators/TabManager';
+import createTabManager from '../../generators/TabManager';
 import Collect from './tabs/Collect';
 import FarmerInformation from './tabs/FarmerInformation';
 

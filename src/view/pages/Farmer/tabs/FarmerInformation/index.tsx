@@ -8,7 +8,7 @@ import EditFarmer from './editFarmer';
 import AddFarmer from './addFarmer';
 
 import styles from './style';
-import createPage from '../../../../lib/generators/Page/index';
+import createPage from '../../../../generators/Page/index';
 
 interface OwnProps {
   mode?: string;

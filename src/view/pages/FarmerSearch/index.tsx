@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Content, List, ListItem } from 'native-base';
 import { ScrollView, Text } from 'react-native';
 
-import createSearchPage, { InjectedSearchProps } from '../../lib/generators/SearchPage';
+import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
 
 /**
  * This is the basic model for the type of farmer object that

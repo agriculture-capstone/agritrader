@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import store from '../../../../store';
-import searchBarActions from '../../../../store/modules/searchBar/actions';
-import createPage from '../../generators/Page/index';
+import store from '../../../store';
+import searchBarActions from '../../../store/modules/searchBar/actions';
+import createPage from '../Page/index';
 
 export interface SearchPageProps { }
 
