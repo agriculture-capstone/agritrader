@@ -23,8 +23,8 @@ export interface RouteInfo {
 export enum Route {
   HOME = 'Home',
   LOGIN = 'Login',
-  FARMER = 'Farmer',
-  SEARCH_FARMER = 'SearchFarmer',
+  FARMER = 'FarmerInfo',
+  SEARCH_FARMER = 'Farmers',
 }
 
 /** App route information */
@@ -49,13 +49,13 @@ export const routes: RouteInfo[] = [
     name: Route.FARMER,
     icon: 'person',
     component: FarmerPage,
-    inDrawer: true,
+    inDrawer: false,
     type: 'menu',
     search: false,
   },
   {
     name: Route.SEARCH_FARMER,
-    icon: 'search',
+    icon: 'people',
     component: FarmerSearch,
     inDrawer: true,
     type: 'back',

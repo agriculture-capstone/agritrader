@@ -74,6 +74,37 @@ class AppNavigation extends React.Component<Props, {}> {
     });
   }
 
+  private setHeaderAndDrawer(type: PageType | undefined) {
+    switch (type) {
+      case 'back':
+        this.props.showHeader();
+        this.props.lockDrawer();
+        break;
+
+      case 'menu':
+        this.props.showHeader();
+        this.props.unlockDrawer();
+        break;
+
+      case 'empty':
+        this.props.hideHeader();
+        this.props.lockDrawer();
+        break;
+
+      default:
+        throw new Error('should not be default case');
+    }
+  }
+
+  private setSearchBar(searchBarShown: boolean) {
+    searchBarShown ? this.props.showSearch() : this.props.hideSearch();
+  }
+
+  public componentWillMount() {
+    this.setHeaderAndDrawer(this.props.routeType);
+    this.setSearchBar(this.props.searchBarShown);
+  }
+
   public componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
@@ -85,30 +116,11 @@ class AppNavigation extends React.Component<Props, {}> {
   public componentWillReceiveProps(nextProps: Props) {
     if (nextProps.routeType !== this.props.routeType) {
       const type = nextProps.routeType;
-
-      switch (type) {
-        case 'back':
-          this.props.showHeader();
-          this.props.lockDrawer();
-          break;
-
-        case 'menu':
-          this.props.showHeader();
-          this.props.unlockDrawer();
-          break;
-
-        case 'empty':
-          this.props.hideHeader();
-          this.props.lockDrawer();
-          break;
-
-        default:
-          throw new Error('should not be default case');
-      }
+      this.setHeaderAndDrawer(type);
     }
 
     if (nextProps.searchBarShown !== this.props.searchBarShown) {
-      nextProps.searchBarShown ? this.props.showSearch() : this.props.hideSearch();
+      this.setSearchBar(nextProps.searchBarShown);
     }
   }
 
