@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import ProductCard from './components/ProductCard';
 import createTabManager from '../../lib/generators/TabManager';
 import Collect from './tabs/Collect';
+import Loan from './tabs/Loan';
 import FarmerInformation from './tabs/FarmerInformation';
 
 const createCollect = () => (
@@ -19,12 +20,12 @@ const createCollect = () => (
 );
 
 const createLoan = () => (
-  <Collect
+  <Loan
     farmerName="Bradley the Farmer"
     allTimeTotal="3944.L"
     currentWeekTotal="3.4L"
     currentMonthTotal="0.2L"
-    collectionValues={[{ date:'Jan 1', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
+    collectionValues={[{ date:'Jan 1', remainingBalance: '$25', weeklyPayment: '$5' }]}
   />
 );
 
@@ -46,11 +47,11 @@ export default createTabManager(
     },
     {
       name: 'Loan',
-      element: createCollect,
+      element: createLoan,
     },
     {
       name: 'Buy',
-      element: createCollect,
+      element: createBuy,
     },
     {
       name: 'Information',
