@@ -1,9 +1,9 @@
-import appState from './state';
+import initialState from './state';
 
 /*----------------------- State -----------------------*/
 
 /** Application module state */
-export type AppState = typeof appState;
+export type DrawerState = typeof initialState;
 
 /*----------------------- Actions -----------------------*/
 
@@ -16,7 +16,4 @@ export type Action = {
 } | {
   type: 'SET_DRAWER_LOCKED',
   locked: boolean,
-} | {
-  type: 'SET_TITLE',
-  title: string,
 };
