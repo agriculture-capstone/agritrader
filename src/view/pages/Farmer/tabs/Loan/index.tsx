@@ -40,11 +40,18 @@ class Collect extends React.Component<CollectPropsType, {}> {
             />
           </Row>
         </Grid>
-        <Button block info>
+        <Row>
+            <Col>
+                 
+                <Button danger block style={{margin: 5}}>
+                    <Text style={{color: "white"}}> PAY </Text>
+                </Button>
+            
+            </Col><Col><Button block info style={{margin: 5}}>
           <Text>
-            ADD ENTRY
+            ADD LOAN
           </Text>
-        </Button>
+        </Button></Col></Row>
       </Content>
     );
   }

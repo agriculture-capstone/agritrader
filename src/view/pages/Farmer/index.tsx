@@ -7,6 +7,7 @@ import ProductCard from './components/ProductCard';
 import createTabManager from '../../lib/generators/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
+import Buy from './tabs/Buy';
 import FarmerInformation from './tabs/FarmerInformation';
 
 const createCollect = () => (
@@ -30,12 +31,12 @@ const createLoan = () => (
 );
 
 const createBuy = () => (
-  <Collect
+  <Buy
     farmerName="Bradley the Farmer"
-    allTimeTotal="3944.L"
-    currentWeekTotal="3.4L"
-    currentMonthTotal="0.2L"
-    collectionValues={[{ date:'Jan 1', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
+    allTimeTotal="$1001.01"
+    currentWeekTotal="$50"
+    currentMonthTotal="$405.50"
+    collectionValues={[{ date:'Jan 1', product: "Cow Feed", quantity: "2", price: "6.50" }]}
   />
 );
 
