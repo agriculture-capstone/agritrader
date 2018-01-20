@@ -18,6 +18,7 @@ export interface RouteInfo {
   inDrawer: boolean;
   type: PageType;
   search: boolean;
+  searchPlaceholder?: string;
 }
 
 /** Named routes in the application */
@@ -62,6 +63,7 @@ export const routes: RouteInfo[] = [
     inDrawer: true,
     type: 'back',
     search: true,
+    searchPlaceholder: 'Search Farmers',
   },
   {
     name: Route.EXPORTS,
