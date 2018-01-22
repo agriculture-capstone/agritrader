@@ -49,22 +49,12 @@ class FarmerInformation extends React.Component<{}, OwnState> {
     this.setState(() => ({ mode: newMode }));
   }
 
-  private updatePaymentCycle = (value: string) => {
-    // this.setState(() => ({ selectedPaymentCycle: value }));
-  }
-
-  private updatePaymentMethod = (value: string) => {
-    // this.setState(() => ({ selectedPaymentMethod: value }));
-  }
-
   /**
    * Render method for Farmer Information
    */
   public render() {
     if (this.state.mode === modes.view) {
       return <ViewFarmer {...this.initialProps} modeHandler={this.changeMode} />;
-    } else if (this.state.mode === modes.add) {
-      return <AddFarmer {...this.initialProps} modeHandler={this.changeMode} updatePaymentCycle={this.updatePaymentCycle} updatePaymentMethod={this.updatePaymentMethod} />;
     } else if (this.state.mode === modes.edit) {
       return <EditFarmer {...this.initialProps} modeHandler={this.changeMode} />;
     }

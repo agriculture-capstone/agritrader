@@ -8,7 +8,7 @@ import styles from './style';
 /**
  * 
  */
-export interface OwnProps {
+export interface OwnPropsType {
   farmerFirstName: string;
   farmerLastName: string;
   farmerPhoneNumber: string;
@@ -24,13 +24,21 @@ export interface OwnProps {
 /**
  * Stateless component for viewing farmer information
  */
-const AddFarmer = (props: OwnProps) => {
+const AddFarmer = (props: OwnPropsType) => {
   
   /**
    * Handles chaning the mode to view farmer
    */
   const modeHandler = () => {
     props.modeHandler('view');
+  };
+
+  const updatePaymentCycle = (value: string) => {
+    // this.setState(() => ({ selectedPaymentCycle: value }));
+  };
+
+  const updatePaymentMethod = (value: string) => {
+    // this.setState(() => ({ selectedPaymentMethod: value }));
   };
 
   return (

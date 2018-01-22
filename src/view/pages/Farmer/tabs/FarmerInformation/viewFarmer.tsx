@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 
 import styles from './style';
 
-interface OwnProps {
+interface OwnPropsType {
   farmerFirstName: string;
   farmerLastName: string;
   farmerPhoneNumber: string;
@@ -19,7 +19,7 @@ interface OwnProps {
 /**
  * Stateless component for viewing farmer information
  */
-const ViewFarmer = (props: OwnProps) => {
+const ViewFarmer = (props: OwnPropsType) => {
 
   const modeHandler = () => {
     props.modeHandler('edit');
