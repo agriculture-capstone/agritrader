@@ -4,8 +4,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {
-  Container,
-  Content,
   Form,
   Item,
   Input,
@@ -15,11 +13,12 @@ import {
   Grid,
   Row,
   Col,
+  Content,
 } from 'native-base';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import { images } from '../../assets/';
-import { styles } from './style';
+import styles from './style';
 import { State } from '../../../store/types';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
@@ -41,9 +40,14 @@ interface StoreProps {
 interface DispatchProps {
   navigateToHome(): void;
 }
-
+/**
+ *Login Properties
+ */
 export type Props = OwnProps & StoreProps & DispatchProps;
 
+/**
+ *Container for the Login screen
+ */
 class Login extends React.Component<Props, OwnState> {
 
   public constructor(props: Props) {
@@ -69,6 +73,7 @@ class Login extends React.Component<Props, OwnState> {
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
+    this.setState({ password: '' });
     /*
     auth: boolean = authenticate(this.state.username, this.state.password);
     if(auth){
@@ -83,7 +88,9 @@ class Login extends React.Component<Props, OwnState> {
     */
 
   }
-
+/**
+ *Render method for Login screen
+ */
   public render() {
     return (
       <KeyboardAvoidingView
