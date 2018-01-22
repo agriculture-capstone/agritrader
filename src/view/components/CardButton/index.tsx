@@ -3,7 +3,7 @@ import { Text, Card, Body, CardItem, Icon, Right, Left } from 'native-base';
 import { Route } from '../../navigation/navigator';
 import styles from './style';
 
-interface CardButtonPropsType {
+interface OwnPropsType {
   title: string;
   iconName: string;
   iconColor: string;
@@ -11,11 +11,25 @@ interface CardButtonPropsType {
   onPress(route: Route): void;
 }
 
+interface DispatchPropsType {
+
+}
+
+interface StorePropsType {
+
+}
+ 
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType; 
+
+interface OwnStateType {
+
+}
+
 /**
 * Card Button Component
 */
-export default class CardButton extends React.Component<CardButtonPropsType, {}> {
-  public constructor(props: CardButtonPropsType) {
+export default class CardButton extends React.Component<PropsType, OwnStateType> {
+  public constructor(props: PropsType) {
     super(props);
     this.onPress = this.onPress.bind(this);
   }

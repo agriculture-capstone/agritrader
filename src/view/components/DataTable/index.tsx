@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
-
-import { Container, Header, Content, List, ListItem, Text, Grid, Row, Col } from 'native-base';
+import { List, ListItem, Text, Grid, Col } from 'native-base';
 
 interface DataTablePropsType {
   headers: Array<string>;
