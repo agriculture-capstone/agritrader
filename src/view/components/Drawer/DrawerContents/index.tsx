@@ -17,8 +17,7 @@ export interface OwnPropsType {
 type OnPress = (route: Route) => void;
 
 /**
- *
- * @param props
+ * React component to generate contents inside the drawer
  */
 const DrawerContents: React.StatelessComponent<OwnPropsType> = (props) => {
   return (
@@ -52,6 +51,7 @@ function createDrawerItem(routeInfo: DrawerRouteInfo, onPress: OnPress) {
   );
 }
 
+/** Typeguard for routeInfo */
 function isDrawerItem(routeInfo: RouteInfo): routeInfo is DrawerRouteInfo {
   return !!routeInfo.drawerInfo;
 }

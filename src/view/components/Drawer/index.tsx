@@ -18,6 +18,7 @@ export interface OwnState {}
 interface StorePropsType {
   open: boolean;
   locked: boolean;
+  // TODO: These should be retrieved from the store
   // name: string;
   // username: string;
 }
@@ -69,6 +70,7 @@ class Drawer extends React.Component<PropsType, OwnState> {
   }
 
   private createDrawerContents() {
+    // TODO: Change placeholder names to this.props.name/this.props.username
     return (
       <DrawerContents
         name={'Joe Trader'}

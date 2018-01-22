@@ -109,7 +109,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
         break;
 
       default:
-        throw new Error('No such page type');
+        throw new Error(`No such page type: ${type}`);
     }
   }
 
