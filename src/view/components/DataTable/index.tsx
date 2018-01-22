@@ -27,7 +27,8 @@ interface OwnStateType {
 export default class DataTable extends React.Component<PropsType, OwnStateType> {
   constructor(props: PropsType) {
     super(props);
-    this.renderSectionHeader.bind(this);
+    this.renderSectionHeader = this.renderSectionHeader.bind(this);
+    this.renderRow = this.renderRow.bind(this);
   }
 
   private formatValues(values: any[]) {
@@ -46,7 +47,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     return (
       <ListItem>
         <Grid>
-          {this.formatValues(item.values())}
+          {this.formatValues(Object.values(item))}
         </Grid>
       </ListItem>
     );

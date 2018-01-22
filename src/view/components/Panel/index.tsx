@@ -41,10 +41,10 @@ class Panel extends React.Component<PropsType, OwnStateType> {
       arrowHeight: 0,
     };
 
-    this.setMinHeight.bind(this);
-    this.setMaxHeight.bind(this);
-    this.setArrowHeight.bind(this);
-    this.toggle.bind(this);
+    this.setMinHeight = this.setMinHeight.bind(this);
+    this.setMaxHeight = this.setMaxHeight.bind(this);
+    this.setArrowHeight = this.setArrowHeight.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   private calculateHeight(state: OwnStateType, expanded: boolean) {
