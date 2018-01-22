@@ -6,7 +6,7 @@ import { Route } from '../../../navigation/navigator';
 
 /** DrawerItem props */
 export interface OwnProps {
-  name: Route;
+  name: string;
   icon: string;
   onPress(route: Route): void;
 }
