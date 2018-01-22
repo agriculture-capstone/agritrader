@@ -7,7 +7,7 @@ import tabsActions from '../../../store/modules/tabs/actions';
 import searchBarActions from '../../../store/modules/searchBar/actions';
 import { State } from '../../../store/types';
 
-/** TabManager OwnProps */
+/** TabManager OwnPropsType */
 interface OwnProps {}
 
 interface StoreProps {

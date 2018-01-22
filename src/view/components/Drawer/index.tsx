@@ -9,7 +9,7 @@ import headerActions from '../../../store/modules/header/actions';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
-/** Drawer OwnProps */
+/** Drawer OwnPropsType */
 export interface OwnProps {}
 
 /** Drawer State */
