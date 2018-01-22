@@ -1,28 +1,12 @@
 import * as React from 'react';
-import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker }
-from 'native-base';
-import { View, Text, StyleSheet } from 'react-native';
 
 import ViewFarmer from './viewFarmer';
 import EditFarmer from './editFarmer';
 import AddFarmer from './addFarmer';
-
-import styles from './style';
 import createPage from '../../../../generators/Page/index';
 
 interface OwnState {
   mode?: string;
-}
-
-export interface OwnProps {
-  // farmerFirstName: string;
-  // farmerLastName: string;
-  // farmerPhoneNumber: string;
-  // farmerBusinessName: string;
-  // farmerNotes: string;
-  // selectedPaymentCycle: string;
-  // selectedPaymentMethod: string;
-  // modeHandler?: Function;
 }
 
 export const modes = {
@@ -34,7 +18,7 @@ export const modes = {
 /**
  * Container for application
  */
-class FarmerInformation extends React.Component<OwnProps, OwnState> {
+class FarmerInformation extends React.Component<{}, OwnState> {
 
   private initialProps: any;
 
@@ -42,7 +26,7 @@ class FarmerInformation extends React.Component<OwnProps, OwnState> {
     mode: 'view',
   };
 
-  constructor(props: OwnProps) {
+  constructor(props: any) {
     super(props);
     this.state = { 
       mode: 'view',
@@ -56,7 +40,6 @@ class FarmerInformation extends React.Component<OwnProps, OwnState> {
       farmerNotes: 'Doctor from village A',
       selectedPaymentCycle: 'Weekly',
       selectedPaymentMethod: 'Mobile',
-      // modeHandler:
     };
 
     this.changeMode.bind(this);

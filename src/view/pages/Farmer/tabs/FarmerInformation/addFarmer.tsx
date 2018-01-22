@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { Container, Header, H1, H2, H3, Content, Grid, Row, Col, Form, Item, Input, Label, Radio, Button, Right, ListItem, InputGroup, Picker }
-from 'native-base';
-import { View, Text, StyleSheet } from 'react-native';
+
+import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Picker } from 'native-base';
+import { Text } from 'react-native';
 
 import styles from './style';
-// import FarmerInformation, { OwnProps as FarmerOwnProps } from '.';
 
-// interface OwnProps extends FarmerOwnProps {
-//   updatePaymentCycle(value: string): void;
-//   updatePaymentMethod(value: string): void;
-// }
-
+/**
+ * 
+ */
 export interface OwnProps {
   farmerFirstName: string;
   farmerLastName: string;
@@ -29,6 +26,9 @@ export interface OwnProps {
  */
 const AddFarmer = (props: OwnProps) => {
   
+  /**
+   * Handles chaning the mode to view farmer
+   */
   const modeHandler = () => {
     props.modeHandler('view');
   };
