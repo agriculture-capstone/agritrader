@@ -12,13 +12,36 @@ export type PageType = 'menu' | 'back' | 'empty';
 
 /** Information for each route in app */
 export interface RouteInfo {
-  name: Route;
+  /** Route for the navigator */
+  readonly route: Route;
+  /** The exposed name for the route */
+  readonly name: string;
+  /** The component that should be rendered */
+  readonly component: React.ComponentClass | React.StatelessComponent;
+  /** Specify whether the header/drawer are shown */
+  readonly type: PageType;
+  /** Info provided if page should have search bar */
+  readonly searchInfo?: SearchInfo;
+  /** Information provided if route should appear in drawer */
+  readonly drawerInfo?: DrawerInfo;
+}
+
+/** Information for route containing drawer entry */
+export interface DrawerRouteInfo extends RouteInfo {
+  readonly drawerInfo: DrawerInfo;
+}
+
+/** Information for route with search bar */
+export interface SearchRouteInfo extends RouteInfo {
+  readonly searchInfo: SearchInfo;
+}
+
+interface DrawerInfo {
   icon: string;
-  component: React.ComponentClass | React.StatelessComponent;
-  inDrawer: boolean;
-  type: PageType;
-  search: boolean;
-  searchPlaceholder?: string;
+}
+
+interface SearchInfo {
+  placeholder: string;
 }
 
 /** Named routes in the application */
@@ -26,60 +49,64 @@ export enum Route {
   HOME = 'Home',
   LOGIN = 'Login',
   EXPORTS = 'Exports',
-  FARMER = 'FarmerInfo',
-  SEARCH_FARMER = 'Farmers',
+  FARMER = 'Farmer',
+  SEARCH_FARMER = 'SearchFarmers',
 }
 
 /** App route information */
-export const routes: RouteInfo[] = [
+export const routesInfo: RouteInfo[] = [
   {
-    name: Route.LOGIN,
-    icon: 'person',
+    route: Route.LOGIN,
+    name: 'Login',
     component: LoginPage,
-    inDrawer: false,
     type: 'empty',
-    search: false,
   },
   {
-    name: Route.HOME,
-    icon: 'home',
+    route: Route.HOME,
+    name: 'Home',
     component: HomePage,
-    inDrawer: true,
     type: 'menu',
-    search: false,
+    drawerInfo: {
+      icon: 'home',
+    },
   },
   {
-    name: Route.FARMER,
-    icon: 'person',
+    route: Route.FARMER,
+    name: 'Farmer',
     component: FarmerPage,
-    inDrawer: false,
     type: 'menu',
-    search: false,
+    drawerInfo: {
+      icon: 'person',
+    },
   },
   {
-    name: Route.SEARCH_FARMER,
-    icon: 'people',
+    route: Route.SEARCH_FARMER,
+    name: 'Farmers',
     component: FarmerSearch,
-    inDrawer: true,
     type: 'back',
-    search: true,
-    searchPlaceholder: 'Search Farmers',
+    drawerInfo: {
+      icon: 'people',
+    },
+    searchInfo: {
+      placeholder: 'Search Farmers',
+    },
   },
   {
-    name: Route.EXPORTS,
-    icon: 'person',
+    route: Route.EXPORTS,
+    name: 'Exports',
     component: ExportsPage,
-    inDrawer: true,
     type: 'menu',
-    search: false,
+    drawerInfo: {
+      icon: 'person',
+    },
   },
 ];
 
-/** Convert IRoute[] to a NavigationRouteConfigMap */
-function toNavigatorRoutes(routes: RouteInfo[]): NavigationRouteConfigMap {
-  return routes.map(route => ({
-    [route.name]: {
-      screen: route.component,
+/** Convert IRoute[] to a NavigationRouteConfigMap for consumtion by StackNavigator */
+function toNavigatorRoutes(routesInfo: RouteInfo[]): NavigationRouteConfigMap {
+  return routesInfo.map(routeInfo => ({
+    [routeInfo.route]: {
+      screen: routeInfo.component,
     },
   })).reduce((a, b) => ({ ...a, ...b }));
 }
@@ -88,7 +115,7 @@ function toNavigatorRoutes(routes: RouteInfo[]): NavigationRouteConfigMap {
 export const INITIAL_ROUTE = Route.LOGIN;
 
 /** Top-level navigator for application */
-const navigator = StackNavigator(toNavigatorRoutes(routes), {
+const navigator = StackNavigator(toNavigatorRoutes(routesInfo), {
   headerMode: 'none',
   initialRouteName: INITIAL_ROUTE,
 });
