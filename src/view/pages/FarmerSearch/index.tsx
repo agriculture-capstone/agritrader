@@ -99,10 +99,7 @@ class FarmerSearch extends React.Component<Props, {}> {
     //     }
     // }
 
-    private renderItem(info: farmer, rowID: ReactText) {
-        if (rowID === 'undefined') {
-            return <ListItem></ListItem>
-        }
+    private renderItem(info: farmer) {
         return (
             <ListItem key={info.id} onPress={this.itemClicked}>
                 <View>
