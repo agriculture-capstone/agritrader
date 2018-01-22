@@ -6,7 +6,7 @@ import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
 import createPage from '../../../../generators/Page/index';
 
-import styles from '../FarmerInformation/style';
+import { styles } from '../../styles';
 
 interface CollectPropsType {
   farmerName: string;

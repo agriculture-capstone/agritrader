@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Picker } from 'native-base';
 import { Text } from 'react-native';
 
-import styles from './style';
+import { styles } from '../../styles';
 
 /**
  * Holds temorary farmer info

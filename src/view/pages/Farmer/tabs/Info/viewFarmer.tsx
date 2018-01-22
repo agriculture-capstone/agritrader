@@ -3,7 +3,7 @@ import * as React from 'react';
 import { H1, H2, Content, Grid, Row, Col, Label, Button } from 'native-base';
 import { Text } from 'react-native';
 
-import styles from './style';
+import { styles } from '../../styles';
 
 interface OwnPropsType {
   farmerFirstName: string;
