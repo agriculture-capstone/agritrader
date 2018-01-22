@@ -1,54 +1,53 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col, Button } from 'native-base';
-import { Text, StyleSheet } from 'react-native';
-import { Provider } from 'react-redux';
-
+import { Grid, Row, Col, Text } from 'native-base';
 import Panel from '../../../../components/Panel';
+import styles from './style';
 
-interface LoanSummaryPropsType {
+interface OwnPropsType {
   title: string;
-  totalRemainingBalance: string; 
+  totalRemainingBalance: string;
   totalWeeklyPaymentBalence: string;
 }
 
+interface DispatchPropsType {
+}
+
+interface StorePropsType {
+}
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
+interface OwnStateType {
+}
+
+
 /**
- * Container for CardSummary
+ * Component for LoanSummary
  */
-export default class LoanSummary extends React.Component<LoanSummaryPropsType, {}> {
-    /**
-     * Render method for CardSummary
-     */
+export default class LoanSummary extends React.Component<PropsType, OwnStateType> {
+  /**
+   * Render method for Loan
+   */
   public render() {
-      return (
-        <Panel title={this.props.title} expandable={true}>
+    return (
+      <Panel title={this.props.title} expandable={true}>
         <Grid >
           <Row>
             <Col>
               <Text style={styles.info}>
-                <Text style={styles.label}>This Week: </Text> 
-                    {this.props.totalRemainingBalance}
-                </Text>
+                <Text style={styles.label}>This Week: </Text>
+                {this.props.totalRemainingBalance}
+              </Text>
             </Col>
             <Col>
               <Text style={styles.info}>
                 <Text style={styles.label}>This Month: </Text>
-                    {this.props.totalWeeklyPaymentBalence}
-                </Text>
+                {this.props.totalWeeklyPaymentBalence}
+              </Text>
             </Col>
           </Row>
         </Grid>
-        </Panel>
-      );
-    }
+      </Panel>
+    );
+  }
 }
-
-  
-let styles = StyleSheet.create({
-  info: {
-      textAlign: 'center',
-      padding: 5,
-    },
-  label: {
-      fontWeight: 'bold',
-    },
-});

@@ -1,7 +1,7 @@
 import { Container, Toast } from 'native-base';
 import { BackHandler } from 'react-native';
-import { NavigationState, addNavigationHelpers, NavigationActions } from 'react-navigation';
-import { connect, DispatchProp, MapStateToProps, MapDispatchToProps } from 'react-redux';
+import { NavigationState, addNavigationHelpers } from 'react-navigation';
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 import * as React from 'react';
 
 import Header from '../../view/components/Header';
