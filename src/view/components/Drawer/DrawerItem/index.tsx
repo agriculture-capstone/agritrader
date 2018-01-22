@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ListItem, Icon, Text, Left, Body, Row } from 'native-base';
+import { ListItem, Icon, Text, Left, Body } from 'native-base';
 
 import { Route } from '../../../navigation/navigator';
 

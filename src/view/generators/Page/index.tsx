@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-import store from '../../../store';
-import headerActions from '../../../store/modules/header/actions';
-import drawerActions from '../../../store/modules/drawer/actions';
-
 /**
  * Higher order component for pages
  *

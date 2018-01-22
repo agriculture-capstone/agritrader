@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Grid, Row, Col, Icon } from 'native-base';
+import { Text, Grid, Row } from 'native-base';
 import { Image, View } from 'react-native';
 
 import { images } from '../../../assets';

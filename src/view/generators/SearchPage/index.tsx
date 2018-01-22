@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import store from '../../../store';
-import searchBarActions from '../../../store/modules/searchBar/actions';
 import createPage from '../Page/index';
 
 interface SearchPageState {
