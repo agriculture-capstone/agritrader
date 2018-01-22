@@ -15,12 +15,12 @@ export interface OwnProps {}
 /** Drawer State */
 export interface OwnState {}
 
-interface StoreProps {
+interface StorePropsType {
   open: boolean;
   locked: boolean;
 }
 
-interface DispatchProps {
+interface DispatchPropsType {
   closeDrawer(): void;
   openDrawer(): void;
   navigate(route: Route): void;
@@ -29,10 +29,10 @@ interface DispatchProps {
 }
 
 /** Drawer props */
-type Props = OwnProps & StoreProps & DispatchProps;
+type PropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 
 /** Drawer component for navigation */
-class Drawer extends React.Component<Props, OwnState> {
+class Drawer extends React.Component<PropsType, OwnState> {
 
   /************************* Member Variables ************************/
 
@@ -40,7 +40,7 @@ class Drawer extends React.Component<Props, OwnState> {
 
   /************************* Member Functions ************************/
 
-  public constructor(props: Props) {
+  public constructor(props: PropsType) {
     super(props);
 
     this.onPress = this.onPress.bind(this);
@@ -74,7 +74,7 @@ class Drawer extends React.Component<Props, OwnState> {
         open={this.props.open}
         onClose={this.props.closeDrawer}
         onOpen={this.openDrawer}
-        content={<DrawerContents onPress={this.onPress} onLogout={this.onLogout} />}
+        content={this.createDrawerContents()}
         type="overlay"
         panOpenMask={this.PAN_OPEN_MASK}
         disabled={this.props.locked}
@@ -88,14 +88,14 @@ class Drawer extends React.Component<Props, OwnState> {
 
 /****************************** Redux ******************************/
 
-const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
   return {
     open: state.drawer.drawerShown,
     locked: state.drawer.drawerLocked,
   };
 };
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     closeDrawer: () => dispatch(drawerActions.setDrawerShown(false)),
     openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),

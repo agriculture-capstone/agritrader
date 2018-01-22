@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import store from '../../../store';
-import headerActions from '../../../store/modules/header/actions';
-import drawerActions from '../../../store/modules/drawer/actions';
-
 /**
  * Higher order component for pages
+ *
+ * Used to enforce global styles and behavior on all pages
+ *
+ * @param {React.ComponentType} [WrappedComponent] React component to wrap in HOC
  *
  * @example
  *
@@ -27,6 +27,7 @@ import drawerActions from '../../../store/modules/drawer/actions';
 */
 export default function createPage<InjectedProps>(WrappedComponent: React.ComponentType<InjectedProps>) {
 
+  /** Page wrapper */
   return class Page extends React.Component<InjectedProps, {}> {
 
     public constructor(props: InjectedProps) {
@@ -35,6 +36,7 @@ export default function createPage<InjectedProps>(WrappedComponent: React.Compon
 
     /************************* React Lifecycle *************************/
 
+    /** React render method */
     public render() {
       return <WrappedComponent {...this.props} />;
     }

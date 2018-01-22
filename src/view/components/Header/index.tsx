@@ -10,7 +10,6 @@ import {
   Title,
   Input,
   Item,
-  View,
 } from 'native-base';
 
 import { State } from '../../../store/types';
@@ -46,7 +45,6 @@ interface LeftButtonInfo {
 
 /** Header component */
 class Header extends React.Component<Props, OwnState> {
-  private searchRef: any;
 
   public constructor(props: Props) {
     super(props);
