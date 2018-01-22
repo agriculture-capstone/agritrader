@@ -26,12 +26,11 @@ interface OwnState {}
 /** TabManager props */
 export type Props = OwnProps & StoreProps & DispatchProps;
 
-function createSimpleComponent(tabs: ElementTabList) {
+
+function wrapTabs(tabs: ElementTabList) {
 
   /**
-  * Page that renders different component depending on which tab the user is on
-  *
-  * Should not be instantiated directly, only extended. Unable to mark abstract due to react-redux
+  * TabManager HOC
   */
   return class TabManager extends React.Component<Props, OwnState> {
 
@@ -96,12 +95,22 @@ function createSimpleComponent(tabs: ElementTabList) {
 }
 /******************************* Redux *******************************/
 
-/** Convert ElementTabList to TabList */
+/**
+ * Convert ElementTabList to TabList as new array
+ *
+ * @param {ElementTabList} [tabList] array to convert
+ * @returns {StoreTabList} converted array
+ */
 export function toTabs(tabList: ElementTabList): StoreTabList {
   return tabList.map(toTab);
 }
 
-/** Convert ElementTab to Tab */
+/**
+ * Convert ElementTab to Tab as new object
+ *
+ * @param {ElementTab} [tab] Tab to convert
+ * @returns {Tab} converted tab
+*/
 export function toTab(tab: ElementTab): Tab {
   const {
     element,
@@ -127,21 +136,39 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
 };
 
 /**
- * Create a React Component class to manage the navigation between provided tabs
+ * Create a tabbed page that renders different contents depending on the active tab
  *
  * The first tab in the 'tabs' list will be rendered on the far left, and the last
  * will be rendered on the far right.
  *
- * @example
- * const ExampleTabManager = createTabManager(exampleTabs);
- * export default ExampleTabManager
+ * @param {ElementTabList} [tabs]
  *
- * @param {ElementTabList} [tabs] The tabs this component should render
- * @returns {React.ComponentClass}
+ * @example
+ *
+  export default createTabManager(
+    [
+      {
+        name: 'Collect',
+        element: () => <Collect />,
+      },
+      {
+        name: 'Loan',
+        element: () => <Loan />,
+      },
+      {
+        name: 'Buy',
+        element: () => <Buy />,
+      },
+      {
+        name: 'Info',
+        element: () => <Info />,
+      },
+    ],
+  );
  */
 export default function createTabManager(tabs: ElementTabList) {
   return connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(createSimpleComponent(tabs));
+  )(wrapTabs(tabs));
 }

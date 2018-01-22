@@ -47,7 +47,7 @@ export default function createSearchPage<InjectedProps>(
     public constructor(props: InjectedProps) {
       super(props);
 
-      // Initialize state
+      // Initialize state from redux
       const reduxState = store.getState();
       this.state = Object.assign({}, this.state, {
         searchBarValue: reduxState.searchBar.value,
@@ -68,7 +68,9 @@ export default function createSearchPage<InjectedProps>(
       });
     }
 
+    /** React render */
     public render() {
+      // Inject searchBarValue into props of WrappedComponent
       return <WrappedComponent {...this.props} searchBarValue={this.state.searchBarValue} />;
     }
   }
