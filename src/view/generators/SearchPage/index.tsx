@@ -4,13 +4,12 @@ import store from '../../../store';
 import searchBarActions from '../../../store/modules/searchBar/actions';
 import createPage from '../Page/index';
 
-export interface SearchPageProps { }
-
 interface SearchPageState {
   /** Value from the search bar */
   searchBarValue: string;
 }
 
+/** The props injected by a search page HOC */
 export type InjectedSearchProps = SearchPageState;
 
 /**
@@ -56,6 +55,7 @@ export default function createSearchPage<InjectedProps>(
 
     /************************* React Lifecycle *************************/
 
+    /** React componentDidMount */
     public componentDidMount() {
       // Listen to updates to search bar value and propogate to local state
       store.subscribe(() => {

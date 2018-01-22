@@ -8,13 +8,13 @@ import searchBarActions from '../../../store/modules/searchBar/actions';
 import { State } from '../../../store/types';
 
 /** TabManager OwnProps */
-interface OwnProps {}
+interface OwnPropsType {}
 
-interface StoreProps {
+interface StorePropsType {
   activeTab: string;
 }
 
-interface DispatchProps extends DispatchProp<State> {
+interface DispatchPropsType extends DispatchProp<State> {
   setTabs(tabs: ElementTabList, activeTab: ElementTab): void;
   setActiveTab(activeTab: ElementTab): void;
   clearTabs(): void;
@@ -24,7 +24,7 @@ interface DispatchProps extends DispatchProp<State> {
 interface OwnState {}
 
 /** TabManager props */
-export type Props = OwnProps & StoreProps & DispatchProps;
+type PropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 
 
 function wrapTabs(tabs: ElementTabList) {
@@ -32,14 +32,14 @@ function wrapTabs(tabs: ElementTabList) {
   /**
   * TabManager HOC
   */
-  return class TabManager extends React.Component<Props, OwnState> {
+  return class TabManager extends React.Component<PropsType, OwnState> {
 
     /************************* Member Variables ************************/
     private tabs: ElementTabList;
 
     /************************* Member Functions ************************/
 
-    constructor(props: Props) {
+    constructor(props: PropsType) {
       super(props);
 
       // Validation
@@ -64,6 +64,7 @@ function wrapTabs(tabs: ElementTabList) {
     }
 
     private getActiveElement() {
+      // Find the active tab
       const tab = (this.props.activeTab) ? this.tabs.find(t => t.name === this.props.activeTab) : this.tabs[0];
       if (!tab) throw new Error('Active tab is not a valid tab');
 
@@ -120,13 +121,13 @@ export function toTab(tab: ElementTab): Tab {
   return rest;
 }
 
-const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
   return {
     activeTab: (state.tabs.activeTab) ? state.tabs.activeTab.name : '',
   };
 };
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     setActiveTab: tab => dispatch(tabsActions.setActiveTab(tab)),
     setTabs: (tabs, activeTab) => dispatch(tabsActions.setTabs(toTabs(tabs))),

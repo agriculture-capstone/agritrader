@@ -9,14 +9,20 @@ import DrawerHeader from '../DrawerHeader';
 
 /** DrawerContents props */
 export interface OwnPropsType {
+  name: string;
+  username: string;
   onPress(route: Route): void;
   onLogout(): void;
 }
 
+/**
+ *
+ * @param props
+ */
 const DrawerContents: React.StatelessComponent<OwnPropsType> = (props) => {
   return (
     <Content style={style.content} >
-      <DrawerHeader />
+      <DrawerHeader name={props.name} username={props.username} />
       <List>
         {getDrawerItems(props, routesInfo)}
       </List>

@@ -26,7 +26,7 @@
         "classes": true,
         "methods": { "privacies": ["public", "protected"] },
         "interfaces": { "visibilities": ["exported"] },
-        "types": true,
+        "types": { "visibilities": ["exported"] },
         "variables": { "visibilities": ["exported"] },
         "properties": { "privacies": ["public", "protected"] }
       }
@@ -48,6 +48,7 @@
     "variable-name": false,
     "import-name": false,
     "jsx-boolean-value": false,
-    "strict-boolean-expressions": false
+    "strict-boolean-expressions": false,
+    "prefer-const": false
   }
 }
