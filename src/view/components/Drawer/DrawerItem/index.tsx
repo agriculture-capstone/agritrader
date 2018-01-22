@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ListItem, Icon, Text, Left, Body } from 'native-base';
-import { Row } from 'react-native-easy-grid';
+import { ListItem, Icon, Text, Left, Body, Row } from 'native-base';
 
 import { Route } from '../../../navigation/navigator';
 
@@ -8,6 +7,7 @@ import { Route } from '../../../navigation/navigator';
 export interface OwnProps {
   name: string;
   icon: string;
+  route: Route;
   onPress(route: Route): void;
 }
 
@@ -19,9 +19,11 @@ const onPresses = {} as {
 
 /** Navigational item in the drawer */
 const DrawerItem: React.StatelessComponent<OwnProps> = (props) => {
-  onPresses[props.name] || (onPresses[props.name] = (() => props.onPress(props.name)));
+  // If handler does not exist, create it
+  onPresses[props.route] || (onPresses[props.route] = (() => props.onPress(props.route)));
+
   return (
-    <ListItem icon onPress={onPresses[props.name]}>
+    <ListItem icon onPress={onPresses[props.route]}>
       <Left>
         <Icon name={props.icon} />
       </Left>

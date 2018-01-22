@@ -11,9 +11,11 @@ import DrawerHeader from '../DrawerHeader';
 export interface OwnPropsType {
   name: string;
   username: string;
-  onPress(route: Route): void;
+  onPress: OnPress;
   onLogout(): void;
 }
+
+type OnPress = (route: Route) => void;
 
 /**
  *
@@ -36,7 +38,19 @@ const DrawerContents: React.StatelessComponent<OwnPropsType> = (props) => {
 function getDrawerItems(props: OwnPropsType, routesInfo: RouteInfo[]): JSX.Element[] {
   return routesInfo
     .filter(isDrawerItem)
-    .map(routeInfo => <DrawerItem icon={routeInfo.drawerInfo.icon} key={routeInfo.route} name={routeInfo.name} onPress={props.onPress} />);
+    .map(routeInfo => createDrawerItem(routeInfo, props.onPress));
+}
+
+function createDrawerItem(routeInfo: DrawerRouteInfo, onPress: OnPress) {
+  return (
+    <DrawerItem
+      icon={routeInfo.drawerInfo.icon}
+      key={routeInfo.route}
+      name={routeInfo.name}
+      route={routeInfo.route}
+      onPress={onPress}
+    />
+  );
 }
 
 function isDrawerItem(routeInfo: RouteInfo): routeInfo is DrawerRouteInfo {
