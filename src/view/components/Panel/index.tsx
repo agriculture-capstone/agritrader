@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Icon } from 'native-base';
-import { Text, View, Animated, LayoutChangeEvent, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, Animated, LayoutChangeEvent, TouchableHighlight } from 'react-native';
 import styles from './style';
 
 interface OwnStateType {
   expanded: boolean;
   animation: Animated.Value;
-  maxHeight: number;
-  minHeight: number;
-  arrowHeight: number;
+  maxHeight?: any;
+  minHeight?: any;
+  arrowHeight?: any;
 }
 
 interface OwnPropsType {
@@ -36,9 +36,6 @@ class Panel extends React.Component<PropsType, OwnStateType> {
     this.state = {
       expanded: true,
       animation: new Animated.Value(0),
-      maxHeight: 0,
-      minHeight: 0,
-      arrowHeight: 0,
     };
 
     this.setMinHeight = this.setMinHeight.bind(this);
@@ -128,13 +125,15 @@ class Panel extends React.Component<PropsType, OwnStateType> {
         >
           {this.props.children}
         </View>
-        <TouchableWithoutFeedback
+        <TouchableHighlight
           style={this.props.expandable ? styles.button : styles.hiddenButton}
           onPress={this.toggle}
+          underlayColor="#fff"
           onLayout={this.setArrowHeight}
+          activeOpacity={0}
         >
           {icon}
-        </TouchableWithoutFeedback>
+        </TouchableHighlight>
       </Animated.View>
     );
   }
