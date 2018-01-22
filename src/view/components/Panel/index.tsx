@@ -1,149 +1,143 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
+import { Icon } from 'native-base';
+import { Text, View, Animated, LayoutChangeEvent, TouchableWithoutFeedback } from 'react-native';
+import styles from './style';
 
-import { Container, Header, Content, List, ListItem, Grid, Row, Col, Icon } from 'native-base';
-import { StyleSheet,Text,View,Image,TouchableHighlight,Animated } from 'react-native'; //Step 1
-
-interface PanelStateType {
+interface OwnStateType {
   expanded: boolean;
   animation: Animated.Value;
-  maxHeight?: any;
-  minHeight?: any;
-  arrowHeight?: any;
+  maxHeight: number;
+  minHeight: number;
+  arrowHeight: number;
 }
-interface PanelPropsType {
+
+interface OwnPropsType {
   title: string;
-  expandable: boolean
+  expandable: boolean;
 }
 
-// Following this as a guide: https://moduscreate.com/blog/expanding-and-collapsing-elements-using-animations-in-react-native/
-class Panel extends React.Component<PanelPropsType, PanelStateType> {
-    
-  public icons: any;
-  constructor(props: PanelPropsType) {
-      super(props);
-
-      this.icons = {
-          up    : 'up', //require('./images/Arrowhead-01-128.png'),
-          down  : 'down', //require('./images/Arrowhead-Down-01-128.png')
-        };
-
-      this.state = {
-          expanded    : true,
-          animation: new Animated.Value(0),
-        };
-    }
-
-  public toggle() {
-      const initialValue    = this.state.expanded ? this.state.maxHeight + this.state.minHeight + this.state.arrowHeight : this.state.minHeight + this.state.arrowHeight,
-          finalValue      = this.state.expanded ? this.state.minHeight + this.state.arrowHeight : this.state.maxHeight + this.state.minHeight + this.state.arrowHeight;
-      this.setState({
-          expanded : !this.state.expanded,
-        });
-
-      this.state.animation.setValue(initialValue);
-      Animated.spring(
-                this.state.animation,
-          {
-            toValue: finalValue,
-          },
-            ).start();
-        
-    }
-
-  public componentDidMount() {
-      const initialValue    = this.state.expanded ? this.state.maxHeight + this.state.minHeight + this.state.arrowHeight : this.state.minHeight + this.state.arrowHeight;
-      this.setState({ animation: new Animated.Value(initialValue) });
-
-    }
-
-  public _setMaxHeight(event:any) {
-      if (this.state.expanded) {this.setState({
-          maxHeight   : event.nativeEvent.layout.height,
-        });}
-    }
-
-  public _setMinHeight(event:any) {
-      this.setState({
-          minHeight   : event.nativeEvent.layout.height,
-        });
-    }
-
-  public _setArrowHeight(event:any) {
-      this.setState({
-          arrowHeight   : event.nativeEvent.layout.height,
-        });
-    }
-
-  public render() {
-      let icon = <Icon name="ios-arrow-down"/>;
-
-      if (this.state.expanded) {
-          icon = <Icon name="ios-arrow-up"/>;
-        }
-
-      return (
-            <Animated.View 
-                style={[styles.container,{ height: this.state.animation }]}>
-                <View style={styles.titleContainer} onLayout={this._setMinHeight.bind(this)}>
-                    <Text style={styles.title}>{this.props.title}</Text>
-                    
-                </View>
-                
-                <View style={[styles.body, this.state.expanded ? styles.show : styles.hide]} onLayout={this._setMaxHeight.bind(this)}>
-                    {this.props.children}
-                </View>
-                <TouchableHighlight 
-                        style={this.props.expandable ? styles.button : styles.hiddenButton} 
-                        onPress={this.toggle.bind(this)}
-                        underlayColor="#fff"
-                        onLayout={this._setArrowHeight.bind(this)}
-                        activeOpacity={0}
-                        >
-                        {icon}
-                    </TouchableHighlight>
-
-            </Animated.View>
-        );
-    }
+interface DispatchPropsType {
 }
 
-let styles = StyleSheet.create({
-  container   : {
-      backgroundColor: '#fff',
-      margin:10,
-      overflow:'hidden', 
-      flex: 1,
-    },
-  titleContainer : {
-      flexDirection: 'row',
-    },
-  title       : {
-      flex    : 1,
-      padding : 10,
-      color   :'#2a2f43',
-      fontWeight:'bold',
-      textAlign: 'center',
-      fontSize: 32,
-        
-    },
-  button      : {
-      alignItems: 'center',
-        
-    },
-  body        : {
-      padding     : 10,
-      paddingTop  : 0,
-    },
-  hide : {
-      display: 'none',
-    },
-  show : {
-      display: 'flex',
-    },
-  hiddenButton: {
-    display: 'none'
+interface StorePropsType {
+}
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
+/**
+* Panel component
+* Followed this as a guide: 
+* https://moduscreate.com/blog/expanding-and-collapsing-elements-using-animations-in-react-native/
+*/
+class Panel extends React.Component<PropsType, OwnStateType> {
+  constructor(props: OwnPropsType) {
+    super(props);
+
+    this.state = {
+      expanded: true,
+      animation: new Animated.Value(0),
+      maxHeight: 0,
+      minHeight: 0,
+      arrowHeight: 0,
+    };
+
+    this.setMinHeight.bind(this);
+    this.setMaxHeight.bind(this);
+    this.setArrowHeight.bind(this);
+    this.toggle.bind(this);
   }
-});
+
+  private calculateHeight(state: OwnStateType, expanded: boolean) {
+    if (expanded) {
+      return state.maxHeight + state.minHeight + state.arrowHeight;
+    } else {
+      return state.minHeight + state.arrowHeight;
+    }
+  }
+
+  private toggle() {
+    const initialValue = this.calculateHeight(this.state, this.state.expanded);
+    const finalValue = this.calculateHeight(this.state, !this.state.expanded);
+
+    this.state.animation.setValue(initialValue);
+
+    Animated.spring(
+      this.state.animation,
+      {
+        toValue: finalValue,
+      },
+    ).start();
+
+    this.setState({
+      expanded: !this.state.expanded,
+    });
+  }
+
+  /**
+  * componentDidMount
+  */
+  public componentDidMount() {
+    // Initialize Animated.Value once the component was first mounted
+    const initialValue = this.calculateHeight(this.state, this.state.expanded);
+    this.setState({ animation: new Animated.Value(initialValue) });
+  }
+
+  private setMaxHeight(event: LayoutChangeEvent) {
+    if (this.state.expanded) {
+      this.setState({
+        maxHeight: event.nativeEvent.layout.height,
+      });
+    }
+  }
+
+  private setMinHeight(event: LayoutChangeEvent) {
+    this.setState({
+      minHeight: event.nativeEvent.layout.height,
+    });
+  }
+
+  private setArrowHeight(event: LayoutChangeEvent) {
+    this.setState({
+      arrowHeight: event.nativeEvent.layout.height,
+    });
+  }
+
+  /**
+  * render
+  */
+  public render() {
+    let icon = <Icon name="ios-arrow-down" />;
+
+    if (this.state.expanded) {
+      icon = <Icon name="ios-arrow-up" />;
+    }
+
+    return (
+      <Animated.View style={[styles.container, { height: this.state.animation }]}>
+        <View
+          style={styles.titleContainer}
+          onLayout={this.setMinHeight}
+        >
+          <Text style={styles.title}>
+            {this.props.title}
+          </Text>
+        </View>
+        <View
+          style={[styles.body, this.state.expanded ? styles.show : styles.hide]}
+          onLayout={this.setMaxHeight}
+        >
+          {this.props.children}
+        </View>
+        <TouchableWithoutFeedback
+          style={this.props.expandable ? styles.button : styles.hiddenButton}
+          onPress={this.toggle}
+          onLayout={this.setArrowHeight}
+        >
+          {icon}
+        </TouchableWithoutFeedback>
+      </Animated.View>
+    );
+  }
+}
 
 export default Panel;
