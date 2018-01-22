@@ -32,7 +32,7 @@ export default class Export extends React.Component<PropsType, OwnStateType> {
    */
   public render() {
     return (
-      <Content>
+      <Content style={styles.exportsContent}>
         <Grid>
           <Row>
             <CardSummary
