@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { Grid, Row } from 'react-native-easy-grid';
-import { Content, List, Button, Text, ListItem } from 'native-base';
-import { View } from 'react-native';
+import { Content, List, Button, Text } from 'native-base';
 import { routes, RouteInfo, Route } from '../../../navigation/navigator';
 import style from './style';
 import DrawerItem from '../DrawerItem';
