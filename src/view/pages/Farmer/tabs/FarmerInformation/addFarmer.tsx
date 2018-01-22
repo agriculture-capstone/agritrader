@@ -6,7 +6,7 @@ import { Text } from 'react-native';
 import styles from './style';
 
 /**
- * 
+ * Holds temorary farmer info
  */
 export interface OwnPropsType {
   farmerFirstName: string;
@@ -34,11 +34,11 @@ const AddFarmer = (props: OwnPropsType) => {
   };
 
   const updatePaymentCycle = (value: string) => {
-    // this.setState(() => ({ selectedPaymentCycle: value }));
+    props.selectedPaymentCycle = value;
   };
 
   const updatePaymentMethod = (value: string) => {
-    // this.setState(() => ({ selectedPaymentMethod: value }));
+    props.selectedPaymentMethod = value;
   };
 
   return (

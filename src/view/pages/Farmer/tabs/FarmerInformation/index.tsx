@@ -5,12 +5,14 @@ import EditFarmer from './editFarmer';
 import AddFarmer from './addFarmer';
 import createPage from '../../../../generators/Page/index';
 
-interface OwnState {
+interface OwnStateType {
   mode?: string;
 }
 
+/**
+ * Modes to determine how to render farmer information
+ */
 export const modes = {
-  add: 'add',
   edit: 'edit',
   view: 'view',
 };
@@ -18,7 +20,7 @@ export const modes = {
 /**
  * Container for application
  */
-class FarmerInformation extends React.Component<{}, OwnState> {
+class FarmerInformation extends React.Component<{}, OwnStateType> {
 
   private initialProps: any;
 

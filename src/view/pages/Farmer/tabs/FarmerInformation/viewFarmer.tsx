@@ -21,6 +21,9 @@ interface OwnPropsType {
  */
 const ViewFarmer = (props: OwnPropsType) => {
 
+  /**
+   * Handles chaning the mode to edit farmer
+   */
   const modeHandler = () => {
     props.modeHandler('edit');
   };
