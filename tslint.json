@@ -48,6 +48,7 @@
     "variable-name": false,
     "import-name": false,
     "jsx-boolean-value": false,
-    "strict-boolean-expressions": false
+    "strict-boolean-expressions": false,
+    "prefer-const": false
   }
 }
