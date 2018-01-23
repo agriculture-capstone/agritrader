@@ -1,27 +1,33 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col, Content, Button, Text } from 'native-base';
-import { StyleSheet } from 'react-native';
-import { Provider } from 'react-redux';
+import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
 import createPage from '../../../../generators/Page/index';
+import styles from './style';
 
-import styles from '../../styles';
-
-interface CollectPropsType {
+interface OwnPropsType {
   farmerName: string;
   allTimeTotal: string;
   currentWeekTotal: string;
   currentMonthTotal: string;
-  collectionValues: any[];
+  collectTransactions: any[];
+}
+
+interface DispatchPropsType {
+}
+
+interface StorePropsType {
+}
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
+interface OwnStateType {
 }
 
 /**
  * Collect Tab Component
  */
-class Collect extends React.Component<CollectPropsType, {}> {
-
-  // TODO: need to connect this to the redux state
+class Collect extends React.Component<PropsType, OwnStateType> {
   /**
    * Render method for Farmer
    */
@@ -39,7 +45,7 @@ class Collect extends React.Component<CollectPropsType, {}> {
           </Row>
           <Row>
             <ProductCard
-              values={this.props.collectionValues}
+              values={this.props.collectTransactions}
             />
           </Row>
           <Row style={styles.addEntryButton}>
@@ -52,7 +58,6 @@ class Collect extends React.Component<CollectPropsType, {}> {
             </Col>
           </Row>
         </Grid>
-
       </Content>
     );
   }

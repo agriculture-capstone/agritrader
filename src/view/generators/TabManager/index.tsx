@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps, DispatchProp } from 'react-redux';
-import { Text, Tab as NativeTab, Tabs as NativeTabs } from 'native-base';
+import { Tab as NativeTab, Tabs as NativeTabs } from 'native-base';
 
-import { Tab, TabList, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
+import { Tab, ElementTab, ElementTabList, StoreTabList } from '../../../store/modules/tabs/types';
 import tabsActions from '../../../store/modules/tabs/actions';
 import searchBarActions from '../../../store/modules/searchBar/actions';
 import { State } from '../../../store/types';
 
 /** TabManager OwnProps */
-interface OwnProps {}
+interface OwnPropsType {}
 
-interface StoreProps {
+interface StorePropsType {
   activeTab: string;
 }
 
-interface DispatchProps extends DispatchProp<State> {
+interface DispatchPropsType extends DispatchProp<State> {
   setTabs(tabs: ElementTabList, activeTab: ElementTab): void;
   setActiveTab(activeTab: ElementTab): void;
   clearTabs(): void;
@@ -24,23 +24,22 @@ interface DispatchProps extends DispatchProp<State> {
 interface OwnState {}
 
 /** TabManager props */
-export type Props = OwnProps & StoreProps & DispatchProps;
+type PropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 
-function createSimpleComponent(tabs: ElementTabList) {
+
+function wrapTabs(tabs: ElementTabList) {
 
   /**
-  * Page that renders different component depending on which tab the user is on
-  *
-  * Should not be instantiated directly, only extended. Unable to mark abstract due to react-redux
+  * TabManager HOC
   */
-  return class TabManager extends React.Component<Props, OwnState> {
+  return class TabManager extends React.Component<PropsType, OwnState> {
 
     /************************* Member Variables ************************/
     private tabs: ElementTabList;
 
     /************************* Member Functions ************************/
 
-    constructor(props: Props) {
+    constructor(props: PropsType) {
       super(props);
 
       // Validation
@@ -65,6 +64,7 @@ function createSimpleComponent(tabs: ElementTabList) {
     }
 
     private getActiveElement() {
+      // Find the active tab
       const tab = (this.props.activeTab) ? this.tabs.find(t => t.name === this.props.activeTab) : this.tabs[0];
       if (!tab) throw new Error('Active tab is not a valid tab');
 
@@ -96,12 +96,22 @@ function createSimpleComponent(tabs: ElementTabList) {
 }
 /******************************* Redux *******************************/
 
-/** Convert ElementTabList to TabList */
+/**
+ * Convert ElementTabList to TabList as new array
+ *
+ * @param {ElementTabList} [tabList] array to convert
+ * @returns {StoreTabList} converted array
+ */
 export function toTabs(tabList: ElementTabList): StoreTabList {
   return tabList.map(toTab);
 }
 
-/** Convert ElementTab to Tab */
+/**
+ * Convert ElementTab to Tab as new object
+ *
+ * @param {ElementTab} [tab] Tab to convert
+ * @returns {Tab} converted tab
+*/
 export function toTab(tab: ElementTab): Tab {
   const {
     element,
@@ -111,13 +121,13 @@ export function toTab(tab: ElementTab): Tab {
   return rest;
 }
 
-const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
   return {
     activeTab: (state.tabs.activeTab) ? state.tabs.activeTab.name : '',
   };
 };
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     setActiveTab: tab => dispatch(tabsActions.setActiveTab(tab)),
     setTabs: (tabs, activeTab) => dispatch(tabsActions.setTabs(toTabs(tabs))),
@@ -127,21 +137,39 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatc
 };
 
 /**
- * Create a React Component class to manage the navigation between provided tabs
+ * Create a tabbed page that renders different contents depending on the active tab
  *
  * The first tab in the 'tabs' list will be rendered on the far left, and the last
  * will be rendered on the far right.
  *
- * @example
- * const ExampleTabManager = createTabManager(exampleTabs);
- * export default ExampleTabManager
+ * @param {ElementTabList} [tabs]
  *
- * @param {ElementTabList} [tabs] The tabs this component should render
- * @returns {React.ComponentClass}
+ * @example
+ *
+  export default createTabManager(
+    [
+      {
+        name: 'Collect',
+        element: () => <Collect />,
+      },
+      {
+        name: 'Loan',
+        element: () => <Loan />,
+      },
+      {
+        name: 'Buy',
+        element: () => <Buy />,
+      },
+      {
+        name: 'Info',
+        element: () => <Info />,
+      },
+    ],
+  );
  */
 export default function createTabManager(tabs: ElementTabList) {
   return connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(createSimpleComponent(tabs));
+  )(wrapTabs(tabs));
 }

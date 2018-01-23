@@ -1,16 +1,14 @@
 import * as React from 'react';
 
 import store from '../../../store';
-import searchBarActions from '../../../store/modules/searchBar/actions';
 import createPage from '../Page/index';
-
-export interface SearchPageProps { }
 
 interface SearchPageState {
   /** Value from the search bar */
   searchBarValue: string;
 }
 
+/** The props injected by a search page HOC */
 export type InjectedSearchProps = SearchPageState;
 
 /**
@@ -47,7 +45,7 @@ export default function createSearchPage<InjectedProps>(
     public constructor(props: InjectedProps) {
       super(props);
 
-      // Initialize state
+      // Initialize state from redux
       const reduxState = store.getState();
       this.state = Object.assign({}, this.state, {
         searchBarValue: reduxState.searchBar.value,
@@ -56,6 +54,7 @@ export default function createSearchPage<InjectedProps>(
 
     /************************* React Lifecycle *************************/
 
+    /** React componentDidMount */
     public componentDidMount() {
       // Listen to updates to search bar value and propogate to local state
       store.subscribe(() => {
@@ -68,7 +67,9 @@ export default function createSearchPage<InjectedProps>(
       });
     }
 
+    /** React render */
     public render() {
+      // Inject searchBarValue into props of WrappedComponent
       return <WrappedComponent {...this.props} searchBarValue={this.state.searchBarValue} />;
     }
   }
