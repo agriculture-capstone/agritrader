@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text } from 'native-base';
+import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text, Picker } from 'native-base';
 
 import createPage from '../../../../generators/Page/index';
 
@@ -165,17 +165,30 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
               <Label>Payment Method</Label>
               </Col>
             </Row>
-            <Row style={styles.input}>
-              <Col>
-              <Input>
-                <H3>{this.state.selectedPaymentCycle}</H3>
-              </Input>
-              </Col> 
-              <Col>
-              <Input>
-                <H3>{this.state.selectedPaymentMethod}</H3>
-              </Input>
-              </Col>
+            <Row style={styles.picker}>
+            <Col>
+              <Picker
+                iosHeader="Select payment method"
+                mode="dropdown"
+                selectedValue={this.state.selectedPaymentMethod}
+                onValueChange={this.updatePaymentMethod}
+              >
+                <Picker.Item label="Mobile" value="Mobile" />
+                <Picker.Item label="Cash" value="Cash" />
+              </Picker>
+            </Col>
+            <Col>
+              <Picker
+                iosHeader="Select payment cycle"
+                mode="dropdown"
+                selectedValue={this.state.selectedPaymentCycle}
+                onValueChange={this.updatePaymentCycle}
+              >
+                <Picker.Item label="Weekly" value="Weekly" />
+                <Picker.Item label="Bi-Weekly" value="Bi-weekly" />
+                <Picker.Item label="Monthly" value="Monthly" />
+              </Picker>
+            </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Notes</Label>
