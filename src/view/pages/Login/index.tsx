@@ -67,21 +67,9 @@ class Login extends React.Component<Props, OwnState> {
   }
 
   private loginPress = () => {
-    // TODO: Don't just let into app
-    this.props.navigateToHome();
-    /*
-    auth: boolean = authenticate(this.state.username, this.state.password);
-    if(auth){
-      this.updatePassord('');
-      save username to redux state
-      store.dispatch({type: string, username: this.state.username})
-      redirect to landing page
-    }
-    else {
-      alert('incorrect username or password')
-    }
-    */
-
+    // TODO: Start a spinner?
+    // TODO: Get password
+    const password = '';
   }
 
   public render() {
