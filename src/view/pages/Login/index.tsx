@@ -4,8 +4,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {
-  Container,
-  Content,
   Form,
   Item,
   Input,
@@ -15,11 +13,12 @@ import {
   Grid,
   Row,
   Col,
+  Content,
 } from 'native-base';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import { images } from '../../assets/';
-import { styles } from './style';
+import styles from './style';
 import { State } from '../../../store/types';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
@@ -27,7 +26,6 @@ import createPage from '../../generators/Page/index';
 
 interface OwnState {
   username: string;
-  password: string;
 }
 
 interface OwnProps {
@@ -41,10 +39,16 @@ interface StoreProps {
 interface DispatchProps {
   navigateToHome(): void;
 }
-
+/**
+ *Login Properties
+ */
 export type Props = OwnProps & StoreProps & DispatchProps;
 
+/**
+ *Container for the Login screen
+ */
 class Login extends React.Component<Props, OwnState> {
+  private passwordTemp: string;
 
   public constructor(props: Props) {
     super(props);
@@ -52,23 +56,22 @@ class Login extends React.Component<Props, OwnState> {
     // TODO: Should not be storing password in memory if we can help it
     this.state = {
       username: '',
-      password: '',
     };
   }
 
   private updateUsername = (value: string) => {
     // TODO: Use function argument
-    this.setState({ username: value });
+    this.setState(state => ({ username: value }));
   }
 
   private updatePassword = (value: string) => {
     // TODO: Use function argument
-    this.setState({ password: value });
+    this.passwordTemp = value;
   }
-
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
+
     /*
     auth: boolean = authenticate(this.state.username, this.state.password);
     if(auth){
@@ -83,7 +86,9 @@ class Login extends React.Component<Props, OwnState> {
     */
 
   }
-
+/**
+ *Render method for Login screen
+ */
   public render() {
     return (
       <KeyboardAvoidingView
@@ -101,7 +106,10 @@ class Login extends React.Component<Props, OwnState> {
                 <Col>
                   <Item floatingLabel style={styles.label} >
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Username</Label>
-                    <Input onChangeText={this.updateUsername} style={{ color:'white' }} />
+                    <Input 
+                      onChangeText={this.updateUsername} 
+                      style={{ color:'white' }}
+                    />
                   </Item>
                 </Col>
               </Row>
@@ -109,7 +117,11 @@ class Login extends React.Component<Props, OwnState> {
                 <Col>
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
-                    <Input onChangeText={this.updatePassword} secureTextEntry={true} style={{ color:'white' }} />
+                    <Input
+                      onChangeText={this.updatePassword} 
+                      secureTextEntry={true} 
+                      style={{ color:'white' }} 
+                    />
                   </Item>
                 </Col>
               </Row>

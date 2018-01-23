@@ -1,30 +1,38 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col, Content, Button, Text } from 'native-base';
-import { StyleSheet } from 'react-native';
-import { Provider } from 'react-redux';
+import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import CardSummary from '../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
+import styles from '../../styles';
 // import Page from '../../../../lib/baseComponents/Page/index';
-import {styles} from '../../styles';
 
-interface ExportPropTypes {
+interface OwnPropsType {
   allTimeTotal: string;
   currentWeekTotal: string;
   currentMonthTotal: string;
   exportValues: any[];
 }
+interface DispatchPropsType {
+}
+
+interface StorePropsType {
+}
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
+interface OwnStateType {
+}
 
 /**
  * Container for Exports
  */
-export default class Export extends React.Component<ExportPropTypes, {}> {
+export default class Export extends React.Component<PropsType, OwnStateType> {
   // TODO need to connect this to the redux state
   /**
    * Render method for Exports
    */
   public render() {
     return (
-      <Content style={{ backgroundColor: 'white' }}>
+      <Content style={styles.exportsContent}>
         <Grid>
           <Row>
             <CardSummary
