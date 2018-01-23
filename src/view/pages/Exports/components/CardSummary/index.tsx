@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Grid, Row, Col } from 'native-base';
 import { Text } from 'react-native';
+
 import Panel from '../../../../components/Panel';
 import styles from './style';
 
@@ -26,7 +27,8 @@ interface OwnStateType {
 /**
  * Container for CardSummary
  */
-export default class CardSummary extends React.Component<PropsType, OwnStateType> {  /**
+export default class CardSummary extends React.Component<PropsType, OwnStateType> {  
+  /**
    * Render method for CardSummary
    */
   public render() {

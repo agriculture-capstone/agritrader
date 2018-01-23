@@ -26,7 +26,6 @@ import createPage from '../../generators/Page/index';
 
 interface OwnState {
   username: string;
-  password: string;
 }
 
 interface OwnProps {
@@ -49,6 +48,7 @@ export type Props = OwnProps & StoreProps & DispatchProps;
  *Container for the Login screen
  */
 class Login extends React.Component<Props, OwnState> {
+  private passwordInput: Input | null;
 
   public constructor(props: Props) {
     super(props);
@@ -56,24 +56,20 @@ class Login extends React.Component<Props, OwnState> {
     // TODO: Should not be storing password in memory if we can help it
     this.state = {
       username: '',
-      password: '',
     };
   }
 
   private updateUsername = (value: string) => {
     // TODO: Use function argument
-    this.setState({ username: value });
+    this.setState(state => ({ username: value }));
   }
 
-  private updatePassword = (value: string) => {
-    // TODO: Use function argument
-    this.setState({ password: value });
-  }
 
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
-    this.setState({ password: '' });
+    alert(this.refs.passwordInput);
+
     /*
     auth: boolean = authenticate(this.state.username, this.state.password);
     if(auth){
@@ -108,7 +104,11 @@ class Login extends React.Component<Props, OwnState> {
                 <Col>
                   <Item floatingLabel style={styles.label} >
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Username</Label>
-                    <Input onChangeText={this.updateUsername} style={{ color:'white' }} />
+                    <Input 
+                      onChangeText={this.updateUsername} 
+                      style={{ color:'white' }}
+                      onSubmitEditing={this.refs.passwordInput.focus}
+                    />
                   </Item>
                 </Col>
               </Row>
@@ -116,7 +116,12 @@ class Login extends React.Component<Props, OwnState> {
                 <Col>
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
-                    <Input onChangeText={this.updatePassword} secureTextEntry={true} style={{ color:'white' }} />
+                    <Input
+                      ref={(Input) => { this.passwordInput = Input; }}
+                      // onChangeText={this.updatePassword} 
+                      secureTextEntry={true} 
+                      style={{ color:'white' }} 
+                    />
                   </Item>
                 </Col>
               </Row>
