@@ -69,6 +69,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     /************************* Member Variables ************************/
 
     private searchBarValue = this.props.searchBarValue;
+    private farmerListFull = this.props.listItems;
 
     /************************* Member Functions ************************/
 
@@ -84,7 +85,6 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     private itemClicked() {
         this.props.navigateToFarmer();
     }
-
     /** Function to sort the list data by Farmer name in alphabetical order */
     // TODO: Make required property
     private sortList(farmers?: FarmerType[]): FarmerType[] {
@@ -112,15 +112,14 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
             return searchedList;
         }
         var options = {
-            shouldSort: true,
             threshold: 0.6,
             location: 0,
             distance: 100,
             maxPatternLength: 32,
             minMatchCharLength: 1,
             keys: [
-                "title",
-                "author.firstName"
+                'name',
+                'phoneNumber',
             ]
         };
         var fuse = new Fuse(farmers, options); // "list" is the item array
@@ -128,6 +127,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
             return farmers;
         }
         var result = fuse.search(this.searchBarValue);
+        this.forceUpdate();
 
 
         return result as FarmerType[];
@@ -138,7 +138,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
 
     public render(): JSX.Element {
         return (
-            <Content>
+            <Content style={style.background}>
                 <List
                     dataArray={this.sortList(this.searchList(this.props.listItems))}
                     renderRow={this.renderItem}
@@ -151,7 +151,9 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     /** Function to render the individual list items */
     private renderItem(info: FarmerType) {
         return (
-            <ListItem key={info.id} onPress={this.itemClicked}>
+            <ListItem
+                key={info.id} onPress={this.itemClicked}
+            >
                 <View>
                     <Text style={style.name}>
                         {info.name}
