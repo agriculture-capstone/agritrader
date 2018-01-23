@@ -8,6 +8,8 @@ import styles from '../../styles';
 
 interface OwnStateType {
   mode?: string;
+  selectedPaymentCycle: string;
+  selectedPaymentMethod: string;
 }
 
 interface OwnPropsType {
@@ -16,8 +18,6 @@ interface OwnPropsType {
   farmerPhoneNumber: string;
   farmerBusinessName: string;
   farmerNotes: string;
-  selectedPaymentCycle: string;
-  selectedPaymentMethod: string;
 }
 
 interface DispatchPropsType {
@@ -41,27 +41,25 @@ const modes = {
  */
 class FarmerInformation extends React.Component<PropsType, OwnStateType> {
 
-  private initialProps: any;
-
   constructor(props: OwnPropsType) {
     super(props);
     this.state = { 
       mode: 'view',
+      selectedPaymentCycle: 'Weekly',
+      selectedPaymentMethod: 'Mobile',
     };
-    
-    // this.initialProps = {
-    //   farmerFirstName: 'Patrick',
-    //   farmerLastName: 'Keenan',
-    //   farmerPhoneNumber: '123-456-7890',
-    //   farmerBusinessName: 'Farmer with coolest hat',
-    //   farmerNotes: 'Doctor from village A',
-    //   selectedPaymentCycle: 'Weekly',
-    //   selectedPaymentMethod: 'Mobile',
-    // };
   }
 
   private changeMode = (newMode: string) => {
     this.setState(state => ({ mode: newMode }));
+  }
+
+  private updatePaymentCycle = (value: string) => {
+    this.setState(state => ({ selectedPaymentCycle: value }));
+  }
+  
+  private updatePaymentMethod = (value: string) => {
+    this.setState(state => ({ selectedPaymentMethod: value }));
   }
 
   /**
@@ -97,10 +95,10 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
             </Row>
             <Row style={styles.infoLabel}>
               <Col>
-                <H2>{this.props.selectedPaymentCycle}</H2>
+                <H2>{this.state.selectedPaymentCycle}</H2>
               </Col> 
               <Col>
-                <H2>{this.props.selectedPaymentMethod}</H2>
+                <H2>{this.state.selectedPaymentMethod}</H2>
               </Col>
             </Row>
             <Row style={styles.infoLabel}>
@@ -170,12 +168,12 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
             <Row style={styles.input}>
               <Col>
               <Input>
-                <H3>{this.props.selectedPaymentCycle}</H3>
+                <H3>{this.state.selectedPaymentCycle}</H3>
               </Input>
               </Col> 
               <Col>
               <Input>
-                <H3>{this.props.selectedPaymentMethod}</H3>
+                <H3>{this.state.selectedPaymentMethod}</H3>
               </Input>
               </Col>
             </Row>
