@@ -50,6 +50,18 @@ const createBuy = () => (
   />
 );
 
+const createInfo = () => (
+  <Info
+    farmerFirstName="Patrick"
+    farmerLastName="Keena"
+    farmerPhoneNumber="123-456-789"
+    farmerBusinessName="Farmer with coolest hat"
+    farmerNotes="Doctor from village A"
+    selectedPaymentCycle="Weekly"
+    selectedPaymentMethod="Mobile"
+  />
+);
+
 export default createTabManager(
   [
     {
@@ -66,7 +78,7 @@ export default createTabManager(
     },
     {
       name: 'Info',
-      element: () => <Info />,
+      element: createInfo,
     },
   ],
 );
