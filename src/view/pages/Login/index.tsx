@@ -107,7 +107,7 @@ class Login extends React.Component<Props, OwnState> {
                     <Input 
                       onChangeText={this.updateUsername} 
                       style={{ color:'white' }}
-                      onSubmitEditing={this.refs.passwordInput.focus}
+                      //onSubmitEditing={this.refs.passwordInput.focus}
                     />
                   </Item>
                 </Col>
