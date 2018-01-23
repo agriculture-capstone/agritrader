@@ -5,7 +5,7 @@ export const deviceWidth = Dimensions.get('window').width;
 export const deviceHeight = Dimensions.get('window').height;
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   addEntryBtn: {
     paddingTop: 7,
   },
@@ -88,3 +88,5 @@ export const styles = StyleSheet.create({
     paddingBottom: 21,
   },
 });
+
+export default styles;

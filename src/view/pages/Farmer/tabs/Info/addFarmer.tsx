@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Picker } from 'native-base';
 import { Text } from 'react-native';
 
-import { styles } from '../../styles';
+import styles from '../../styles';
 
 /**
  * Holds temorary farmer info
@@ -22,25 +22,25 @@ export interface OwnPropsType {
 }
 
 /**
+ * Handles changing the mode to view farmer
+ */
+const modeHandler = (props: OwnPropsType, page: string) => {
+  // page === 'view' ? props.modeHandler(page) : false;
+  props.modeHandler(page);
+};
+
+const updatePaymentCycle = (props: OwnPropsType, value: string) => {
+  props.selectedPaymentCycle = value;
+};
+
+const updatePaymentMethod = (props: OwnPropsType, value: string) => {
+  props.selectedPaymentMethod = value;
+};
+
+/**
  * Stateless component for viewing farmer information
  */
 const AddFarmer = (props: OwnPropsType) => {
-  
-  /**
-   * Handles chaning the mode to view farmer
-   */
-  const modeHandler = () => {
-    props.modeHandler('view');
-  };
-
-  const updatePaymentCycle = (value: string) => {
-    props.selectedPaymentCycle = value;
-  };
-
-  const updatePaymentMethod = (value: string) => {
-    props.selectedPaymentMethod = value;
-  };
-
   return (
     <Content>
       <Form>
@@ -119,12 +119,7 @@ const AddFarmer = (props: OwnPropsType) => {
           </Row>
           <Row style={styles.farmerInfoButtonRow}>
             <Col style={styles.farmerInfoButtonCol}>
-              <Button block danger>
-                <Text style={styles.buttonText}>CANCEL</Text>
-              </Button>
-            </Col>
-            <Col style={styles.farmerInfoButtonCol}>
-              <Button block success onPress={modeHandler}>
+              <Button block success onPress={() => modeHandler(props, 'view')}>
                 <Text style={styles.buttonText}>ADD</Text>
               </Button>
             </Col>

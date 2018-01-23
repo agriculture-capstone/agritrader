@@ -9,6 +9,17 @@ interface OwnStateType {
   mode?: string;
 }
 
+interface OwnPropsType {
+}
+
+interface DispatchPropsType {
+}
+
+interface StorePropsType {
+}
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
 /**
  * Modes to determine how to render farmer information
  */
@@ -20,7 +31,7 @@ export const modes = {
 /**
  * Container for application
  */
-class FarmerInformation extends React.Component<{}, OwnStateType> {
+class FarmerInformation extends React.Component<PropsType, OwnStateType> {
 
   private initialProps: any;
 
@@ -28,7 +39,7 @@ class FarmerInformation extends React.Component<{}, OwnStateType> {
     mode: 'view',
   };
 
-  constructor(props: any) {
+  constructor(props: OwnPropsType) {
     super(props);
     this.state = { 
       mode: 'view',
@@ -48,7 +59,7 @@ class FarmerInformation extends React.Component<{}, OwnStateType> {
   }
 
   private changeMode = (newMode: string) => {
-    this.setState(() => ({ mode: newMode }));
+    this.setState(state => ({ mode: newMode }));
   }
 
   /**
@@ -59,6 +70,8 @@ class FarmerInformation extends React.Component<{}, OwnStateType> {
       return <ViewFarmer {...this.initialProps} modeHandler={this.changeMode} />;
     } else if (this.state.mode === modes.edit) {
       return <EditFarmer {...this.initialProps} modeHandler={this.changeMode} />;
+    } else {
+      throw new Error('Error: invalid mode ' + this.state.mode);
     }
   }
 }

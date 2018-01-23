@@ -8,7 +8,7 @@ import createTabManager from '../../generators/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
 import Buy from './tabs/Buy';
-import FarmerInformation from './tabs/Info';
+import Info from './tabs/Info';
 
 const createCollect = () => (
   <Collect
@@ -67,7 +67,7 @@ export default createTabManager(
     },
     {
       name: 'Info',
-      element: () => <FarmerInformation />,
+      element: () => <Info />,
     },
   ],
 );

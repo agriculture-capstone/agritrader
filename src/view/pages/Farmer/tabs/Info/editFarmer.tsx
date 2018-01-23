@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Content, Grid, Row, Col, Input, Label, Button, H3 } from 'native-base';
 import { Text } from 'react-native';
 
-import { styles } from '../../styles';
+import styles from '../../styles';
 
 interface OwnPropsType {
   farmerFirstName: string;
@@ -22,7 +22,7 @@ interface OwnPropsType {
 const EditFarmer = (props: OwnPropsType) => {
 
   /**
-   * Handles chaning the mode to view farmer
+   * Handles changing the mode to view farmer
    */
   const modeHandler = () => {
     props.modeHandler('view');
