@@ -10,7 +10,7 @@ import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
 /** Drawer OwnPropsType */
-export interface OwnProps {}
+export interface OwnPropsType {}
 
 /** Drawer State */
 export interface OwnState {}
@@ -74,7 +74,6 @@ class Drawer extends React.Component<PropsType, OwnState> {
         open={this.props.open}
         onClose={this.props.closeDrawer}
         onOpen={this.openDrawer}
-        content={this.createDrawerContents()}
         type="overlay"
         panOpenMask={this.PAN_OPEN_MASK}
         disabled={this.props.locked}

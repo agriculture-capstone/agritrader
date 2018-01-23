@@ -8,7 +8,7 @@ import searchBarActions from '../../../store/modules/searchBar/actions';
 import { State } from '../../../store/types';
 
 /** TabManager OwnPropsType */
-interface OwnProps {}
+interface OwnPropsType {}
 
 interface StorePropsType {
   activeTab: string;

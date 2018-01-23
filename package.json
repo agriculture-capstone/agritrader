@@ -40,6 +40,7 @@
 		"copyfiles": "node_modules/.bin/copyfiles"
 	},
 	"dependencies": {
+		"fuse.js": "^3.2.0",
 		"jest-cli": "^21.2.1",
 		"native-base": "^2.3.4",
 		"react": "16.0.0-beta.5",

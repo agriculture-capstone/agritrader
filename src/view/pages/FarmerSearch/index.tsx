@@ -1,3 +1,4 @@
+///<reference path="../../../../node_modules/@types/react-redux/index.d.ts"/>
 import * as React from 'react';
 
 import { Content, List, ListItem } from 'native-base';
@@ -9,6 +10,7 @@ import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import style from './style';
+import * as Fuse from 'fuse.js'
 
 /** This is just a table of phony information to populate the FarmerSearch UI */
 const defaultFarmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id: 1 },
@@ -34,7 +36,7 @@ interface FarmerType {
 /** FarmerSearch OwnPropsType */
 // TODO: Make required property when moving to StorePropsType
 export interface OwnPropsType {
-  farmerSearchListItems?: FarmerType[];
+  listItems?: FarmerType[];
 }
 
 /** FarmerSearch StorePropsType */
@@ -66,6 +68,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
 
     /************************* Member Variables ************************/
 
+    private searchBarValue = this.props.searchBarValue;
 
     /************************* Member Functions ************************/
 
@@ -74,6 +77,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
 
         this.renderItem = this.renderItem.bind(this);
         this.itemClicked = this.itemClicked.bind(this);
+        this.searchList = this.searchList.bind(this);
     }
 
     /** Function to take user to farmer that was clicked on */
@@ -101,14 +105,42 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
         return sortedList;
     }
 
+    /** Function to perform a fuzzy search on the farmer list given a search term */
+    private searchList(farmers?: FarmerType[]): FarmerType[] {
+        var searchedList: FarmerType[] = [];
+        if (farmers === undefined) {
+            return searchedList;
+        }
+        var options = {
+            shouldSort: true,
+            threshold: 0.6,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: [
+                "title",
+                "author.firstName"
+            ]
+        };
+        var fuse = new Fuse(farmers, options); // "list" is the item array
+        if (this.searchBarValue === '') {
+            return farmers;
+        }
+        var result = fuse.search(this.searchBarValue);
+
+
+        return result as FarmerType[];
+    }
+
+
     /************************* React *************************/
 
     public render(): JSX.Element {
         return (
             <Content>
-
                 <List
-                    dataArray={this.sortList(this.props.farmerSearchListItems)}
+                    dataArray={this.sortList(this.searchList(this.props.listItems))}
                     renderRow={this.renderItem}
                 />
 
