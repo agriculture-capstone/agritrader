@@ -1,12 +1,8 @@
 import store from '../store';
 import * as React from 'react';
 import { Root, Toast, ActionSheet } from 'native-base';
-import { View } from 'react-native';
 import { Provider } from 'react-redux';
 import NavContainer from './navigation';
-import Drawer from './components/Drawer';
-import Header from './components/Header';
-import Login from './pages/Login';
 
 
 /**

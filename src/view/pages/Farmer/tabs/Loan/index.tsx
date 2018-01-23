@@ -1,26 +1,33 @@
 import * as React from 'react';
-import { Root, Grid, Row, Col, Content, Button, Text } from 'native-base';
-import { StyleSheet } from 'react-native';
-import { Provider } from 'react-redux';
+import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import LoanSummary from '../../components/LoanSummary';
 import LoansTable from '../../components/LoansTable';
 import createPage from '../../../../generators/Page/index';
 
-interface CollectPropsType {
+interface OwnPropsType {
   farmerName: string;
   totalRemainingBalance: string,
   totalWeeklyPaymentBalence: string,
-  collectionValues: any[];
+  loanTransactions: any[];
+}
+
+interface DispatchPropsType {
+}
+
+interface StorePropsType {
+}
+ 
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType; 
+
+interface OwnStateType {
 }
 
 /**
- * Collect Tab Component
+ * Buy Tab Component
  */
-class Collect extends React.Component<CollectPropsType, {}> {
-
-  // TODO: need to connect this to the redux state
+class Buy extends React.Component<PropsType, OwnStateType> {
   /**
-   * Render method for Farmer
+   * Render method for Buy
    */
   public render() {
     return (
@@ -35,7 +42,7 @@ class Collect extends React.Component<CollectPropsType, {}> {
           </Row>
           <Row>
             <LoansTable
-              values={this.props.collectionValues}
+              values={this.props.loanTransactions}
             />
           </Row>
         </Grid>
@@ -56,4 +63,4 @@ class Collect extends React.Component<CollectPropsType, {}> {
   }
 }
 
-export default createPage(Collect);
+export default createPage(Buy);
