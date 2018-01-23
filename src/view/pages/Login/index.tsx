@@ -48,7 +48,8 @@ export type Props = OwnProps & StoreProps & DispatchProps;
  *Container for the Login screen
  */
 class Login extends React.Component<Props, OwnState> {
-  private passwordInput: Input | null;
+  //private passwordInput: Input | null;
+  private passwordTemp: string;
 
   public constructor(props: Props) {
     super(props);
@@ -64,11 +65,16 @@ class Login extends React.Component<Props, OwnState> {
     this.setState(state => ({ username: value }));
   }
 
-
+  private updatePassword = (value: string) => {
+    // TODO: Use function argument
+    this.passwordTemp = value;
+  }
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
-    alert(this.refs.passwordInput);
+    //alert(this.refs.passwordInput.value);
+    //this.passwordTemp = '';
+
 
     /*
     auth: boolean = authenticate(this.state.username, this.state.password);
@@ -107,7 +113,7 @@ class Login extends React.Component<Props, OwnState> {
                     <Input 
                       onChangeText={this.updateUsername} 
                       style={{ color:'white' }}
-                      onSubmitEditing={this.refs.passwordInput.focus}
+                      //onSubmitEditing={this.refs.passwordInput.focus}
                     />
                   </Item>
                 </Col>
@@ -117,8 +123,9 @@ class Login extends React.Component<Props, OwnState> {
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
                     <Input
-                      ref={(Input) => { this.passwordInput = Input; }}
-                      // onChangeText={this.updatePassword} 
+                      //ref={(Input) => { this.passwordInput = Input; }}
+                      //getRef={(Input) => { this.passwordInput = Input; }}
+                      onChangeText={this.updatePassword} 
                       secureTextEntry={true} 
                       style={{ color:'white' }} 
                     />
