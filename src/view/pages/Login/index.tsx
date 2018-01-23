@@ -50,7 +50,6 @@ export type Props = OwnProps & StoreProps & DispatchProps;
  *Container for the Login screen
  */
 class Login extends React.Component<Props, OwnState> {
-  //private passwordInput: Input | null;
   private passwordTemp: string;
 
   public constructor(props: Props) {
@@ -116,7 +115,6 @@ class Login extends React.Component<Props, OwnState> {
                     <Input 
                       onChangeText={this.updateUsername} 
                       style={{ color:'white' }}
-                      //onSubmitEditing={this.refs.passwordInput.focus}
                     />
                   </Item>
                 </Col>
@@ -126,8 +124,6 @@ class Login extends React.Component<Props, OwnState> {
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
                     <Input
-                      //ref={(Input) => { this.passwordInput = Input; }}
-                      //getRef={(Input) => { this.passwordInput = Input; }}
                       onChangeText={this.updatePassword} 
                       secureTextEntry={true} 
                       style={{ color:'white' }} 

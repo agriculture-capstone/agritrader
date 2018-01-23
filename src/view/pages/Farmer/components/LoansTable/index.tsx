@@ -1,21 +1,28 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
-
-import { Container, Header, Content, List, ListItem, Text, Grid, Row, Col } from 'native-base';
 import DataTable from '../../../../components/DataTable';
 
-interface LoansTablePropsType {
-  values: Array<any>;
+interface OwnPropsType {
+  values: any[];
 }
+
+interface DispatchPropsType {
+}
+
+interface StorePropsType {
+}
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
+interface OwnStateType {
+}
+
 
 const PRODUCT_CARD_HEADERS = ['Date', 'Remaining Balance', 'Weekly Payment'];
 
 /**
-* Container for Product Card
+* Component for Loans Table
 */
-export default class LoansTable extends React.Component<LoansTablePropsType, {}> {
-  // TODO connect this to redux state
-
+export default class LoansTable extends React.Component<PropsType, OwnStateType> {
   /**
   * Render method for Product Card
   */
@@ -24,7 +31,7 @@ export default class LoansTable extends React.Component<LoansTablePropsType, {}>
       <DataTable
         headers={PRODUCT_CARD_HEADERS}
         values={this.props.values}
-       />
+      />
     );
   }
 }
