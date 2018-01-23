@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Content } from 'native-base';
 
 /**
  * Higher order component for pages
@@ -38,7 +39,11 @@ export default function createPage<InjectedProps>(WrappedComponent: React.Compon
 
     /** React render method */
     public render() {
-      return <WrappedComponent {...this.props} />;
+      return (
+        <Content>
+          <WrappedComponent {...this.props} />
+        </Content>
+      );
     }
   };
 }

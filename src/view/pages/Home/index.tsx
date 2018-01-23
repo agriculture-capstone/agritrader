@@ -8,7 +8,7 @@ import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
-import createPage from '../../generators/Page/index';
+import Composer from '../../hoc/PageComposer';
 import styles from './style';
 
 interface OwnPropsType { }
@@ -67,7 +67,7 @@ class Home extends React.Component<HomePropsType, {}> {
   }
 }
 
-const HomePage = createPage<HomePropsType>(Home);
+const HomePage = new Composer(Home).finalize;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
   return {};

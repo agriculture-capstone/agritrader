@@ -4,11 +4,11 @@ import { Content, List, ListItem } from 'native-base';
 import { ScrollView, Text } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
-import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
+import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
-import createPage from '../../generators/Page/index';
 import { State } from '../../../store/types';
+import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 
 /**
  * This is the basic model for the type of farmer object that
@@ -93,7 +93,10 @@ class FarmerSearch extends React.Component<Props, {}> {
   }
 }
 
-const FarmerSearchPage = createSearchPage<FarmerSearchProps>(FarmerSearch, 'Search Farmers');
+const FarmerSearchPage = new Composer(FarmerSearch)
+  .apply<FarmerSearchProps>(Composer.search<FarmerSearchProps>('Search Farmers'))
+  .finalize;
+
 
 /************************* Redux ************************/
 

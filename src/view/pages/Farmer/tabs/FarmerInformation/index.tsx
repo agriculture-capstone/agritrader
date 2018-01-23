@@ -8,7 +8,7 @@ import EditFarmer from './editFarmer';
 import AddFarmer from './addFarmer';
 
 import styles from './style';
-import createPage from '../../../../generators/Page/index';
+import Composer from '../../../../hoc/PageComposer';
 
 interface OwnState {
   mode?: string;
@@ -44,10 +44,10 @@ class FarmerInformation extends React.Component<OwnProps, OwnState> {
 
   constructor(props: OwnProps) {
     super(props);
-    this.state = { 
+    this.state = {
       mode: 'view',
     };
-    
+
     this.initialProps = {
       farmerFirstName: 'Patrick',
       farmerLastName: 'Keenan',
@@ -88,4 +88,5 @@ class FarmerInformation extends React.Component<OwnProps, OwnState> {
   }
 }
 
-export default createPage(FarmerInformation);
+export default new Composer(FarmerInformation)
+  .finalize;
