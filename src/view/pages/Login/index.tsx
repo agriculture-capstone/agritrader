@@ -22,6 +22,7 @@ import styles from './style';
 import { State } from '../../../store/types';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
+import loginActions from '../../../store/modules/login/actions';
 import createPage from '../../generators/Page/index';
 
 interface OwnState {
@@ -38,6 +39,7 @@ interface StoreProps {
 
 interface DispatchProps {
   navigateToHome(): void;
+  setUsername(): void;
 }
 /**
  *Login Properties
@@ -72,6 +74,7 @@ class Login extends React.Component<Props, OwnState> {
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
+    this.props.setUsername(this.state.username);
     //alert(this.refs.passwordInput.value);
     //this.passwordTemp = '';
 
