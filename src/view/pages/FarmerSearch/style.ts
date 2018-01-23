@@ -2,16 +2,15 @@
  * Style sheet for Farmer Search
  */
 
-const react = require('react-native');
-const { StyleSheet } = react;
+import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
     name: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: 'bold',
     },
     phone: {
-        fontSize: 12,
+        fontSize: 18,
         fontWeight: 'normal',
     },
 });

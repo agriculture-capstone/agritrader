@@ -8,7 +8,7 @@ import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPa
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
-import { styles } from './style';
+import style from './style';
 
 /** This is just a table of phony information to populate the FarmerSearch UI */
 const defaultFarmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id: 1 },
@@ -24,6 +24,7 @@ const defaultFarmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id:
                     { name: 'Simon', phoneNumber: '1-234-456-7890', id: 11 }];
 
 /** Basic model for the FarmerType object */
+// TODO: Move to store --@jinglis
 interface FarmerType {
   name: string;
   phoneNumber: string;
@@ -31,8 +32,9 @@ interface FarmerType {
 }
 
 /** FarmerSearch OwnPropsType */
+// TODO: Make required property when moving to StorePropsType
 export interface OwnPropsType {
-  listItems?: FarmerType[];
+  farmerSearchListItems?: FarmerType[];
 }
 
 /** FarmerSearch StorePropsType */
@@ -43,13 +45,20 @@ interface DispatchPropsType {
   navigateToFarmer(): void;
 }
 
-type FarmerSearchPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+/** FarmerSearch OwnStateType */
+interface OwnStateType {}
 
-/** FarmerSearch Props */
-type Props = FarmerSearchPropsType & InjectedSearchProps;
+/** FarmerSearch WrappedPropsType */
+type WrappedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** FarmerSearch PropsType */
+type PropsType = WrappedPropsType & InjectedSearchProps;
+
+/** FarmerSearch StateType */
+type StateType = OwnStateType;
 
 /** Farmer Search component for displaying and searching through farmers */
-class FarmerSearch extends React.Component<Props, {}> {
+class FarmerSearch extends React.Component<PropsType, StateType> {
 
     public static defaultProps = {
         listItems: defaultFarmerList,
@@ -60,7 +69,7 @@ class FarmerSearch extends React.Component<Props, {}> {
 
     /************************* Member Functions ************************/
 
-    public constructor(props: Props) {
+    public constructor(props: PropsType) {
         super(props);
 
         this.renderItem = this.renderItem.bind(this);
@@ -73,6 +82,7 @@ class FarmerSearch extends React.Component<Props, {}> {
     }
 
     /** Function to sort the list data by Farmer name in alphabetical order */
+    // TODO: Make required property
     private sortList(farmers?: FarmerType[]): FarmerType[] {
 
         var sortedList: FarmerType[] = [];
@@ -98,37 +108,23 @@ class FarmerSearch extends React.Component<Props, {}> {
             <Content>
 
                 <List
-                    dataArray={this.sortList(this.props.listItems)}
+                    dataArray={this.sortList(this.props.farmerSearchListItems)}
                     renderRow={this.renderItem}
-                    // renderSectionHeader={this.renderSectionHeader}
                 />
 
             </Content>
         );
     }
 
-    /** Function to render the section headers -Currently disabled- */
-    // private renderSectionHeader(sectionData: FarmerType, rowID: ReactText) {
-    //     if (rowID == 'undefined') {
-    //         return (
-    //             <ListItem>
-    //                 <Text>{sectionData.name.toString()}</Text>
-    //             </ListItem>
-    //         );
-    //     } else {
-    //         return <ListItem/>
-    //     }
-    // }
-
     /** Function to render the individual list items */
     private renderItem(info: FarmerType) {
         return (
             <ListItem key={info.id} onPress={this.itemClicked}>
                 <View>
-                    <Text style={styles.name}>
+                    <Text style={style.name}>
                         {info.name}
                     </Text>
-                    <Text style={styles.phone}>
+                    <Text style={style.phone}>
                         Phone: {info.phoneNumber}
                     </Text>
                 </View>
@@ -137,7 +133,7 @@ class FarmerSearch extends React.Component<Props, {}> {
     }
 }
 
-const FarmerSearchPage = createSearchPage<FarmerSearchPropsType>(FarmerSearch, 'Search Farmers');
+const FarmerSearchPage = createSearchPage<WrappedPropsType>(FarmerSearch, 'Search Farmers');
 
 /************************* Redux ************************/
 
