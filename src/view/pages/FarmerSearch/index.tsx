@@ -72,7 +72,7 @@ const farmerList: Farmer[] = [
   },
 ];
 
-/** Basic model for the FarmerType object */
+/** Basic model for the Farmer object */
 // TODO: Move to store --@jinglis
 // TODO: should match Core API for farmer @nick
 // TODO: Phones should be shown (123) 456-7890 @nick
@@ -141,19 +141,38 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     this.fuse = new Fuse(farmerList, {
       caseSensitive: false,
       shouldSort: true,
-      threshold: 0.6,
+      threshold: 0.0,
       location: 0,
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
         'name',
-        'phoneNumber',
       ],
     });
   }
 
-  private searchList() {
+    /** Function to sort the list data by Farmer name in alphabetical order */
+    // TODO: Make required property
+    private sortList(farmers: Farmer[]): Farmer[] {
+
+        var sortedList: Farmer[] = [];
+        if (farmers === undefined) {
+            return sortedList;
+        }
+        sortedList = farmers.sort((f1: Farmer, f2: Farmer) => {
+            if (f1.name > f2.name) {
+                return 1;
+            }
+            if (f1.name < f2.name) {
+                return -1;
+            }
+            return 0;
+        });
+        return sortedList;
+    }
+
+  private searchList(): Farmer[] {
     return (this.props.searchBarValue) ?
       this.fuse.search(this.props.searchBarValue) :
       farmerList;
@@ -178,7 +197,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     return (
       <Content style={style.background} >
         <List
-          dataArray={this.searchList()}
+          dataArray={this.sortList(this.searchList())}
           renderRow={this.renderItem}
         />
       </Content>
