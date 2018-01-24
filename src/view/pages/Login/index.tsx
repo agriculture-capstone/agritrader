@@ -20,6 +20,7 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { images } from '../../assets/';
 import styles from './style';
 import { State } from '../../../store/types';
+import store from '../../../store';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
 import loginActions from '../../../store/modules/login/actions';
@@ -27,6 +28,7 @@ import createPage from '../../generators/Page/index';
 
 interface OwnState {
   username: string;
+  password: string;
 }
 
 interface OwnProps {
@@ -39,7 +41,7 @@ interface StoreProps {
 
 interface DispatchProps {
   navigateToHome(): void;
-  setUsername(): void;
+  setUsername(username: string): void;
 }
 /**
  *Login Properties
@@ -50,14 +52,13 @@ export type Props = OwnProps & StoreProps & DispatchProps;
  *Container for the Login screen
  */
 class Login extends React.Component<Props, OwnState> {
-  private passwordTemp: string;
 
   public constructor(props: Props) {
     super(props);
 
-    // TODO: Should not be storing password in memory if we can help it
     this.state = {
       username: '',
+      password: '',
     };
   }
 
@@ -65,36 +66,21 @@ class Login extends React.Component<Props, OwnState> {
     // TODO: Use function argument
     this.setState(state => ({ username: value }));
   }
-
+    // TODO: Continue to research how to use ref to access pass directly
   private updatePassword = (value: string) => {
     // TODO: Use function argument
-    this.passwordTemp = value;
+    this.setState(state => ({ password: value }));
   }
+
   private loginPress = () => {
     // TODO: Don't just let into app
     this.props.navigateToHome();
     this.props.setUsername(this.state.username);
-    //alert(this.refs.passwordInput.value);
-    //this.passwordTemp = '';
-
-
-    /*
-    auth: boolean = authenticate(this.state.username, this.state.password);
-    if(auth){
-      this.updatePassord('');
-      save username to redux state
-      store.dispatch({type: string, username: this.state.username})
-      redirect to landing page
-    }
-    else {
-      alert('incorrect username or password')
-    }
-    */
-
+    this.setState(state => ({ password: '' }));
   }
-/**
- *Render method for Login screen
- */
+  /**
+   *Render method for Login screen
+   */
   public render() {
     return (
       <KeyboardAvoidingView
@@ -112,9 +98,9 @@ class Login extends React.Component<Props, OwnState> {
                 <Col>
                   <Item floatingLabel style={styles.label} >
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Username</Label>
-                    <Input 
-                      onChangeText={this.updateUsername} 
-                      style={{ color:'white' }}
+                    <Input
+                      onChangeText={this.updateUsername}
+                      style={{ color: 'white' }}
                     />
                   </Item>
                 </Col>
@@ -124,9 +110,9 @@ class Login extends React.Component<Props, OwnState> {
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
                     <Input
-                      onChangeText={this.updatePassword} 
-                      secureTextEntry={true} 
-                      style={{ color:'white' }} 
+                      onChangeText={this.updatePassword}
+                      secureTextEntry={true}
+                      style={{ color: 'white' }}
                     />
                   </Item>
                 </Col>
@@ -161,6 +147,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) =>
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
     navigateToHome: () => dispatch(navActions.navigateTo(Route.HOME)),
+    setUsername: username => dispatch(loginActions.setUsername(username)), 
   };
 };
 
