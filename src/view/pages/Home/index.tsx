@@ -3,7 +3,7 @@ import { Grid, Row, Col, Content, Text } from 'native-base';
 import { View } from 'react-native';
 import CardButton from '../../components/CardButton';
 import Panel from '../../components/Panel';
-import StatisicsBlock from './components/StatisticsBlock';
+import StatisicsBlock from '../../components/StatisticsBlock';
 import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { State } from '../../../store/types';
