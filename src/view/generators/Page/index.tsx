@@ -9,9 +9,9 @@ import * as React from 'react';
  *
  * @example
  *
-  class MyPage extends React.Component<Props, OwnState> {
+  class MyPage extends React.Component<PropsType, OwnState> {
 
-    constructor(props: Props) {
+    constructor(props: PropsType) {
       super(props);
     }
 

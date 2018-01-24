@@ -4,7 +4,7 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-// import { OwnProps as FarmerOwnProps }  from './index';
+// import { OwnPropsType as FarmerOwnProps }  from './index';
 
 interface OwnProps {
   farmerFirstName: string;
@@ -18,7 +18,7 @@ interface OwnProps {
 }
 
 /**
- * Stateless component for viewing farmer information
+ * Stateless component for viewing farmerType information
  */
 const ViewFarmer = (props: OwnProps) => {
 

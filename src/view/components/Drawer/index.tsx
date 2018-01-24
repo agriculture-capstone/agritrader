@@ -9,8 +9,8 @@ import headerActions from '../../../store/modules/header/actions';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
-/** Drawer OwnProps */
-export interface OwnPropsType {}
+/** Drawer OwnPropsType */
+export interface OwnProps {}
 
 /** Drawer State */
 export interface OwnState {}
@@ -22,7 +22,6 @@ interface StorePropsType {
   // name: string;
   // username: string;
 }
-
 interface DispatchPropsType {
   closeDrawer(): void;
   openDrawer(): void;
@@ -49,7 +48,6 @@ class Drawer extends React.Component<PropsType, OwnState> {
     this.onPress = this.onPress.bind(this);
     this.onLogout = this.onLogout.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
-    this.createDrawerContents = this.createDrawerContents.bind(this);
   }
 
   private openDrawer() {
@@ -67,18 +65,6 @@ class Drawer extends React.Component<PropsType, OwnState> {
   private onLogout() {
     // TODO: Actually log people out (build a service for this)
     this.props.goToLogin();
-  }
-
-  private createDrawerContents() {
-    // TODO: Change placeholder names to this.props.name/this.props.username
-    return (
-      <DrawerContents
-        name={'Joe Trader'}
-        username={'joe@qualitymilk.ca'}
-        onPress={this.onPress}
-        onLogout={this.onLogout}
-      />
-    );
   }
 
   /****************************** React ******************************/

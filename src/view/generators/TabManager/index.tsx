@@ -64,7 +64,6 @@ function wrapTabs(tabs: ElementTabList) {
     }
 
     private getActiveElement() {
-      // Find the active tab
       const tab = (this.props.activeTab) ? this.tabs.find(t => t.name === this.props.activeTab) : this.tabs[0];
       if (!tab) throw new Error('Active tab is not a valid tab');
 
@@ -141,8 +140,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
  *
  * The first tab in the 'tabs' list will be rendered on the far left, and the last
  * will be rendered on the far right.
- *
- * @param {ElementTabList} [tabs]
  *
  * @example
  *

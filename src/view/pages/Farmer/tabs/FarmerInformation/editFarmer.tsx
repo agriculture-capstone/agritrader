@@ -18,7 +18,7 @@ interface OwnProps {
 }
 
 /**
- * Stateless component for viewing farmer information
+ * Stateless component for viewing farmerType information
  */
 const EditFarmer = (props: OwnProps) => {
 

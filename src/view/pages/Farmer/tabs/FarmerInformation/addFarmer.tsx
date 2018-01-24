@@ -6,7 +6,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import styles from './style';
 // import FarmerInformation, { OwnProps as FarmerOwnProps } from '.';
 
-// interface OwnProps extends FarmerOwnProps {
+// interface OwnPropsType extends FarmerOwnProps {
 //   updatePaymentCycle(value: string): void;
 //   updatePaymentMethod(value: string): void;
 // }
@@ -25,7 +25,7 @@ export interface OwnProps {
 }
 
 /**
- * Stateless component for viewing farmer information
+ * Stateless component for viewing farmerType information
  */
 const AddFarmer = (props: OwnProps) => {
   
