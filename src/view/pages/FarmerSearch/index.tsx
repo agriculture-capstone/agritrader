@@ -155,7 +155,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
 
   private searchList() {
     return (this.props.searchBarValue) ?
-      this.fuse.search(this.props.searchBarValue) :
+      this.fuse.search(this.props.searchBarValue) as Farmer[] :
       farmerList;
   }
 
