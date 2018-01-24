@@ -1,13 +1,11 @@
-const React = require('react-native');
-const { Platform, Dimensions, StyleSheet } = React;
+import { StyleSheet } from 'react-native';
 
-export const deviceWidth = Dimensions.get('window').width;
-export const deviceHeight = Dimensions.get('window').height;
-
-
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     backgroundColor: '#3F51B5',
+  },
+  exportsContent: {
+    backgroundColor: 'white',
   },
   addEntryButton: {
     paddingLeft: 21,
