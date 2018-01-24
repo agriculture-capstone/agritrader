@@ -7,7 +7,7 @@ import createPage from '../../../../generators/Page/index';
 import styles from '../../styles';
 
 interface OwnStateType {
-  mode?: string;
+  mode: PageMode;
   selectedPaymentCycle: string;
   selectedPaymentMethod: string;
 }
@@ -18,6 +18,8 @@ interface OwnPropsType {
   farmerPhoneNumber: string;
   farmerBusinessName: string;
   farmerNotes: string;
+  selectedPaymentCycle: string;
+  selectedPaymentMethod: string;
 }
 
 interface DispatchPropsType {
@@ -31,10 +33,7 @@ type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 /**
  * Modes to determine how to render farmer information
  */
-const modes = {
-  edit: 'edit',
-  view: 'view',
-};
+type PageMode = 'view' | 'edit';
 
 /**
  * Container for application
@@ -50,7 +49,11 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
     };
   }
 
-  private changeMode = (newMode: string) => {
+  private changeToViewMode = () => this.changeMode('view');
+
+  private changeToEditMode = () => this.changeMode('edit');
+
+  private changeMode = (newMode: PageMode) => {
     this.setState(state => ({ mode: newMode }));
   }
 
@@ -66,7 +69,7 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
    * Render method for Farmer Information
    */
   public render() {
-    if (this.state.mode === modes.view) {
+    if (this.state.mode === 'view') {
       return (
         <Content padder>
           <Grid>
@@ -109,7 +112,7 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
             </Row>
             <Row style={styles.editButton}>
               <Col>
-                <Button block danger onPress={() => this.changeMode(modes.edit)}>
+                <Button block danger onPress={this.changeToEditMode}>
                   <Text style={styles.buttonText}>Edit</Text>
                 </Button>
               </Col>
@@ -117,7 +120,7 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
           </Grid>
         </Content>
       );
-    } else if (this.state.mode === modes.edit) {
+    } else if (this.state.mode === 'edit') {
       return (
         <Content padder>
           <Grid>
@@ -200,7 +203,7 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
             </Row>
             <Row style={styles.farmerInfoButtonRow}>
               <Col style={styles.farmerInfoButtonCol}>
-              <Button block success onPress={() => this.changeMode(modes.view)}>
+              <Button block success onPress={this.changeToViewMode}>
                 <Text style={styles.buttonText}>SAVE</Text>
               </Button>
               </Col>
