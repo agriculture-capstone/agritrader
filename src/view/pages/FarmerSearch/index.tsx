@@ -15,57 +15,57 @@ import * as Fuse from 'fuse.js';
 const farmerList: Farmer[] = [
   {
     name: 'Swalleh',
-    phoneNumber: '1-250-234-1234',
+    phoneNumber: '(250) 234-1234',
     id: 1,
   },
   {
     name: 'James',
-    phoneNumber: '1-526-123-8123',
+    phoneNumber: '(526) 123-8123',
     id: 2,
   },
   {
     name: 'Alex',
-    phoneNumber: '1-514-235-6789',
+    phoneNumber: '(514) 235-6789',
     id: 3,
   },
   {
     name: 'Joseph',
-    phoneNumber: '1-922-789-2348',
+    phoneNumber: '(922) 789-2348',
     id: 4,
   },
   {
     name: 'Mary',
-    phoneNumber: '1-626-626-1236',
+    phoneNumber: '(626) 626-1236',
     id: 5,
   },
   {
     name: 'David',
-    phoneNumber: '1-789-231-2345',
+    phoneNumber: '(789) 231-2345',
     id: 6,
   },
   {
     name: 'Michael',
-    phoneNumber: '1-899-781-8786',
+    phoneNumber: '(899) 781-8786',
     id: 7,
   },
   {
     name: 'Mary',
-    phoneNumber: '1-897-768-6780',
+    phoneNumber: '(897) 768-6780',
     id: 8,
   },
   {
     name: 'Peter',
-    phoneNumber: '1-123-564-2315',
+    phoneNumber: '(123) 564-2315',
     id: 9,
   },
   {
     name: 'Jonah',
-    phoneNumber: '1-011-101-1001',
+    phoneNumber: '(011) 101-1001',
     id: 10,
   },
   {
     name: 'Simon',
-    phoneNumber: '1-234-456-7890',
+    phoneNumber: '(234) 456-7890',
     id: 11,
   },
 ];
