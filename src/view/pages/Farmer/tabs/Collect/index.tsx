@@ -38,7 +38,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   public render() {
     return (
       <Content>
-        <Grid>
+        <Grid style={{margin: 10}}>
           <Row>
             <CardSummary
               title={this.props.farmerName}
