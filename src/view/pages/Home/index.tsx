@@ -40,7 +40,7 @@ class Home extends React.Component<HomePropsType, {}> {
   public render() {
     return (
       <Content>
-        <Panel title="Trader Joe" expandable={false}>
+        <Panel title="Quality Milk" expandable={false}>
           <Grid>
             <Row>
               <Col><Text style={styles.label}> {'Friday, January 19, 2018'.toUpperCase()}</Text></Col>
@@ -51,13 +51,13 @@ class Home extends React.Component<HomePropsType, {}> {
 
             </Row>
             <Row>
-              <StatisicsBlock value="7.4M" units="UGX" label="All Farmers Balance" />
-              <StatisicsBlock value="1.1M" units="UGX" label="Farmer Debts" />
+              <StatisicsBlock value="7.4M" units="UGX" label="All Farmers Balance" valueColor="green"/>
+              <StatisicsBlock value="1.1M" units="UGX" label="Farmer Debts" valueColor="red"/>
             </Row>
           </Grid>
         </Panel>
         <View style={styles.menuButtons} >
-          <CardButton title="Farmer Manager" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
+          <CardButton title="Farmers" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
           <CardButton title="Exports" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
           <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
           <CardButton title="View Records" iconName="stats" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
