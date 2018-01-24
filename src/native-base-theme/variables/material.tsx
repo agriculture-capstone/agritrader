@@ -3,9 +3,9 @@ import * as color from "color";
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
 /**
- * Based on https://material.io/color/#!/?view.left=1&view.right=0&primary.color=00838e&secondary.color=3F51B5
+ * Based on https://material.io/color/#!/?view.left=0&view.right=0&primary.color=00838e&secondary.color=0277BD
  */
-const COLORS = {
+const MATERIAL_COLORS = {
   logo: "#0fc6ce", 
   primary: {
     normal: "#00838e",
@@ -13,78 +13,63 @@ const COLORS = {
     dark: "#005661",
   },
   secondary: {
-    normal: "#3f51b5",
-    light: "#757de8",
-    dark: "#002984",
+    normal: "#0277bd",
+    light: "#58a5f0",
+    dark: "#004c8c",
   }
 };
+
+const COLORS = {
+  white: "#fff",
+  black: "#000",
+}
+
+function getHexValue(color: string, opacity: number) 
+{
+  const opacityPercent = opacity * 100;
+  if (opacityPercent >= 0 && opacityPercent <= 100) {
+    let opacityHex = opacityPercent.toString(16);
+    if (opacityHex.length === 1) {
+      opacityHex = "0" + opacityHex;
+    }
+    const hexStringWithOpacity = color + opacityHex;
+    return hexStringWithOpacity;
+  }
+  return '';
+  // return color(textStyleInfo.color).alpha(textStyleInfo.opacity).hex(); 
+}
 
 const TEXT_STYLES = {
   primary: {
     normal: {
-      large: {
-        color: "#ffffff",
-        opacity: 0.7
-      },
-      normal: {
-        color: "#ffffff",
-        opacity: 1
-      }
+      large: getHexValue("#ffffff", 0.7),
+      normal:  getHexValue("#ffffff", 1),
     }, 
     light: {
-      large: {
-        color: "#000000",
-        opacity: 0.48
-      },
-      normal: {
-        color: "#000000",
-        opacity: 0.64
-      }
+      large: getHexValue("#000000", 0.48),
+      normal:  getHexValue("#000000", 0.64),
     }, 
     dark: {
-      large: {
-        color: "#ffffff",
-        opacity: 0.45
-      },
-      normal: {
-        color: "#ffffff",
-        opacity: 0.65
-      }
+      large: getHexValue("#ffffff", 0.45),
+      normal:  getHexValue("#ffffff", 0.65),
     },
   },
   secondary: {
     normal: {
-      large: {
-        color: "#ffffff",
-        opacity: 0.51
-      },
-      normal: {
-        color: "#ffffff",
-        opacity: 0.73
-      }
+      large: getHexValue("#ffffff", 0.67),
+      normal:  getHexValue("#ffffff", 0.95),
     }, 
     light: {
-      large: {
-        color: "#ffffff",
-        opacity: 0.84
-      },
-      normal: {
-        color: "#000000",
-        opacity: 0.76
-      }
+      large: getHexValue("#000000", 0.49),
+      normal:  getHexValue("#000000", 0.66),
     }, 
     dark: {
-      large: {
-        color: "#ffffff",
-        opacity: 0.38
-      },
-      normal: {
-        color: "#ffffff",
-        opacity: 0.53
-      }
+      large: getHexValue("#ffffff", 0.45),
+      normal:  getHexValue("#ffffff", 0.64),
     },
   },
 };
+
 /**
  * Based off of the following link:
  * https://github.com/jankarres/react-native-typescript-nativebase-boilerplate/tree/master/native-base-theme
@@ -124,17 +109,17 @@ export default {
   CheckboxIconMarginTop: platform === "ios" ? undefined : 1,
   CheckboxFontSize: platform === "ios" ? 21 : 18,
   DefaultFontSize: 17,
-  checkboxBgColor: "#039BE5",
+  checkboxBgColor: MATERIAL_COLORS.secondary.normal,
   checkboxSize: 20,
-  checkboxTickColor: "#fff",
+  checkboxTickColor: TEXT_STYLES.secondary.normal.normal,
 
   // Segment
-  segmentBackgroundColor: "#3F51B5",
-  segmentActiveBackgroundColor: "#fff",
-  segmentTextColor: "#fff",
-  segmentActiveTextColor: "#3F51B5",
-  segmentBorderColor: "#fff",
-  segmentBorderColorMain: "#3F51B5",
+  segmentBackgroundColor: MATERIAL_COLORS.primary.normal,
+  segmentActiveBackgroundColor: TEXT_STYLES.primary.normal.normal,
+  segmentTextColor: TEXT_STYLES.primary.normal.normal,
+  segmentActiveTextColor: MATERIAL_COLORS.primary.normal,
+  segmentBorderColor: TEXT_STYLES.primary.normal.normal,
+  segmentBorderColorMain: MATERIAL_COLORS.primary.normal,
 
   // New Variable
   get defaultTextColor() {
@@ -197,8 +182,8 @@ export default {
   cardDefaultBg: "#fff",
 
   // Color
-  brandPrimary: "#3F51B5",
-  brandInfo: "#3F57D3",
+  brandPrimary: MATERIAL_COLORS.primary.normal,
+  brandInfo: MATERIAL_COLORS.secondary.normal,
   brandSuccess: "#5cb85c",
   brandDanger: "#d9534f",
   brandWarning: "#f0ad4e",
@@ -220,7 +205,7 @@ export default {
 
   // Footer
   footerHeight: 55,
-  footerDefaultBg: "#3F51B5",
+  footerDefaultBg: MATERIAL_COLORS.primary.normal,
 
   // FooterTab
   tabBarTextColor: "#b3c7f9",
@@ -231,27 +216,27 @@ export default {
   tabActiveBgColor: undefined,
 
   // Tab
-  tabDefaultBg: "#3F51B5",
-  topTabBarTextColor: "#b3c7f9",
-  topTabBarActiveTextColor: "#fff",
+  tabDefaultBg: MATERIAL_COLORS.primary.normal,
+  topTabBarTextColor: TEXT_STYLES.primary.normal.normal,
+  topTabBarActiveTextColor: COLORS.white,
   topTabActiveBgColor: undefined,
-  topTabBarBorderColor: "#fff",
-  topTabBarActiveBorderColor: "#fff",
+  topTabBarBorderColor: COLORS.white,
+  topTabBarActiveBorderColor: COLORS.white,
 
   // Header
-  toolbarBtnColor: "#fff",
-  toolbarDefaultBg: "#3F51B5",
+  toolbarBtnColor: COLORS.white,
+  toolbarDefaultBg: MATERIAL_COLORS.primary.normal,
   toolbarHeight: platform === "ios" ? 76 : 56,
   toolbarIconSize: platform === "ios" ? 20 : 22,
   toolbarSearchIconSize: platform === "ios" ? 20 : 23,
   toolbarInputColor: "#fff",
   searchBarHeight: platform === "ios" ? 30 : 40,
   toolbarInverseBg: "#222",
-  toolbarTextColor: "#fff",
-  toolbarDefaultBorder: "#3F51B5",
+  toolbarTextColor: TEXT_STYLES.primary.normal.large,
+  toolbarDefaultBorder: MATERIAL_COLORS.primary.normal,
   iosStatusbar: "light-content",
   get statusBarColor() {
-    return color(this.toolbarDefaultBg).darken(0.2).hex();
+    return MATERIAL_COLORS.primary.dark;
   },
 
   // Icon
@@ -343,7 +328,7 @@ export default {
   subtitleColor: "#FFF",
 
   // New Variable
-  titleFontColor: "#FFF",
+  titleFontColor: COLORS.white,
 
   // Other
   borderRadiusBase: 2,
