@@ -8,9 +8,9 @@ import FarmerInformation from './tabs/FarmerInformation';
 const createCollect = () => (
   <Collect
     farmerName="Bradley the Farmer"
-    allTimeTotal="3944.L"
-    currentWeekTotal="3.4L"
-    currentMonthTotal="0.2L"
+    allTimeTotal="3944.2"
+    currentWeekTotal="3.4"
+    currentMonthTotal="0.2"
     collectTransactions={[{ date:'Jan 4', am: 2, pm:2 }, { date:'Jan 3', am: 2, pm:2 }, { date:'Jan 2', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
   />
 );

@@ -7,12 +7,16 @@ import styles from './style';
 
 interface OwnPropsType {
   farmerName: string;
-  allTimeTotal: string;
-  currentWeekTotal: string;
-  currentMonthTotal: string;
+  allTimeTotal: any;
+  currentWeekTotal: any;
+  currentMonthTotal: any;
   collectTransactions: any[];
 }
 
+interface Statistic {
+  unit: string;
+  value: string;
+}
 interface DispatchPropsType {
 }
 

@@ -76,12 +76,14 @@ export default (variables = variable) => {
     },
     ".first": {
       ".itemHeader": {
-        paddingTop: variables.listItemPadding + 3
+        paddingTop: variables.listItemPadding + 3,
+        // TODO backgroundColor: "red" header style here
       }
     },
     ".itemHeader": {
       ".first": {
-        paddingTop: variables.listItemPadding + 3
+        paddingTop: variables.listItemPadding + 3,
+        // TODO backgroundColor: "red" header style here
       },
       borderBottomWidth: platform === "ios" ? variables.borderWidth : null,
       marginLeft: null,
