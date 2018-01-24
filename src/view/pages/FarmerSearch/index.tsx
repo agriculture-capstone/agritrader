@@ -54,11 +54,8 @@ type WrappedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 /** FarmerSearch PropsType */
 type PropsType = WrappedPropsType & InjectedSearchProps;
 
-/** FarmerSearch StateType */
-type StateType = OwnStateType;
-
 /** Farmer Search component for displaying and searching through farmers */
-class FarmerSearch extends React.Component<PropsType, StateType> {
+class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
     public static defaultProps = {
         listItems: defaultFarmerList,
