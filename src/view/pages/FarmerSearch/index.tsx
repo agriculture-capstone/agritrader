@@ -148,6 +148,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
       minMatchCharLength: 1,
       keys: [
         'name',
+          'phoneNumber',
       ],
     });
   }
@@ -177,7 +178,6 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
       this.fuse.search(this.props.searchBarValue) as Farmer[] :
       farmerList;
   }
-
 
   /************************* React *************************/
 
