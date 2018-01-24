@@ -3,6 +3,89 @@ import * as color from "color";
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
 /**
+ * Based on https://material.io/color/#!/?view.left=1&view.right=0&primary.color=00838e&secondary.color=3F51B5
+ */
+const COLORS = {
+  logo: "#0fc6ce", 
+  primary: {
+    normal: "#00838e",
+    light: "#4fb3be",
+    dark: "#005661",
+  },
+  secondary: {
+    normal: "#3f51b5",
+    light: "#757de8",
+    dark: "#002984",
+  }
+};
+
+const TEXT_STYLES = {
+  primary: {
+    normal: {
+      large: {
+        color: "#ffffff",
+        opacity: 0.7
+      },
+      normal: {
+        color: "#ffffff",
+        opacity: 1
+      }
+    }, 
+    light: {
+      large: {
+        color: "#000000",
+        opacity: 0.48
+      },
+      normal: {
+        color: "#000000",
+        opacity: 0.64
+      }
+    }, 
+    dark: {
+      large: {
+        color: "#ffffff",
+        opacity: 0.45
+      },
+      normal: {
+        color: "#ffffff",
+        opacity: 0.65
+      }
+    },
+  },
+  secondary: {
+    normal: {
+      large: {
+        color: "#ffffff",
+        opacity: 0.51
+      },
+      normal: {
+        color: "#ffffff",
+        opacity: 0.73
+      }
+    }, 
+    light: {
+      large: {
+        color: "#ffffff",
+        opacity: 0.84
+      },
+      normal: {
+        color: "#000000",
+        opacity: 0.76
+      }
+    }, 
+    dark: {
+      large: {
+        color: "#ffffff",
+        opacity: 0.38
+      },
+      normal: {
+        color: "#ffffff",
+        opacity: 0.53
+      }
+    },
+  },
+};
+/**
  * Based off of the following link:
  * https://github.com/jankarres/react-native-typescript-nativebase-boilerplate/tree/master/native-base-theme
  * The steps for customizing native base from the official documentation was not working 
