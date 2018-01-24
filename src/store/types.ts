@@ -3,6 +3,8 @@ import { NavState, Action as NavAction } from './modules/nav/types';
 import { TabState, Action as TabsAction } from './modules/tabs/types';
 import { SearchBarState, Action as SearchBarAction } from './modules/searchBar/types';
 import { HeaderState, Action as HeaderAction } from './modules/header/types';
+import { LoginState, Action as LoginAction } from './modules/login/types';
+
 
 /** Global redux state */
 export interface State {
@@ -11,6 +13,7 @@ export interface State {
   tabs: TabState;
   searchBar: SearchBarState;
   header: HeaderState;
+  login: LoginState;
 }
 
 /** Global redux action */
@@ -19,4 +22,6 @@ export type Action
   | NavAction
   | TabsAction
   | SearchBarAction
-  | HeaderAction;
+  | HeaderAction
+  | LoginAction;
+

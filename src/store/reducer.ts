@@ -6,6 +6,8 @@ import navReducer from './modules/nav/reducer';
 import tabsReducer from './modules/tabs/reducer';
 import searchBarReducer from './modules/searchBar/reducer';
 import headerReducer from './modules/header/reducer';
+import loginReducer from './modules/login/reducer';
+
 
 export default combineReducers<State>({
   drawer: drawerReducer,
@@ -13,4 +15,6 @@ export default combineReducers<State>({
   tabs: tabsReducer,
   searchBar: searchBarReducer,
   header: headerReducer,
+  login: loginReducer,
+
 });
