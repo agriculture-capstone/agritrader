@@ -2,6 +2,12 @@ import * as color from "color";
 
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
+/**
+ * Based off of the following link:
+ * https://github.com/jankarres/react-native-typescript-nativebase-boilerplate/tree/master/native-base-theme
+ * The steps for customizing native base from the official documentation was not working 
+ * well with typescript.
+ */
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const platform = Platform.OS;
