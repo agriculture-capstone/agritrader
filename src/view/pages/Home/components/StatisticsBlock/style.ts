@@ -9,7 +9,8 @@ export default StyleSheet.create({
     textAlign: "center"
   },
   label: {
-    color: "gray", 
+    color: "black", 
+    opacity: 0.54,
     fontSize: 12,
   },
   unit : {

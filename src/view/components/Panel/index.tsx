@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon } from 'native-base';
+import { Icon, Card } from 'native-base';
 import { Text, View, Animated, LayoutChangeEvent, TouchableHighlight } from 'react-native';
 import styles from './style';
 
@@ -110,15 +110,12 @@ class Panel extends React.Component<PropsType, OwnStateType> {
     }
 
     return (
-      <Animated.View style={[styles.container, { height: this.state.animation }]}>
-        <View
-          style={styles.titleContainer}
-          onLayout={this.setMinHeight}
-        >
+      <Card style={{margin: 10}}>
+        
           <Text style={styles.title}>
             {this.props.title}
           </Text>
-        </View>
+        
         <View
           style={[styles.body, this.state.expanded ? styles.show : styles.hide]}
           onLayout={this.setMaxHeight}
@@ -134,7 +131,7 @@ class Panel extends React.Component<PropsType, OwnStateType> {
         >
           {icon}
         </TouchableHighlight>
-      </Animated.View>
+      </Card>
     );
   }
 }

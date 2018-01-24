@@ -30,9 +30,9 @@ export default class StatisticsBlock extends React.Component<PropsType, OwnState
   public render() {
     return (
       <Col style={styles.content}>
-        <Text style={[styles.stats, styles.value, { color: this.props.valueColor ? this.props.valueColor : "black" }]}>
+        <Text style={[styles.stats, styles.value, { color: this.props.valueColor ? this.props.valueColor : "#58a5f0" }]}>
           {this.props.value}
-          <Text style={[styles.stats, styles.unit, { color: this.props.valueColor ? this.props.valueColor : "black" }]}> 
+          <Text style={[styles.stats, styles.unit, { color: this.props.valueColor ? this.props.valueColor : "#58a5f0" }]}> 
             {this.props.units}
           </Text>
         </Text>
