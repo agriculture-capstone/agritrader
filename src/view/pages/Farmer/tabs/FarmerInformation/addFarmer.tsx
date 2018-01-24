@@ -4,7 +4,7 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-// import FarmerInformation, { OwnPropsType as FarmerOwnProps } from '.';
+// import FarmerInformation, { OwnProps as FarmerOwnProps } from '.';
 
 // interface OwnPropsType extends FarmerOwnProps {
 //   updatePaymentCycle(value: string): void;

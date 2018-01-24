@@ -18,8 +18,10 @@ export interface OwnState {}
 interface StorePropsType {
   open: boolean;
   locked: boolean;
+  // TODO: These should be retrieved from the store
+  // name: string;
+  // username: string;
 }
-
 interface DispatchPropsType {
   closeDrawer(): void;
   openDrawer(): void;

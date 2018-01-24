@@ -4,7 +4,7 @@ from 'native-base';
 import { View, Text, StyleSheet } from 'react-native';
 
 import styles from './style';
-// import { OwnPropsType as FarmerOwnProps } from './index';
+// import { OwnProps as FarmerOwnProps } from './index';
 
 interface OwnProps {
   farmerFirstName: string;
