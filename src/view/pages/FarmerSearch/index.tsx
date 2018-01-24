@@ -1,4 +1,3 @@
-///<reference path="../../../../node_modules/@types/react-redux/index.d.ts"/>
 import * as React from 'react';
 
 import { Content, List, ListItem } from 'native-base';
@@ -11,7 +10,6 @@ import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import style from './style';
 import * as Fuse from 'fuse.js';
-import { FuseOptions } from 'fuse.js';
 
 /** This is just a table of phony information to populate the FarmerSearch UI */
 const farmerList: Farmer[] = [
@@ -141,42 +139,43 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     this.fuse = new Fuse(farmerList, {
       caseSensitive: false,
       shouldSort: true,
-      threshold: 0.0,
+      threshold: 0.5,
       location: 0,
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
         'name',
-          'phoneNumber',
+        'phoneNumber',
       ],
     });
   }
 
-    /** Function to sort the list data by Farmer name in alphabetical order */
-    // TODO: Make required property
-    private sortList(farmers: Farmer[]): Farmer[] {
+  /** Function to sort the list data by Farmer name in alphabetical order */
+  // TODO: Make required property
+  private sortList(farmers: Farmer[]): Farmer[] {
 
-        var sortedList: Farmer[] = [];
-        if (farmers === undefined) {
-            return sortedList;
-        }
-        sortedList = farmers.sort((f1: Farmer, f2: Farmer) => {
-            if (f1.name > f2.name) {
-                return 1;
-            }
-            if (f1.name < f2.name) {
-                return -1;
-            }
-            return 0;
-        });
-        return sortedList;
+    let sortedList: Farmer[] = [];
+    if (farmers === undefined) {
+      return sortedList;
     }
+    sortedList = farmers.sort((f1: Farmer, f2: Farmer) => {
+      if (f1.name > f2.name) {
+        return 1;
+      }
+      if (f1.name < f2.name) {
+        return -1;
+      }
+      return 0;
+    });
+    return sortedList;
+  }
 
+  /** Function to return either the result of the fuzzy search, or the default list in alphabetical order */
   private searchList(): Farmer[] {
     return (this.props.searchBarValue) ?
-      this.fuse.search(this.props.searchBarValue) as Farmer[] :
-      farmerList;
+      this.fuse.search(this.props.searchBarValue) :
+      this.sortList(farmerList);
   }
 
   /************************* React *************************/
@@ -197,7 +196,7 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     return (
       <Content style={style.background} >
         <List
-          dataArray={this.sortList(this.searchList())}
+          dataArray={this.searchList()}
           renderRow={this.renderItem}
         />
       </Content>
