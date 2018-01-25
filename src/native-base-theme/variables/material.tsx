@@ -115,8 +115,8 @@ export default {
   cardDefaultBg: "#fff",
 
   // Color
-  brandPrimary: MATERIAL_COLORS.primary.normal,
-  brandInfo: MATERIAL_COLORS.secondary.normal,
+  brandPrimary: MATERIAL_COLORS.secondary.normal,
+  brandInfo: MATERIAL_COLORS.primary.dark,
   brandSuccess: "#5cb85c",
   brandDanger: "#d9534f",
   brandWarning: "#f0ad4e",

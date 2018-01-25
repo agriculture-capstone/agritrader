@@ -46,18 +46,10 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
         </Grid>
-        <Row>
-            <Col>
-                 
-                <Button danger block style={{margin: 5}}>
-                    <Text style={{color: "white"}}> PAY </Text>
-                </Button>
-            
-            </Col><Col><Button block info style={{margin: 5}}>
-          <Text>
-            ADD LOAN
-          </Text>
-        </Button></Col></Row>
+        <Button primary block style={{margin: 5}}>
+        <Text style={{color: "white"}}> ADD LOAN </Text>
+    </Button>
+
       </Content>
     );
   }

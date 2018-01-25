@@ -49,7 +49,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
         </Grid>
-        <Button block info>
+        <Button block primary>
           <Text>
             BUY PRODUCTS
           </Text>

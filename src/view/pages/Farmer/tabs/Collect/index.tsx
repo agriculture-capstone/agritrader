@@ -54,7 +54,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row style={styles.addEntryButton}>
             <Col>
-              <Button block info >
+              <Button block primary >
                 <Text>
                   ADD ENTRY
                 </Text>
