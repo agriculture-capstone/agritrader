@@ -1,30 +1,26 @@
 import * as React from 'react';
 
 import createPage from './Page';
-import createSearchPage, { InjectedSearchProps } from './SearchPage/index';
-import createFabPage, { FabType, InjectedFabProps } from './FabPage/index';
+import createSearchPage from './SearchPage/index';
+import createFabPage, { FabType } from './FabPage/index';
 
-export default class Composer<InjectedProps> {
+export default class Composer<T> {
 
-  private component: React.ComponentType<InjectedProps>;
+  private component: React.ComponentType<any>;
 
-  public constructor(component: React.ComponentType<InjectedProps>) {
+  public constructor(component: React.ComponentType<any>) {
     this.component = component;
   }
 
-  public apply<R>(fn: (component: React.ComponentType<InjectedProps>) => React.ComponentType<R>) {
-    return new Composer(fn(this.component));
+  public search(placeholder?: string) {
+    return new Composer<T>(createSearchPage(this.component, placeholder));
+  }
+
+  public fab(type?: FabType) {
+    return new Composer<T>(createFabPage(this.component, type));
   }
 
   public get finalize() {
-    return createPage(this.component);
-  }
-
-  public static search<T>(placeholder?: string) {
-    return (el: React.ComponentType<T & InjectedSearchProps>) => createSearchPage(el, placeholder);
-  }
-
-  public static fab<T>(type?: FabType) {
-    return (el: React.ComponentType<T & InjectedFabProps>) => createFabPage(el, type);
+    return createPage(this.component) as React.ComponentType<T>;
   }
 }

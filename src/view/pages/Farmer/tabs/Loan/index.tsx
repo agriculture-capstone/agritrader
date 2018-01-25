@@ -64,5 +64,5 @@ class Buy extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default new Composer(Buy)
+export default new Composer<PropsType>(Buy)
   .finalize;

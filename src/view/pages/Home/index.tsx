@@ -19,14 +19,14 @@ interface DispatchPropsType {
   navigate(route: Route): void;
 }
 
-type HomePropsType = OwnPropsType & StorePropsType & DispatchPropsType;
+type PropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 
 /**
 * Home Page Component
 */
-class Home extends React.Component<HomePropsType, {}> {
+class Home extends React.Component<PropsType, {}> {
 
-  public constructor(props: HomePropsType) {
+  public constructor(props: PropsType) {
     super(props);
     this.onCardPress = this.onCardPress.bind(this);
   }
@@ -67,7 +67,7 @@ class Home extends React.Component<HomePropsType, {}> {
   }
 }
 
-const HomePage = new Composer(Home).finalize;
+const HomePage = new Composer<PropsType>(Home).finalize;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
   return {};

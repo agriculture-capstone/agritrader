@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text } from 'native-base';
 
-import createPage from '../../../../generators/Page/index';
+import Composer from '../../../../hoc/PageComposer';
 
 import styles from '../../styles';
 
@@ -33,7 +33,7 @@ type PageMode = 'view' | 'edit';
 /**
  * Container for application
  */
-class FarmerInformation extends React.Component<PropsType, OwnStateType> {
+class Info extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: OwnPropsType) {
     super(props);
@@ -139,4 +139,5 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default createPage(FarmerInformation);
+export default new Composer<PropsType>(Info)
+  .finalize;

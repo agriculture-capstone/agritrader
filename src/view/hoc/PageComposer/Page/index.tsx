@@ -40,9 +40,7 @@ export default function createPage<InjectedProps>(WrappedComponent: React.Compon
     /** React render method */
     public render() {
       return (
-        <Content>
-          <WrappedComponent {...this.props} />
-        </Content>
+        <WrappedComponent {...this.props} />
       );
     }
   };
