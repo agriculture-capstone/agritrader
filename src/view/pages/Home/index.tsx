@@ -50,10 +50,6 @@ class Home extends React.Component<HomePropsType, {}> {
               <StatisicsBlock value="2,250" units="L" label="Average Daily" />
 
             </Row>
-            <Row>
-              <StatisicsBlock value="7.4M" units="UGX" label="All Farmers Balance" valueColor="green"/>
-              <StatisicsBlock value="1.1M" units="UGX" label="Farmer Debts" valueColor="red"/>
-            </Row>
           </Grid>
         </Panel>
         <View style={styles.menuButtons} >
