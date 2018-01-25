@@ -64,4 +64,4 @@ class Collect extends React.Component<PropsType, OwnStateType> {
 }
 
 export default new Composer<PropsType>(Collect)
-  .finalize;
+  .page;

@@ -140,4 +140,4 @@ class Info extends React.Component<PropsType, OwnStateType> {
 }
 
 export default new Composer<PropsType>(Info)
-  .finalize;
+  .page;

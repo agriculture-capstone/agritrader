@@ -96,10 +96,10 @@ interface DispatchPropsType {
 /** FarmerSearch OwnStateType */
 interface OwnStateType {}
 
-type WrappedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 /** FarmerSearch PropsType */
-type PropsType = InjectedSearchProps & InjectedFabProps & WrappedPropsType;
+type PropsType = InjectedSearchProps & InjectedFabProps & NestedPropsType;
 
 /** Farmer Search component for displaying and searching through farmers */
 class FarmerSearch extends React.Component<PropsType, OwnStateType> {
@@ -163,6 +163,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
   /************************* React *************************/
 
+  /** React componentDidMount */
   public componentDidMount() {
     this.props.listenToFab(this.onFabPress);
   }
@@ -180,10 +181,10 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const FarmerSearchPage = new Composer<WrappedPropsType>(FarmerSearch)
+const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
   .search('Search Farmers')
   .fab()
-  .finalize;
+  .page;
 
 
 /************************* Redux ************************/

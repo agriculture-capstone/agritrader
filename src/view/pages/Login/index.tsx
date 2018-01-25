@@ -144,7 +144,7 @@ class Login extends React.Component<PropsType, OwnState> {
   }
 }
 
-const LoginPage = new Composer<PropsType>(Login).finalize;
+const LoginPage = new Composer<PropsType>(Login).page;
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
   return {};

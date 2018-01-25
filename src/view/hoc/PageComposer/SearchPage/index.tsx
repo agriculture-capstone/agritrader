@@ -71,5 +71,5 @@ export default function createSearchPage<InjectedProps>(
       // Inject searchBarValue into props of WrappedComponent
       return <WrappedComponent {...this.props} searchBarValue={this.state.searchBarValue} />;
     }
-  }
+  };
 }

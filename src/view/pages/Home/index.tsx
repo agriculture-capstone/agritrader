@@ -67,7 +67,7 @@ class Home extends React.Component<PropsType, {}> {
   }
 }
 
-const HomePage = new Composer<PropsType>(Home).finalize;
+const HomePage = new Composer<PropsType>(Home).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
   return {};

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Content } from 'native-base';
 
 /**
  * Higher order component for pages

@@ -2,12 +2,39 @@ import * as React from 'react';
 import EventEmitter = require('wolfy87-eventemitter');
 import { View, Fab, Icon } from 'native-base';
 
+/** Type of Floating Action Button */
 export type FabType = 'add' | 'share';
 
+/** Props injected into wrapped component */
 export interface InjectedFabProps {
   listenToFab(listener: () => void): void;
 }
 
+/**
+ * Higher order component for Floating Action Page
+ *
+ * Adds a FAB to the bottom right of the page
+ *
+ * @param {React.ComponentType} [WrappedComponent] React component to wrap in HOC
+ *
+ * @example
+ *
+  class MyPage extends React.Component<Props, OwnState> {
+
+    constructor(props: Props) {
+      super(props);
+    }
+
+    public render(): JSX.Element {
+      return (
+        <View />
+      );
+    }
+  }
+
+  export default createPage(MyPage, 'back');
+*
+*/
 export default function createFabPage<InjectedProps>(WrappedComponent: React.ComponentType<InjectedProps & InjectedFabProps>, type?: FabType) {
 
   /** Container for FabPage */
