@@ -3,6 +3,7 @@ import { NavState, Action as NavAction } from './modules/nav/types';
 import { TabState, Action as TabsAction } from './modules/tabs/types';
 import { SearchBarState, Action as SearchBarAction } from './modules/searchBar/types';
 import { HeaderState, Action as HeaderAction } from './modules/header/types';
+import { FarmerState, Action as FarmerAction } from './modules/farmer/types';
 
 /** Global redux state */
 export interface State {
@@ -11,6 +12,7 @@ export interface State {
   tabs: TabState;
   searchBar: SearchBarState;
   header: HeaderState;
+  farmer: FarmerState;
 }
 
 /** Global redux action */
@@ -19,7 +21,8 @@ export type Action
   | NavAction
   | TabsAction
   | SearchBarAction
-  | HeaderAction;
+  | HeaderAction
+  | FarmerAction;
 
 /*----------------------- Global Models -----------------------*/
 
