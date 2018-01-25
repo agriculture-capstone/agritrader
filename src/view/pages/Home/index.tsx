@@ -40,8 +40,6 @@ class Home extends React.Component<HomePropsType, {}> {
   public render() {
     return (
       <Content>
-        
-       
         <View style={styles.menuButtons} >
         <Card style={styles.betaNotice}>
           <CardItem style={styles.betaNotice}>

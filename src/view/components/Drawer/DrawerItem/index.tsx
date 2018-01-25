@@ -26,10 +26,10 @@ const DrawerItem: React.StatelessComponent<OwnProps> = (props) => {
   return (
     <ListItem icon onPress={onPresses[props.route]} style={styles.contents}>
       <Left>
-        <Icon name={props.icon} style={styles.contents} />
+        <Icon name={props.icon} style={[styles.contents, styles.menuItems]} />
       </Left>
       <Body>
-        <Text style={styles.contents}>{props.name}</Text>
+        <Text style={[styles.contents, styles.menuItems]}>{props.name}</Text>
       </Body>
     </ListItem>
   );
