@@ -8,9 +8,8 @@ interface OwnPropsType {
     firstName: string;
     lastName: string;
     date: string;
-    entryDetails: any[];
+    labels: string[];
   };
-  mode: PageMode;
 }
 
 interface DispatchPropsType {
@@ -25,30 +24,20 @@ interface OwnStateType {
 }
 
 /**
- * Modes to determine how to render EntryDetails component
- */
-type PageMode = 'DETAILS' | 'EDIT';
-
-/**
  * Button color
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
- * Component for EntryDetails
+ * Component for AddEntry
  * @param values = {
  *                  firstName: string;
  *                  lastName: string;
  *                  date: string;
- *                  entryDetails: [
- *                    {label: 'Amount', value: '#'},
- *                    {label: 'Quality', value: '#'}, 
- *                    {label: 'Rate', value: '#'}
- *                  ]
+ *                  labels: string[];
  *                 }
- * @param mode = 'DETAILS' | 'EDIT'
  */
-export default class EntryDetails extends React.Component<PropsType, OwnStateType> {
+export default class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
@@ -138,7 +127,7 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
   }
 
   /**
-   * Render method for EntryDetails
+   * Render method for AddEntry
    */
   public render() {
     switch (this.props.mode) {
@@ -147,7 +136,7 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
           <Content padder>
             {this.renderHeader()}
             <List
-              dataArray={this.props.values.entryDetails}
+              dataArray={this.props.values.AddEntry}
               renderRow={this.renderDetailRow}
             />
             <Grid>
@@ -163,7 +152,7 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
           <Content padder>
             {this.renderHeader()}
             <List
-              dataArray={this.props.values.entryDetails}
+              dataArray={this.props.values.AddEntry}
               renderRow={this.renderEditRow}
             />
             <Grid>
