@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Row, Col, Content, Text } from 'native-base';
+import { Grid, Row, Col, Content, Text, Card, CardItem, Body } from 'native-base';
 import { View } from 'react-native';
 import CardButton from '../../components/CardButton';
 import Panel from '../../components/Panel';
@@ -40,6 +40,19 @@ class Home extends React.Component<HomePropsType, {}> {
   public render() {
     return (
       <Content>
+        <Card style={styles.betaNotice}>
+          <CardItem style={styles.betaNotice}>
+            <Body >
+          <Text style={[styles.betaContents, styles.betaTitle]}>
+            Welcome to the Beta Version of Agritrader!
+          </Text>
+          <Text style={styles.betaContents}>
+            This application is continuously being developed to provide users 
+            like you with rich features to ease your workflow. 
+          </Text>
+          </Body>
+          </CardItem>
+          </Card>
         <Panel title="Quality Milk" expandable={false}>
           <Grid>
             <Row>
@@ -53,6 +66,7 @@ class Home extends React.Component<HomePropsType, {}> {
           </Grid>
         </Panel>
         <View style={styles.menuButtons} >
+        
           <CardButton title="Farmers" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
           <CardButton title="Exports" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
           <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
