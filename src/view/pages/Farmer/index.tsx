@@ -3,7 +3,7 @@ import createTabManager from '../../generators/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
 import Buy from './tabs/Buy';
-import FarmerInformation from './tabs/FarmerInformation';
+import Info from './tabs/Info';
 
 const createCollect = () => (
   <Collect
@@ -50,6 +50,18 @@ const createBuy = () => (
   />
 );
 
+const createInfo = () => (
+  <Info
+    farmerFirstName="Patrick"
+    farmerLastName="Keena"
+    farmerPhoneNumber="123-456-789"
+    farmerBusinessName="Farmer with coolest hat"
+    farmerNotes="Doctor from village A"
+    selectedPaymentCycle="Weekly"
+    selectedPaymentMethod="Mobile"
+  />
+);
+
 export default createTabManager(
   [
     {
@@ -66,7 +78,7 @@ export default createTabManager(
     },
     {
       name: 'Info',
-      element: () => <FarmerInformation />,
+      element: createInfo,
     },
   ],
 );
