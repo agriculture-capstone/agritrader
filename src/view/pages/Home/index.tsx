@@ -8,7 +8,7 @@ import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
-import createPage from '../../generators/Page/index';
+import Composer from '../../hoc/PageComposer';
 import styles from './style';
 
 interface OwnPropsType { }
@@ -19,14 +19,14 @@ interface DispatchPropsType {
   navigate(route: Route): void;
 }
 
-type HomePropsType = OwnPropsType & StorePropsType & DispatchPropsType;
+type PropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 
 /**
 * Home Page Component
 */
-class Home extends React.Component<HomePropsType, {}> {
+class Home extends React.Component<PropsType, {}> {
 
-  public constructor(props: HomePropsType) {
+  public constructor(props: PropsType) {
     super(props);
     this.onCardPress = this.onCardPress.bind(this);
   }
@@ -67,7 +67,7 @@ class Home extends React.Component<HomePropsType, {}> {
   }
 }
 
-const HomePage = createPage<HomePropsType>(Home);
+const HomePage = new Composer<PropsType>(Home).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
   return {};

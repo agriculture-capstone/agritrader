@@ -22,7 +22,7 @@ import styles from './style';
 import { State } from '../../../store/types';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
-import createPage from '../../generators/Page/index';
+import Composer from '../../hoc/PageComposer';
 
 interface OwnState {
   username: string;
@@ -42,14 +42,14 @@ interface DispatchProps {
 /**
  *Login Properties
  */
-export type Props = OwnProps & StoreProps & DispatchProps;
+export type PropsType = OwnProps & StoreProps & DispatchProps;
 
 /**
  *Container for the Login screen
  */
-class Login extends React.Component<Props, OwnState> {
+class Login extends React.Component<PropsType, OwnState> {
 
-  public constructor(props: Props) {
+  public constructor(props: PropsType) {
     super(props);
 
     // TODO: Should not be storing password in memory if we can help it
@@ -144,7 +144,7 @@ class Login extends React.Component<Props, OwnState> {
   }
 }
 
-const LoginPage = createPage(Login);
+const LoginPage = new Composer<PropsType>(Login).page;
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
   return {};

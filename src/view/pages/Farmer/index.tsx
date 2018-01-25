@@ -1,5 +1,5 @@
 import * as React from 'react';
-import createTabManager from '../../generators/TabManager';
+import createTabManager from '../../hoc/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
 import Buy from './tabs/Buy';

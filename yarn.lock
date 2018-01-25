@@ -48,6 +48,12 @@
   dependencies:
     redux "^3.6.0"
 
+"@types/wolfy87-eventemitter@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@types/wolfy87-eventemitter/-/wolfy87-eventemitter-5.2.0.tgz#0233f0af5d600d22b6a669be6006708e79712ef7"
+  dependencies:
+    wolfy87-eventemitter "*"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -4949,6 +4955,10 @@ win-release@^1.0.0:
 window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
+
+wolfy87-eventemitter@*, wolfy87-eventemitter@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/wolfy87-eventemitter/-/wolfy87-eventemitter-5.2.4.tgz#5021d2952d3611cbcd195149711d9b595cd11d48"
 
 wordwrap@0.0.2:
   version "0.0.2"
