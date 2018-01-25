@@ -11,18 +11,19 @@ interface BaseDairy {
   costPerUnit: string;
 }
 
+/** Dairy model containing all attributes */
 export type Dairy = CoreData<BaseDairy>;
-
+/** Dairy model all attributes except lastModified and containsLocal */
 export type PartialDairy = PartialCoreData<BaseDairy>;
 
 /*----------------------- State -----------------------*/
-
+/** Dairy State*/
 export interface DairyState extends CoreState {
   dairyList: Dairy[];
 }
 
 /*----------------------- Actions -----------------------*/
-
+/** Dairy Action Types */
 export type Action = {
   type: 'UPDATE_DAIRY',
   dairy: PartialDairy,
