@@ -88,37 +88,18 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private renderDetailRow(item: any) {
+  private renderAddRow(item: any) {
     return (
       <ListItem>
         <Grid>
           <Col>
             <H3>
-              {item.label}
-            </H3>
-          </Col>
-          <Col>
-            <H3>
-              {item.value}
-            </H3>
-          </Col>
-        </Grid>
-      </ListItem>
-    );
-  }
-
-  private renderEditRow(item: any) {
-    return (
-      <ListItem>
-        <Grid>
-          <Col>
-            <H3>
-              {item.label}
+              {item}
             </H3>
           </Col>
           <Col>
             <Input
-              placeholder={item.value}
+              placeholder={'Enter ' + item + ' here'}
             />
           </Col>
         </Grid>
@@ -130,40 +111,20 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
    * Render method for AddEntry
    */
   public render() {
-    switch (this.props.mode) {
-      case 'DETAILS': {
-        return(
-          <Content padder>
-            {this.renderHeader()}
-            <List
-              dataArray={this.props.values.AddEntry}
-              renderRow={this.renderDetailRow}
-            />
-            <Grid>
-              <Row>
-                {this.renderEditButton()}
-              </Row>
-            </Grid>
-          </Content>
-        );
-      }
-      case 'EDIT': {
-        return(
-          <Content padder>
-            {this.renderHeader()}
-            <List
-              dataArray={this.props.values.AddEntry}
-              renderRow={this.renderEditRow}
-            />
-            <Grid>
-              <Row>
-                {this.renderCancelButton()}
-                {this.renderSaveButton()}
-              </Row>
-            </Grid>
-          </Content>
-        );
-      } 
-    }
+    return(
+      <Content padder>
+        {this.renderHeader()}
+        <List
+          dataArray={this.props.values.labels}
+          renderRow={this.renderAddRow}
+        />
+        <Grid>
+          <Row>
+            {this.renderCancelButton()}
+            {this.renderSaveButton()}
+          </Row>
+        </Grid>
+      </Content>
+    );
   }
 }
