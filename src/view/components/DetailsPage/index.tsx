@@ -74,9 +74,7 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
             </H3>
           </Col>
           <Col>
-            <H3>
-              {item.value}
-            </H3>
+            <Input placeholder={item.value} />
           </Col>
         </Grid>
       </ListItem>
@@ -88,10 +86,15 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
       <ListItem>
         <Grid>
           <Col>
-          <Item floatingLabel>
-            <Label>{item.label}</Label>
-            <Input />
-          </Item>
+            <H3>
+              {item.label}
+            </H3>
+          </Col>
+          <Col>
+            <Item inlineLabel>
+              <Label>{item.label}</Label>
+              <Input />
+            </Item>
           </Col>
         </Grid>
       </ListItem>
