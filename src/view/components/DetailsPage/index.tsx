@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { Content, Text, Grid, Row, Col, H2, H3 } from 'native-base';
+import { Content, View, List, ListItem, Text, Grid, Row, Col, H2, H3, Button } from 'native-base';
+
+import Styles from './style';
 
 interface OwnPropsType {
-  farmerFirstName: string;
-  farmerLastName: string;
-  // date: Date;
-  amount: number;
-  quality: number;
-  rate: number;
+  values: any;
   mode: PageMode;
 }
 
@@ -28,47 +25,128 @@ interface OwnStateType {
 type PageMode = 'details' | 'edit' | 'add';
 
 /**
+ * Button types
+ */
+type ButtonType = 'Add' | 'Edit' | 'Cancel';
+
+/**
  * Component for DetailsPage
- * Modes: 'details' | 'edit' | 'add'
+ * @param values = {label: 'lableName', value: 'valueName'}
+ * @param mode = 'details' | 'edit' | 'add'
  */
 export default class DetailsPage extends React.Component<PropsType, OwnStateType> {
+
   constructor(props: PropsType) {
     super(props);
   }
 
-  private renderDetail() {
+  private renderDetailRow(item: any) {
+    return (
+      <ListItem>
+        <Grid>
+          <Col>
+            <H3>
+              {item.label}
+            </H3>
+          </Col>
+          <Col>
+            <H3>
+              {item.value}
+            </H3>
+          </Col>
+        </Grid>
+      </ListItem>
+    );
+  }
+
+  private renderEditRow(item: any) {
+    return (
+      <ListItem>
+        <Grid>
+          <Col>
+            <H3>
+              {item.label}
+            </H3>
+          </Col>
+          <Col>
+            <H3>
+              {item.value}
+            </H3>
+          </Col>
+        </Grid>
+      </ListItem>
+    );
+  }
+
+  private renderAddRow(item: any) {
+    return (
+      <ListItem>
+        <Grid>
+          <Col>
+            <H3>
+              {item.label}
+            </H3>
+          </Col>
+          <Col>
+            <H3>
+              {item.value}
+            </H3>
+          </Col>
+        </Grid>
+      </ListItem>
+    );
+  }
+
+  private renderDetailsButton() {
     return (
       <Grid>
         <Row>
-          <H2>Name: </H2>
-          <H3>{this.props.farmerFirstName} {this.props.farmerLastName}</H3>
-        </Row>
-        <Row>
-          <H2>Date: </H2>
-          {/* <H3>{this.props.date}</H3> */}
-        </Row>
-        <Row>
-          <H2>Amount: </H2>
-          <H3>{this.props.amount}</H3>
-        </Row>
-        <Row>
-          <H2>Quality: </H2>
-          <H3>{this.props.quality}</H3>
-        </Row>
-        <Row>
-          <H2>Rate: </H2>
-          <H3>{this.props.rate}</H3>
+          <Col>
+            <Button block primary>
+              <Text>Edit</Text>
+            </Button>
+          </Col>
         </Row>
       </Grid>
     );
   }
 
-  private renderEdit() {
-
+  private renderEditButton() {
+    return (
+      <Grid>
+        <Row>
+          <Col style={Styles.button}>
+            <Button block info>
+              <Text>Cancel</Text>
+            </Button>
+          </Col>
+          <Col style={Styles.button}>
+            <Button block primary>
+              <Text>Save</Text>
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+    );
   }
 
-  private renderAdd() {
-
+  private renderAddButton() {
+    return (
+      <Grid>
+        <Row>
+          <Col style={Styles.button}>
+            <Button block info>
+              <Text>Cancel</Text>
+            </Button>
+          </Col>
+          <Col style={Styles.button}>
+            <Button block primary>
+              <Text>Add</Text>
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+    );
   }
 
   /**
@@ -78,22 +156,34 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
     switch (this.props.mode) {
       case 'details': {
         return(
-          <Content>
-            {this.renderDetail}
+          <Content padder>
+            <List
+              dataArray={this.props.values}
+              renderRow={this.renderDetailRow}
+            />
+            {this.renderDetailsButton()}
           </Content>
         );
       }
       case 'edit': {
         return(
-          <Content>
-            {this.renderEdit}
+          <Content padder>
+            <List
+              dataArray={this.props.values}
+              renderRow={this.renderEditRow}
+            />
+            {this.renderEditButton()}
           </Content>
         );
       } 
       case 'add': {
         return(
-          <Content>
-            {this.renderAdd}
+          <Content padder>
+            <List
+              dataArray={this.props.values}
+              renderRow={this.renderAddRow}
+            />
+            {this.renderAddButton()}
           </Content>
         );
       }
