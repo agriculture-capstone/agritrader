@@ -61,7 +61,7 @@ export default createTabManager(
       element: createLoan,
     },
     {
-      name: 'Buy',
+      name: 'Shop',
       element: createBuy,
     },
     {
