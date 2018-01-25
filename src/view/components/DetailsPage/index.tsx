@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, View, List, ListItem, Text, Grid, Row, Col, H2, H3, Button } from 'native-base';
+import { Content, View, List, ListItem, Text, Grid, Row, Col, H2, H3, Button, Input, Item, Label } from 'native-base';
 
 import Styles from './style';
 
@@ -28,6 +28,11 @@ type PageMode = 'details' | 'edit' | 'add';
  * Button types
  */
 type ButtonType = 'Add' | 'Edit' | 'Cancel';
+
+/**
+ * Button color
+ */
+type ButtonColor = 'primary' | 'info';
 
 /**
  * Component for DetailsPage
@@ -83,69 +88,41 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
       <ListItem>
         <Grid>
           <Col>
-            <H3>
-              {item.label}
-            </H3>
-          </Col>
-          <Col>
-            <H3>
-              {item.value}
-            </H3>
+          <Item floatingLabel>
+            <Label>{item.label}</Label>
+            <Input />
+          </Item>
           </Col>
         </Grid>
       </ListItem>
     );
   }
 
-  private renderDetailsButton() {
-    return (
-      <Grid>
-        <Row>
-          <Col>
-            <Button block primary>
-              <Text>Edit</Text>
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
-    );
-  }
-
   private renderEditButton() {
-    return (
-      <Grid>
-        <Row>
-          <Col style={Styles.button}>
-            <Button block info>
-              <Text>Cancel</Text>
-            </Button>
-          </Col>
-          <Col style={Styles.button}>
-            <Button block primary>
-              <Text>Save</Text>
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
-    );
+    return (this.renderButton('Edit', 'primary'));
   }
 
-  private renderAddButton() {
+  private renderCancelButton() {
+    return (this.renderButton('Cancel', 'info'));
+  }
+
+  private renderSaveButton() {
+    return (this.renderButton('Save', 'primary'));
+  }
+
+  /**
+   * Returns a button with text specified
+   */
+  private renderButton(text: string, color: ButtonColor) {
+    const isInfo = color === 'info';
+    const isPrimary = color === 'primary';
+
     return (
-      <Grid>
-        <Row>
-          <Col style={Styles.button}>
-            <Button block info>
-              <Text>Cancel</Text>
-            </Button>
-          </Col>
-          <Col style={Styles.button}>
-            <Button block primary>
-              <Text>Add</Text>
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
+      <Col style={Styles.button}>
+        <Button block info={isInfo} primary={isPrimary}>
+          <Text>{text}</Text>
+        </Button>
+      </Col>
     );
   }
 
@@ -161,7 +138,11 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
               dataArray={this.props.values}
               renderRow={this.renderDetailRow}
             />
-            {this.renderDetailsButton()}
+            <Grid>
+              <Row>
+                {this.renderEditButton()}
+              </Row>
+            </Grid>
           </Content>
         );
       }
@@ -172,7 +153,12 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
               dataArray={this.props.values}
               renderRow={this.renderEditRow}
             />
-            {this.renderEditButton()}
+            <Grid>
+              <Row>
+                {this.renderCancelButton()}
+                {this.renderSaveButton()}
+              </Row>
+            </Grid>
           </Content>
         );
       } 
@@ -183,7 +169,12 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
               dataArray={this.props.values}
               renderRow={this.renderAddRow}
             />
-            {this.renderAddButton()}
+            <Grid>
+              <Row>
+                {this.renderCancelButton()}
+                {this.renderSaveButton()}
+              </Row>
+            </Grid>
           </Content>
         );
       }
