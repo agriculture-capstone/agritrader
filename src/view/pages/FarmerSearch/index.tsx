@@ -1,107 +1,184 @@
 import * as React from 'react';
 
-import { Content, List, ListItem } from 'native-base';
-import { ScrollView, Text } from 'react-native';
+import { H1, H3, Content, List, ListItem } from 'native-base';
+import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
-import createPage from '../../generators/Page/index';
 import { State } from '../../../store/types';
 
-/**
- * This is the basic model for the type of farmer object that
- * should be put into array form and given to this page component
- */
-interface farmerList {
+/** This is just a table of phony information to populate the FarmerSearch UI */
+const fakeFarmerList = [
+  {
+    name: 'Swalleh',
+    phoneNumber: '(250) 234-1234',
+    id: 1,
+  },
+  {
+    name: 'James',
+    phoneNumber: '(526) 123-8123',
+    id: 2,
+  },
+  {
+    name: 'Alex',
+    phoneNumber: '(514) 235-6789',
+    id: 3,
+  },
+  {
+    name: 'Joseph',
+    phoneNumber: '(922) 789-2348',
+    id: 4,
+  },
+  {
+    name: 'Mary',
+    phoneNumber: '(626) 626-1236',
+    id: 5,
+  },
+  {
+    name: 'David',
+    phoneNumber: '(789) 231-2345',
+    id: 6,
+  },
+  {
+    name: 'Michael',
+    phoneNumber: '(899) 781-8786',
+    id: 7,
+  },
+  {
+    name: 'Mary',
+    phoneNumber: '(897) 768-6780',
+    id: 8,
+  },
+  {
+    name: 'Peter',
+    phoneNumber: '(123) 564-2315',
+    id: 9,
+  },
+  {
+    name: 'Jonah',
+    phoneNumber: '(011) 101-1001',
+    id: 10,
+  },
+  {
+    name: 'Simon',
+    phoneNumber: '(234) 456-7890',
+    id: 11,
+  },
+];
+
+/** Basic model for the FarmerType object */
+// TODO: Move to store --@jinglis
+interface FarmerType {
   name: string;
   phoneNumber: string;
   id: number;
 }
 
-/**
- * An array of farmer objects must be supplied to populate the list
- */
-export interface OwnProps {
-  listItems?: farmerList[];
+/** FarmerSearch OwnPropsType */
+// TODO: Make required property when moving to StorePropsType
+export interface OwnPropsType {
 }
 
-interface StoreProps {}
+/** FarmerSearch StorePropsType */
+interface StorePropsType {
+  // farmerList: Farmer[];
+}
 
-interface DispatchProps {
+/** FarmerSearch DispatchPropsType */
+interface DispatchPropsType {
   navigateToFarmer(): void;
 }
 
-type FarmerSearchProps = StoreProps & DispatchProps & OwnProps;
-type Props = FarmerSearchProps & InjectedSearchProps;
+/** FarmerSearch OwnStateType */
+interface OwnStateType {}
 
-const farmerList = [{ name: 'Swalleh', phoneNumber: '1-250-234-1234', id: 1 },
-                    { name: 'James', phoneNumber: '1-526-123-8123', id: 2 },
-                    { name: 'Alex', phoneNumber: '1-514-235-6789', id: 3 },
-                    { name: 'James I.', phoneNumber: '1-922-789-2348', id: 2 },
-                    { name: 'Bea', phoneNumber: '1-626-626-1236', id: 2 },
-                    { name: 'Brad', phoneNumber: '1-789-231-2345', id: 2 },
-                    { name: 'Enoch', phoneNumber: '1-899-781-8786', id: 2 },
-                    { name: 'Moath', phoneNumber: '1-897-768-6780', id: 2 },
-                    { name: 'Nick', phoneNumber: '1-123-564-2315', id: 2 },
-                    { name: 'Farmer 239-XB4', phoneNumber: '1-011-101-1001', id: 2 }];
+/** FarmerSearch WrappedPropsType */
+type WrappedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
+/** FarmerSearch PropsType */
+type PropsType = WrappedPropsType & InjectedSearchProps;
 
-class FarmerSearch extends React.Component<Props, {}> {
-
-  public static defaultProps = {
-    listItems: farmerList,
-  };
+/** Farmer Search component for displaying and searching through farmers */
+class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
   /************************* Member Variables ************************/
 
   /************************* Member Functions ************************/
 
-  public constructor (props: Props) {
+  public constructor(props: PropsType) {
     super(props);
 
     this.renderItem = this.renderItem.bind(this);
     this.itemClicked = this.itemClicked.bind(this);
   }
 
+  /** Function to take user to farmer that was clicked on */
   private itemClicked() {
     this.props.navigateToFarmer();
   }
 
-  /************************* React Lifecycle *************************/
-  public render (): JSX.Element {
+  /** Function to sort the list data by Farmer name in alphabetical order */
+  // TODO: Make required property
+  private sortList(farmers?: FarmerType[]): FarmerType[] {
+
+    let sortedList: FarmerType[] = [];
+    if (farmers === undefined) {
+      return sortedList;
+    }
+    sortedList = farmers.sort((f1: FarmerType, f2: FarmerType) => {
+      if (f1.name > f2.name) {
+        return 1;
+      }
+      if (f1.name < f2.name) {
+        return -1;
+      }
+      return 0;
+    });
+    return sortedList;
+  }
+
+  /** Function to render the individual list items */
+  private renderItem(info: FarmerType) {
     return (
-      <Content>
-
-          <List
-            dataArray={this.props.listItems}
-            renderRow={this.renderItem}
-          />
-
-      </Content>
+      <ListItem key={info.id} onPress={this.itemClicked}>
+        <View>
+          <H1>
+            {info.name}
+          </H1>
+          <H3>
+            {info.phoneNumber}
+          </H3>
+        </View>
+      </ListItem>
     );
   }
 
-  private renderItem(info: farmerList) {
+  /************************* React *************************/
+
+  /** Render method to create the List */
+  public render(): JSX.Element {
     return (
-      <ListItem key={info.id} onPress={this.itemClicked} >
-        <Text>{info.name}</Text>
-        <Text>Phone: {info.phoneNumber}</Text>
-      </ListItem>
+      <Content>
+        <List
+          dataArray={this.sortList(fakeFarmerList)}
+          renderRow={this.renderItem}
+        />
+      </Content>
     );
   }
 }
 
-const FarmerSearchPage = createSearchPage<FarmerSearchProps>(FarmerSearch, 'Search Farmers');
+const FarmerSearchPage = createSearchPage<WrappedPropsType>(FarmerSearch, 'Search Farmers');
 
 /************************* Redux ************************/
 
-const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {};
 };
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigateToFarmer: () => dispatch(navActions.navigateTo(Route.FARMER)),
   };

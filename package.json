@@ -18,7 +18,7 @@
 		"move:view:assets": "npm run copyfiles -- -f ./src/view/assets/*[!.ts] lib/view/assets/",
 		"create:view:assets": "npm run mkdirp -- lib/view/assets",
 		"create:android:assets": "npm run mkdirp -- android/app/src/main/assets",
-		"pre:build": "npm run create:view:assets && npm run move:view:assets && npm run clean:app:assets && npm run create:android:assets",
+		"pre:build": "yarn && npm run create:view:assets && npm run move:view:assets && npm run clean:app:assets && npm run create:android:assets",
 		"build": "node_modules/.bin/tsc",
 		"rebuild": "npm run clean && npm run build",
 		"start:android": "npm run pre:build && npm run build && npm run concurrently:android",

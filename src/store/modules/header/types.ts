@@ -1,5 +1,6 @@
 /*----------------------- State -----------------------*/
 
+/** State for header module */
 export interface HeaderState {
   shown: boolean;
   title: string;
@@ -7,6 +8,7 @@ export interface HeaderState {
 
 /*----------------------- Actions -----------------------*/
 
+/** Action type for header module */
 export type Action = {
   type: 'SET_HEADER_SHOWN',
   shown: boolean,

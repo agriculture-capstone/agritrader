@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Picker } from 'native-base';
+import { Content, Grid, Row, Col, Form, Item, Input, Label, Button } from 'native-base';
 import { Text } from 'react-native';
 
 import styles from '../../styles';
@@ -52,7 +52,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
                 </Item>
               </Col>
             </Row>
-  
+
             <Row>
               <Col>
                 <Item floatingLabel>

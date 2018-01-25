@@ -21,6 +21,6 @@ const headerReducer: Reducer<HeaderState> = (state = initialState, action: Actio
     default:
       return state;
   }
-}
+};
 
 export default headerReducer;

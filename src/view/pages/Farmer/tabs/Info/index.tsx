@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text, Picker } from 'native-base';
+import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text } from 'native-base';
 
 import createPage from '../../../../generators/Page/index';
 
@@ -37,7 +37,7 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: OwnPropsType) {
     super(props);
-    this.state = { 
+    this.state = {
       mode: 'view',
     };
   }
