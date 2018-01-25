@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, ListItem, Text, Grid, Col } from 'native-base';
+import { List, ListItem, Text, Grid, Col, Card} from 'native-base';
 
 
 interface OwnPropsType {
@@ -68,11 +68,13 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   */
   public render() {
     return (
+      <Card>
       <List
         dataArray={this.props.values}
         renderRow={this.renderRow}
         renderSectionHeader={this.renderSectionHeader}
       />
+      </Card>
     );
   }
 }

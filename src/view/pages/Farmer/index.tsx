@@ -43,7 +43,7 @@ const demoPurchaseTransactions = [
 const createBuy = () => (
   <Buy
     farmerName="Bradley the Farmer"
-    allTimeTotal="$1001.01"
+    currentDayTotal="$1001.01"
     currentWeekTotal="$50"
     currentMonthTotal="$405.50"
     purchaseTransactions={demoPurchaseTransactions}

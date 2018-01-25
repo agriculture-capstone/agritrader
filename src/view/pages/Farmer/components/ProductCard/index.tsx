@@ -29,12 +29,10 @@ export default class ProductCard extends React.Component<PropsType, OwnStateType
   */
   public render() {
     return (
-      <Card>
       <DataTable
         headers={PRODUCT_CARD_HEADERS}
         values={this.props.values}
       />
-      </Card>
     );
   }
 }

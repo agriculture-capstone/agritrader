@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Grid, Row, Col, Content, Button, Text } from 'native-base';
-import CardSummary from '../../components/CardSummary';
+import CardSummary from '../../../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
 import createPage from '../../../../generators/Page/index';
 import styles from './style';
 
 interface OwnPropsType {
   farmerName: string;
-  currentDayTotal: any;
-  currentWeekTotal: any;
-  currentMonthTotal: any;
+  currentDayTotal: string;
+  currentWeekTotal: string;
+  currentMonthTotal: string;
   collectTransactions: any[];
 }
 
@@ -38,13 +38,25 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   public render() {
     return (
       <Content>
-        <Grid style={{margin: 10}}>
+        <Grid style={{ margin: 10 }}>
           <Row>
             <CardSummary
-              title={this.props.farmerName}
-              currentDayTotal={this.props.currentDayTotal}
-              currentWeekTotal={this.props.currentWeekTotal}
-              currentMonthTotal={this.props.currentMonthTotal}
+              data={[{
+                label: "Today",
+                units: this.props.currentDayTotal,
+                value: "",
+              },{
+                label: "This Week",
+                units: this.props.currentWeekTotal,
+                value: "",
+              },{
+                label: "This Month",
+                units: this.props.currentMonthTotal,
+                value: "",
+              },
+
+              ]}
+
             />
           </Row>
           <Row>
