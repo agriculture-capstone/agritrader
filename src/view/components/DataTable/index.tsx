@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { List, ListItem, Text, Grid, Col } from 'native-base';
-
+import { DataTable as OtherDataTable } from 'react-native-data-table';
 
 interface OwnPropsType {
   headers: string[];
@@ -68,11 +68,8 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   */
   public render() {
     return (
-      <List
-        dataArray={this.props.values}
-        renderRow={this.renderRow}
-        renderSectionHeader={this.renderSectionHeader}
-      />
+      <OtherDataTable /> 
+      
     );
   }
 }
