@@ -1,17 +1,16 @@
 import * as React from 'react';
 
-import { Content, List, ListItem } from 'native-base';
-import { Text, View } from 'react-native';
+import { H1, H3, Content, List, ListItem } from 'native-base';
+import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
-import style from './style';
 
 /** This is just a table of phony information to populate the FarmerSearch UI */
-const defaultFarmerList = [
+const fakeFarmerList = [
   {
     name: 'Swalleh',
     phoneNumber: '(250) 234-1234',
@@ -80,11 +79,12 @@ interface FarmerType {
 /** FarmerSearch OwnPropsType */
 // TODO: Make required property when moving to StorePropsType
 export interface OwnPropsType {
-  farmerSearchListItems?: FarmerType[];
 }
 
 /** FarmerSearch StorePropsType */
-interface StorePropsType {}
+interface StorePropsType {
+  // farmerList: Farmer[];
+}
 
 /** FarmerSearch DispatchPropsType */
 interface DispatchPropsType {
@@ -102,11 +102,6 @@ type PropsType = WrappedPropsType & InjectedSearchProps;
 
 /** Farmer Search component for displaying and searching through farmers */
 class FarmerSearch extends React.Component<PropsType, OwnStateType> {
-
-  /** Static method to supply the List with a default list */
-  public static defaultProps = {
-    listItems: defaultFarmerList,
-  };
 
   /************************* Member Variables ************************/
 
@@ -149,12 +144,12 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <ListItem key={info.id} onPress={this.itemClicked}>
         <View>
-          <Text style={style.name}>
+          <H1>
             {info.name}
-          </Text>
-          <Text style={style.phone}>
-            Phone: {info.phoneNumber}
-          </Text>
+          </H1>
+          <H3>
+            {info.phoneNumber}
+          </H3>
         </View>
       </ListItem>
     );
@@ -167,7 +162,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <Content>
         <List
-          dataArray={this.sortList(this.props.farmerSearchListItems)}
+          dataArray={this.sortList(fakeFarmerList)}
           renderRow={this.renderItem}
         />
       </Content>
