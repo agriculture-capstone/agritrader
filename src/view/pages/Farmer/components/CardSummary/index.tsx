@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Row, Col, Card, Text } from 'native-base';
+import { Grid, Row, Col, Card, Text, CardItem } from 'native-base';
 import Panel from '../../../../components/Panel';
 import StatisticsBlock from '../../../../components/StatisticsBlock';
 import styles from './style';
@@ -8,7 +8,7 @@ interface OwnPropsType {
   title: string;
   currentWeekTotal: any;
   currentMonthTotal: any;
-  allTimeTotal: any;
+  currentDayTotal: any;
 }
 
 interface DispatchPropsType {
@@ -33,31 +33,33 @@ export default class CardSummary extends React.Component<PropsType, OwnStateType
   public render() {
     return (
       <Card>
+        <CardItem>
         <Grid >
-            <Col>
-            <StatisticsBlock 
-              label="This Week" 
-              value={this.props.currentWeekTotal} 
-              units="L" 
-            />
-            </Col>
-            <Col>
-            
-            <StatisticsBlock 
-              label="This Month" 
-              value={this.props.currentMonthTotal} 
+          <Col>
+            <StatisticsBlock
+              label="Today"
+              value={this.props.currentDayTotal}
               units="L" />
-              
-            </Col>
-            <Col>
-            
-            <StatisticsBlock 
-              label="All-Time Total Amount" 
-              value={this.props.allTimeTotal} 
-              units="L"/>
-            </Col>
-          
+          </Col>
+          <Col>
+            <StatisticsBlock
+              label="This Week"
+              value={this.props.currentWeekTotal}
+              units="L"
+            />
+          </Col>
+          <Col>
+
+            <StatisticsBlock
+              label="This Month"
+              value={this.props.currentMonthTotal}
+              units="L" />
+
+          </Col>
+
+
         </Grid>
+        </CardItem>
       </Card>
     );
   }

@@ -7,7 +7,7 @@ import styles from './style';
 
 interface OwnPropsType {
   farmerName: string;
-  allTimeTotal: any;
+  currentDayTotal: any;
   currentWeekTotal: any;
   currentMonthTotal: any;
   collectTransactions: any[];
@@ -42,7 +42,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           <Row>
             <CardSummary
               title={this.props.farmerName}
-              allTimeTotal={this.props.allTimeTotal}
+              currentDayTotal={this.props.currentDayTotal}
               currentWeekTotal={this.props.currentWeekTotal}
               currentMonthTotal={this.props.currentMonthTotal}
             />

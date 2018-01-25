@@ -17,7 +17,8 @@ export default StyleSheet.create({
     
   }, 
   value : {
-    fontSize: 20
+    fontSize: 20,
+    fontWeight: "bold"
   },
   content: {
     padding: 5
