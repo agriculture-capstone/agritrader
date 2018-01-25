@@ -18,7 +18,7 @@
 		"move:view:assets": "npm run copyfiles -- -f ./src/view/assets/*[!.ts] lib/view/assets/",
 		"create:view:assets": "npm run mkdirp -- lib/view/assets",
 		"create:android:assets": "npm run mkdirp -- android/app/src/main/assets",
-		"pre:build": "npm run create:view:assets && npm run move:view:assets && npm run clean:app:assets && npm run create:android:assets",
+		"pre:build": "yarn && npm run create:view:assets && npm run move:view:assets && npm run clean:app:assets && npm run create:android:assets",
 		"build": "node_modules/.bin/tsc",
 		"rebuild": "npm run clean && npm run build",
 		"start:android": "npm run pre:build && npm run build && npm run concurrently:android",
@@ -50,7 +50,8 @@
 		"redux": "^3.7.2",
 		"redux-logger": "^3.0.6",
 		"reselect": "^3.0.1",
-		"rimraf": "^2.6.2"
+		"rimraf": "^2.6.2",
+		"wolfy87-eventemitter": "^5.2.4"
 	},
 	"devDependencies": {
 		"@types/jest": "^21.1.5",
@@ -60,6 +61,7 @@
 		"@types/react-redux": "^5.0.14",
 		"@types/react-test-renderer": "^16.0.0",
 		"@types/redux-logger": "^3.0.5",
+		"@types/wolfy87-eventemitter": "^5.2.0",
 		"babel-core": "^6.26.0",
 		"babel-jest": "^22.1.0",
 		"babel-preset-react-native": "4.0.0",

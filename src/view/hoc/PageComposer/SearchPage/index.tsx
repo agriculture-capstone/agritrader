@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import store from '../../../store';
-import createPage from '../Page/index';
+import store from '../../../../store';
 
 interface SearchPageState {
   /** Value from the search bar */
@@ -40,7 +39,7 @@ export default function createSearchPage<InjectedProps>(
 ) {
 
   /** Higher order class for wrapping search pages */
-  class SearchPage extends React.Component<InjectedProps, SearchPageState> {
+  return class SearchPageContainer extends React.Component<InjectedProps, SearchPageState> {
 
     public constructor(props: InjectedProps) {
       super(props);
@@ -72,8 +71,5 @@ export default function createSearchPage<InjectedProps>(
       // Inject searchBarValue into props of WrappedComponent
       return <WrappedComponent {...this.props} searchBarValue={this.state.searchBarValue} />;
     }
-  }
-
-  // Wrap in page and return
-  return createPage(SearchPage);
+  };
 }
