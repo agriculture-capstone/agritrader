@@ -2,6 +2,7 @@ import { Action } from './types';
 
 const headerActions = {
 
+  /** Show the header */
   setHeaderShown(shown: boolean): Action {
     return {
       shown,
@@ -9,6 +10,7 @@ const headerActions = {
     };
   },
 
+  /** Set the title of the header */
   setTitle: (title: string): Action => ({
     title,
     type: 'SET_TITLE',

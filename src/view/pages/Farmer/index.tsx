@@ -3,7 +3,7 @@ import createTabManager from '../../hoc/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
 import Buy from './tabs/Buy';
-import FarmerInformation from './tabs/FarmerInformation';
+import Info from './tabs/Info';
 
 const createCollect = () => (
   <Collect
@@ -50,6 +50,15 @@ const createBuy = () => (
   />
 );
 
+const createInfo = () => (
+  <Info
+    farmerFirstName="Patrick"
+    farmerLastName="Keena"
+    farmerPhoneNumber="123-456-789"
+    farmerNotes="Doctor from village A"
+  />
+);
+
 export default createTabManager(
   [
     {
@@ -66,7 +75,7 @@ export default createTabManager(
     },
     {
       name: 'Info',
-      element: () => <FarmerInformation />,
+      element: createInfo,
     },
   ],
 );

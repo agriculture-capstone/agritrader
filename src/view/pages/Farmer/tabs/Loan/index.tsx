@@ -6,8 +6,8 @@ import Composer from '../../../../hoc/PageComposer';
 
 interface OwnPropsType {
   farmerName: string;
-  totalRemainingBalance: string,
-  totalWeeklyPaymentBalence: string,
+  totalRemainingBalance: string;
+  totalWeeklyPaymentBalence: string;
   loanTransactions: any[];
 }
 
@@ -35,9 +35,9 @@ class Buy extends React.Component<PropsType, OwnStateType> {
         <Grid>
           <Row>
             <LoanSummary
-                title={this.props.farmerName}
-                totalRemainingBalance={this.props.totalRemainingBalance}
-                totalWeeklyPaymentBalence={this.props.totalWeeklyPaymentBalence}
+              title={this.props.farmerName}
+              totalRemainingBalance={this.props.totalRemainingBalance}
+              totalWeeklyPaymentBalence={this.props.totalWeeklyPaymentBalence}
             />
           </Row>
           <Row>
@@ -47,17 +47,18 @@ class Buy extends React.Component<PropsType, OwnStateType> {
           </Row>
         </Grid>
         <Row>
-            <Col>
-
-                <Button danger block style={{margin: 5}}>
-                    <Text style={{color: "white"}}> PAY </Text>
-                </Button>
-
-            </Col><Col><Button block info style={{margin: 5}}>
-          <Text>
-            ADD LOAN
+          <Col>
+            {/* TODO: Convert to stylesheet */}
+            <Button danger block style={{ margin: 5 }}>
+              <Text style={{ color: 'white' }}> PAY </Text>
+            </Button>
+          </Col>
+          <Col>
+            <Button block info style={{ margin: 5 }}>
+              <Text>
+                ADD LOAN
           </Text>
-        </Button></Col></Row>
+            </Button></Col></Row>
       </Content>
     );
   }
