@@ -26,13 +26,12 @@ export type Action
 
 /*----------------------- Global Models -----------------------*/
 
-/** TODO: doc */
+/** Base state for modules synced with core  */
 export interface CoreState {
   lastModified: string;
   containsLocal: boolean;
 }
 
-/** TODO: doc */
 interface OptionalCoreData {
   lastModified: string;
   local: string;
@@ -42,6 +41,18 @@ interface RequiredCoreData {
   uuid: string;
 }
 
+/**
+ * Data model for data synced with core
+ *
+ * @template T Model for data to be synced with core
+ */
 export type CoreData<T> = T & OptionalCoreData & RequiredCoreData;
 
+/**
+ * Partial data model for data synced with core
+ *
+ * Used for updates
+ *
+ * @template T Model for data to be synced with core
+ */
 export type PartialCoreData<T> = Partial<T> & Partial<OptionalCoreData> & RequiredCoreData;

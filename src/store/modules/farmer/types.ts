@@ -13,18 +13,22 @@ interface BaseFarmer {
   companyName?: string;
 }
 
+/** Model for Farmer */
 export type Farmer = CoreData<BaseFarmer>;
 
+/** Model for updating farmer */
 export type PartialFarmer = PartialCoreData<BaseFarmer>;
 
 /*----------------------- State -----------------------*/
 
+/** Farmer module state */
 export interface FarmerState extends CoreState {
   farmers: Farmer[];
 }
 
 /*----------------------- Actions -----------------------*/
 
+/** Actions for farmer module */
 export type Action = {
   type: 'UPDATE_FARMER',
   farmer: PartialFarmer,
@@ -33,5 +37,5 @@ export type Action = {
   farmer: Farmer,
 } | {
   type: 'DO_NOT_USE',
-}; 
+};
 
