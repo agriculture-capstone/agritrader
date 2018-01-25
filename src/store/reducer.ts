@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
 
 import { State } from './types';
-import appReducer from './modules/app/reducer';
+import drawerReducer from './modules/drawer/reducer';
 import navReducer from './modules/nav/reducer';
+import tabsReducer from './modules/tabs/reducer';
+import searchBarReducer from './modules/searchBar/reducer';
+import headerReducer from './modules/header/reducer';
 
 export default combineReducers<State>({
-  app: appReducer,
+  drawer: drawerReducer,
   nav: navReducer,
+  tabs: tabsReducer,
+  searchBar: searchBarReducer,
+  header: headerReducer,
 });

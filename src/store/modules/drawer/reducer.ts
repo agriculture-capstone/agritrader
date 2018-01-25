@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
 
-import { AppState, Action } from './types';
+import { DrawerState, Action } from './types';
 import initialState from './state';
 
-const reducer: Reducer<AppState> = (state = initialState, action: Action) => {
+const drawerReducer: Reducer<DrawerState> = (state = initialState, action: Action) => {
   switch (action.type) {
     case 'SET_DRAWER_SHOWN':
       return {
@@ -15,7 +15,7 @@ const reducer: Reducer<AppState> = (state = initialState, action: Action) => {
     case 'TOGGLE_DRAWER_SHOWN':
       return {
         ...state,
-        drawerShown: (state.drawerLocked) ? state.drawerShown : !state.drawerShown, 
+        drawerShown: (state.drawerLocked) ? state.drawerShown : !state.drawerShown,
       };
 
     case 'SET_DRAWER_LOCKED':
@@ -25,15 +25,9 @@ const reducer: Reducer<AppState> = (state = initialState, action: Action) => {
         drawerShown: false,
       };
 
-    case 'SET_TITLE':
-      return {
-        ...state,
-        title: action.title,
-      };
-      
     default:
       return state;
   }
 };
 
-export default reducer;
+export default drawerReducer;

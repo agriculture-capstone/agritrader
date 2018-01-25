@@ -55,7 +55,7 @@ buck-out/
 
 # TypeScript
 #
-lib/
+/lib/
 
 # Jest
 #

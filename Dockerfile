@@ -18,26 +18,25 @@ RUN \
 # Install Android SDK
 
 ## Set correct environment variables.
-ENV ANDROID_SDK_FILE android-sdk_r24.4.1-linux.tgz
+ENV ANDROID_SDK_FILE sdk-tools-linux-3859397.zip
 ENV ANDROID_HOME /usr/local/android-sdk-linux
-ENV ANDROID_SDK_URL=http://dl.google.com/android/$ANDROID_SDK_FILE
+ENV ANDROID_SDK_URL=https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
 ENV PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/23.0.1
 
 ## Install 32bit support for Android SDK
 RUN dpkg --add-architecture i386 && \
     apt-get update -q && \
     apt-get install -qy --no-install-recommends \
-        libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 && \
+        libstdc++6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386 unzip
 ## Install SDK
-    (cd /usr/local && \
+RUN (cd /tmp/ && \
      wget $ANDROID_SDK_URL && \
-     tar -xzf $ANDROID_SDK_FILE && \
+     unzip $ANDROID_SDK_FILE && \
      export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools && \
-     chgrp -R users $ANDROID_HOME && \
-     chmod -R 0775 $ANDROID_HOME && \
+     yes | tools/bin/sdkmanager --licenses && \
+     (while sleep 3; do echo "y"; done) | tools/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "platforms;android-26" && \
      rm $ANDROID_SDK_FILE)
 # Install android tools and system-image.
-RUN (while true ; do sleep 5; echo y; done) | android update sdk --no-ui --force --all --filter platform-tools,android-23,build-tools-23.0.1,extra-android-support,extra-android-m2repository,sys-img-x86_64-android-23,extra-google-m2repository
 
 COPY 51-android.rules /etc/udev/rules.d/51-android.rules
 

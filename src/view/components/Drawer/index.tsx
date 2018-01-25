@@ -3,34 +3,83 @@ import { Drawer as BaseDrawer } from 'native-base';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
 import { State } from '../../../store/types';
-import appActions from '../../../store/modules/app/actions';
+import drawerActions from '../../../store/modules/drawer/actions';
+import navActions from '../../../store/modules/nav/actions';
+import headerActions from '../../../store/modules/header/actions';
 import DrawerContents from './DrawerContents';
+import { Route } from '../../navigation/navigator';
 
 /** Drawer OwnProps */
-export interface OwnProps {}
+export interface OwnPropsType {}
 
 /** Drawer State */
-export interface State {}
+export interface OwnState {}
 
-interface StoreProps {
+interface StorePropsType {
   open: boolean;
   locked: boolean;
+  // TODO: These should be retrieved from the store
+  // name: string;
+  // username: string;
 }
 
-interface DispatchProps {
+interface DispatchPropsType {
   closeDrawer(): void;
   openDrawer(): void;
+  navigate(route: Route): void;
+  showHeader(): void;
+  goToLogin(): void;
 }
 
 /** Drawer props */
-type Props = OwnProps & StoreProps & DispatchProps;
+type PropsType = OwnPropsType & StorePropsType & DispatchPropsType;
 
 /** Drawer component for navigation */
-class Drawer extends React.Component<Props, State> {
+class Drawer extends React.Component<PropsType, OwnState> {
 
   /************************* Member Variables ************************/
 
+  private PAN_OPEN_MASK = .10;
+
   /************************* Member Functions ************************/
+
+  public constructor(props: PropsType) {
+    super(props);
+
+    this.onPress = this.onPress.bind(this);
+    this.onLogout = this.onLogout.bind(this);
+    this.openDrawer = this.openDrawer.bind(this);
+    this.createDrawerContents = this.createDrawerContents.bind(this);
+  }
+
+  private openDrawer() {
+    if (!this.props.locked) {
+      this.props.openDrawer();
+    }
+  }
+
+  private onPress(route: Route) {
+    this.props.navigate(route);
+    this.props.showHeader();
+    this.props.closeDrawer();
+  }
+
+  private onLogout() {
+    // TODO: Actually log people out (build a service for this)
+    this.props.goToLogin();
+  }
+
+  private createDrawerContents() {
+    // TODO: Change placeholder names to this.props.name/this.props.username
+    return (
+      <DrawerContents
+        name={'Joe Trader'}
+        username={'joe@qualitymilk.ca'}
+        onPress={this.onPress}
+        onLogout={this.onLogout}
+      />
+    );
+  }
 
   /****************************** React ******************************/
 
@@ -40,12 +89,12 @@ class Drawer extends React.Component<Props, State> {
       <BaseDrawer
         open={this.props.open}
         onClose={this.props.closeDrawer}
-        onOpen={this.props.openDrawer}
-        content={<DrawerContents />}
+        onOpen={this.openDrawer}
+        content={this.createDrawerContents()}
         type="overlay"
+        panOpenMask={this.PAN_OPEN_MASK}
         disabled={this.props.locked}
         acceptPan
-        captureGestures
       >
       {this.props.children}
       </BaseDrawer>
@@ -55,17 +104,20 @@ class Drawer extends React.Component<Props, State> {
 
 /****************************** Redux ******************************/
 
-const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state, ownProps) => {
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
   return {
-    open: state.app.drawerShown,
-    locked: state.app.drawerLocked,
+    open: state.drawer.drawerShown,
+    locked: state.drawer.drawerLocked,
   };
 };
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    closeDrawer: () => dispatch(appActions.setDrawerShown(false)),
-    openDrawer: () => dispatch(appActions.setDrawerShown(true)),
+    closeDrawer: () => dispatch(drawerActions.setDrawerShown(false)),
+    openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    showHeader: () => dispatch(headerActions.setHeaderShown(true)),
+    goToLogin: () => dispatch(navActions.navigateTo(Route.LOGIN)),
   };
 };
 
