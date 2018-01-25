@@ -22,9 +22,9 @@
   version "21.1.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-21.1.10.tgz#dcacb5217ddf997a090cc822bba219b4b2fd7984"
 
-"@types/lodash@^4.14.95":
-  version "4.14.95"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.95.tgz#02c170690719bbaca8293d9c8cdcccb565728081"
+"@types/lodash@^4.14.96":
+  version "4.14.96"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.96.tgz#49a402bb6984af7dd9a48cea3781744a3774bff1"
 
 "@types/react-native@*":
   version "0.52.1"
@@ -3000,7 +3000,7 @@ lodash.templatesettings@^3.0.0:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
 
-lodash@4.17.4, lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
+lodash@4.17.4, lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
