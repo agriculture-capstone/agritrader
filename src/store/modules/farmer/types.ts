@@ -1,8 +1,8 @@
-import { CoreState, CoreData } from '../../types';
+import { CoreState, CoreData, PartialCoreData } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
-export interface Farmer extends CoreData {
+interface BaseFarmer {
   username: string;
   firstName: string;
   middleName: string;
@@ -13,9 +13,13 @@ export interface Farmer extends CoreData {
   companyName?: string;
 }
 
+export type Farmer = CoreData<BaseFarmer>;
+
+export type PartialFarmer = PartialCoreData<BaseFarmer>;
+
 /*----------------------- State -----------------------*/
 
-export interface State extends CoreState {
+export interface FarmerState extends CoreState {
   farmers: Farmer[];
 }
 
@@ -23,11 +27,11 @@ export interface State extends CoreState {
 
 export type Action = {
   type: 'UPDATE_FARMER',
-  farmer: Farmer,
+  farmer: PartialFarmer,
 } | {
   type: 'CREATE_FARMER',
   farmer: Farmer,
 } | {
-  type: 'DELETE_FARMER',
-  farmerId: string;
-};
+  type: 'DO_NOT_USE',
+}; 
+

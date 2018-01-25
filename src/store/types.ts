@@ -25,13 +25,20 @@ export type Action
 
 /** TODO: doc */
 export interface CoreState {
-  lastModified: Date;
+  lastModified: string;
   containsLocal: boolean;
 }
 
 /** TODO: doc */
-export interface CoreData {
-  uuid: string;
-  lastModified: Date;
+interface OptionalCoreData {
+  lastModified: string;
   local: string;
 }
+
+interface RequiredCoreData {
+  uuid: string;
+}
+
+export type CoreData<T> = T & OptionalCoreData & RequiredCoreData;
+
+export type PartialCoreData<T> = Partial<T> & Partial<OptionalCoreData> & RequiredCoreData;

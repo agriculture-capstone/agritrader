@@ -1,7 +1,9 @@
-import { State, Farmer } from './types';
+import { FarmerState, Farmer } from './types';
 
-const initialState: State = {
+const initialState: FarmerState = {
   containsLocal: false,
   farmers: [] as Farmer[],
-  lastModified: Date.now(),
-}
+  lastModified: '1451635200000',
+};
+
+export default initialState;
