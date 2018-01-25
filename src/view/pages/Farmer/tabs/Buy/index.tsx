@@ -3,6 +3,7 @@ import { Grid, Row, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import createPage from '../../../../generators/Page/index';
+import styles from './style';
 
 interface OwnPropsType {
   farmerName: string;
@@ -33,26 +34,24 @@ class Buy extends React.Component<PropsType, OwnStateType> {
   public render() {
     return (
       <Content>
-        <Grid>
+        <Grid style={styles.container}>
           <Row>
           <CardSummary
-          data={[{
-            label: "Today",
-            units: this.props.currentDayTotal,
-            value: "",
-          },{
-            label: "This Week",
-            units: this.props.currentWeekTotal,
-            value: "",
-          },{
-            label: "This Month",
-            units: this.props.currentMonthTotal,
-            value: "",
-          },
-
-          ]}
-
-        />
+            data={[{
+              label: "Today",
+              value: this.props.currentDayTotal,
+              units: "UGX",
+            },{
+              label: "This Week",
+              value: this.props.currentWeekTotal,
+              units: "UGX",
+            },{
+              label: "This Month",
+              value: this.props.currentMonthTotal,
+              units: "UGX",
+            },
+            ]}
+          />
           </Row>
           <Row>
             <DataTable

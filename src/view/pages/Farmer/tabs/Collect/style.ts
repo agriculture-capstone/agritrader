@@ -6,5 +6,8 @@ export default StyleSheet.create({
     paddingRight: 21,
     paddingTop: 21,
     paddingBottom: 21,
-  },
+  }, 
+  container: {
+    margin: 10
+  }
 });

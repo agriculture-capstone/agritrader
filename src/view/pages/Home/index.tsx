@@ -40,6 +40,9 @@ class Home extends React.Component<HomePropsType, {}> {
   public render() {
     return (
       <Content>
+        
+       
+        <View style={styles.menuButtons} >
         <Card style={styles.betaNotice}>
           <CardItem style={styles.betaNotice}>
             <Body >
@@ -65,8 +68,6 @@ class Home extends React.Component<HomePropsType, {}> {
             </Row>
           </Grid>
         </Panel>
-        <View style={styles.menuButtons} >
-        
           <CardButton title="Farmers" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
           <CardButton title="Exports" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
           <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />

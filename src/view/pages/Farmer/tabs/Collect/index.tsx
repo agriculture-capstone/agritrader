@@ -38,21 +38,21 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   public render() {
     return (
       <Content>
-        <Grid style={{ margin: 10 }}>
+        <Grid style={styles.container}>
           <Row>
             <CardSummary
               data={[{
                 label: "Today",
-                units: this.props.currentDayTotal,
-                value: "",
+                value: this.props.currentDayTotal,
+                units: "L",
               },{
                 label: "This Week",
-                units: this.props.currentWeekTotal,
-                value: "",
+                value: this.props.currentWeekTotal,
+                units: "L",
               },{
                 label: "This Month",
-                units: this.props.currentMonthTotal,
-                value: "",
+                value: this.props.currentMonthTotal,
+                units: "L",
               },
 
               ]}
