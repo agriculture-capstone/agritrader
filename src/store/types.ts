@@ -4,6 +4,7 @@ import { TabState, Action as TabsAction } from './modules/tabs/types';
 import { SearchBarState, Action as SearchBarAction } from './modules/searchBar/types';
 import { HeaderState, Action as HeaderAction } from './modules/header/types';
 import { FarmerState, Action as FarmerAction } from './modules/farmer/types';
+import { SensitiveState, Action as SensitiveAction } from './modules/sensitive/types';
 
 /** Global redux state */
 export interface State {
@@ -13,6 +14,7 @@ export interface State {
   searchBar: SearchBarState;
   header: HeaderState;
   farmer: FarmerState;
+  sensitive: SensitiveState;
 }
 
 /** Global redux action */
@@ -22,7 +24,9 @@ export type Action
   | TabsAction
   | SearchBarAction
   | HeaderAction
-  | FarmerAction;
+  | FarmerAction
+  | SensitiveAction
+  ;
 
 /*----------------------- Global Models -----------------------*/
 
