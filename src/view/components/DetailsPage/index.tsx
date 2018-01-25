@@ -22,22 +22,17 @@ interface OwnStateType {
 /**
  * Modes to determine how to render DetailsPage component
  */
-type PageMode = 'details' | 'edit' | 'add';
-
-/**
- * Button types
- */
-type ButtonType = 'Add' | 'Edit' | 'Cancel';
+type PageMode = 'DETAILS' | 'EDIT' | 'ADD';
 
 /**
  * Button color
  */
-type ButtonColor = 'primary' | 'info';
+type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Component for DetailsPage
  * @param values = {label: 'lableName', value: 'valueName'}
- * @param mode = 'details' | 'edit' | 'add'
+ * @param mode = 'DETAILS' | 'EDIT' | 'ADD'
  */
 export default class DetailsPage extends React.Component<PropsType, OwnStateType> {
 
@@ -102,23 +97,23 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
   }
 
   private renderEditButton() {
-    return (this.renderButton('Edit', 'primary'));
+    return (this.renderButton('Edit', 'PRIMARY'));
   }
 
   private renderCancelButton() {
-    return (this.renderButton('Cancel', 'info'));
+    return (this.renderButton('Cancel', 'INFO'));
   }
 
   private renderSaveButton() {
-    return (this.renderButton('Save', 'primary'));
+    return (this.renderButton('Save', 'PRIMARY'));
   }
 
   /**
    * Returns a button with text specified
    */
   private renderButton(text: string, color: ButtonColor) {
-    const isInfo = color === 'info';
-    const isPrimary = color === 'primary';
+    const isInfo = color === 'INFO';
+    const isPrimary = color === 'PRIMARY';
 
     return (
       <Col style={Styles.button}>
@@ -134,7 +129,7 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
    */
   public render() {
     switch (this.props.mode) {
-      case 'details': {
+      case 'DETAILS': {
         return(
           <Content padder>
             <List
@@ -149,7 +144,7 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
           </Content>
         );
       }
-      case 'edit': {
+      case 'EDIT': {
         return(
           <Content padder>
             <List
@@ -165,7 +160,7 @@ export default class DetailsPage extends React.Component<PropsType, OwnStateType
           </Content>
         );
       } 
-      case 'add': {
+      case 'ADD': {
         return(
           <Content padder>
             <List
