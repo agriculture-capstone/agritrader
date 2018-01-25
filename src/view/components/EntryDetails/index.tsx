@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, View, List, ListItem, Text, Grid, Row, Col, H1, H2, H3, Button, Input, Item, Label } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, H1, H3, Button, Input } from 'native-base';
 
 import Styles from './style';
 
@@ -36,7 +36,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Component for EntryDetails
- * @param values = {label: 'lableName', value: 'valueName'}
+ * @param values = { firstName: string; lastName: string; date: string; 
+ * entryDetails: [{label: 'Amount', value: '#'}, {label: 'Quality', value: '#'}, {label: 'Rate', value: '#'}]}
  * @param mode = 'DETAILS' | 'EDIT'
  */
 export default class EntryDetails extends React.Component<PropsType, OwnStateType> {
