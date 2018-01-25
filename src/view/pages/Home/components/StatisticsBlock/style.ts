@@ -3,22 +3,22 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   menuButtons : {
     marginRight: 10,
-    marginLeft: 10
+    marginLeft: 10,
   },
   stats: {
-    textAlign: "center"
+    textAlign: 'center',
   },
   label: {
-    color: "gray", 
+    color: 'gray', 
     fontSize: 12,
   },
   unit : {
     
   }, 
   value : {
-    fontSize: 28
+    fontSize: 28,
   },
   content: {
-    padding: 5
-  }
+    padding: 5,
+  },
 });    

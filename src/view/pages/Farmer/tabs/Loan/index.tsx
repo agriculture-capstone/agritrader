@@ -6,8 +6,8 @@ import createPage from '../../../../generators/Page/index';
 
 interface OwnPropsType {
   farmerName: string;
-  totalRemainingBalance: string,
-  totalWeeklyPaymentBalence: string,
+  totalRemainingBalance: string;
+  totalWeeklyPaymentBalence: string;
   loanTransactions: any[];
 }
 
@@ -49,11 +49,11 @@ class Buy extends React.Component<PropsType, OwnStateType> {
         <Row>
             <Col>
                  
-                <Button danger block style={{margin: 5}}>
-                    <Text style={{color: "white"}}> PAY </Text>
+                <Button danger block style={{ margin: 5 }}>
+                    <Text style={{ color: 'white' }}> PAY </Text>
                 </Button>
             
-            </Col><Col><Button block info style={{margin: 5}}>
+            </Col><Col><Button block info style={{ margin: 5 }}>
           <Text>
             ADD LOAN
           </Text>
