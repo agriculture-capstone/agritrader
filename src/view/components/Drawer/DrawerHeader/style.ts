@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 
+import { MATERIAL_COLORS, COLORS, TEXT_STYLES } from '../../../../native-base-theme/variables/styles'; 
+
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: MATERIAL_COLORS.primary.dark,
   },
   logo: {
     width: 80, 
     height: 80, 
-    backgroundColor: '#0fc6ce', 
+    backgroundColor: COLORS.logo, 
     margin: 20, 
     alignItems: 'center', 
     justifyContent: 'center',
@@ -25,11 +27,11 @@ export default StyleSheet.create({
   },
   userFullName: {
     fontSize: 24,
-    color: 'white',
+    color: COLORS.white,
     fontWeight: 'bold',
   },
   username: {
-    color: 'white',
+    color: COLORS.white,
     fontStyle: 'italic',
   },
 });
