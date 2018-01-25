@@ -6,16 +6,9 @@ import { Text } from 'react-native';
 import styles from '../../styles';
 
 interface OwnStateType {
-  selectedPaymentCycle: string;
-  selectedPaymentMethod: string;
 }
 
 interface OwnPropsType {
-  farmerFirstName: string;
-  farmerLastName: string;
-  farmerPhoneNumber: string;
-  farmerBusinessName: string;
-  farmerNotes: string;
 }
 
 interface DispatchPropsType {
@@ -34,17 +27,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      selectedPaymentCycle: 'Weekly',
-      selectedPaymentMethod: 'Mobile',
     };
-  }
-
-  private updatePaymentCycle = (value: string) => {
-    this.setState(state => ({ selectedPaymentCycle: value }));
-  }
-  
-  private updatePaymentMethod = (value: string) => {
-    this.setState(state => ({ selectedPaymentMethod: value }));
   }
 
   /**
@@ -78,47 +61,6 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
                 </Item>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <Item floatingLabel>
-                  <Label>Business Name</Label>
-                  <Input />
-                </Item>
-              </Col>
-            </Row>
-            <Row style={styles.paymentLabel}>
-              <Col>
-                <Label style={styles.label}>Payment Cycle</Label>
-              </Col>
-              <Col>
-                <Label style={styles.label}>Payment Method</Label>
-              </Col>
-            </Row>
-            <Row style={styles.picker}>
-              <Col>
-                <Picker
-                  iosHeader="Select payment method"
-                  mode="dropdown"
-                  selectedValue={this.state.selectedPaymentMethod}
-                  onValueChange={this.updatePaymentMethod}
-                >
-                  <Picker.Item label="Mobile" value="Mobile" />
-                  <Picker.Item label="Cash" value="Cash" />
-                </Picker>
-              </Col>
-              <Col>
-                <Picker
-                  iosHeader="Select payment cycle"
-                  mode="dropdown"
-                  selectedValue={this.state.selectedPaymentCycle}
-                  onValueChange={this.updatePaymentCycle}
-                >
-                  <Picker.Item label="Weekly" value="Weekly" />
-                  <Picker.Item label="Bi-Weekly" value="Bi-weekly" />
-                  <Picker.Item label="Monthly" value="Monthly" />
-                </Picker>
-              </Col>
-              </Row>
             <Row>
               <Col>
                 <Item floatingLabel>
