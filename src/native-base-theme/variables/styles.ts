@@ -18,7 +18,8 @@ export const MATERIAL_COLORS = {
 export const COLORS = {
   white: "#fff",
   black: "#000",
-  logo: "#0fc6ce"
+  logo: "#0fc6ce",
+  icons: "#515151"
 }
 
 export function getHexValue(color: string, opacity: number) 

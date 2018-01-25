@@ -51,11 +51,11 @@ export default class CardButton extends React.Component<PropsType, OwnStateType>
         <CardItem button onPress={this.onPress}>
           <Left>
             <Icon
-              style={[styles.icon, iconColor]}
+              style={styles.icon}
               name={this.props.iconName}
             />
             <Body>
-              <Text>
+              <Text style={styles.title}>
                 {this.props.title}
               </Text>
             </Body>
