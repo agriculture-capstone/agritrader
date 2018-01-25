@@ -8,18 +8,13 @@ import styles from '../../styles';
 
 interface OwnStateType {
   mode: PageMode;
-  selectedPaymentCycle: string;
-  selectedPaymentMethod: string;
 }
 
 interface OwnPropsType {
   farmerFirstName: string;
   farmerLastName: string;
   farmerPhoneNumber: string;
-  farmerBusinessName: string;
   farmerNotes: string;
-  selectedPaymentCycle: string;
-  selectedPaymentMethod: string;
 }
 
 interface DispatchPropsType {
@@ -44,8 +39,6 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
     super(props);
     this.state = { 
       mode: 'view',
-      selectedPaymentCycle: 'Weekly',
-      selectedPaymentMethod: 'Mobile',
     };
   }
 
@@ -55,14 +48,6 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
 
   private changeMode = (newMode: PageMode) => {
     this.setState(state => ({ mode: newMode }));
-  }
-
-  private updatePaymentCycle = (value: string) => {
-    this.setState(state => ({ selectedPaymentCycle: value }));
-  }
-  
-  private updatePaymentMethod = (value: string) => {
-    this.setState(state => ({ selectedPaymentMethod: value }));
   }
 
   /**
@@ -81,28 +66,6 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
             </Row>
             <Row style={styles.infoLabel}>
               <H2>{this.props.farmerPhoneNumber}</H2>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Business Name</Label>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <H2>{this.props.farmerBusinessName}</H2>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <Label>Payment Cycle</Label>
-              </Col> 
-              <Col>
-                <Label>Payment Method</Label>
-              </Col>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <H2>{this.state.selectedPaymentCycle}</H2>
-              </Col> 
-              <Col>
-                <H2>{this.state.selectedPaymentMethod}</H2>
-              </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Notes</Label>
@@ -151,47 +114,6 @@ class FarmerInformation extends React.Component<PropsType, OwnStateType> {
               <Input>
               <H3>{this.props.farmerPhoneNumber}</H3>
               </Input>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Business Name</Label>
-            </Row>
-            <Row style={styles.input}>
-              <Input>
-              <H3>{this.props.farmerBusinessName}</H3>
-              </Input>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Col>
-              <Label>Payment Cycle</Label>
-              </Col> 
-              <Col>
-              <Label>Payment Method</Label>
-              </Col>
-            </Row>
-            <Row style={styles.picker}>
-            <Col>
-              <Picker
-                iosHeader="Select payment method"
-                mode="dropdown"
-                selectedValue={this.state.selectedPaymentMethod}
-                onValueChange={this.updatePaymentMethod}
-              >
-                <Picker.Item label="Mobile" value="Mobile" />
-                <Picker.Item label="Cash" value="Cash" />
-              </Picker>
-            </Col>
-            <Col>
-              <Picker
-                iosHeader="Select payment cycle"
-                mode="dropdown"
-                selectedValue={this.state.selectedPaymentCycle}
-                onValueChange={this.updatePaymentCycle}
-              >
-                <Picker.Item label="Weekly" value="Weekly" />
-                <Picker.Item label="Bi-Weekly" value="Bi-weekly" />
-                <Picker.Item label="Monthly" value="Monthly" />
-              </Picker>
-            </Col>
             </Row>
             <Row style={styles.infoLabel}>
               <Label>Notes</Label>
