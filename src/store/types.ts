@@ -20,3 +20,18 @@ export type Action
   | TabsAction
   | SearchBarAction
   | HeaderAction;
+
+/*----------------------- Global Models -----------------------*/
+
+/** TODO: doc */
+export interface CoreState {
+  lastModified: Date;
+  containsLocal: boolean;
+}
+
+/** TODO: doc */
+export interface CoreData {
+  uuid: string;
+  lastModified: Date;
+  local: string;
+}
