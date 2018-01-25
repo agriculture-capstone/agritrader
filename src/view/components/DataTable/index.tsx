@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { List, ListItem, Text, Grid, Col, Card} from 'native-base';
+import styles from './style';
 
 
 interface OwnPropsType {
@@ -35,7 +36,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     return values.map((value) => {
       return (
         <Col key={value}>
-          <Text>
+          <Text style={styles.values}>
             {value}
           </Text>
         </Col>

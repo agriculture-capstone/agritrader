@@ -220,7 +220,7 @@ export default {
   // Changed Variable
   listItemPadding: platform === "ios" ? 10 : 12,
 
-  listNoteColor: "#808080",
+  listNoteColor: COLORS.icons,
   listNoteSize: 13,
 
   // Progress Bar

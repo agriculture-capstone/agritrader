@@ -3,6 +3,7 @@ import { Platform, PixelRatio } from "react-native";
 import pickerAndroid from "./Picker.android";
 import pickerIos from "./Picker.ios";
 import variable from "./../variables/platform";
+import { TEXT_STYLES, MATERIAL_COLORS } from './../variables/styles';
 
 export default (variables = variable) => {
   const platform = variables.platform;
@@ -77,13 +78,27 @@ export default (variables = variable) => {
     ".first": {
       ".itemHeader": {
         paddingTop: variables.listItemPadding + 3,
-        // TODO backgroundColor: "red" header style here
+        paddingBottom: variables.listItemPadding + 4,
+        borderBottomColor: "#d6d6d6",
+        borderBottomWidth: 1,
+        "NativeBase.Text" : {
+        fontWeight: "bold",
+        color: variables.listNoteColor,
+        alignSelf: "center"
+        }
       }
     },
     ".itemHeader": {
       ".first": {
         paddingTop: variables.listItemPadding + 3,
-        // TODO backgroundColor: "red" header style here
+        paddingBottom: variables.listItemPadding + 4,
+        borderBottomColor: "#d6d6d6",
+        borderBottomWidth: 1,
+        "NativeBase.Text" : {
+          fontWeight: "bold",
+          color: variables.listNoteColor,
+          alignSelf: "center"
+          }
       },
       borderBottomWidth: platform === "ios" ? variables.borderWidth : null,
       marginLeft: null,
@@ -192,7 +207,7 @@ export default (variables = variable) => {
       "NativeBase.Text": {
         ".note": {
           color: variables.listNoteColor,
-          fontWeight: "200"
+          // fontWeight: "200"
         },
         alignSelf: null
       },

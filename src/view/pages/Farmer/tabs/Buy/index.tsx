@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Grid, Row, Content, Button, Text } from 'native-base';
+import { View } from 'react-native';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import createPage from '../../../../generators/Page/index';
@@ -33,9 +34,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
    */
   public render() {
     return (
-      <Content>
-        <Grid style={styles.container}>
-          <Row>
+      <Content style={styles.container}>
           <CardSummary
             data={[{
               label: "Today",
@@ -52,14 +51,10 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             },
             ]}
           />
-          </Row>
-          <Row>
             <DataTable
               headers={['Date', 'Product', 'Quantity', 'Price']}
               values={this.props.purchaseTransactions}
             />
-          </Row>
-        </Grid>
         <Button block primary>
           <Text>
             BUY PRODUCTS
