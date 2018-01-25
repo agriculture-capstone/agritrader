@@ -1,6 +1,6 @@
 import 'react-native';
 
-import { toTab } from '../../../view/generators/TabManager';
+import { toTab } from '../../../view/hoc/TabManager';
 
 describe('TabNavigator', () => {
 
