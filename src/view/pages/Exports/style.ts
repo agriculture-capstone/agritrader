@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#3F51B5',
+    margin: 10
   },
-  exportsContent: {
-    backgroundColor: 'white',
+  exportContents: {
+    margin: 10
   },
   addEntryButton: {
     paddingLeft: 21,

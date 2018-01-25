@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { View } from 'native-base';
 import Export from './tabs/Export';
+import styles from './style';
 
 
 const demoExportValues = [
@@ -19,12 +21,12 @@ export default class Farmer extends React.Component<{}, {}> {
   public render() {
     // TODO based on the active tab, we will decide which tab to render
     return (
-      <Export
-        allTimeTotal="6049L"
-        currentWeekTotal="60L"
-        currentMonthTotal="180L"
-        exportValues={demoExportValues}
-      />
+        <Export
+          currentDayTotal="6049"
+          currentWeekTotal="60"
+          currentMonthTotal="180"
+          exportValues={demoExportValues}
+        />
     );
   }
 }
