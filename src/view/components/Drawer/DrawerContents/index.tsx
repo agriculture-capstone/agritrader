@@ -26,8 +26,8 @@ const DrawerContents: React.StatelessComponent<OwnPropsType> = (props) => {
       <List>
         {getDrawerItems(props, routesInfo)}
       </List>
-      <Button info full onPress={props.onLogout}>
-      <Text> Sign Out </Text>
+      <Button primary full onPress={props.onLogout}>
+        <Text> Sign Out </Text>
       </Button>
     </Content>
   );
