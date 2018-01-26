@@ -1,7 +1,8 @@
+import HTTPCode from '../HTTPCode';
 import { AGRICORE_URL, AGRICORE_PORT } from '../../config';
 import store from '../../store';
-import { PartialCoreData } from '../../store/types';
 import sensitiveActions from '../../store/modules/sensitive/actions';
+import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
 
 export enum CorePath {
   FARMERS = '/people/farmers',
@@ -28,7 +29,7 @@ export default class CoreAPI {
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));
 
-    return await fetch(request);
+    return await this.coreFetch(request);
   }
 
   public async getAll() {
@@ -39,7 +40,7 @@ export default class CoreAPI {
     return this.coreFetch(request);
   }
 
-  public async update<T>(data: PartialCoreData<T>) {
+  public async update<T>(data: CoreUpdateRequest<T>) {
     const url = this.url;
     const method: CoreRequestMethod = 'PUT';
     const request = new Request(url, this.getOptions(method, data));
@@ -47,7 +48,7 @@ export default class CoreAPI {
     return this.coreFetch(request);
   }
 
-  public async create<T>(data: T) {
+  public async create<T>(data: CoreCreationRequest<T>) {
     const url = this.url;
     const method: CoreRequestMethod = 'POST';
     const request = new Request(url, this.getOptions(method, data));
@@ -78,7 +79,18 @@ export default class CoreAPI {
   }
 
   private async coreFetch(request: Request) {
-    const response = await fetch(request);
+    // Declare block scoped variables (let) at top of block
+    let response: Response;
+    { let attempts: number = 0;
+      const maxAttempts = 10;
+
+      // Make request, attempt request again if 500 received
+      do {
+        // tslint:disable-next-line:no-console
+        attempts && console.log('request failed with 500, making another attempt');
+        response = await fetch(request);
+      } while (response.status === HTTPCode.INTERNAL_SERVER_ERROR && attempts < maxAttempts);
+    }
 
     if (!response.ok) throw response;
 
