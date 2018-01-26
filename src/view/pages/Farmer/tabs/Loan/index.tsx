@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Grid, Row, Col, Content, Button, Text } from 'native-base';
-import LoanSummary from '../../components/LoanSummary';
-import LoansTable from '../../components/LoansTable';
+import { Grid, Row, Content, Button, Text } from 'native-base';
+import CardSummary from '../../../../components/CardSummary';
+import DataTable from '../../../../components/DataTable';
+import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
 
 interface OwnPropsType {
@@ -23,42 +24,41 @@ interface OwnStateType {
 }
 
 /**
- * Buy Tab Component
- */
+* Buy Tab Component
+*/
 class Buy extends React.Component<PropsType, OwnStateType> {
   /**
-   * Render method for Buy
-   */
+  * Render method for Buy
+  */
   public render() {
+    const testData = [{
+      label: 'Total Balance',
+      value: this.props.totalRemainingBalance,
+      units: 'UGX',
+    },                {
+      label: 'Total Weekly Payment',
+      value: this.props.totalWeeklyPaymentBalence,
+      units: 'UGX',
+    },
+    ];
     return (
-      <Content>
-        <Grid>
+      <Content style={styles.container}>
+        <Grid style={styles.content}>
           <Row>
-            <LoanSummary
-              title={this.props.farmerName}
-              totalRemainingBalance={this.props.totalRemainingBalance}
-              totalWeeklyPaymentBalence={this.props.totalWeeklyPaymentBalence}
+            <CardSummary
+              data={testData}
             />
           </Row>
           <Row>
-            <LoansTable
+            <DataTable
+              headers={['Date', 'Remaining Balance', 'Weekly Payment']}
               values={this.props.loanTransactions}
             />
           </Row>
         </Grid>
-        <Row>
-          <Col>
-            {/* TODO: Convert to stylesheet */}
-            <Button danger block style={{ margin: 5 }}>
-              <Text style={{ color: 'white' }}> PAY </Text>
-            </Button>
-          </Col>
-          <Col>
-            <Button block info style={{ margin: 5 }}>
-              <Text>
-                ADD LOAN
-          </Text>
-            </Button></Col></Row>
+        <Button primary block style={{ margin: 5 }}>
+          <Text style={{ color: 'white' }}> ADD LOAN </Text>
+        </Button>
       </Content>
     );
   }

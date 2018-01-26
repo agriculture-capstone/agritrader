@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   Image,
   KeyboardAvoidingView,
+  View,
 } from 'react-native';
 import {
   Form,
@@ -90,14 +91,14 @@ class Login extends React.Component<PropsType, OwnState> {
   public render() {
     return (
       <KeyboardAvoidingView
-        style={{ backgroundColor: '#3F51B5', flex: 1 }}
+        style={styles.container}
       >
-        <Content padder>
+        <Content style={styles.container}>
           <Form >
             <Grid>
               <Row>
                 <Col style={styles.centerContent}>
-                  <Image style={styles.logo} source={images.logo_dark} />
+                  <Image style={styles.logo} source={images.logo} />
                 </Col>
               </Row>
               <Row>
@@ -123,19 +124,17 @@ class Login extends React.Component<PropsType, OwnState> {
                   </Item>
                 </Col>
               </Row>
-              <Row style={styles.buttonRow}>
-                <Col>
+              </Grid>
+              <View style={styles.buttonRow}>
                   <Button
                     block
-                    primary
-                    style={styles.loginButton}
+                    light
                     onPress={this.loginPress}
                   >
-                    <Text style={styles.buttonText}>Sign In</Text>
+                    <Text>Sign In</Text>
                   </Button>
-                </Col>
-              </Row>
-            </Grid>
+                </View>
+            
           </Form>
         </Content>
       </KeyboardAvoidingView>
