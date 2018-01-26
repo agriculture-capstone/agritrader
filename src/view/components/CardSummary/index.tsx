@@ -52,7 +52,6 @@ export default class CardSummary extends React.Component<PropsType, OwnStateType
           <Grid>
             {this.generateMetrics()}
           </Grid>
-
         </CardItem>
       </Card>
     );
