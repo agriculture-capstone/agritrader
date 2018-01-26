@@ -42,7 +42,7 @@ export type Status
 /** Base state for modules synced with core  */
 export interface CoreState {
   lastModified: string;
-  dirty: boolean;
+  isDirty: boolean;
 }
 
 interface OptionalCoreData {

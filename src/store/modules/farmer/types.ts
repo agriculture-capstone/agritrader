@@ -46,6 +46,9 @@ export type Action = {
   oldUUID: string,
   farmer: PartialFarmer,
 } | {
+  type: 'SET_FARMERS_DIRTY',
+  isDirty: boolean,
+} | {
   type: 'DO_NOT_USE',
 };
 

@@ -39,6 +39,13 @@ const farmerReducer: Reducer<FarmerState> = (state = initialState, action: Actio
       };
     }
 
+    case 'SET_FARMERS_DIRTY': {
+      return {
+        ...state,
+        isDirty: action.isDirty,
+      };
+    }
+
     default:
       return state;
   }
