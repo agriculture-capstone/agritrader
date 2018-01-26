@@ -42,6 +42,7 @@ export default {
   CheckboxIconMarginTop: platform === 'ios' ? undefined : 1,
   CheckboxFontSize: platform === 'ios' ? 21 : 18,
   DefaultFontSize: 17,
+<<<<<<< HEAD
   checkboxBgColor: MATERIAL_COLORS.secondary.normal,
   checkboxSize: 20,
   checkboxTickColor: TEXT_STYLES.secondary.normal.normal,
@@ -53,6 +54,19 @@ export default {
   segmentActiveTextColor: MATERIAL_COLORS.primary.normal,
   segmentBorderColor: TEXT_STYLES.primary.normal.normal,
   segmentBorderColorMain: MATERIAL_COLORS.primary.normal,
+=======
+  checkboxBgColor: '#039BE5',
+  checkboxSize: 20,
+  checkboxTickColor: '#fff',
+
+  // Segment
+  segmentBackgroundColor: '#3F51B5',
+  segmentActiveBackgroundColor: '#fff',
+  segmentTextColor: '#fff',
+  segmentActiveTextColor: '#3F51B5',
+  segmentBorderColor: '#fff',
+  segmentBorderColorMain: '#3F51B5',
+>>>>>>> beaesguerra/at-70/inittheme
 
   // New Variable
   get defaultTextColor() {
@@ -115,8 +129,13 @@ export default {
   cardDefaultBg: '#fff',
 
   // Color
+<<<<<<< HEAD
   brandPrimary: MATERIAL_COLORS.secondary.normal,
   brandInfo: MATERIAL_COLORS.secondary.dark,
+=======
+  brandPrimary: '#3F51B5',
+  brandInfo: '#3F57D3',
+>>>>>>> beaesguerra/at-70/inittheme
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
   brandWarning: '#f0ad4e',
@@ -138,7 +157,11 @@ export default {
 
   // Footer
   footerHeight: 55,
+<<<<<<< HEAD
   footerDefaultBg: MATERIAL_COLORS.primary.normal,
+=======
+  footerDefaultBg: '#3F51B5',
+>>>>>>> beaesguerra/at-70/inittheme
 
   // FooterTab
   tabBarTextColor: '#b3c7f9',
@@ -149,6 +172,7 @@ export default {
   tabActiveBgColor: undefined,
 
   // Tab
+<<<<<<< HEAD
   tabDefaultBg: MATERIAL_COLORS.primary.normal,
   topTabBarTextColor: TEXT_STYLES.primary.normal.normal,
   topTabBarActiveTextColor: COLORS.white,
@@ -159,17 +183,37 @@ export default {
   // Header
   toolbarBtnColor: COLORS.white,
   toolbarDefaultBg: MATERIAL_COLORS.primary.normal,
+=======
+  tabDefaultBg: '#3F51B5',
+  topTabBarTextColor: '#b3c7f9',
+  topTabBarActiveTextColor: '#fff',
+  topTabActiveBgColor: undefined,
+  topTabBarBorderColor: '#fff',
+  topTabBarActiveBorderColor: '#fff',
+
+  // Header
+  toolbarBtnColor: '#fff',
+  toolbarDefaultBg: '#3F51B5',
+>>>>>>> beaesguerra/at-70/inittheme
   toolbarHeight: platform === 'ios' ? 76 : 56,
   toolbarIconSize: platform === 'ios' ? 20 : 22,
   toolbarSearchIconSize: platform === 'ios' ? 20 : 23,
   toolbarInputColor: '#fff',
   searchBarHeight: platform === 'ios' ? 30 : 40,
   toolbarInverseBg: '#222',
+<<<<<<< HEAD
   toolbarTextColor: TEXT_STYLES.primary.normal.large,
   toolbarDefaultBorder: MATERIAL_COLORS.primary.normal,
   iosStatusbar: 'light-content',
   get statusBarColor() {
     return MATERIAL_COLORS.primary.dark;
+=======
+  toolbarTextColor: '#fff',
+  toolbarDefaultBorder: '#3F51B5',
+  iosStatusbar: 'light-content',
+  get statusBarColor() {
+    return color(this.toolbarDefaultBg).darken(0.2).hex();
+>>>>>>> beaesguerra/at-70/inittheme
   },
 
   // Icon
@@ -220,7 +264,11 @@ export default {
   // Changed Variable
   listItemPadding: platform === 'ios' ? 10 : 12,
 
+<<<<<<< HEAD
   listNoteColor: COLORS.icons,
+=======
+  listNoteColor: '#808080',
+>>>>>>> beaesguerra/at-70/inittheme
   listNoteSize: 13,
 
   // Progress Bar
@@ -261,7 +309,11 @@ export default {
   subtitleColor: '#FFF',
 
   // New Variable
+<<<<<<< HEAD
   titleFontColor: COLORS.white,
+=======
+  titleFontColor: '#FFF',
+>>>>>>> beaesguerra/at-70/inittheme
 
   // Other
   borderRadiusBase: 2,
