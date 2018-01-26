@@ -1,4 +1,4 @@
-import { Action as ActionBase } from 'redux';
+import { Action as ActionBase, Reducer } from 'redux';
 
 import { CorePath } from '../CoreAPI';
 import StoreUtils from '../StoreUtils';
@@ -9,13 +9,36 @@ import {
   ThunkCreationRow,
   CoreThunk,
   ThunkUpdateRow,
+  CoreModuleState,
+  Status,
 } from '../../store/types';
 
+/*--------------------------------- Utility Types ---------------------------------*/
+
 export type CoreModuleName
-= 'farmer'
-| 'dairy'
-| 'loan'
-;
+  = 'farmer'
+  | 'dairy'
+  | 'loan'
+  ;
+
+/*-------------------------------- Generic Actions --------------------------------*/
+
+type CreateLocalPayload<Row> = { row: StoreLocalCreationRow<Row> };
+type CreateRemotePayload = { localUUID: string, coreUUID: string, lastModified: string };
+type UpdateLocalPayload<Row> = { row: StoreLocalUpdateRow<Row> };
+type UpdateRemotePayload = { uuid: string, lastModified: string };
+
+
+type ActionPayload<Row>
+  = CreateLocalPayload<Row>
+  | CreateRemotePayload
+  | UpdateLocalPayload<Row>
+  | UpdateRemotePayload
+  ;
+
+type Action<R> = ActionPayload<R> & ActionBase;
+
+/*-------------------------------- Helper Functions -------------------------------*/
 
 function isResponse(response: any): response is Response {
   return (response instanceof Response);
@@ -25,40 +48,78 @@ function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
   return (row === undefined);
 }
 
-function createReducer() {
-
+function deriveIsDirty<T>(rows: StoreRow<T>[]) {
+  return rows.some(r => r.status !== 'clean');
 }
 
-type ActionPayload<R> = {
-  row: StoreLocalCreationRow<R>,
-} | {
-  localUUID: string,
-  coreUUID: string,
-  lastModified: string,
-} | {
-  row: StoreLocalUpdateRow<R>,
-} | {
-  uuid: string,
-  lastModified: string,
-};
+/*------------------------------- Creation Utilities -------------------------------*/
 
-type Action<R> = ActionPayload<R> & ActionBase;
+function createReducer<Row>(name: CoreModuleName, initialState: CoreModuleState<Row>): Reducer<CoreModuleState<Row>> {
+  const UPPER_NAME = name.toUpperCase();
+
+  return (state = initialState, action: Action<Row>) => {
+    let status: Status, isDirty: boolean;
+
+    switch (action.type) {
+
+      case `CREATE_${UPPER_NAME}_LOCAL`: (function (action: CreateLocalPayload<any>) {
+        status = 'local';
+        isDirty = true;
+        const rows = { ...action.row, status };
+        const farmers = [...state.rows, rows];
+
+        return { ...state, farmers, isDirty };
+      })(action as any);
+
+      case `CREATE_${UPPER_NAME}_REMOTE`: (function (action: CreateRemotePayload) {
+        status = 'clean';
+        const { coreUUID: uuid, lastModified } = action;
+        const rows = state.rows.map(r => r.uuid === action.localUUID ? { ...(r as any), uuid, lastModified } : r);
+        isDirty = deriveIsDirty(rows);
+
+        return { ...state, rows, isDirty };
+      })(action as any);
+
+      case `UPDATE_${UPPER_NAME}_LOCAL`: (function (action: UpdateLocalPayload<any>) {
+        status = 'modified';
+        isDirty = true;
+        const { row: tempRow, row: { uuid } } = action;
+        const row = { ...tempRow, status };
+        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), ...row } : r);
+
+        return { ...state, rows, isDirty };
+      })(action as any);
+
+      case `UPDATE_${UPPER_NAME}_REMOTE`: (function (action: UpdateRemotePayload) {
+        status = 'clean';
+        const { uuid, lastModified } = action;
+        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), uuid, lastModified, status } : r);
+        isDirty = deriveIsDirty(rows);
+
+        return { ...state, rows };
+      })(action as any);
+
+      default:
+        return state;
+    }
+  };
+}
 
 function createActions<Row>(name: CoreModuleName) {
-  const upperName = name.toUpperCase();
+  const UPPER_NAME = name.toUpperCase();
 
   return {
     createRowLocal: (row: StoreLocalCreationRow<Row>): Action<Row> =>
-    ({ row, type: `CREATE_${upperName}_LOCAL` }),
+    ({ row, type: `CREATE_${UPPER_NAME}_LOCAL` }),
 
     createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): Action<Row> =>
-      ({ localUUID, coreUUID, lastModified, type: `CREATE_${upperName}_REMOTE` }),
+      ({ localUUID, coreUUID, lastModified, type: `CREATE_${UPPER_NAME}_REMOTE` }),
 
     updateRowLocal: (row: StoreLocalUpdateRow<Row>): Action<Row> =>
-      ({ row, type: `UPDATE_${upperName}_LOCAL` }),
+      ({ row, type: `UPDATE_${UPPER_NAME}_LOCAL` }),
 
     updateRowRemote: (uuid: string, lastModified: string): Action<Row> =>
-      ({ uuid, lastModified, type: `UPDATE_${upperName}_REMOTE` }),
+      ({ uuid, lastModified, type: `UPDATE_${UPPER_NAME}_REMOTE` }),
   };
 }
 
