@@ -6,10 +6,6 @@
   version "21.1.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-21.1.10.tgz#dcacb5217ddf997a090cc822bba219b4b2fd7984"
 
-"@types/node@*":
-  version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.3.0.tgz#3a129cda7c4e5df2409702626892cb4b96546dd5"
-
 "@types/react-native@*":
   version "0.52.1"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.52.1.tgz#a39057be4c5d7c9d40e1720747310a14411ba46e"
@@ -51,12 +47,6 @@
   resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.5.tgz#d1a02758f90845899cd304aa0912daeba2028eb6"
   dependencies:
     redux "^3.6.0"
-
-"@types/uuid@^3.4.3":
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.3.tgz#121ace265f5569ce40f4f6d0ff78a338c732a754"
-  dependencies:
-    "@types/node" "*"
 
 "@types/wolfy87-eventemitter@^5.2.0":
   version "5.2.0"

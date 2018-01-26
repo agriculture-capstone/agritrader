@@ -1,16 +1,16 @@
 import { ThunkAction } from 'redux-thunk';
 
-import { Farmer, Action, PartialFarmer, BaseCreateFarmer, BaseUpdateFarmer } from './types';
-import { State, CoreThunk, ModuleStatus } from '../../types';
+import { Farmer, Action, BaseCreateFarmer, BaseUpdateFarmer } from './types';
+import { State, CoreThunk } from '../../types';
 import StoreUtils from '../../../utils/StoreUtils';
-import { CorePath } from '../../../utils/CoreRequest/index';
+import { CorePath } from '../../../utils/CoreAPI/index';
 
-function updateFarmer(farmer: PartialFarmer): Action {
-  return {
-    farmer,
-    type: 'UPDATE_FARMER',
-  };
-}
+// function updateFarmer(farmer: PartialFarmer): Action {
+//   return {
+//     farmer,
+//     type: 'UPDATE_FARMER',
+//   };
+// }
 
 function createFarmer(farmer: Farmer): Action {
   return {
@@ -36,6 +36,7 @@ function setFarmersDirty(isDirty: boolean): Action {
 
 const farmerThunks = {
 
+  /** Create a new farmer */
   createFarmer: (farmer: BaseCreateFarmer): CoreThunk => async (dispatch, getState, { CoreAPI }) => {
     const { model, localUUID } = StoreUtils.createLocalStoreModel(farmer);
 
@@ -65,6 +66,7 @@ const farmerThunks = {
     dispatch(setFarmersDirty(isDirty));
   },
 
+  /** Update an existing farmer */
   updateFarmer: (farmer: BaseUpdateFarmer): ThunkAction<Promise<void>, State, {}> => async (dispatch, getState) => {
 
   },

@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 
-import CoreAPI from '../utils/CoreRequest';
+import CoreAPI from '../utils/CoreAPI';
 import { DrawerState, Action as DrawerAction } from './modules/drawer/types';
 import { NavState, Action as NavAction } from './modules/nav/types';
 import { TabState, Action as TabsAction } from './modules/tabs/types';

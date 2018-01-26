@@ -63,7 +63,6 @@
 		"@types/react-redux": "^5.0.14",
 		"@types/react-test-renderer": "^16.0.0",
 		"@types/redux-logger": "^3.0.5",
-		"@types/uuid": "^3.4.3",
 		"@types/wolfy87-eventemitter": "^5.2.0",
 		"babel-core": "^6.26.0",
 		"babel-jest": "^22.1.0",

@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 
 import reducer from './reducer';
 import { State } from './types';
-import CoreAPI from '../utils/CoreRequest';
+import CoreAPI from '../utils/CoreAPI';
 
 const composeEnhancers = (typeof window !== 'undefined' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 const store = createStore<State>(reducer, composeEnhancers(
