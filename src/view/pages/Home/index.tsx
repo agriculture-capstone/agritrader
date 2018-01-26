@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Grid, Row, Col, Content, Text } from 'native-base';
+import { Grid, Row, Col, Content, Text, Card, CardItem, Body } from 'native-base';
 import { View } from 'react-native';
 import CardButton from '../../components/CardButton';
 import Panel from '../../components/Panel';
-import StatisicsBlock from './components/StatisticsBlock';
+import StatisicsBlock from '../../components/StatisticsBlock';
 import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { State } from '../../../store/types';
@@ -40,7 +40,21 @@ class Home extends React.Component<PropsType, {}> {
   public render() {
     return (
       <Content>
-        <Panel title="Trader Joe" expandable={false}>
+        <View style={styles.menuButtons} >
+        <Card style={styles.betaNotice}>
+          <CardItem style={styles.betaNotice}>
+            <Body >
+          <Text style={[styles.betaContents, styles.betaTitle]}>
+            Welcome to the Beta Version of Agritrader!
+          </Text>
+          <Text style={styles.betaContents}>
+            This application is continuously being developed to provide users 
+            like you with rich features to ease your workflow. 
+          </Text>
+          </Body>
+          </CardItem>
+          </Card>
+        <Panel title="Quality Milk" expandable={false}>
           <Grid>
             <Row>
               <Col><Text style={styles.label}> {'Friday, January 19, 2018'.toUpperCase()}</Text></Col>
@@ -50,14 +64,9 @@ class Home extends React.Component<PropsType, {}> {
               <StatisicsBlock value="2,250" units="L" label="Average Daily" />
 
             </Row>
-            <Row>
-              <StatisicsBlock value="7.4M" units="UGX" label="All Farmers Balance" />
-              <StatisicsBlock value="1.1M" units="UGX" label="Farmer Debts" />
-            </Row>
           </Grid>
         </Panel>
-        <View style={styles.menuButtons} >
-          <CardButton title="Farmer Manager" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
+          <CardButton title="Farmers" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
           <CardButton title="Exports" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
           <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
           <CardButton title="View Records" iconName="stats" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
