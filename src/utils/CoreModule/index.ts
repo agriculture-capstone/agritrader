@@ -1,6 +1,7 @@
 import { Action as ActionBase, Reducer } from 'redux';
 
 import { CorePath } from '../CoreAPI';
+import UTCDate from '../UTCDate';
 import StoreUtils from '../StoreUtils';
 import {
   StoreLocalCreationRow,
@@ -217,8 +218,12 @@ function createThunks<Row>(name: CoreModuleName, path: CorePath) {
   };
 }
 
-function createInitialState() {
-
+function createInitialState<Row>(): CoreModuleState<Row> {
+  return {
+    isDirty: false,
+    rows: [] as StoreRow<Row>[],
+    lastModified: UTCDate.OLD_DATE,
+  };
 }
 
 /**
