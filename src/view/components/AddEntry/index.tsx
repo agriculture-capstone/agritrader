@@ -30,12 +30,23 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Component for AddEntry
- * @param values = {
+ * @requires values = {
  *                  firstName: string
  *                  lastName: string
  *                  date: string
  *                  time: string
- *                 }
+ *           }
+ * @returns 
+ * AddEntry component with firstName, lastName, date, and time as read-only and Amount (L), Quality, and Rate (UGX) input fields
+ * @example 
+ *             <AddEntry
+ *                values={{
+ *                  firstName: 'Patrick',
+ *                  lastName: 'Kenaan',
+ *                  date: 'Friday, Jan 25, 2018',
+ *                  time: '9:35 pm',
+ *                }}
+ *             />
  */
 export default class AddEntry extends React.Component<PropsType, OwnStateType> {
 
