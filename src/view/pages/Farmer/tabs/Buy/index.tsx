@@ -33,34 +33,35 @@ class Buy extends React.Component<PropsType, OwnStateType> {
    * Render method for Buy
    */
   public render() {
+    const testData = [{
+      label: 'Today',
+      value: this.props.currentDayTotal,
+      units: 'UGX',
+    },                {
+      label: 'This Week',
+      value: this.props.currentWeekTotal,
+      units: 'UGX',
+    },                {
+      label: 'This Month',
+      value: this.props.currentMonthTotal,
+      units: 'UGX',
+    },
+    ];
     return (
       <Content style={styles.container}>
         <View style={styles.content}>
           <CardSummary
-            data={[{
-              label: 'Today',
-              value: this.props.currentDayTotal,
-              units: 'UGX',
-            },     {
-              label: 'This Week',
-              value: this.props.currentWeekTotal,
-              units: 'UGX',
-            },     {
-              label: 'This Month',
-              value: this.props.currentMonthTotal,
-              units: 'UGX',
-            },
-            ]}
+            data={testData}
           />
-            <DataTable
-              headers={['Date', 'Product', 'Quantity', 'Price']}
-              values={this.props.purchaseTransactions}
-            />
-        <Button block primary>
-          <Text>
-            BUY PRODUCTS
+          <DataTable
+            headers={['Date', 'Product', 'Quantity', 'Price']}
+            values={this.props.purchaseTransactions}
+          />
+          <Button block primary>
+            <Text>
+              BUY PRODUCTS
           </Text>
-        </Button>
+          </Button>
         </View>
       </Content>
     );

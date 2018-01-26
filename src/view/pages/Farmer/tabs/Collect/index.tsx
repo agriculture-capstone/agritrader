@@ -32,26 +32,26 @@ class Collect extends React.Component<PropsType, OwnStateType> {
    * Render method for Farmer
    */
   public render() {
+    const testData = [{
+      label: 'Today',
+      value: this.props.currentDayTotal,
+      units: 'L',
+    },                {
+      label: 'This Week',
+      value: this.props.currentWeekTotal,
+      units: 'L',
+    },                {
+      label: 'This Month',
+      value: this.props.currentMonthTotal,
+      units: 'L',
+    },
+    ];
     return (
       <Content style={styles.container}>
         <Grid style={styles.content}>
           <Row>
             <CardSummary
-              data={[{
-                label: 'Today',
-                value: this.props.currentDayTotal,
-                units: 'L',
-              },     {
-                label: 'This Week',
-                value: this.props.currentWeekTotal,
-                units: 'L',
-              },     {
-                label: 'This Month',
-                value: this.props.currentMonthTotal,
-                units: 'L',
-              },
-
-              ]}
+              data={testData}
 
             />
           </Row>

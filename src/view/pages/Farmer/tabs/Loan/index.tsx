@@ -24,29 +24,30 @@ interface OwnStateType {
 }
 
 /**
- * Buy Tab Component
- */
+* Buy Tab Component
+*/
 class Buy extends React.Component<PropsType, OwnStateType> {
   /**
-   * Render method for Buy
-   */
+  * Render method for Buy
+  */
   public render() {
+    const testData = [{
+      label: 'Total Balance',
+      value: this.props.totalRemainingBalance,
+      units: 'UGX',
+    },                {
+      label: 'Total Weekly Payment',
+      value: this.props.totalWeeklyPaymentBalence,
+      units: 'UGX',
+    },
+    ];
     return (
       <Content style={styles.container}>
         <Grid style={styles.content}>
           <Row>
-          <CardSummary
-          data={[{
-            label: 'Total Balance',
-            value: this.props.totalRemainingBalance,
-            units: 'UGX',
-          },     {
-            label: 'Total Weekly Payment',
-            value: this.props.totalWeeklyPaymentBalence,
-            units: 'UGX',
-          },
-          ]}
-        />
+            <CardSummary
+              data={testData}
+            />
           </Row>
           <Row>
             <LoansTable
@@ -55,9 +56,8 @@ class Buy extends React.Component<PropsType, OwnStateType> {
           </Row>
         </Grid>
         <Button primary block style={{ margin: 5 }}>
-        <Text style={{ color: 'white' }}> ADD LOAN </Text>
-    </Button>
-
+          <Text style={{ color: 'white' }}> ADD LOAN </Text>
+        </Button>
       </Content>
     );
   }

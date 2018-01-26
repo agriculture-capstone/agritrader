@@ -31,27 +31,27 @@ export default class Export extends React.Component<PropsType, OwnStateType> {
    * Render method for Exports
    */
   public render() {
+    const testData = [{
+      label: 'Today',
+      value: this.props.currentDayTotal,
+      units: 'L',
+    },                {
+      label: 'This Week',
+      value: this.props.currentWeekTotal,
+      units: 'L',
+    },                {
+      label: 'This Month',
+      value: this.props.currentMonthTotal,
+      units: 'L',
+    },
+    ];
+
     return (
       <Content style={styles.container}>
         <Grid style={styles.contents}>
           <Row>
-          <CardSummary
-              data={[{
-                label: 'Today',
-                value: this.props.currentDayTotal,
-                units: 'L',
-              },     {
-                label: 'This Week',
-                value: this.props.currentWeekTotal,
-                units: 'L',
-              },     {
-                label: 'This Month',
-                value: this.props.currentMonthTotal,
-                units: 'L',
-              },
-
-              ]}
-
+            <CardSummary
+              data={testData}
             />
           </Row>
           <Row>
@@ -61,13 +61,13 @@ export default class Export extends React.Component<PropsType, OwnStateType> {
           </Row>
         </Grid>
         <Row style={styles.addEntryButton}>
-        <Col>
-          <Button block info >
-            <Text>
-              ADD ENTRY
+          <Col>
+            <Button block info >
+              <Text>
+                ADD ENTRY
             </Text>
-          </Button>
-        </Col>
+            </Button>
+          </Col>
         </Row>
       </Content>
     );
