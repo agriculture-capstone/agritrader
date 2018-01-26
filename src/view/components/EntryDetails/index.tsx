@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, H3, Button, Input } from 'native-base';
+import { Content, List, View, ListItem, Text, Grid, Row, Col, Right, H1, H2, H3, Button, Input, Form, Item, Label, Card, CardItem } from 'native-base';
 
 import Styles from './style';
 
@@ -8,7 +8,8 @@ interface OwnPropsType {
     firstName: string;
     lastName: string;
     date: string;
-    entryDetails: any[];
+    time: string;
+    entryDetails: any;
   };
   mode: PageMode;
 }
@@ -36,16 +37,36 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Component for EntryDetails
- * @prop values = {
- *                  firstName: string;
- *                  lastName: string;
- *                  date: string;
+ * @requires values = {
+ *                  firstName: string
+ *                  lastName: string
+ *                  date: string
+ *                  time: string
  *                  entryDetails: [
- *                    {label: 'Amount', value: '#'},
- *                    {label: 'Quality', value: '#'}, 
- *                    {label: 'Rate', value: '#'}
+ *                    'Amount #'
+ *                    'Quality #'
+ *                    'Rate #'
  *                  ]
- *                 }
+ *           }
+ * @returns 
+ * EntryDetails component with firstName, lastName, date, time, Amount (L), Quality, and Rate (UGX) as read-only
+ * @example 
+ *             <EntryDetails
+ *                values={{
+ *                  firstName: 'Patrick',
+ *                  lastName: 'Kenaan',
+ *                  date: 'Friday, Jan 25, 2018',
+ *                  time: '9:35 pm',
+ *                  entryDetails: [
+ *                    {
+ *                      amount: '14',
+ *                      quality: '45',
+ *                      rate: '2.75',
+ *                    }
+ *                  ]
+ *                }}
+ *                mode="DETAILS"
+ *             />
  * @prop mode = 'DETAILS' | 'EDIT'
  */
 export default class EntryDetails extends React.Component<PropsType, OwnStateType> {
@@ -91,49 +112,76 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
-          <H1>
+          <Text style={Styles.header}>
             {this.props.values.date}
-          </H1>
+          </Text>
+        </Row>
+        <Row style={Styles.headerRow}>
+          <Text style={Styles.header}>
+            {this.props.values.time}
+          </Text>
         </Row>
       </Grid>
     );
   }
 
-  private renderDetailRow(item: any) {
+  private formatRow(label: string, value: string) {
     return (
-      <ListItem>
-        <Grid>
+      <Grid>
+        <Row>
           <Col>
-            <H3>
-              {item.label}
-            </H3>
+            <Text>{label}</Text>
           </Col>
           <Col>
-            <H3>
-              {item.value}
-            </H3>
+            <Text>{value}</Text>
           </Col>
-        </Grid>
-      </ListItem>
+        </Row>
+      </Grid>
     );
   }
 
-  private renderEditRow(item: any) {
+  private formatEditRow(label: string, value: string) {
     return (
-      <ListItem>
-        <Grid>
+      <Grid>
+        <Row>
           <Col>
-            <H3>
-              {item.label}
-            </H3>
+            <Text>{label}</Text>
           </Col>
           <Col>
-            <Input
-              placeholder={item.value}
-            />
+          <Item>
+            <Input>
+              <Text>{value}</Text>
+            </Input>
+          </Item>
           </Col>
-        </Grid>
-      </ListItem>
+        </Row>
+      </Grid>
+    );
+  }
+
+  private renderDetailFields() {
+    return (
+      <List>
+        <ListItem>
+          {this.formatRow('Amount (L)', this.props.values.entryDetails.amount)}
+        </ListItem>
+        <ListItem>
+          {this.formatRow('Quality', this.props.values.entryDetails.quality)}
+        </ListItem>
+        <ListItem>
+          {this.formatRow('Rate (UGX)', this.props.values.entryDetails.rate)}
+        </ListItem>
+      </List>
+    );
+  }
+
+  private renderEditFields() {
+    return (
+      <View style={{ padding: 15, }}>
+        {this.formatEditRow('Amount (L)', this.props.values.entryDetails.amount)}
+        {this.formatEditRow('Quality', this.props.values.entryDetails.quality)}
+        {this.formatEditRow('Rate (UGX)', this.props.values.entryDetails.rate)}
+      </View>
     );
   }
 
@@ -144,35 +192,33 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
     switch (this.props.mode) {
       case 'DETAILS': {
         return(
-          <Content padder>
+          <Content padder style={{ backgroundColor: 'white' }}>
             {this.renderHeader()}
-            <List
-              dataArray={this.props.values.entryDetails}
-              renderRow={this.renderDetailRow}
-            />
-            <Grid>
-              <Row>
-                {this.renderEditButton()}
-              </Row>
-            </Grid>
-          </Content>
+          <Grid>
+            {this.renderDetailFields()}
+            <Row style={Styles.buttonRow}>
+              {this.renderEditButton()}
+            </Row>
+          </Grid>
+        </Content>
         );
       }
       case 'EDIT': {
         return(
-          <Content padder>
-            {this.renderHeader()}
-            <List
-              dataArray={this.props.values.entryDetails}
-              renderRow={this.renderEditRow}
-            />
-            <Grid>
-              <Row>
-                {this.renderCancelButton()}
-                {this.renderSaveButton()}
-              </Row>
-            </Grid>
-          </Content>
+          <Content padder style={{ backgroundColor: 'white' }}>
+          <List>
+            <ListItem>
+              {this.renderHeader()}
+            </ListItem>
+          </List>
+          {this.renderEditFields()}
+          <Grid>
+            <Row style={Styles.buttonRow}>
+              {this.renderCancelButton()}
+              {this.renderSaveButton()}
+            </Row>
+          </Grid>
+        </Content>
         );
       } 
     }

@@ -54,10 +54,6 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
     super(props);
   }
 
-  private renderEditButton = () => {
-    return (this.renderButton('Edit', 'PRIMARY'));
-  }
-
   private renderCancelButton() {
     return (this.renderButton('Cancel', 'INFO'));
   }
