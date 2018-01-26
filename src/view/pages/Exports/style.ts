@@ -4,13 +4,13 @@ import { COLORS } from '../../../native-base-theme/variables/styles';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLORS.backgroundColor
+    backgroundColor: COLORS.backgroundColor,
   },
   contents: {
-    margin: 10
+    margin: 10,
   },
   exportContents: {
-    margin: 10
+    margin: 10,
   },
   addEntryButton: {
     paddingLeft: 21,

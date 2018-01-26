@@ -110,7 +110,7 @@ class Panel extends React.Component<PropsType, OwnStateType> {
     }
 
     return (
-      <Card style={{margin: 10}}>
+      <Card style={{ margin: 10 }}>
         
           <Text style={styles.title}>
             {this.props.title}

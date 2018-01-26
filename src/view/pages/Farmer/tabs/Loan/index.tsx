@@ -37,13 +37,13 @@ class Buy extends React.Component<PropsType, OwnStateType> {
           <Row>
           <CardSummary
           data={[{
-            label: "Total Balance",
+            label: 'Total Balance',
             value: this.props.totalRemainingBalance,
-            units: "UGX",
-          },{
-            label: "Total Weekly Payment",
+            units: 'UGX',
+          },     {
+            label: 'Total Weekly Payment',
             value: this.props.totalWeeklyPaymentBalence,
-            units: "UGX",
+            units: 'UGX',
           },
           ]}
         />
@@ -54,8 +54,8 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
         </Grid>
-        <Button primary block style={{margin: 5}}>
-        <Text style={{color: "white"}}> ADD LOAN </Text>
+        <Button primary block style={{ margin: 5 }}>
+        <Text style={{ color: 'white' }}> ADD LOAN </Text>
     </Button>
 
       </Content>

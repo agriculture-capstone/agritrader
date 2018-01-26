@@ -18,7 +18,7 @@ export default StyleSheet.create({
   logoicon: { 
     width: 50,
     height: 50,
-    padding: 15
+    padding: 15,
   },
   user: {
     justifyContent: 'center',

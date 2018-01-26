@@ -50,8 +50,8 @@ export default class CardButton extends React.Component<PropsType, OwnStateType>
               style={[
                 styles.icon, 
                 this.props.iconColor ? 
-                  {color: this.props.iconColor} : styles.iconColor
-                ]}
+                  { color: this.props.iconColor } : styles.iconColor,
+              ]}
               name={this.props.iconName}
             />
             <Body>

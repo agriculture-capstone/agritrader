@@ -7,9 +7,9 @@ export default StyleSheet.create({
     fontSize: 40,
   },
   iconColor: {
-    color: COLORS.icons
+    color: COLORS.icons,
   },
   title: {
-    color: COLORS.icons
-  }
+    color: COLORS.icons,
+  },
 });

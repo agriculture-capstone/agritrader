@@ -6,7 +6,7 @@ export default StyleSheet.create({
   container: {
     backgroundColor: MATERIAL_COLORS.primary.normal,
     flex: 1, 
-    padding: 30
+    padding: 30,
   },
   centerContent: {
     justifyContent: 'center',
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   },
   buttonRow: {
     marginTop: 40,
-    padding: 10
+    padding: 10,
   },
   labelText: {
     color: 'white',

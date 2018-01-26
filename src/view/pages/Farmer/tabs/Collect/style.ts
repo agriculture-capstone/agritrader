@@ -10,9 +10,9 @@ export default StyleSheet.create({
     paddingBottom: 21,
   }, 
   container: {
-    backgroundColor: COLORS.backgroundColor
+    backgroundColor: COLORS.backgroundColor,
   }, 
   content: {
     margin: 10, 
-  }
+  },
 });

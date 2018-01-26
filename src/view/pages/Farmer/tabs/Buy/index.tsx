@@ -38,17 +38,17 @@ class Buy extends React.Component<PropsType, OwnStateType> {
         <View style={styles.content}>
           <CardSummary
             data={[{
-              label: "Today",
+              label: 'Today',
               value: this.props.currentDayTotal,
-              units: "UGX",
-            },{
-              label: "This Week",
+              units: 'UGX',
+            },     {
+              label: 'This Week',
               value: this.props.currentWeekTotal,
-              units: "UGX",
-            },{
-              label: "This Month",
+              units: 'UGX',
+            },     {
+              label: 'This Month',
               value: this.props.currentMonthTotal,
-              units: "UGX",
+              units: 'UGX',
             },
             ]}
           />

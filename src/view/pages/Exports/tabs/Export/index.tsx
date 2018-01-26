@@ -37,17 +37,17 @@ export default class Export extends React.Component<PropsType, OwnStateType> {
           <Row>
           <CardSummary
               data={[{
-                label: "Today",
+                label: 'Today',
                 value: this.props.currentDayTotal,
-                units: "L",
-              },{
-                label: "This Week",
+                units: 'L',
+              },     {
+                label: 'This Week',
                 value: this.props.currentWeekTotal,
-                units: "L",
-              },{
-                label: "This Month",
+                units: 'L',
+              },     {
+                label: 'This Month',
                 value: this.props.currentMonthTotal,
-                units: "L",
+                units: 'L',
               },
 
               ]}

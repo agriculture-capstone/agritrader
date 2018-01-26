@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   Image,
   KeyboardAvoidingView,
-  View
+  View,
 } from 'react-native';
 import {
   Form,

@@ -7,10 +7,10 @@ interface OwnPropsType {
 }
 
 interface DataType {
-  label: string,
-  units: string,
-  value: string
-};
+  label: string;
+  units: string;
+  value: string;
+}
 
 interface DispatchPropsType {
 }
@@ -40,7 +40,7 @@ export default class CardSummary extends React.Component<PropsType, OwnStateType
           />
         </Col>
       );
-    })
+    });
   }
   /**
    * Render method for CardSummary

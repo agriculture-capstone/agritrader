@@ -7,6 +7,6 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   menuItems: {
-    color: COLORS.icons
-  }
+    color: COLORS.icons,
+  },
 });

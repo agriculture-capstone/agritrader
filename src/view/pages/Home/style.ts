@@ -15,11 +15,10 @@ export default StyleSheet.create({
     backgroundColor: MATERIAL_COLORS.secondary.normal,
   }, 
   betaContents: {
-    color: "#ffffffcc"
+    color: '#ffffffcc',
   },
   betaTitle: {
-    // alignSelf: "center",
-    fontWeight: "bold",
-    color: COLORS.white
-  }
+    fontWeight: 'bold',
+    color: COLORS.white,
+  },
 });

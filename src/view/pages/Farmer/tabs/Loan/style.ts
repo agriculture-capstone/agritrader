@@ -7,6 +7,6 @@ export default StyleSheet.create({
     margin: 10,
   },
   container: {
-    backgroundColor: COLORS.backgroundColor
-  }
+    backgroundColor: COLORS.backgroundColor,
+  },
 });
