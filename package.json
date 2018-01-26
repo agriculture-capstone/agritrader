@@ -53,7 +53,9 @@
 		"wolfy87-eventemitter": "^5.2.4"
 	},
 	"devDependencies": {
+		"@types/color": "^2.0.0",
 		"@types/jest": "^21.1.5",
+		"@types/lodash": "^4.14.96",
 		"@types/react": "^16.0.19",
 		"@types/react-native": "^0.51.10",
 		"@types/react-navigation": "^1.0.26",

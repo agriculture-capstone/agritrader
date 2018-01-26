@@ -211,7 +211,7 @@ export default (variables = variable) => {
     },
   };
 
-  const cssifyTheme = (grandparent, parent, parentKey) => {
+  const cssifyTheme = (grandparent: any, parent: any, parentKey: any) => {
     _.forEach(parent, (style, styleName) => {
       if (
         styleName.indexOf('.') === 0 &&
