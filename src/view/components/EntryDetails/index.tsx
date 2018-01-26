@@ -36,7 +36,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Component for EntryDetails
- * @param values = {
+ * @prop values = {
  *                  firstName: string;
  *                  lastName: string;
  *                  date: string;
@@ -46,7 +46,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                    {label: 'Rate', value: '#'}
  *                  ]
  *                 }
- * @param mode = 'DETAILS' | 'EDIT'
+ * @prop mode = 'DETAILS' | 'EDIT'
  */
 export default class EntryDetails extends React.Component<PropsType, OwnStateType> {
 
