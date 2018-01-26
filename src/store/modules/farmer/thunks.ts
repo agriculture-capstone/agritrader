@@ -3,17 +3,7 @@ import { CoreThunk, StoreLocalCreationRow, StoreLocalUpdateRow, ThunkCreationRow
 import StoreUtils from '../../../utils/StoreUtils';
 import { CorePath } from '../../../utils/CoreAPI/index';
 
-const createFarmerLocal = (row: StoreLocalCreationRow<Farmer>): Action =>
-  ({ row, type: 'CREATE_FARMER_LOCAL' });
 
-const createFarmerRemote = (localUUID: string, coreUUID: string, lastModified: string): Action =>
-  ({ localUUID, coreUUID, lastModified, type: 'CREATE_FARMER_REMOTE' });
-
-const updateFarmerLocal = (row: StoreLocalUpdateRow<Farmer>): Action =>
-  ({ row, type: 'UPDATE_FARMER_LOCAL' });
-
-const updateFarmerRemote = (uuid: string, lastModified: string): Action =>
-  ({ uuid, lastModified, type: 'UPDATE_FARMER_REMOTE' });
 
 const farmerThunks = {
 
