@@ -1,9 +1,13 @@
 import { AGRICORE_URL, AGRICORE_PORT } from '../../config';
 import store from '../../store';
+import { PartialCoreData, CoreData } from '../../store/types';
+import sensitiveActions from '../../store/modules/sensitive/actions';
 
 export enum CorePath {
   FARMERS = '/people/farmers',
 }
+
+const LOGIN_PATH = '/actions/authenticate';
 
 export type CoreRequestMethod
   = 'GET'     // Retrieve
@@ -12,7 +16,7 @@ export type CoreRequestMethod
   | 'HEAD'    // Timestamp
   ;
 
-export default class CoreRequest<DataModel> {
+export default class CoreRequest {
   private url: string;
 
   constructor(path: CorePath) {
@@ -23,40 +27,90 @@ export default class CoreRequest<DataModel> {
     const url = `${this.url}/${uuid}`;
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));
-    const response = await fetch(request);
-    // TODO: Finish
+
+    return await fetch(request);
   }
 
   public async getAll() {
+    const url = this.url;
+    const method: CoreRequestMethod = 'GET';
+    const request = new Request(url, this.getOptions(method));
+
+    return this.coreFetch(request);
+  }
+
+  public async update<T>(data: PartialCoreData<T>) {
+    const url = this.url;
+    const method: CoreRequestMethod = 'PUT';
+    const request = new Request(url, this.getOptions(method, data));
+
+    return this.coreFetch(request);
+  }
+
+  public async create<T>(data: CoreData<T>) {
+    const url = this.url;
+    const method: CoreRequestMethod = 'POST';
+    const request = new Request(url, this.getOptions(method, data));
+
+    return this.coreFetch(request);
+  }
+
+  public async head(timestamp: string) {
 
   }
 
-  public async update() {
+  private getOptions<T>(method: CoreRequestMethod, body?: PartialCoreData<T>): RequestInit {
 
-  }
-
-  public async create() {
-
-  }
-
-  public async head() {
-
-  }
-
-  private getOptions(method: CoreRequestMethod, body?: DataModel, useJwt = true): RequestInit {
-
+    const { jwt } = store.getState().sensitive;
+    if (!jwt) {
+      throw new Error('Not authenticated');
+    }
     const headers = new Headers({
       'content-type': 'application/json',
+      Authorization: `Bearer ${jwt}`,
     });
-
-    if (useJwt) {
-      const { jwt } = store.getState().sensitive;
-      headers.append('Authorization', `Bearer ${jwt}`);
-    }
 
     return {
       method,
       headers,
+      body: JSON.stringify(body),
     };
+  }
+
+  private async coreFetch(request: Request) {
+    const response = await fetch(request);
+
+    if (!response.ok) throw response;
+
+    else return await response.json();
+  }
+
+  public static async login(username: string, password: string): Promise<boolean> {
+    const url = LOGIN_PATH;
+    const method: CoreRequestMethod = 'POST';
+    const headers = new Headers({
+      'content-type': 'application/json',
+    });
+
+    const body = {
+      username,
+      password,
+    };
+
+    const request = new Request(url, {
+      method,
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    const response = await fetch(request);
+
+    // Check response
+    if (!response.ok) return false;
+
+    const { jwt } = await response.json();
+    store.dispatch(sensitiveActions.setJwt(jwt));
+
+    return true;
   }
 }

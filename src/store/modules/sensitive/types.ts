@@ -8,6 +8,7 @@ export interface SensitiveState {
 
 export type Action = {
   type: 'SET_JWT',
+  jwt: string,
 } | {
   type: 'DO_NOT_USE',
 };
