@@ -2,7 +2,7 @@ import { FarmerState, Farmer } from './types';
 import UTCDate from '../../../utils/UTCDate';
 
 const initialState: FarmerState = {
-  containsLocal: false,
+  dirty: false,
   farmers: [] as Farmer[],
   lastModified: UTCDate.OLD_DATE,
 };

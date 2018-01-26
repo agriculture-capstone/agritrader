@@ -1,6 +1,6 @@
 import { AGRICORE_URL, AGRICORE_PORT } from '../../config';
 import store from '../../store';
-import { PartialCoreData, CoreData } from '../../store/types';
+import { PartialCoreData } from '../../store/types';
 import sensitiveActions from '../../store/modules/sensitive/actions';
 
 export enum CorePath {
@@ -16,7 +16,7 @@ export type CoreRequestMethod
   | 'HEAD'    // Timestamp
   ;
 
-export default class CoreRequest {
+export default class CoreAPI {
   private url: string;
 
   constructor(path: CorePath) {
@@ -47,7 +47,7 @@ export default class CoreRequest {
     return this.coreFetch(request);
   }
 
-  public async create<T>(data: CoreData<T>) {
+  public async create<T>(data: T) {
     const url = this.url;
     const method: CoreRequestMethod = 'POST';
     const request = new Request(url, this.getOptions(method, data));
@@ -59,7 +59,7 @@ export default class CoreRequest {
 
   }
 
-  private getOptions<T>(method: CoreRequestMethod, body?: PartialCoreData<T>): RequestInit {
+  private getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
 
     const { jwt } = store.getState().sensitive;
     if (!jwt) {

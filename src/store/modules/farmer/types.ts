@@ -1,4 +1,4 @@
-import { CoreState, CoreData, PartialCoreData } from '../../types';
+import { CoreState, CoreData, PartialCoreData, IdCoreData } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
@@ -13,10 +13,16 @@ interface BaseFarmer {
   companyName?: string;
 }
 
-/** Model for Farmer */
+/** Model for Farmer in store */
 export type Farmer = CoreData<BaseFarmer>;
 
-/** Model for updating farmer */
+/** Model for creating a farmer via thunk */
+export type BaseCreateFarmer = BaseFarmer;
+
+/** Model for updating farmer via thunk */
+export type BaseUpdateFarmer = IdCoreData<BaseFarmer>;
+
+/** Model for Farmer in reducer update */
 export type PartialFarmer = PartialCoreData<BaseFarmer>;
 
 /*----------------------- State -----------------------*/
@@ -35,6 +41,10 @@ export type Action = {
 } | {
   type: 'CREATE_FARMER',
   farmer: Farmer,
+} | {
+  type: 'UPDATE_FARMER_UUID',
+  oldUUID: string,
+  farmer: PartialFarmer,
 } | {
   type: 'DO_NOT_USE',
 };
