@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Grid, Row, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
-import LoansTable from '../../components/LoansTable';
+import DataTable from '../../../../components/DataTable';
 import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
 
@@ -50,7 +50,8 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
           <Row>
-            <LoansTable
+            <DataTable
+              headers={['Date', 'Remaining Balance', 'Weekly Payment']}
               values={this.props.loanTransactions}
             />
           </Row>

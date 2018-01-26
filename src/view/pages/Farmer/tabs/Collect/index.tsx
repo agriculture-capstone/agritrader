@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
-import ProductCard from '../../components/ProductCard';
+import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
 import styles from './style';
 
@@ -56,7 +56,8 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
           <Row>
-            <ProductCard
+            <DataTable
+              headers={['Date', 'AM', 'PM']}
               values={this.props.collectTransactions}
             />
           </Row>
