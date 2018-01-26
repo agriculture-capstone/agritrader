@@ -31,7 +31,7 @@ export type Action
   | SensitiveAction
   ;
 
-/*----------------------- Global Models -----------------------*/
+/*----------------------- Core Module Models -----------------------*/
 
 export type Status
   = 'local'
@@ -40,44 +40,81 @@ export type Status
   ;
 
 /** Base state for modules synced with core  */
-export interface CoreState {
+export interface CoreModuleState<T> {
   lastModified: string;
   isDirty: boolean;
+  rows: StoreRow<T>[];
 }
 
-interface OptionalCoreData {
-  lastModified: string;
+interface DataStatus {
   status: Status;
 }
 
-interface RequiredCoreData {
+interface LastModifiedData {
+  lastModified: string;
+}
+
+interface UUIDData {
   uuid: string;
 }
 
 /**
- * Data model for data synced with core
+ * Data model in store
  *
- * @template T Model for data to be synced with core
+ * @template T Data model for module
  */
-export type CoreData<T> = T & OptionalCoreData & RequiredCoreData;
+export type StoreRow<T> = T & DataStatus & LastModifiedData & UUIDData;
 
 /**
- * Partial data model for data synced with core
+ * Data model for local creation
  *
- * Used for action updates
- *
- * @template T Model for data to be synced with core
+ * @template T Data model for module
  */
-export type PartialCoreData<T> = Partial<T> & Partial<OptionalCoreData> & RequiredCoreData;
+export type StoreLocalCreationRow<T> = T & LastModifiedData & UUIDData;
 
 /**
- * Partial data model containing only ID
+ * Data model for local update
  *
- * Used for thunk updates
- *
- * @template T Model for data to be synced with core
+ * @template T Data model for module
  */
-export type IdCoreData<T> = Partial<T> & RequiredCoreData;
+export type StoreLocalUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
+/**
+ * Data model for sending creation request to core
+ *
+ * @template T Data model for module
+ */
+export type CoreCreationRequest<T> = T & LastModifiedData;
+
+/**
+ * Data model for sending update request to core
+ *
+ * @template T Data model for module
+ */
+export type CoreUpdateRequest<T> = Partial<T> & LastModifiedData & UUIDData;
+
+/**
+ * Data model for thunk item creation
+ *
+ * @template T Data model for module
+ */
+export type ThunkCreationRow<T> = T & UUIDData;
+
+/**
+ * Data model for thunk item update
+ *
+ * @template T Data model for module
+ */
+export type ThunkUpdateRow<T> = Partial<T> & UUIDData;
+
+/**
+ * Function definition for thunk
+ *
+ * @template T Return type of thunk
+ */
 export type Thunk<T> = ThunkAction<T, State, { CoreAPI: typeof CoreAPI }>;
+
+/**
+ * Function definition for core module thunks
+ */
 export type CoreThunk = Thunk<Promise<void>>;

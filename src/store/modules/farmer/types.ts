@@ -1,8 +1,8 @@
-import { CoreState, CoreData, PartialCoreData, IdCoreData } from '../../types';
+import { CoreModuleState, StoreLocalCreationRow, StoreLocalUpdateRow } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
-interface BaseFarmer {
+export interface Farmer {
   username: string;
   firstName: string;
   middleName: string;
@@ -13,41 +13,29 @@ interface BaseFarmer {
   companyName?: string;
 }
 
-/** Model for Farmer in store */
-export type Farmer = CoreData<BaseFarmer>;
-
-/** Model for creating a farmer via thunk */
-export type BaseCreateFarmer = BaseFarmer;
-
-/** Model for updating farmer via thunk */
-export type BaseUpdateFarmer = IdCoreData<BaseFarmer>;
-
-/** Model for Farmer in reducer update */
-export type PartialFarmer = PartialCoreData<BaseFarmer>;
-
 /*----------------------- State -----------------------*/
 
 /** Farmer module state */
-export interface FarmerState extends CoreState {
-  farmers: Farmer[];
-}
+export type FarmerState = CoreModuleState<Farmer>;
 
 /*----------------------- Actions -----------------------*/
 
 /** Actions for farmer module */
 export type Action = {
-  type: 'UPDATE_FARMER',
-  farmer: PartialFarmer,
+  type: 'CREATE_FARMER_LOCAL',
+  row: StoreLocalCreationRow<Farmer>,
 } | {
-  type: 'CREATE_FARMER',
-  farmer: Farmer,
+  type: 'CREATE_FARMER_REMOTE',
+  localUUID: string,
+  coreUUID: string,
+  lastModified: string,
 } | {
-  type: 'UPDATE_FARMER_UUID',
-  oldUUID: string,
-  farmer: PartialFarmer,
+  type: 'UPDATE_FARMER_LOCAL',
+  row: StoreLocalUpdateRow<Farmer>,
 } | {
-  type: 'SET_FARMERS_DIRTY',
-  isDirty: boolean,
+  type: 'UPDATE_FARMER_REMOTE',
+  uuid: string,
+  lastModified: string,
 } | {
   type: 'DO_NOT_USE',
 };
