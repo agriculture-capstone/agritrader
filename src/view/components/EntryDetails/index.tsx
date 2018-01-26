@@ -42,11 +42,11 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                  lastName: string
  *                  date: string
  *                  time: string
- *                  entryDetails: [
- *                    'Amount #'
- *                    'Quality #'
- *                    'Rate #'
- *                  ]
+ *                  entryDetails: {
+ *                    amount: 'Amount #'
+ *                    quality: 'Quality #'
+ *                    rate: 'Rate #'
+ *                  }
  *           }
  * @returns 
  * EntryDetails component with firstName, lastName, date, time, Amount (L), Quality, and Rate (UGX) as read-only
@@ -57,13 +57,12 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                  lastName: 'Kenaan',
  *                  date: 'Friday, Jan 25, 2018',
  *                  time: '9:35 pm',
- *                  entryDetails: [
+ *                  entryDetails:
  *                    {
  *                      amount: '14',
  *                      quality: '45',
  *                      rate: '2.75',
  *                    }
- *                  ]
  *                }}
  *                mode="DETAILS"
  *             />
