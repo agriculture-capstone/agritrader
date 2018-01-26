@@ -206,11 +206,7 @@ export default (variables = variable) => {
       'NativeBase.Text': {
         '.note': {
           color: variables.listNoteColor,
-<<<<<<< HEAD
           // fontWeight: "200"
-=======
-          fontWeight: '200',
->>>>>>> beaesguerra/at-70/inittheme
         },
         alignSelf: null,
       },
