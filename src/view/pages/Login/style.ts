@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { MATERIAL_COLORS, COLORS } from '../../../native-base-theme/variables/styles';
+import { MATERIAL_COLORS } from '../../../native-base-theme/variables/styles';
 
 export default StyleSheet.create({
   container: {

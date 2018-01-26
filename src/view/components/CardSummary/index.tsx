@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Grid, Row, Col, Card, Text, CardItem } from 'native-base';
+import { Grid, Col, Card, CardItem } from 'native-base';
 import StatisticsBlock from '../StatisticsBlock';
-import styles from './style';
 
 interface OwnPropsType {
   data: DataType[];

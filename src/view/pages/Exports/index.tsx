@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { View } from 'native-base';
-import Export from './tabs/Export';
-import styles from './style';
 
+import Export from './tabs/Export';
 
 const demoExportValues = [
   { date: 'Jan 18 17:31', plate:'BRI8932', vol: 10 }, 

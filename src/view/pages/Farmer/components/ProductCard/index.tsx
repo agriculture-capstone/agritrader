@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card } from 'native-base';
+
 import DataTable from '../../../../components/DataTable';
 
 interface OwnPropsType {

@@ -13,10 +13,6 @@ interface OwnPropsType {
   collectTransactions: any[];
 }
 
-interface Statistic {
-  unit: string;
-  value: string;
-}
 interface DispatchPropsType {
 }
 

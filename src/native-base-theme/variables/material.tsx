@@ -1,7 +1,7 @@
 import * as color from "color";
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
-import { TEXT_STYLES, MATERIAL_COLORS, COLORS, getHexValue } from './styles';
+import { TEXT_STYLES, MATERIAL_COLORS, COLORS } from './styles';
 
 /**
  * Based off of the following link:

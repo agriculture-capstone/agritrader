@@ -3,7 +3,6 @@ import { Platform, PixelRatio } from "react-native";
 import pickerAndroid from "./Picker.android";
 import pickerIos from "./Picker.ios";
 import variable from "./../variables/platform";
-import { TEXT_STYLES, MATERIAL_COLORS } from './../variables/styles';
 
 export default (variables = variable) => {
   const platform = variables.platform;

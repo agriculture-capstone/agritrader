@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Grid, Row, Col, Card, Text, CardItem } from 'native-base';
-import Panel from '../../../../components/Panel';
+import { Grid, Col, Card, CardItem } from 'native-base';
 import StatisticsBlock from '../../../../components/StatisticsBlock';
-import styles from './style';
 
 interface OwnPropsType {
   title: string;
