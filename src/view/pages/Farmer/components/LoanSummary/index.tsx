@@ -3,6 +3,9 @@ import { Grid, Row, Col, Text } from 'native-base';
 import Panel from '../../../../components/Panel';
 import styles from './style';
 
+import createComingSoonOverlay from '../../../../components/ComingSoon';
+import { connect } from 'react-redux';
+
 interface OwnPropsType {
   title: string;
   totalRemainingBalance: string;
@@ -24,7 +27,7 @@ interface OwnStateType {
 /**
  * Component for LoanSummary
  */
-export default class LoanSummary extends React.Component<PropsType, OwnStateType> {
+export class LoanSummary extends React.Component<PropsType, OwnStateType> {
   /**
    * Render method for Loan
    */
@@ -51,3 +54,10 @@ export default class LoanSummary extends React.Component<PropsType, OwnStateType
     );
   }
 }
+
+const LoanSummaryPage = createComingSoonOverlay<PropsType>(LoanSummary);
+
+export default connect(
+
+)
+(LoanSummaryPage);
