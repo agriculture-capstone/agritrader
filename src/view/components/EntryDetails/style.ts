@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  content: {
+    backgroundColor: 'white',
+  },
   button: {
     padding: 5,
   },
@@ -14,5 +17,8 @@ export default StyleSheet.create({
   },
   header: {
     textAlign: 'center',
+  },
+  editView: {
+    padding: 15,
   },
 });

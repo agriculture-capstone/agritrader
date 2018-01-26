@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, H2, H3, Button, Input, Form, Item, Label } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
 
 import Styles from './style';
 
@@ -126,7 +126,7 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
    */
   public render() {
     return(
-      <Content padder>
+      <Content padder style={Styles.content}>
         <List>
           <ListItem>
             {this.renderHeader()}

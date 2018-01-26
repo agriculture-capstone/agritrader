@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, View, ListItem, Text, Grid, Row, Col, Right, H1, H2, H3, Button, Input, Form, Item, Label, Card, CardItem } from 'native-base';
+import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
 
 import Styles from './style';
 
@@ -179,7 +179,7 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
 
   private renderEditFields() {
     return (
-      <View style={{ padding: 15, }}>
+      <View style={Styles.editView}>
         {this.formatEditRow('Amount (L)', this.props.values.entryDetails.amount)}
         {this.formatEditRow('Quality', this.props.values.entryDetails.quality)}
         {this.formatEditRow('Rate (UGX)', this.props.values.entryDetails.rate)}
@@ -194,7 +194,7 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
     switch (this.props.mode) {
       case 'DETAILS': {
         return(
-          <Content padder style={{ backgroundColor: 'white' }}>
+          <Content padder style={Styles.content}>
             {this.renderHeader()}
           <Grid>
             {this.renderDetailFields()}
