@@ -77,7 +77,7 @@ export default (variables = variable) => {
     '.first': {
       '.itemHeader': {
         paddingTop: variables.listItemPadding + 3,
-        paddingBottom: variables.listItemPadding + 4,
+        // paddingBottom: variables.listItemPadding + 4,
         borderBottomColor: '#d6d6d6',
         borderBottomWidth: 1,
         'NativeBase.Text' : {
@@ -90,7 +90,7 @@ export default (variables = variable) => {
     '.itemHeader': {
       '.first': {
         paddingTop: variables.listItemPadding + 3,
-        paddingBottom: variables.listItemPadding + 4,
+        // paddingBottom: variables.listItemPadding + 4,
         borderBottomColor: '#d6d6d6',
         borderBottomWidth: 1,
         'NativeBase.Text' : {

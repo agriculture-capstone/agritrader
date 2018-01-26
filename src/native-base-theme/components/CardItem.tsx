@@ -7,12 +7,12 @@ export default (variables = variable) => {
     'NativeBase.Left': {
       'NativeBase.Body': {
         'NativeBase.Text': {
-        '.note': {
-        color: variables.listNoteColor,
-        fontWeight: '400',
-        marginRight: 20,
-      },
-      },
+          '.note': {
+            color: variables.listNoteColor,
+            fontWeight: '400',
+            marginRight: 20,
+          },
+        },
         flex: 1,
         marginLeft: 10,
         alignItems: null,
@@ -29,23 +29,23 @@ export default (variables = variable) => {
       },
       'NativeBase.Button': {
         '.transparent': {
-        'NativeBase.Text': {
-        fontSize: variables.DefaultFontSize - 4,
-        color: variables.sTabBarActiveTextColor,
-      },
-        'NativeBase.Icon': {
-        fontSize: variables.iconFontSize - 10,
-        color: variables.sTabBarActiveTextColor,
-        marginHorizontal: null,
-      },
-        'NativeBase.IconNB': {
-        fontSize: variables.iconFontSize - 10,
-        color: variables.sTabBarActiveTextColor,
-      },
-        paddingVertical: null,
-        paddingHorizontal: null,
-        paddingRight: variables.listItemPadding + 5,
-      },
+          'NativeBase.Text': {
+            fontSize: variables.DefaultFontSize - 4,
+            color: variables.sTabBarActiveTextColor,
+          },
+          'NativeBase.Icon': {
+            fontSize: variables.iconFontSize - 10,
+            color: variables.sTabBarActiveTextColor,
+            marginHorizontal: null,
+          },
+          'NativeBase.IconNB': {
+            fontSize: variables.iconFontSize - 10,
+            color: variables.sTabBarActiveTextColor,
+          },
+          paddingVertical: null,
+          paddingHorizontal: null,
+          paddingRight: variables.listItemPadding + 5,
+        },
       },
       flex: 1,
       flexDirection: 'row',
@@ -67,31 +67,31 @@ export default (variables = variable) => {
     'NativeBase.Body': {
       'NativeBase.Text': {
         '.note': {
-        color: variables.listNoteColor,
-        fontWeight: '200',
-        marginRight: 20,
-      },
+          color: variables.listNoteColor,
+          fontWeight: '200',
+          marginRight: 20,
+        },
       },
       'NativeBase.Button': {
         '.transparent': {
-        'NativeBase.Text': {
-        fontSize: variables.DefaultFontSize - 4,
-        color: variables.sTabBarActiveTextColor,
-      },
-        'NativeBase.Icon': {
-        fontSize: variables.iconFontSize - 10,
-        color: variables.sTabBarActiveTextColor,
-        marginHorizontal: null,
-      },
-        'NativeBase.IconNB': {
-        fontSize: variables.iconFontSize - 10,
-        color: variables.sTabBarActiveTextColor,
-      },
-        paddingVertical: null,
-        paddingHorizontal: null,
-        paddingRight: variables.listItemPadding + 5,
-        alignSelf: 'stretch',
-      },
+          'NativeBase.Text': {
+            fontSize: variables.DefaultFontSize - 4,
+            color: variables.sTabBarActiveTextColor,
+          },
+          'NativeBase.Icon': {
+            fontSize: variables.iconFontSize - 10,
+            color: variables.sTabBarActiveTextColor,
+            marginHorizontal: null,
+          },
+          'NativeBase.IconNB': {
+            fontSize: variables.iconFontSize - 10,
+            color: variables.sTabBarActiveTextColor,
+          },
+          paddingVertical: null,
+          paddingHorizontal: null,
+          paddingRight: variables.listItemPadding + 5,
+          alignSelf: 'stretch',
+        },
       },
       flex: 1,
       alignSelf: 'stretch',
@@ -103,22 +103,22 @@ export default (variables = variable) => {
       },
       'NativeBase.Button': {
         '.transparent': {
-        'NativeBase.Text': {
-        fontSize: variables.DefaultFontSize - 4,
-        color: variables.sTabBarActiveTextColor,
-      },
-        'NativeBase.Icon': {
-        fontSize: variables.iconFontSize - 10,
-        color: variables.sTabBarActiveTextColor,
-        marginHorizontal: null,
-      },
-        'NativeBase.IconNB': {
-        fontSize: variables.iconFontSize - 10,
-        color: variables.sTabBarActiveTextColor,
-      },
-        paddingVertical: null,
-        paddingHorizontal: null,
-      },
+          'NativeBase.Text': {
+            fontSize: variables.DefaultFontSize - 4,
+            color: variables.sTabBarActiveTextColor,
+          },
+          'NativeBase.Icon': {
+            fontSize: variables.iconFontSize - 10,
+            color: variables.sTabBarActiveTextColor,
+            marginHorizontal: null,
+          },
+          'NativeBase.IconNB': {
+            fontSize: variables.iconFontSize - 10,
+            color: variables.sTabBarActiveTextColor,
+          },
+          paddingVertical: null,
+          paddingHorizontal: null,
+        },
         alignSelf: null,
       },
       'NativeBase.Icon': {
@@ -159,9 +159,9 @@ export default (variables = variable) => {
       },
       '.bordered': {
         'NativeBase.Text': {
-        color: variables.sTabBarActiveTextColor,
-        fontWeight: platform === 'ios' ? '500' : undefined,
-      },
+          color: variables.sTabBarActiveTextColor,
+          fontWeight: platform === 'ios' ? '500' : undefined,
+        },
         borderBottomWidth: platform === 'ios' ? variables.borderWidth : null,
       },
       borderBottomWidth: null,
@@ -174,9 +174,9 @@ export default (variables = variable) => {
       },
       '.bordered': {
         'NativeBase.Text': {
-        color: variables.activeTab,
-        fontWeight: '500',
-      },
+          color: variables.activeTab,
+          fontWeight: '500',
+        },
         borderTopWidth: platform === 'ios' ? variables.borderWidth : null,
       },
       borderBottomWidth: null,
