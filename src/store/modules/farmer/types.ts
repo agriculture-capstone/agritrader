@@ -3,13 +3,12 @@ import { CoreState, CoreData, PartialCoreData } from '../../types';
 /*----------------------- Models -----------------------*/
 
 interface BaseFarmer {
-  username: string;
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
-  phoneCountry?: string;
-  phoneArea?: string;
-  phoneNumber?: string;
+  phoneCountry: string;
+  phoneArea: string;
+  phoneNumber: string;
   companyName?: string;
 }
 
