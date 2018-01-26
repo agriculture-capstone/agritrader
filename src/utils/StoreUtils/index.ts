@@ -1,6 +1,6 @@
 import * as uuid4 from 'uuid/v4';
 
-import { CoreData, Status } from '../../store/types';
+import { CoreData, Status, PartialCoreData } from '../../store/types';
 import UTCDate from '../UTCDate';
 
 interface LocalStoreModel<T> {
@@ -25,12 +25,25 @@ const StoreUtils = {
     };
   },
 
-  updateLocalStoreModel<T>(model: T, coreUUID: string, lastModified: string): CoreData<T> {
+  updateModelCoreProperties<T>(model: T, coreUUID: string, lastModified: string): CoreData<T> {
     const status: Status = 'clean';
     return Object.assign({}, model, {
       lastModified,
       status,
       uuid: coreUUID,
+    });
+  },
+
+  updateModel<T>(oldModel: CoreData<T>, updates: PartialCoreData<T>) {
+    // Declare block scoped `let` values at start of block
+    let uuid: string, lastModified: string, partialUpdates: Partial<T> = {};
+
+    // Remove the UUID and lastModified
+    ({ uuid, lastModified, ...partialUpdates } = (updates as any));
+
+    // Apply partial updates to the model
+    return Object.assign({}, oldModel, partialUpdates, {
+      lastModified: UTCDate.getCurrentDate(),
     });
   },
 };
