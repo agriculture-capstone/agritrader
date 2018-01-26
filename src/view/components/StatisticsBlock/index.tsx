@@ -3,10 +3,10 @@ import { Col, Text } from 'native-base';
 import styles from './style';
 
 interface OwnPropsType {
-  value: string,
-  units: string,
-  label: string,
-  valueColor?: string,
+  value: string;
+  units: string;
+  label: string;
+  valueColor?: string;
 }
 
 interface DispatchPropsType {

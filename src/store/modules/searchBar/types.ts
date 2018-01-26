@@ -1,5 +1,6 @@
 /*----------------------- State -----------------------*/
 
+/** State for the search bar module */
 export interface SearchBarState {
   shown: boolean;
   value: string;
@@ -8,6 +9,7 @@ export interface SearchBarState {
 
 /*----------------------- Actions -----------------------*/
 
+/** Action type for search bar module */
 export type Action = {
   type: 'SHOW_SEARCH_BAR',
   placeholder: string,

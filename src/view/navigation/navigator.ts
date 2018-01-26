@@ -75,9 +75,6 @@ export const routesInfo: RouteInfo[] = [
     name: 'Farmer',
     component: FarmerPage,
     type: 'menu',
-    drawerInfo: {
-      icon: 'person',
-    },
   },
   {
     route: Route.SEARCH_FARMER,
