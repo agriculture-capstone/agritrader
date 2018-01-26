@@ -33,7 +33,7 @@ export default class Export extends React.Component<PropsType, OwnStateType> {
   public render() {
     return (
       <Content style={styles.container}>
-        <Grid>
+        <Grid style={styles.contents}>
           <Row>
           <CardSummary
               data={[{

@@ -35,6 +35,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
   public render() {
     return (
       <Content style={styles.container}>
+        <View style={styles.content}>
           <CardSummary
             data={[{
               label: "Today",
@@ -60,6 +61,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             BUY PRODUCTS
           </Text>
         </Button>
+        </View>
       </Content>
     );
   }

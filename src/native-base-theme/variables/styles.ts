@@ -19,7 +19,8 @@ export const COLORS = {
   white: "#fff",
   black: "#000",
   logo: "#0fc6ce",
-  icons: "#515151"
+  icons: "#515151",
+  backgroundColor: "#eeeeee"
 }
 
 export function getHexValue(color: string, opacity: number) 

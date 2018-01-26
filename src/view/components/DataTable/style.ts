@@ -3,6 +3,7 @@ import { COLORS } from '../../../native-base-theme/variables/styles';
 
 export default StyleSheet.create({
   values: {
-    color: COLORS.icons
+    color: COLORS.icons,
+    textAlign: "center"
   }
 });

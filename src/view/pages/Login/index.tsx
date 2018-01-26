@@ -95,7 +95,7 @@ class Login extends React.Component<Props, OwnState> {
       <KeyboardAvoidingView
         style={styles.container}
       >
-        <Content padder>
+        <Content style={styles.container}>
           <Form >
             <Grid>
               <Row>

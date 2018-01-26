@@ -32,8 +32,8 @@ class Buy extends React.Component<PropsType, OwnStateType> {
    */
   public render() {
     return (
-      <Content>
-        <Grid style={styles.container}>
+      <Content style={styles.container}>
+        <Grid style={styles.content}>
           <Row>
           <CardSummary
           data={[{

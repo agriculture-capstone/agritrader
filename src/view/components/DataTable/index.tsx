@@ -35,7 +35,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   private formatValues(values: any[]) {
     return values.map((value) => {
       return (
-        <Col key={value}>
+        <Col key={value} style={{justifyContent: "center"}}>
           <Text style={styles.values}>
             {value}
           </Text>
@@ -46,8 +46,8 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem>
-        <Grid>
+      <ListItem style={{justifyContent: "center"}}>
+        <Grid style={{justifyContent: "center"}}>
           {this.formatValues(Object.values(item))}
         </Grid>
       </ListItem>

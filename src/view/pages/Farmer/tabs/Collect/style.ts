@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { COLORS } from '../../../../../native-base-theme/variables/styles';
+
 export default StyleSheet.create({
   addEntryButton: {
     paddingLeft: 21,
@@ -8,6 +10,9 @@ export default StyleSheet.create({
     paddingBottom: 21,
   }, 
   container: {
-    margin: 10
+    backgroundColor: "#eeeeee"
+  }, 
+  content: {
+    margin: 10, 
   }
 });
