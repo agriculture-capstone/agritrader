@@ -28,7 +28,7 @@
 		"android:unix": "npm run pre:build && npm run build && npm run bundle:android && npm run concurrently:android",
 		"test": "jest --coverage",
 		"watch": "npm run build -- -w",
-		"lint": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json",
+		"lint": "node_modules/.bin/tslint \"src/**/*.ts?(x)\" --project ./tsconfig.json --exclude \"src/native-base-theme/**/*.ts?(x)\"",
 		"lint:fix": "npm run lint -- --fix",
 		"bundle:android": "npm run react-native -- bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
 		"concurrently": "node_modules/.bin/concurrently --kill-others-on-fail -p \"[{name}]\" -n \"Typescript,React-Native\" -c \"cyan.bold,green.bold\"",
@@ -53,7 +53,9 @@
 		"wolfy87-eventemitter": "^5.2.4"
 	},
 	"devDependencies": {
+		"@types/color": "^2.0.0",
 		"@types/jest": "^21.1.5",
+		"@types/lodash": "^4.14.96",
 		"@types/react": "^16.0.19",
 		"@types/react-native": "^0.51.10",
 		"@types/react-navigation": "^1.0.26",
