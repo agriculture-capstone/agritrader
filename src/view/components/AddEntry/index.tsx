@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, H3, Button, Input } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, H1, H2, H3, Button, Input, Form, Item, Label } from 'native-base';
 
 import Styles from './style';
 
@@ -8,7 +8,7 @@ interface OwnPropsType {
     firstName: string;
     lastName: string;
     date: string;
-    labels: string[];
+    time: string;
   };
 }
 
@@ -31,10 +31,10 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 /**
  * Component for AddEntry
  * @param values = {
- *                  firstName: string;
- *                  lastName: string;
- *                  date: string;
- *                  labels: string[];
+ *                  firstName: string
+ *                  lastName: string
+ *                  date: string
+ *                  time: string
  *                 }
  */
 export default class AddEntry extends React.Component<PropsType, OwnStateType> {
@@ -80,30 +80,35 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
-          <H1>
+          <Text style={Styles.header}>
             {this.props.values.date}
-          </H1>
+          </Text>
+        </Row>
+        <Row style={Styles.headerRow}>
+          <Text style={Styles.header}>
+            {this.props.values.time}
+          </Text>
         </Row>
       </Grid>
     );
   }
 
-  private renderAddRow(item: any) {
+  private renderFields() {
     return (
-      <ListItem>
-        <Grid>
-          <Col>
-            <H3>
-              {item}
-            </H3>
-          </Col>
-          <Col>
-            <Input
-              placeholder={'Enter ' + item + ' here'}
-            />
-          </Col>
-        </Grid>
-      </ListItem>
+      <Form>
+      <Item floatingLabel>
+        <Label>Amount (L)</Label>
+        <Input />
+      </Item>
+      <Item floatingLabel>
+        <Label>Quality</Label>
+        <Input />
+      </Item>
+      <Item floatingLabel last>
+        <Label>Rate (UGX)</Label>
+        <Input />
+      </Item>
+    </Form>
     );
   }
 
@@ -113,13 +118,14 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
   public render() {
     return(
       <Content padder>
-        {this.renderHeader()}
-        <List
-          dataArray={this.props.values.labels}
-          renderRow={this.renderAddRow}
-        />
+        <List>
+          <ListItem>
+            {this.renderHeader()}
+          </ListItem>
+        </List>
+        {this.renderFields()}
         <Grid>
-          <Row>
+          <Row style={Styles.buttonRow}>
             {this.renderCancelButton()}
             {this.renderSaveButton()}
           </Row>

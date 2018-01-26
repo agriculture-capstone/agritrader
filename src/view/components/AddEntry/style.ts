@@ -8,4 +8,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
     padding: 5,
   },
+  buttonRow: {
+    alignSelf: 'center',
+    paddingTop: 25,
+  },
+  header: {
+    textAlign: 'center',
+  },
 });
