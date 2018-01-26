@@ -48,8 +48,10 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                    rate: 'Rate #'
  *                  }
  *           }
+ * 
  * @returns 
  * EntryDetails component with firstName, lastName, date, time, Amount (L), Quality, and Rate (UGX) as read-only
+ * 
  * @example 
  *             <EntryDetails
  *                values={{
@@ -66,6 +68,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                }}
  *                mode="DETAILS"
  *             />
+ * 
  * @prop mode = 'DETAILS' | 'EDIT'
  */
 export default class EntryDetails extends React.Component<PropsType, OwnStateType> {

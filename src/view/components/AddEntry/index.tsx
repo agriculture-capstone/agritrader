@@ -36,8 +36,10 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                  date: string
  *                  time: string
  *           }
+ * 
  * @returns 
  * AddEntry component with firstName, lastName, date, and time as read-only and Amount (L), Quality, and Rate (UGX) input fields
+ * 
  * @example 
  *             <AddEntry
  *                values={{
