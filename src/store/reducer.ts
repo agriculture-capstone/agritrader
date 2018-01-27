@@ -8,6 +8,9 @@ import searchBarReducer from './modules/searchBar/reducer';
 import headerReducer from './modules/header/reducer';
 import sensitiveReducer from './modules/sensitive/reducer';
 
+import farmerReducer from './modules/farmer/reducer';
+import dairyReducer from './modules/dairy/reducer';
+
 export default combineReducers<State>({
   drawer: drawerReducer,
   nav: navReducer,
@@ -15,4 +18,6 @@ export default combineReducers<State>({
   searchBar: searchBarReducer,
   header: headerReducer,
   sensitive: sensitiveReducer,
+  farmer: farmerReducer,
+  dairy: dairyReducer,
 });
