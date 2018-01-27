@@ -8,6 +8,7 @@ import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
 import AddEntryPage from '../components/AddEntry';
 import EditEntryPage from '../components/EditEntry';
+import MilkEntryDetails from '../components/EntryDetails';
 
 /** Different types of pages */
 export type PageType = 'menu' | 'back' | 'empty';
@@ -54,6 +55,7 @@ export enum Route {
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmers',
   ADD_MILK_ENTRY = 'AddMilkEntry',
+  MILK_ENTRY_DETAILS = 'MilkEntryDetails',
   EDIT_MILK_ENTRY = 'EditMilkEntry',
 }
 
@@ -111,6 +113,12 @@ export const routesInfo: RouteInfo[] = [
     route: Route.EDIT_MILK_ENTRY,
     name: 'Edit Milk Entry',
     component: EditEntryPage,
+    type: 'back',
+  },
+  {
+    route: Route.MILK_ENTRY_DETAILS,
+    name: 'Milk Entry Details',
+    component: MilkEntryDetails,
     type: 'back',
   },
 ];

@@ -3,6 +3,13 @@ import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input,
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
+import { Route } from '../../navigation/navigator';
+
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../store/modules/nav/actions';
+import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
+import Composer from '../../hoc/PageComposer/index';
+import { State } from '../../../store/types';
 
 import Styles from './style';
 
@@ -25,15 +32,19 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
 }
 
 interface StorePropsType {
 }
 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
-
 interface OwnStateType {
 }
+
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** FarmerSearch PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
 
 /**
  * Button color
@@ -49,11 +60,13 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *             <EntryDetails
  *             />
  */
-export default class EntryDetails extends React.Component<PropsType, OwnStateType> {
+class EntryDetails extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
   }
+
+  private onEditPress = () => this.props.navigate(Route.EDIT_MILK_ENTRY);
 
   private renderEditButton = () => {
     return (this.renderButton('Edit', 'PRIMARY'));
@@ -72,7 +85,7 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
 
     return (
       <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary}>
+        <Button block info={isInfo} primary={isPrimary} onPress={this.onEditPress}>
           <Text>{text}</Text>
         </Button>
       </Col>
@@ -157,3 +170,20 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
     );
   }
 }
+
+const EntryDetailsPage = new Composer<NestedPropsType>(EntryDetails).page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
+  return {};
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EntryDetailsPage);
