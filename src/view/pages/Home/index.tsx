@@ -8,7 +8,6 @@ import Panel from '../../components/Panel';
 import StatisicsBlock from './components/StatisticsBlock';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
-import store from '../../../store';
 import navActions from '../../../store/modules/nav/actions';
 import { getAvgDaysDairyTotal, getDaysDairyTotal } from '../../../store/modules/dairy/selectors';
 import Composer from '../../hoc/PageComposer';
@@ -16,7 +15,11 @@ import styles from './style';
 
 interface OwnPropsType { }
 
-interface StorePropsType { }
+//TODO change from any
+interface StorePropsType {
+  dayTotal: any;
+  avgDayTotal: any;
+}
 
 interface DispatchPropsType {
   navigate(route: Route): void;

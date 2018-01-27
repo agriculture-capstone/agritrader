@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { DairyState, Dairy } from '../types';
 import UTCDate from '../../../../UTCDate'
 
 const getDairyEntries = state => state.dairy.dairyList;
@@ -32,7 +33,6 @@ export const getAvgDaysDairyTotal = createSelector(
 export const getWeeklyFarmerDairyTotal = createSelector(
   [getDairyEntries],
   (dairyentries) => {
-    let weekSum: number = 0;
     let weekDay: number = getCurrentDate().getDay;
     dairyentries.forEach(entry => {
       for (let i = 0; i <= weekDay; i++) {
@@ -54,3 +54,10 @@ export const getMonthlyFarmerDairyTotal = createSelector(
       acc + ((convertToDate(entry.dateTime).getMonth() === getCurrentDate().getMonth)
         && (convertToDate(entry.dateTime).getYear() === getCurrentDate().getYear)) ? entry.volume : 0));
 
+/**Selector to calculate the farmers total milk collected this week **Still struggling with this one** */
+export const getFarmersTransactions = createSelector(
+  [getDairyEntries],
+  (dairyEntries) => {
+    dairyEntries.filter(entry => entry.fromUUID === currentFarmer)//TODO figure out how I'm getting current farmer
+  },
+);
