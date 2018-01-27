@@ -53,9 +53,43 @@ function deriveIsDirty<T>(rows: StoreRow<T>[]) {
   return rows.some(r => r.status !== 'clean');
 }
 
+function createInitialState<Row>(): CoreModuleState<Row> {
+  return {
+    isDirty: false,
+    rows: [] as StoreRow<Row>[],
+    lastModified: UTCDate.OLD_DATE,
+  };
+}
+
+/*------------------------------------- Actions ------------------------------------*/
+
+function createActions<Row>(name: CoreModuleName) {
+  const UPPER_NAME = name.toUpperCase();
+
+  return {
+    createRowLocal: (row: StoreLocalCreationRow<Row>): Action<Row> =>
+    ({ row, type: `CREATE_${UPPER_NAME}_LOCAL` }),
+
+    createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): Action<Row> =>
+      ({ localUUID, coreUUID, lastModified, type: `CREATE_${UPPER_NAME}_REMOTE` }),
+
+    updateRowLocal: (row: StoreLocalUpdateRow<Row>): Action<Row> =>
+      ({ row, type: `UPDATE_${UPPER_NAME}_LOCAL` }),
+
+    updateRowRemote: (uuid: string, lastModified: string): Action<Row> =>
+      ({ uuid, lastModified, type: `UPDATE_${UPPER_NAME}_REMOTE` }),
+  };
+}
+
 /*------------------------------- Creation Utilities -------------------------------*/
 
-function createReducer<Row>(name: CoreModuleName, initialState: CoreModuleState<Row>): Reducer<CoreModuleState<Row>> {
+/**
+ * Utility to create reducer for core store module
+ *
+ * @param name Name of the module
+ * @param initialState initialState for application
+ */
+export function createReducer<Row>(name: CoreModuleName, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
   const UPPER_NAME = name.toUpperCase();
 
   return (state = initialState, action: Action<Row>) => {
@@ -106,25 +140,13 @@ function createReducer<Row>(name: CoreModuleName, initialState: CoreModuleState<
   };
 }
 
-function createActions<Row>(name: CoreModuleName) {
-  const UPPER_NAME = name.toUpperCase();
-
-  return {
-    createRowLocal: (row: StoreLocalCreationRow<Row>): Action<Row> =>
-    ({ row, type: `CREATE_${UPPER_NAME}_LOCAL` }),
-
-    createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): Action<Row> =>
-      ({ localUUID, coreUUID, lastModified, type: `CREATE_${UPPER_NAME}_REMOTE` }),
-
-    updateRowLocal: (row: StoreLocalUpdateRow<Row>): Action<Row> =>
-      ({ row, type: `UPDATE_${UPPER_NAME}_LOCAL` }),
-
-    updateRowRemote: (uuid: string, lastModified: string): Action<Row> =>
-      ({ uuid, lastModified, type: `UPDATE_${UPPER_NAME}_REMOTE` }),
-  };
-}
-
-function createThunks<Row>(name: CoreModuleName, path: CorePath) {
+/**
+ * Utility to create store thunks for core module
+ *
+ * @param name Name of the module
+ * @param path Path for the module on the core
+ */
+export function createThunks<Row>(name: CoreModuleName, path: CorePath) {
   const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createActions(name);
 
   return {
@@ -217,23 +239,3 @@ function createThunks<Row>(name: CoreModuleName, path: CorePath) {
     },
   };
 }
-
-function createInitialState<Row>(): CoreModuleState<Row> {
-  return {
-    isDirty: false,
-    rows: [] as StoreRow<Row>[],
-    lastModified: UTCDate.OLD_DATE,
-  };
-}
-
-/**
- * Utility to create store modules for data from Agricore
- *
- * @param name Name of the module
- * @param path Path for the module on the core
- */
-function createCoreModule<R>(name: CoreModuleName, path: CorePath) {
-
-}
-
-export default createCoreModule;

@@ -1,7 +1,8 @@
-import { CoreModuleState, StoreLocalCreationRow, StoreLocalUpdateRow } from '../../types';
+import { CoreModuleState } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
+/** Model for a farmer */
 export interface Farmer {
   username: string;
   firstName: string;
@@ -17,26 +18,3 @@ export interface Farmer {
 
 /** Farmer module state */
 export type FarmerState = CoreModuleState<Farmer>;
-
-/*----------------------- Actions -----------------------*/
-
-/** Actions for farmer module */
-export type Action = {
-  type: 'CREATE_FARMER_LOCAL',
-  row: StoreLocalCreationRow<Farmer>,
-} | {
-  type: 'CREATE_FARMER_REMOTE',
-  localUUID: string,
-  coreUUID: string,
-  lastModified: string,
-} | {
-  type: 'UPDATE_FARMER_LOCAL',
-  row: StoreLocalUpdateRow<Farmer>,
-} | {
-  type: 'UPDATE_FARMER_REMOTE',
-  uuid: string,
-  lastModified: string,
-} | {
-  type: 'DO_NOT_USE',
-};
-

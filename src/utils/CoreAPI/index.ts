@@ -6,6 +6,7 @@ import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
 
 export enum CorePath {
   FARMERS = '/people/farmers',
+  DAIRY = '/transactions/products/milk',
 }
 
 const LOGIN_PATH = '/actions/authenticate';
