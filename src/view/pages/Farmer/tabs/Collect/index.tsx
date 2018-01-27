@@ -43,6 +43,7 @@ type PropsType = InjectedFabProps & NestedPropsType;
 class Collect extends React.Component<PropsType, OwnStateType> {
 
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
+  private onEntryPress = (route: Route) => this.props.navigate(route);
 
   public componentDidMount() {
     this.props.listenToFab(this.onAddPress);
@@ -79,6 +80,8 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'AM', 'PM']}
               values={this.props.collectTransactions}
+              route={Route.EDIT_MILK_ENTRY}
+              onPress={this.onEntryPress}
             />
           </Row>
         </Grid>

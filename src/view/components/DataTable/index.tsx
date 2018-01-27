@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
 import styles from './style';
+import { Route } from '../../navigation/navigator';
 
 
 interface OwnPropsType {
   headers: string[];
   values: any[];
+  route?: Route;
+  onPress?(route: Route): void;
 }
 
 interface DispatchPropsType {
@@ -32,6 +35,12 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.renderRow = this.renderRow.bind(this);
   }
 
+  private onPress = () => {
+    if (this.props.route && this.props.onPress) {
+      this.props.onPress(this.props.route);
+    }
+  }
+
   private formatValues(values: any[]) {
     return values.map((value) => {
       return (
@@ -46,7 +55,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }}>
+      <ListItem style={{ justifyContent: 'center' }} button onPress={this.onPress}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>
