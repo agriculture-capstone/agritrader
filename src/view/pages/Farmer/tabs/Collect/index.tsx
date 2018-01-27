@@ -3,6 +3,8 @@ import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
+import { State } from '../../../../../store/types';
+import { getMonthlyFarmerDairyTotal, getWeeklyFarmerDairyTotal, getFarmersTransactions } from '../../../../../store/modules/dairy/selectors';
 import styles from './style';
 
 interface OwnPropsType {
@@ -17,6 +19,9 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
+  monthlyTotal: any;
+  weeklyTotal: any;
+  farmerTransactions: any[];
 }
 
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
@@ -76,5 +81,22 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default new Composer<PropsType>(Collect)
-  .page;
+const collectPage = new Composer<PropsType>(Collect).page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    monthlyTotal: getMonthlyFarmerDairyTotal(state),
+    weeklyTotal: getWeeklyFarmerDairyTotal(state),
+    farmerTransactions: getFarmersTransactions(state),
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(collectPage);
