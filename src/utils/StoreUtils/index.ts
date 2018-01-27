@@ -13,6 +13,10 @@ import UTCDate from '../UTCDate';
 
 const StoreUtils = {
 
+  /**
+   * Convert a thunk creation row to a store creation row
+   * @param creationRow row to convert
+   */
   convertCreationRow<T>(creationRow: ThunkCreationRow<T>): StoreLocalCreationRow<T> {
     const uuid = `${uuid4()}-local`;
     const lastModified = UTCDate.getCurrentDate();
@@ -24,6 +28,11 @@ const StoreUtils = {
     return row;
   },
 
+  /**
+   * Convert a thunk update row to a store update row
+   *
+   * @param rowUpdate row to convert
+   */
   convertUpdateRow<T>(rowUpdate: ThunkUpdateRow<T>): StoreLocalUpdateRow<T> {
     const lastModified = UTCDate.getCurrentDate();
     const row = Object.assign({}, rowUpdate, {
@@ -33,6 +42,11 @@ const StoreUtils = {
     return row;
   },
 
+  /**
+   * Convert a storeRow to an request update row
+   *
+   * @param storeRow row to convert
+   */
   convertToUpdateRequest<T>(storeRow: StoreRow<T>): CoreUpdateRequest<T> {
     let row: any, status: any;
 
@@ -42,6 +56,11 @@ const StoreUtils = {
     return row as CoreUpdateRequest<T>;
   },
 
+  /**
+   * Convert a store creation row to a request creation row
+   *
+   * @param creationRow row to convert
+   */
   convertToCreateRequest<T>(creationRow: StoreLocalCreationRow<T>): CoreCreationRequest<T> {
     let row: any, uuid: string;
 

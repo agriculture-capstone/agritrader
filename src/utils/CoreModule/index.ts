@@ -16,6 +16,7 @@ import {
 
 /*--------------------------------- Utility Types ---------------------------------*/
 
+/** Different core modules */
 export type CoreModuleName
   = 'farmer'
   | 'dairy'

@@ -35,6 +35,7 @@ export type Action
 
 /*----------------------- Core Module Models -----------------------*/
 
+/** Status of a row in store */
 export type Status
   = 'local'
   | 'modified'

@@ -4,6 +4,7 @@ import store from '../../store';
 import sensitiveActions from '../../store/modules/sensitive/actions';
 import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
 
+/** Paths on Core for specific data tables */
 export enum CorePath {
   FARMERS = '/people/farmers',
   DAIRY = '/transactions/products/milk',
@@ -11,13 +12,17 @@ export enum CorePath {
 
 const LOGIN_PATH = '/actions/authenticate';
 
-export type CoreRequestMethod
+/** Types of methods to interact with the core */
+type CoreRequestMethod
   = 'GET'     // Retrieve
   | 'POST'    // Create
   | 'PUT'     // Update
   | 'HEAD'    // Timestamp
   ;
 
+/**
+ * API for interacting with the core
+ */
 export default class CoreAPI {
   private url: string;
 
@@ -25,14 +30,24 @@ export default class CoreAPI {
     this.url = `${AGRICORE_URL}:${AGRICORE_PORT}${path}`;
   }
 
-  public async get(uuid: string) {
+  /**
+   * Get a row from the core
+   *
+   * @param uuid UUID of the desired row
+   *
+   * @returns
+   */
+  public async get<Row>(uuid: string) {
     const url = `${this.url}/${uuid}`;
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));
 
-    return await this.coreFetch(request);
+    return await this.coreFetch(request) as Row;
   }
 
+  /**
+   * Get all of the specified resource
+   */
   public async getAll() {
     const url = this.url;
     const method: CoreRequestMethod = 'GET';
@@ -41,22 +56,37 @@ export default class CoreAPI {
     return this.coreFetch(request);
   }
 
-  public async update<T>(data: CoreUpdateRequest<T>) {
+  /**
+   * Update a row on the core
+   *
+   * @param row Information to overwrite
+   */
+  public async update<T>(row: CoreUpdateRequest<T>) {
     const url = this.url;
     const method: CoreRequestMethod = 'PUT';
-    const request = new Request(url, this.getOptions(method, data));
+    const request = new Request(url, this.getOptions(method, row));
 
     return this.coreFetch(request);
   }
 
-  public async create<T>(data: CoreCreationRequest<T>) {
+  /**
+   * Create a row in the database
+   *
+   * @param row Row to create
+   */
+  public async create<T>(row: CoreCreationRequest<T>) {
     const url = this.url;
     const method: CoreRequestMethod = 'POST';
-    const request = new Request(url, this.getOptions(method, data));
+    const request = new Request(url, this.getOptions(method, row));
 
     return this.coreFetch(request);
   }
 
+  /**
+   * Send a HEAD request for the resources
+   *
+   * @param timestamp Timestamp to compare
+   */
   public async head(timestamp: string) {
 
   }
@@ -98,6 +128,14 @@ export default class CoreAPI {
     else return await response.json();
   }
 
+  /**
+   * Attempt to login
+   *
+   * @param username Username to login with
+   * @param password Password to login with
+   *
+   * @return {boolean} Success status (true if successful)
+   */
   public static async login(username: string, password: string): Promise<boolean> {
     const url = LOGIN_PATH;
     const method: CoreRequestMethod = 'POST';
