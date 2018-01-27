@@ -29,20 +29,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Page for EditEntry
- * @requires values = {
- *                  firstName: string
- *                  lastName: string
- *                  date: string
- *                  time: string
- *                  EditEntry: {
- *                    amount: 'Amount #'
- *                    quality: 'Quality #'
- *                    rate: 'Rate #'
- *                  }
- *           }
- * 
- * @returns 
- * EditEntry page with firstName, lastName, date, time, Amount (L), Quality, and Rate (UGX) as read-only
+ * @requires farmer
+ * @requires milkEntry
  * 
  * @example 
  *             <EditEntry
@@ -52,10 +40,6 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
 
   constructor(props: PropsType) {
     super(props);
-  }
-
-  private renderEditButton = () => {
-    return (this.renderButton('Edit', 'PRIMARY'));
   }
 
   private renderCancelButton() {
@@ -106,21 +90,6 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
     );
   }
 
-  private formatRow(label: string, value: string) {
-    return (
-      <Grid>
-        <Row>
-          <Col>
-            <Text>{label}</Text>
-          </Col>
-          <Col>
-            <Text>{value}</Text>
-          </Col>
-        </Row>
-      </Grid>
-    );
-  }
-
   private formatEditRow(label: string, value: string) {
     return (
       <Grid>
@@ -140,28 +109,12 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
     );
   }
 
-  private renderDetailFields() {
-    return (
-      <List>
-        <ListItem>
-          {this.formatRow('Amount (L)', this.props.milkEntry.volume)}
-        </ListItem>
-        <ListItem>
-          {this.formatRow('Quality', this.props.milkEntry.quality)}
-        </ListItem>
-        <ListItem>
-          {this.formatRow('Rate (UGX)', this.props.milkEntry.costPerUnit)}
-        </ListItem>
-      </List>
-    );
-  }
-
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.values.EditEntry.amount)}
-        {this.formatEditRow('Quality', this.props.values.EditEntry.quality)}
-        {this.formatEditRow('Rate (UGX)', this.props.values.EditEntry.rate)}
+        {this.formatEditRow('Amount (L)', this.props.milkEntry.volume)}
+        {this.formatEditRow('Quality', this.props.milkEntry.quality)}
+        {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit)}
       </View>
     );
   }
@@ -170,38 +123,21 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
    * Render method for EditEntry
    */
   public render() {
-    switch (this.props.mode) {
-      case 'DETAILS': {
-        return(
-          <Content padder style={Styles.content}>
-            {this.renderHeader()}
-          <Grid>
-            {this.renderDetailFields()}
-            <Row style={Styles.buttonRow}>
-              {this.renderEditButton()}
-            </Row>
-          </Grid>
-        </Content>
-        );
-      }
-      case 'EDIT': {
-        return(
-          <Content padder style={{ backgroundColor: 'white' }}>
-          <List>
-            <ListItem>
-              {this.renderHeader()}
-            </ListItem>
-          </List>
-          {this.renderEditFields()}
-          <Grid>
-            <Row style={Styles.buttonRow}>
-              {this.renderCancelButton()}
-              {this.renderSaveButton()}
-            </Row>
-          </Grid>
-        </Content>
-        );
-      } 
-    }
+    return(
+      <Content padder style={{ backgroundColor: 'white' }}>
+      <List>
+        <ListItem>
+          {this.renderHeader()}
+        </ListItem>
+      </List>
+      {this.renderEditFields()}
+      <Grid>
+        <Row style={Styles.buttonRow}>
+          {this.renderCancelButton()}
+          {this.renderSaveButton()}
+        </Row>
+      </Grid>
+    </Content>
+    );
   }
 }
