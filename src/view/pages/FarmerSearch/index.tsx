@@ -4,10 +4,12 @@ import { H1, H3, Content, List, ListItem } from 'native-base';
 import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
-import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
+import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
+import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
+import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 
 /** This is just a table of phony information to populate the FarmerSearch UI */
 const fakeFarmerList = [
@@ -94,11 +96,10 @@ interface DispatchPropsType {
 /** FarmerSearch OwnStateType */
 interface OwnStateType {}
 
-/** FarmerSearch WrappedPropsType */
-type WrappedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 /** FarmerSearch PropsType */
-type PropsType = WrappedPropsType & InjectedSearchProps;
+type PropsType = InjectedSearchProps & InjectedFabProps & NestedPropsType;
 
 /** Farmer Search component for displaying and searching through farmers */
 class FarmerSearch extends React.Component<PropsType, OwnStateType> {
@@ -112,6 +113,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
     this.renderItem = this.renderItem.bind(this);
     this.itemClicked = this.itemClicked.bind(this);
+    this.onFabPress = this.onFabPress.bind(this);
   }
 
   /** Function to take user to farmer that was clicked on */
@@ -139,6 +141,10 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return sortedList;
   }
 
+  private onFabPress() {
+
+  }
+
   /** Function to render the individual list items */
   private renderItem(info: FarmerType) {
     return (
@@ -157,6 +163,11 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
   /************************* React *************************/
 
+  /** React componentDidMount */
+  public componentDidMount() {
+    this.props.listenToFab(this.onFabPress);
+  }
+
   /** Render method to create the List */
   public render(): JSX.Element {
     return (
@@ -170,7 +181,11 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const FarmerSearchPage = createSearchPage<WrappedPropsType>(FarmerSearch, 'Search Farmers');
+const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
+  .search('Search Farmers')
+  .fab()
+  .page;
+
 
 /************************* Redux ************************/
 

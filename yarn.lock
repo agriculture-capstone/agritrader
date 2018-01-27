@@ -2,9 +2,29 @@
 # yarn lockfile v1
 
 
+"@types/color-convert@*":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@types/color-convert/-/color-convert-1.9.0.tgz#bfa8203e41e7c65471e9841d7e306a7cd8b5172d"
+  dependencies:
+    "@types/color-name" "*"
+
+"@types/color-name@*":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.0.tgz#926f76f7e66f49cc59ad880bb15b030abbf0b66d"
+
+"@types/color@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/color/-/color-2.0.0.tgz#73c5db00fcf15426d5a12f9af943eed03d7e0984"
+  dependencies:
+    "@types/color-convert" "*"
+
 "@types/jest@^21.1.5":
   version "21.1.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-21.1.10.tgz#dcacb5217ddf997a090cc822bba219b4b2fd7984"
+
+"@types/lodash@^4.14.96":
+  version "4.14.96"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.96.tgz#49a402bb6984af7dd9a48cea3781744a3774bff1"
 
 "@types/react-native@*":
   version "0.52.1"
@@ -47,6 +67,12 @@
   resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.5.tgz#d1a02758f90845899cd304aa0912daeba2028eb6"
   dependencies:
     redux "^3.6.0"
+
+"@types/wolfy87-eventemitter@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@types/wolfy87-eventemitter/-/wolfy87-eventemitter-5.2.0.tgz#0233f0af5d600d22b6a669be6006708e79712ef7"
+  dependencies:
+    wolfy87-eventemitter "*"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -4949,6 +4975,10 @@ win-release@^1.0.0:
 window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
+
+wolfy87-eventemitter@*, wolfy87-eventemitter@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/wolfy87-eventemitter/-/wolfy87-eventemitter-5.2.4.tgz#5021d2952d3611cbcd195149711d9b595cd11d48"
 
 wordwrap@0.0.2:
   version "0.0.2"

@@ -1,9 +1,11 @@
-import { Container, Toast } from 'native-base';
+import { Container, Toast, StyleProvider } from 'native-base';
 import { BackHandler } from 'react-native';
 import { NavigationState, addNavigationHelpers } from 'react-navigation';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 import * as React from 'react';
 
+import getTheme from '../../native-base-theme/components';
+import material from '../../native-base-theme/variables/material';
 import Header from '../../view/components/Header';
 import Drawer from '../../view/components/Drawer';
 import { State } from '../../store/types';
@@ -151,12 +153,14 @@ class AppNavigation extends React.Component<PropsType, {}> {
   /** Render the navigator */
   public render () {
     return (
-      <Drawer>
-        <Container>
-          {this.props.headerShown && <Header />}
-          <Navigator navigation={this.navHelpers()} />
-        </Container>
-      </Drawer>
+      <StyleProvider style={getTheme(material as any)}>
+        <Drawer>
+          <Container>
+            {this.props.headerShown && <Header />}
+            <Navigator navigation={this.navHelpers()} />
+          </Container>
+        </Drawer>
+      </StyleProvider>
     );
   }
 }
