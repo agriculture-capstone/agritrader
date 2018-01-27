@@ -4,20 +4,20 @@ import thunk from 'redux-thunk';
 import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import reducer from './reducer';
+import rootReducer from './reducer';
 import { State } from './types';
 import CoreAPI from '../utils/CoreAPI';
 import { CoreModule } from '../utils/CoreModule/index';
 
-const whitelist = [...Object.values(CoreModule), 'sensitive'];
+const whitelist = Object.values(CoreModule);
 
 const persistConfig: PersistConfig = {
   storage,
   whitelist,
-  key: 'root',
+  key: 'main',
 };
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const composeEnhancers = (typeof window !== 'undefined' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
