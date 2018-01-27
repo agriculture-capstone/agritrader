@@ -28,6 +28,7 @@ type CreateLocalPayload<Row> = { row: StoreLocalCreationRow<Row> };
 type CreateRemotePayload = { localUUID: string, coreUUID: string, lastModified: string };
 type UpdateLocalPayload<Row> = { row: StoreLocalUpdateRow<Row> };
 type UpdateRemotePayload = { uuid: string, lastModified: string };
+type EmptyPayload = {};
 
 
 type ActionPayload<Row>
@@ -35,6 +36,7 @@ type ActionPayload<Row>
   | CreateRemotePayload
   | UpdateLocalPayload<Row>
   | UpdateRemotePayload
+  | EmptyPayload
   ;
 
 type Action<R> = ActionPayload<R> & ActionBase;
@@ -200,7 +202,7 @@ export function createThunks<Row>(name: CoreModuleName, path: CorePath) {
       dispatch(updateRowLocal(convertedRow));
 
       // Retrieve the updated row
-      const updatedRow = getState()[name].rows.find(f => f.uuid === uuid);
+      const updatedRow = (getState() as any)[name].rows.find((f: StoreRow<Row>) => f.uuid === uuid);
 
       // Deal with no row found
       if (rowNotFound(updatedRow)) {
