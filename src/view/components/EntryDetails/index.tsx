@@ -18,6 +18,7 @@ const fakeValues = {
   costPerUnit: '3.6',
 };
 
+// @TODO uncomment props
 interface OwnPropsType {
   // farmer: Farmer;
   // milkEntry: MilkEntry;

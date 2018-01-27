@@ -19,6 +19,7 @@ interface values {
   farmer: Farmer;
 }
 
+// @TODO uncomment props
 interface OwnPropsType {
   // farmer: Farmer;
 }

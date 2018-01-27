@@ -23,9 +23,10 @@ interface values {
   milkEntry: MilkEntry;
 }
 
+// @TODO uncomment props
 interface OwnPropsType {
-  farmer: Farmer;
-  milkEntry: MilkEntry;
+  // farmer: Farmer;
+  // milkEntry: MilkEntry;
 }
 
 interface DispatchPropsType {
