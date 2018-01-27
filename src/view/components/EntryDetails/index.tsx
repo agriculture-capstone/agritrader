@@ -43,7 +43,7 @@ interface OwnStateType {
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
-/** FarmerSearch PropsType */
+/** EntryDetails PropsType */
 type PropsType = InjectedFabProps & NestedPropsType;
 
 /**
@@ -70,10 +70,6 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
 
   private renderEditButton = () => {
     return (this.renderButton('Edit', 'PRIMARY'));
-  }
-
-  private renderCancelButton() {
-    return (this.renderButton('Cancel', 'INFO'));
   }
 
   /**

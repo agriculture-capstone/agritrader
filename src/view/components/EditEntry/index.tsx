@@ -3,6 +3,14 @@ import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input,
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
+import { Route } from '../../navigation/navigator';
+
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../store/modules/nav/actions';
+import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
+import Composer from '../../hoc/PageComposer/index';
+import { State } from '../../../store/types';
+
 
 import Styles from './style';
 
@@ -30,12 +38,17 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
+  goBack(): void;
 }
 
 interface StorePropsType {
 }
 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** EditEntry PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
 
 interface OwnStateType {
 }
@@ -54,30 +67,28 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *             <EditEntry
  *             />
  */
-export default class EditEntry extends React.Component<PropsType, OwnStateType> {
+class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
   }
 
-  private renderCancelButton() {
-    return (this.renderButton('Cancel', 'INFO'));
-  }
+  private onCancelPress = () => this.props.goBack();
+  private onSavePress = () => this.props.navigate(Route.MILK_ENTRY_DETAILS);
 
-  private renderSaveButton() {
-    return (this.renderButton('Save', 'PRIMARY'));
-  }
+  private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
+  private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
 
   /**
    * Returns a button with text specified
    */
-  private renderButton(text: string, color: ButtonColor) {
+  private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
     return (
       <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary}>
+        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
           <Text>{text}</Text>
         </Button>
       </Col>
@@ -165,3 +176,21 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
     );
   }
 }
+
+const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
+  return {};
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    goBack: () => dispatch(navActions.goBack()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditEntryPage);
