@@ -82,9 +82,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     };
   }
 
-  /**
-   * Create page buttons
-   */
+  /** Create page buttons */
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
 

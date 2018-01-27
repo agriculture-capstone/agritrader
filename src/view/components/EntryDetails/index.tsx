@@ -25,10 +25,9 @@ const fakeValues = {
   costPerUnit: '3.6',
 };
 
-// @TODO uncomment props
 interface OwnPropsType {
-  // farmer: Farmer;
-  // milkEntry: MilkEntry;
+  farmer: Farmer;
+  milkEntry: MilkEntry;
 }
 
 interface DispatchPropsType {
@@ -57,8 +56,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  * @requires milkEntry
  * 
  * @example 
- *             <EntryDetails
- *             />
+ *          <EntryDetails
+ *          />
  */
 class EntryDetails extends React.Component<PropsType, OwnStateType> {
 
@@ -66,11 +65,13 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
     super(props);
   }
 
-  private onEditPress = () => this.props.navigate(Route.EDIT_MILK_ENTRY);
-
+  /** Create edit button */
   private renderEditButton = () => {
     return (this.renderButton('Edit', 'PRIMARY'));
   }
+
+  /** Handle pressing edit button */
+  private onEditPress = () => this.props.navigate(Route.EDIT_MILK_ENTRY);
 
   /**
    * Returns a button with text specified
@@ -93,22 +94,19 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
-            {fakeValues.firstName} {fakeValues.lastName}
+            {this.props.farmer.firstName} {this.props.farmer.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take date only */}
-            {/* {this.props.milkEntry.datetime} */}
-            {fakeValues.date}
+            {this.props.milkEntry.datetime}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
-            {/* {this.props.milkEntry.datetime}  */}
-            {fakeValues.time} 
+            {this.props.milkEntry.datetime}
           </Text>
         </Row>
       </Grid>
@@ -134,16 +132,13 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <List>
         <ListItem>
-          {/* {this.formatRow('Amount (L)', this.props.milkEntry.volume)} */}
-          {this.formatRow('Amount (L)', fakeValues.volume)}
+          {this.formatRow('Amount (L)', this.props.milkEntry.volume)}
         </ListItem>
         <ListItem>
-          {/* {this.formatRow('Quality', this.props.milkEntry.quality)} */}
-          {this.formatRow('Quality', fakeValues.quality)}
+          {this.formatRow('Quality', this.props.milkEntry.quality)}
         </ListItem>
         <ListItem>
-          {/* {this.formatRow('Rate (UGX)', this.props.milkEntry.costPerUnit)} */}
-          {this.formatRow('Rate (UGX)', fakeValues.costPerUnit)}
+          {this.formatRow('Rate (UGX)', this.props.milkEntry.costPerUnit)}
         </ListItem>
       </List>
     );
