@@ -15,13 +15,8 @@ const fakeValues = {
   time: '9:35 pm',
 };
 
-interface values {
-  farmer: Farmer;
-}
-
-// @TODO uncomment props
 interface OwnPropsType {
-  // farmer: Farmer;
+  farmer: Farmer;
 }
 
 interface DispatchPropsType {

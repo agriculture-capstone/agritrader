@@ -27,11 +27,6 @@ const fakeValues = {
   costPerUnit: '3.6',
 };
 
-interface values {
-  farmer: Farmer;
-  milkEntry: MilkEntry;
-}
-
 interface OwnPropsType {
   farmer: Farmer;
   milkEntry: MilkEntry;
