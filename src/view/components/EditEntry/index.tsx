@@ -75,12 +75,21 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     super(props);
   }
 
-  private onCancelPress = () => this.props.goBack();
-  private onSavePress = () => this.props.navigate(Route.MILK_ENTRY_DETAILS);
-
+  /**
+   * Create page buttons
+   */
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
 
+  /**
+   * Handle buttons onPress
+   */
+  private onCancelPress = () => this.props.goBack();
+  private onSavePress = () => this.props.navigate(Route.MILK_ENTRY_DETAILS);
+
+  /**
+   * Handle entry changes
+   */
   private onAmountChange = (newAmount: string) => '';
   private onQualityChange = (newQuality: string) => '';
   private onRateChange = (newRate: string) => '';
