@@ -35,7 +35,7 @@ interface values {
 // @TODO uncomment props
 interface OwnPropsType {
   // farmer: Farmer;
-  // milkEntry: MilkEntry;
+  milkEntry: MilkEntry;
 }
 
 interface DispatchPropsType {
@@ -84,11 +84,20 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
 
-  /**
-   * Handle buttons onPress
-   */
+  /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
-  private onSavePress = () => this.props.navigate(Route.MILK_ENTRY_DETAILS);
+  
+  /** Handle pressing save button */
+  private onSavePress = () => {
+    let newEntry: PartialDairy = {
+      uuid: this.props.milkEntry.uuid,
+      volume: this.state.volume,
+      quality: this.state.quality,
+      costPerUnit: this.state.costPerUnit,
+    };
+    this.props.updateDairy(newEntry);
+    this.props.navigate(Route.MILK_ENTRY_DETAILS);
+  }
 
   /**
    * Handle entry changes, update local state
