@@ -73,7 +73,6 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           <Row>
             <CardSummary
               data={testData}
-
             />
           </Row>
           <Row>
