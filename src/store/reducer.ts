@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
-import { BaseReducer } from 'redux-persist';
+import { BaseReducer, persistReducer, PersistConfig } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import { State, Action } from './types';
+import { CoreModule } from '../utils/CoreModule/index';
+
 import drawerReducer from './modules/drawer/reducer';
 import navReducer from './modules/nav/reducer';
 import tabsReducer from './modules/tabs/reducer';
@@ -12,7 +15,16 @@ import sensitiveReducer from './modules/sensitive/reducer';
 import farmerReducer from './modules/farmer/reducer';
 import dairyReducer from './modules/dairy/reducer';
 
-export default combineReducers<State>({
+const whitelist = Object.values(CoreModule);
+
+const persistConfig: PersistConfig = {
+  storage,
+  whitelist,
+  key: 'root',
+};
+
+
+const reducer = combineReducers<State>({
   drawer: drawerReducer,
   nav: navReducer,
   tabs: tabsReducer,
@@ -22,3 +34,6 @@ export default combineReducers<State>({
   farmer: farmerReducer,
   dairy: dairyReducer,
 }) as BaseReducer<State, Action>;
+
+export default persistReducer(persistConfig, reducer);
+
