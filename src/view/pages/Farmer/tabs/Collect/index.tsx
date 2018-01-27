@@ -3,6 +3,15 @@ import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
+
+import { InjectedSearchProps } from '../../../../hoc/PageComposer/SearchPage/index';
+import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../../../store/modules/nav/actions';
+import { Route } from '../../../../navigation/navigator';
+import { State } from '../../../../../store/types';
+
+
 import styles from './style';
 
 interface OwnPropsType {
@@ -14,20 +23,31 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
 }
 
 interface StorePropsType {
 }
 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
-
 interface OwnStateType {
 }
+
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** FarmerSearch PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
 
 /**
  * Collect Tab Component
  */
 class Collect extends React.Component<PropsType, OwnStateType> {
+
+  private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
+
+  public componentDidMount() {
+    this.props.listenToFab(this.onAddPress);
+  }
+
   /**
    * Render method for Farmer
    */
@@ -61,20 +81,27 @@ class Collect extends React.Component<PropsType, OwnStateType> {
               values={this.props.collectTransactions}
             />
           </Row>
-          <Row style={styles.addEntryButton}>
-            <Col>
-              <Button block primary >
-                <Text>
-                  ADD ENTRY
-                </Text>
-              </Button>
-            </Col>
-          </Row>
         </Grid>
       </Content>
     );
   }
 }
 
-export default new Composer<PropsType>(Collect)
-  .page;
+const CollectPage = new Composer<NestedPropsType>(Collect)
+.fab()
+.page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
+  return {};
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CollectPage);

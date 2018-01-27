@@ -1,21 +1,32 @@
 import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
 
+import Composer from '../../hoc/PageComposer';
 import Styles from './style';
 
+// TODO delete this
+const fakeValues = {
+  firstName: 'Patrick',
+  lastName: 'Kenaan',
+  date: 'Friday, Jan 25, 2018',
+  time: '9:35 pm',
+};
+
+interface Values {
+  firstName: string;
+  lastName: string;
+  date: string;
+  time: string;
+}
+
 interface OwnPropsType {
-  values: {
-    firstName: string;
-    lastName: string;
-    date: string;
-    time: string;
-  };
 }
 
 interface DispatchPropsType {
 }
 
 interface StorePropsType {
+  // values: Values;
 }
 
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
@@ -38,7 +49,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *           }
  * 
  * @returns 
- * AddEntry component with firstName, lastName, date, and time as read-only and Amount (L), Quality, and Rate (UGX) input fields
+ * AddEntry component with firstName, lastName, date, and time 
+ * as read-only and Amount (L), Quality, and Rate (UGX) input fields
  * 
  * @example 
  *             <AddEntry
@@ -50,6 +62,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *                }}
  *             />
  */
+
 export default class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
@@ -85,17 +98,20 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {this.props.values.firstName} {this.props.values.lastName}
+            {/* {this.props.values.firstName} {this.props.values.lastName} */}
+            {fakeValues.firstName} {fakeValues.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {this.props.values.date}
+            {/* {this.props.values.date} */}
+            {fakeValues.date}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {this.props.values.time}
+            {/* {this.props.values.time} */}
+            {fakeValues.time}
           </Text>
         </Row>
       </Grid>

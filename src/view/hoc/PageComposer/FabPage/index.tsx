@@ -3,7 +3,7 @@ import EventEmitter = require('wolfy87-eventemitter');
 import { View, Fab, Icon } from 'native-base';
 
 /** Type of Floating Action Button */
-export type FabType = 'add' | 'share';
+export type FabType = 'add' | 'share' | 'edit';
 
 /** Props injected into wrapped component */
 export interface InjectedFabProps {
