@@ -5,6 +5,8 @@ import { SearchBarState, Action as SearchBarAction } from './modules/searchBar/t
 import { HeaderState, Action as HeaderAction } from './modules/header/types';
 import { FarmerState, Action as FarmerAction } from './modules/farmer/types';
 import { DairyState, Action as DairyAction } from './modules/dairy/types';
+import { CurrentFarmerState, Action as CurrentFarmerAction } from './modules/currentFarmer/types';
+
 
 /** Global redux state */
 export interface State {
@@ -15,6 +17,7 @@ export interface State {
   header: HeaderState;
   farmer: FarmerState;
   dairy: DairyState;
+  currentFarmer: CurrentFarmerState;
 }
 
 /** Global redux action */
@@ -26,6 +29,7 @@ export type Action
   | HeaderAction
   | FarmerAction
   | DairyAction
+  | CurrentFarmerAction
   ;
 
 /*----------------------- Global Models -----------------------*/

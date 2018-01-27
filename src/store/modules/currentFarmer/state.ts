@@ -1,6 +1,6 @@
-import { currentFarmerState } from './types';
+import { CurrentFarmerState } from './types';
 
-const initialState: currentFarmerState = {
+const initialState: CurrentFarmerState = {
   currentFarmerUUID: 'temp113',
 };
 

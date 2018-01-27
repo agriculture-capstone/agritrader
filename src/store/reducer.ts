@@ -7,6 +7,8 @@ import tabsReducer from './modules/tabs/reducer';
 import searchBarReducer from './modules/searchBar/reducer';
 import headerReducer from './modules/header/reducer';
 import farmerReducer from './modules/farmer/reducer';
+import currentFarmerReducer from './modules/currentFarmer/reducer';
+
 
 export default combineReducers<State>({
   drawer: drawerReducer,
@@ -15,4 +17,5 @@ export default combineReducers<State>({
   searchBar: searchBarReducer,
   header: headerReducer,
   farmer: farmerReducer,
+  currentFarmer: currentFarmerReducer,
 });

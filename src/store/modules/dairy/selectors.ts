@@ -1,15 +1,20 @@
 import { createSelector } from 'reselect';
-import { DairyState,Dairy } from './types';
+import { Dairy } from './types';
+import { State } from '../../types';
+
+
 import * as moment from 'moment';
 
-const getDairyEntries = (state:DairyState) => state.dairyList;
+const getDairyEntries = (state: State) => state.dairy.dairyList;
+const getCurrentFarmerUUID = (state:State) => state.currentFarmer.currentFarmerUUID;
+
 
 /************Selectors for all milk entries ***************/
 
 /**Selector to calculate the current days milk collection */
 export const getDaysDairyTotal = createSelector(
   [getDairyEntries],
-  (dairyEntries:Dairy[]) => dairyEntries.reduce((sum: number, entry: Dairy) => (inSameDay(entry.datetime)) ? sum + entry.volume : 0));
+  (dairyEntries:Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => (inSameDay(entry.datetime)) ? sum + entry.volume : 0));
 
 /**Selector to calculate the average daily milk collection */
 export const getAvgDaysDairyTotal = createSelector(
@@ -24,20 +29,18 @@ export const getAvgDaysDairyTotal = createSelector(
 
 /**Selector to calculate the farmers total milk collected this week **Still struggling with this one** */
 export const getFarmersTransactions = createSelector(
-  [getDairyEntries],
-  (dairyEntries:Dairy[]) => dairyEntries.filter(entry => entry.fromUUID === currentFarmer);//TODO figure out how I'm getting current farmer
+  [getDairyEntries, getCurrentFarmerUUID],
+  (dairyEntries:Dairy[], farmerUUID:string) => dairyEntries.filter(entry => entry.fromUUID.localeCompare(farmerUUID)));
 
 /**Selector to calculate the farmers total milk collected this week */
 export const getWeeklyFarmerDairyTotal = createSelector(
   [getFarmersTransactions],
-  (dairyEntries:Dairy[]) => dairyEntries.reduce((sum: number, entry: Dairy) => (inLastWeek(entry.datetime)) ? sum + entry.volume : 0));
+  (dairyEntries:Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => (inLastWeek(entry.datetime)) ? sum + entry.volume : 0));
 
 /**Selector to calculate the farmers total milk collected this month */
 export const getMonthlyFarmerDairyTotal = createSelector(
   [getFarmersTransactions],
-  (dairyEntries:Dairy[]) => dairyEntries.reduce((sum: number, entry: Dairy) => (inSameMonth(entry.datetime)) ? sum + entry.volume : 0));
-
-
+  (dairyEntries:Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => (inSameMonth(entry.datetime)) ? sum + entry.volume : 0));
 
 
 /************Helper Methods************/

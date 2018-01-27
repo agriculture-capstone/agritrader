@@ -1,6 +1,6 @@
 /*----------------------- State -----------------------*/
 /** currentFarmer State*/
-export interface currentFarmerState{
+export interface CurrentFarmerState{
   currentFarmerUUID: string;
 }
 
