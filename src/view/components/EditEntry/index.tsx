@@ -32,9 +32,8 @@ interface values {
   milkEntry: MilkEntry;
 }
 
-// @TODO uncomment props
 interface OwnPropsType {
-  // farmer: Farmer;
+  farmer: Farmer;
   milkEntry: MilkEntry;
 }
 
@@ -69,13 +68,18 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  * @requires milkEntry
  * 
  * @example 
- *             <EditEntry
- *             />
+ *          <EditEntry
+ *          />
  */
 class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
+    this.state = {
+      volume: this.props.milkEntry.volume,
+      quality: this.props.milkEntry.quality,
+      costPerUnit: this.props.milkEntry.costPerUnit,
+    };
   }
 
   /**
@@ -127,22 +131,22 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
-            {fakeValues.firstName} {fakeValues.lastName}
+            {this.props.farmer.firstName} {this.props.farmer.lastName}
+            {/* {fakeValues.firstName} {fakeValues.lastName} */}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take date only */}
-            {/* {this.props.milkEntry.datetime} */}
-            {fakeValues.date}
+            {this.props.milkEntry.datetime}
+            {/* {fakeValues.date} */}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
-            {/* {this.props.milkEntry.datetime}  */}
-            {fakeValues.time} 
+            {this.props.milkEntry.datetime} 
+            {/* {fakeValues.time}  */}
           </Text>
         </Row>
       </Grid>
@@ -171,12 +175,12 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {/* {this.formatEditRow('Amount (L)', this.props.milkEntry.volume, this.onAmountChange)} */}
-        {/* {this.formatEditRow('Quality', this.props.milkEntry.quality, this.onQualityChange)} */}
-        {/* {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit, this.onRateChange)} */}
-        {this.formatEditRow('Amount (L)', fakeValues.volume, this.onAmountChange)}
-        {this.formatEditRow('Quality', fakeValues.quality, this.onQualityChange)}
-        {this.formatEditRow('Rate (UGX)', fakeValues.costPerUnit, this.onRateChange)}
+        {this.formatEditRow('Amount (L)', this.props.milkEntry.volume, this.onAmountChange)}
+        {this.formatEditRow('Quality', this.props.milkEntry.quality, this.onQualityChange)}
+        {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit, this.onRateChange)}
+        {/* {this.formatEditRow('Amount (L)', fakeValues.volume, this.onAmountChange)} */}
+        {/* {this.formatEditRow('Quality', fakeValues.quality, this.onQualityChange)} */}
+        {/* {this.formatEditRow('Rate (UGX)', fakeValues.costPerUnit, this.onRateChange)} */}
       </View>
     );
   }
