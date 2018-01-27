@@ -3,6 +3,7 @@ import { Action as ActionBase, Reducer } from 'redux';
 import { CorePath } from '../CoreAPI';
 import UTCDate from '../UTCDate';
 import StoreUtils from '../StoreUtils';
+import { NetworkError } from '../../errors/NetworkError';
 import {
   StoreLocalCreationRow,
   StoreLocalUpdateRow,
@@ -46,6 +47,10 @@ type Action<R> = ActionPayload<R> & ActionBase;
 
 function isResponse(response: any): response is Response {
   return (response instanceof Response);
+}
+
+function isNetworkError(err: any): err is NetworkError {
+  return (err instanceof NetworkError);
 }
 
 function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
@@ -180,6 +185,10 @@ export function createThunks<Row>(name: CoreModuleName, path: CorePath) {
             const response = err;
             // tslint:disable-next-line:no-console
             console.log(response.status);
+
+            return;
+          } else if (isNetworkError(err)) {
+            // Currently no network, let request fail and allow sync service to resolve
             return;
           } else {
             // Not a response error, should be logged
@@ -227,6 +236,9 @@ export function createThunks<Row>(name: CoreModuleName, path: CorePath) {
             const response = err;
             // tslint:disable-next-line:no-console
             console.log(response.status);
+            return;
+          } else if (isNetworkError(err)) {
+            // Currently no network, let request fail and allow sync service to resolve
             return;
           } else {
             // Not a response error, should be logged
