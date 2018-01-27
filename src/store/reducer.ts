@@ -8,6 +8,8 @@ import searchBarReducer from './modules/searchBar/reducer';
 import headerReducer from './modules/header/reducer';
 import farmerReducer from './modules/farmer/reducer';
 import currentFarmerReducer from './modules/currentFarmer/reducer';
+import dairyReducer from './modules/dairy/reducer';
+
 
 
 export default combineReducers<State>({
@@ -18,4 +20,5 @@ export default combineReducers<State>({
   header: headerReducer,
   farmer: farmerReducer,
   currentFarmer: currentFarmerReducer,
+  dairy: dairyReducer,
 });
