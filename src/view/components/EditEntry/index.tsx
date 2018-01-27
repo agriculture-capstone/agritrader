@@ -28,15 +28,27 @@ interface OwnStateType {
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
- * Page for EntryDetails
- * @requires farmer
- * @requires milkEntry
+ * Page for EditEntry
+ * @requires values = {
+ *                  firstName: string
+ *                  lastName: string
+ *                  date: string
+ *                  time: string
+ *                  EditEntry: {
+ *                    amount: 'Amount #'
+ *                    quality: 'Quality #'
+ *                    rate: 'Rate #'
+ *                  }
+ *           }
+ * 
+ * @returns 
+ * EditEntry page with firstName, lastName, date, time, Amount (L), Quality, and Rate (UGX) as read-only
  * 
  * @example 
- *             <EntryDetails
+ *             <EditEntry
  *             />
  */
-export default class EntryDetails extends React.Component<PropsType, OwnStateType> {
+export default class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
@@ -48,6 +60,10 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
 
   private renderCancelButton() {
     return (this.renderButton('Cancel', 'INFO'));
+  }
+
+  private renderSaveButton() {
+    return (this.renderButton('Save', 'PRIMARY'));
   }
 
   /**
@@ -105,6 +121,25 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
     );
   }
 
+  private formatEditRow(label: string, value: string) {
+    return (
+      <Grid>
+        <Row>
+          <Col>
+            <Text>{label}</Text>
+          </Col>
+          <Col>
+          <Item>
+            <Input>
+              <Text>{value}</Text>
+            </Input>
+          </Item>
+          </Col>
+        </Row>
+      </Grid>
+    );
+  }
+
   private renderDetailFields() {
     return (
       <List>
@@ -121,20 +156,52 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
     );
   }
 
+  private renderEditFields() {
+    return (
+      <View style={Styles.editView}>
+        {this.formatEditRow('Amount (L)', this.props.values.EditEntry.amount)}
+        {this.formatEditRow('Quality', this.props.values.EditEntry.quality)}
+        {this.formatEditRow('Rate (UGX)', this.props.values.EditEntry.rate)}
+      </View>
+    );
+  }
+
   /**
-   * Render method for EntryDetails
+   * Render method for EditEntry
    */
   public render() {
-    return(
-      <Content padder style={Styles.content}>
-        {this.renderHeader()}
-      <Grid>
-        {this.renderDetailFields()}
-        <Row style={Styles.buttonRow}>
-          {this.renderEditButton()}
-        </Row>
-      </Grid>
-    </Content>
-    );
+    switch (this.props.mode) {
+      case 'DETAILS': {
+        return(
+          <Content padder style={Styles.content}>
+            {this.renderHeader()}
+          <Grid>
+            {this.renderDetailFields()}
+            <Row style={Styles.buttonRow}>
+              {this.renderEditButton()}
+            </Row>
+          </Grid>
+        </Content>
+        );
+      }
+      case 'EDIT': {
+        return(
+          <Content padder style={{ backgroundColor: 'white' }}>
+          <List>
+            <ListItem>
+              {this.renderHeader()}
+            </ListItem>
+          </List>
+          {this.renderEditFields()}
+          <Grid>
+            <Row style={Styles.buttonRow}>
+              {this.renderCancelButton()}
+              {this.renderSaveButton()}
+            </Row>
+          </Grid>
+        </Content>
+        );
+      } 
+    }
   }
 }
