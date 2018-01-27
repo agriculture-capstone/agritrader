@@ -7,19 +7,20 @@ import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
 import Composer from '../../hoc/PageComposer';
 import Styles from './style';
 
-// TODO delete this
-const fakeFarmer = {
+// @TODO delete this
+const fakeValues = {
   firstName: 'Patrick',
   lastName: 'Kenaan',
   date: 'Friday, Jan 25, 2018',
   time: '9:35 pm',
 };
 
-interface farmer {
-  // farmer: Farmer;
+interface values {
+  farmer: Farmer;
 }
 
 interface OwnPropsType {
+  // farmer: Farmer;
 }
 
 interface DispatchPropsType {
@@ -83,21 +84,21 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
         <Row style={Styles.headerRow}>
           <H1>
             {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
-            {fakeFarmer.firstName} {fakeFarmer.lastName}
+            {fakeValues.firstName} {fakeValues.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take date only */}
             {/* {this.props.farmer.datetime} */}
-            {fakeFarmer.date}
+            {fakeValues.date}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
             {/* {this.props.farmer.datetime} */}
-            {fakeFarmer.time}
+            {fakeValues.time}
           </Text>
         </Row>
       </Grid>

@@ -6,6 +6,23 @@ import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
 
 import Styles from './style';
 
+// @TODO delete this
+const fakeValues = {
+  firstName: 'Patrick',
+  lastName: 'Kenaan',
+
+  date: 'Friday, Jan 25, 2018',
+  time: '9:35 pm',
+  volume: '14',
+  quality: '60',
+  costPerUnit: '3.6',
+};
+
+interface values {
+  farmer: Farmer;
+  milkEntry: MilkEntry;
+}
+
 interface OwnPropsType {
   farmer: Farmer;
   milkEntry: MilkEntry;
@@ -71,19 +88,22 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
+            {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
+            {fakeValues.firstName} {fakeValues.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take date only */}
-            {this.props.milkEntry.datetime}
+            {/* {this.props.milkEntry.datetime} */}
+            {fakeValues.date}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
-            {this.props.milkEntry.datetime} 
+            {/* {this.props.milkEntry.datetime}  */}
+            {fakeValues.time} 
           </Text>
         </Row>
       </Grid>
@@ -112,9 +132,12 @@ export default class EditEntry extends React.Component<PropsType, OwnStateType> 
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.volume)}
-        {this.formatEditRow('Quality', this.props.milkEntry.quality)}
-        {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit)}
+        {/* {this.formatEditRow('Amount (L)', this.props.milkEntry.volume)} */}
+        {/* {this.formatEditRow('Quality', this.props.milkEntry.quality)} */}
+        {/* {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit)} */}
+        {this.formatEditRow('Amount (L)', fakeValues.volume)}
+        {this.formatEditRow('Quality', fakeValues.quality)}
+        {this.formatEditRow('Rate (UGX)', fakeValues.costPerUnit)}
       </View>
     );
   }
