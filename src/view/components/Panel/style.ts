@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { COLORS } from '../../../native-base-theme/variables/styles';
+
 export default StyleSheet.create({
   container: {
     backgroundColor: '#fff',
@@ -13,7 +15,7 @@ export default StyleSheet.create({
   title: {
     flex: 1,
     padding: 10,
-    color: '#2a2f43',
+    color: COLORS.icons,
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 32,

@@ -42,20 +42,20 @@ export default class CardButton extends React.Component<PropsType, OwnStateType>
    * Render method 
    */
   public render() {
-    const iconColor = {
-      color: this.props.iconColor,
-    };
-
+    const iconStyle = [
+      styles.icon, 
+      this.props.iconColor ? { color: this.props.iconColor } : styles.iconColor,
+    ];
     return (
       <Card>
         <CardItem button onPress={this.onPress}>
           <Left>
             <Icon
-              style={[styles.icon, iconColor]}
+              style={iconStyle}
               name={this.props.iconName}
             />
             <Body>
-              <Text>
+              <Text style={styles.title}>
                 {this.props.title}
               </Text>
             </Body>

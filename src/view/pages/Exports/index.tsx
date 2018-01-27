@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Export from './tabs/Export';
 
+import Export from './tabs/Export';
 
 const demoExportValues = [
   { date: 'Jan 18 17:31', plate:'BRI8932', vol: 10 }, 
@@ -19,12 +19,12 @@ export default class Farmer extends React.Component<{}, {}> {
   public render() {
     // TODO based on the active tab, we will decide which tab to render
     return (
-      <Export
-        allTimeTotal="6049L"
-        currentWeekTotal="60L"
-        currentMonthTotal="180L"
-        exportValues={demoExportValues}
-      />
+        <Export
+          currentDayTotal="6049"
+          currentWeekTotal="60"
+          currentMonthTotal="180"
+          exportValues={demoExportValues}
+        />
     );
   }
 }

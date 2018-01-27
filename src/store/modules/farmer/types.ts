@@ -4,13 +4,12 @@ import { CoreModuleState } from '../../types';
 
 /** Model for a farmer */
 export interface Farmer {
-  username: string;
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
-  phoneCountry?: string;
-  phoneArea?: string;
-  phoneNumber?: string;
+  phoneCountry: string;
+  phoneArea: string;
+  phoneNumber: string;
   companyName?: string;
 }
 

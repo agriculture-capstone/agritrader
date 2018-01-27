@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { Grid, Row, Content, Button, Text } from 'native-base';
-import CardSummary from '../../components/CardSummary';
+import { Content, Button, Text } from 'native-base';
+import { View } from 'react-native';
+import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
+import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
 
 interface OwnPropsType {
   farmerName: string;
-  allTimeTotal: string;
+  currentDayTotal: string;
   currentWeekTotal: string;
   currentMonthTotal: string;
   purchaseTransactions: any[];
@@ -31,29 +33,36 @@ class Buy extends React.Component<PropsType, OwnStateType> {
    * Render method for Buy
    */
   public render() {
+    const testData = [{
+      label: 'Today',
+      value: this.props.currentDayTotal,
+      units: 'UGX',
+    },                {
+      label: 'This Week',
+      value: this.props.currentWeekTotal,
+      units: 'UGX',
+    },                {
+      label: 'This Month',
+      value: this.props.currentMonthTotal,
+      units: 'UGX',
+    },
+    ];
     return (
-      <Content>
-        <Grid>
-          <Row>
-            <CardSummary
-              title={this.props.farmerName}
-              allTimeTotal={this.props.allTimeTotal}
-              currentWeekTotal={this.props.currentWeekTotal}
-              currentMonthTotal={this.props.currentMonthTotal}
-            />
-          </Row>
-          <Row>
-            <DataTable
-              headers={['Date', 'Product', 'Quantity', 'Price']}
-              values={this.props.purchaseTransactions}
-            />
-          </Row>
-        </Grid>
-        <Button block info>
-          <Text>
-            BUY PRODUCTS
+      <Content style={styles.container}>
+        <View style={styles.content}>
+          <CardSummary
+            data={testData}
+          />
+          <DataTable
+            headers={['Date', 'Product', 'Quantity', 'Price']}
+            values={this.props.purchaseTransactions}
+          />
+          <Button block primary>
+            <Text>
+              BUY PRODUCTS
           </Text>
-        </Button>
+          </Button>
+        </View>
       </Content>
     );
   }

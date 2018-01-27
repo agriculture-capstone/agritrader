@@ -1,11 +1,16 @@
 import { StyleSheet } from 'react-native';
 
+import { COLORS } from '../../../native-base-theme/variables/styles';
+
 export default StyleSheet.create({
   container: {
-    backgroundColor: '#3F51B5',
+    backgroundColor: COLORS.backgroundColor,
   },
-  exportsContent: {
-    backgroundColor: 'white',
+  contents: {
+    margin: 10,
+  },
+  exportContents: {
+    margin: 10,
   },
   addEntryButton: {
     paddingLeft: 21,
