@@ -132,21 +132,18 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         <Row style={Styles.headerRow}>
           <H1>
             {this.props.farmer.firstName} {this.props.farmer.lastName}
-            {/* {fakeValues.firstName} {fakeValues.lastName} */}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take date only */}
             {this.props.milkEntry.datetime}
-            {/* {fakeValues.date} */}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
             {this.props.milkEntry.datetime} 
-            {/* {fakeValues.time}  */}
           </Text>
         </Row>
       </Grid>
@@ -178,9 +175,6 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         {this.formatEditRow('Amount (L)', this.props.milkEntry.volume, this.onAmountChange)}
         {this.formatEditRow('Quality', this.props.milkEntry.quality, this.onQualityChange)}
         {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit, this.onRateChange)}
-        {/* {this.formatEditRow('Amount (L)', fakeValues.volume, this.onAmountChange)} */}
-        {/* {this.formatEditRow('Quality', fakeValues.quality, this.onQualityChange)} */}
-        {/* {this.formatEditRow('Rate (UGX)', fakeValues.costPerUnit, this.onRateChange)} */}
       </View>
     );
   }
