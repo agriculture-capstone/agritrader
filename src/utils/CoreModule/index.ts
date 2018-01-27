@@ -17,11 +17,11 @@ import {
 /*--------------------------------- Utility Types ---------------------------------*/
 
 /** Different core modules */
-export type CoreModuleName
-  = 'farmer'
-  | 'dairy'
-  | 'loan'
-  ;
+export enum CoreModule {
+  FARMER = 'farmer',
+  DAIRY = 'dairy',
+  LOAN = 'loan',
+}
 
 /*-------------------------------- Generic Actions --------------------------------*/
 
@@ -66,7 +66,7 @@ function createInitialState<Row>(): CoreModuleState<Row> {
 
 /*------------------------------------- Actions ------------------------------------*/
 
-function createActions<Row>(name: CoreModuleName) {
+function createActions<Row>(name: CoreModule) {
   const UPPER_NAME = name.toUpperCase();
 
   return {
@@ -92,7 +92,7 @@ function createActions<Row>(name: CoreModuleName) {
  * @param name Name of the module
  * @param initialState initialState for application
  */
-export function createReducer<Row>(name: CoreModuleName, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
+export function createReducer<Row>(name: CoreModule, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
   const UPPER_NAME = name.toUpperCase();
 
   return (state = initialState, action: Action<Row>) => {
@@ -149,7 +149,7 @@ export function createReducer<Row>(name: CoreModuleName, initialState = createIn
  * @param name Name of the module
  * @param path Path for the module on the core
  */
-export function createThunks<Row>(name: CoreModuleName, path: CorePath) {
+export function createThunks<Row>(name: CoreModule, path: CorePath) {
   const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createActions(name);
 
   return {

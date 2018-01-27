@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
+import { BaseReducer } from 'redux-persist';
 
-import { State } from './types';
+import { State, Action } from './types';
 import drawerReducer from './modules/drawer/reducer';
 import navReducer from './modules/nav/reducer';
 import tabsReducer from './modules/tabs/reducer';
@@ -20,4 +21,4 @@ export default combineReducers<State>({
   sensitive: sensitiveReducer,
   farmer: farmerReducer,
   dairy: dairyReducer,
-});
+}) as BaseReducer<State, Action>;
