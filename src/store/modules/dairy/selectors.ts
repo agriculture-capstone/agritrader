@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import { DairyState, Dairy } from '../types';
-import UTCDate from '../../../../UTCDate'
+import { DairyState, Dairy } from './types';
+import UTCDate from '../../../utils/UTCDate';
 
 const getDairyEntries = state => state.dairy.dairyList;
 let getDate = entry => entry.datetime.dateString.split(' ').slice(0, 4).join(' ');
