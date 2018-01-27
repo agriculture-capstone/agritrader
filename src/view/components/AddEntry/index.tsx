@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
 
+import { Farmer } from '../../../store/modules/farmer/types';
+import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
+
 import Composer from '../../hoc/PageComposer';
 import Styles from './style';
 
 // TODO delete this
-const fakeValues = {
+const fakeFarmer = {
   firstName: 'Patrick',
   lastName: 'Kenaan',
   date: 'Friday, Jan 25, 2018',
   time: '9:35 pm',
 };
 
-interface Values {
-  firstName: string;
-  lastName: string;
-  date: string;
-  time: string;
+interface farmer {
+  // farmer: Farmer;
 }
 
 interface OwnPropsType {
@@ -26,7 +26,6 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  // values: Values;
 }
 
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
@@ -41,25 +40,10 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Component for AddEntry
- * @requires values = {
- *                  firstName: string
- *                  lastName: string
- *                  date: string
- *                  time: string
- *           }
- * 
- * @returns 
- * AddEntry component with firstName, lastName, date, and time 
- * as read-only and Amount (L), Quality, and Rate (UGX) input fields
+ * @requires values
  * 
  * @example 
  *             <AddEntry
- *                values={{
- *                  firstName: 'Patrick',
- *                  lastName: 'Kenaan',
- *                  date: 'Friday, Jan 25, 2018',
- *                  time: '9:35 pm',
- *                }}
  *             />
  */
 
@@ -98,20 +82,22 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {/* {this.props.values.firstName} {this.props.values.lastName} */}
-            {fakeValues.firstName} {fakeValues.lastName}
+            {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
+            {fakeFarmer.firstName} {fakeFarmer.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {/* {this.props.values.date} */}
-            {fakeValues.date}
+            {/* @TODO Change this to take date only */}
+            {/* {this.props.farmer.datetime} */}
+            {fakeFarmer.date}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {/* {this.props.values.time} */}
-            {fakeValues.time}
+            {/* @TODO Change this to take time only */}
+            {/* {this.props.farmer.datetime} */}
+            {fakeFarmer.time}
           </Text>
         </Row>
       </Grid>
