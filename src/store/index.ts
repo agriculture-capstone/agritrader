@@ -16,6 +16,7 @@ const store = createStore<State>(rootReducer, composeEnhancers(
   ),
 ));
 
+/** The persistor to sync store with AsyncStorage/SharedStorage */
 export const persistor = persistStore(store);
 
 export default store;

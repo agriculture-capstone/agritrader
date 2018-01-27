@@ -107,7 +107,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    createFarmer: (farmer: Farmer) => dispatch(farmerThunks.createFarmer(farmer)),
+    createFarmer: async (farmer: Farmer) => dispatch(farmerThunks.createFarmer(farmer)),
   };
 };
 
