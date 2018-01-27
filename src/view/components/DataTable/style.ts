@@ -1,11 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../../native-base-theme/variables/styles';
 
 export default StyleSheet.create({
-  info: {
+  values: {
+    color: COLORS.icons,
     textAlign: 'center',
-    padding: 5,
-  },
-  label: {
-    fontWeight: 'bold',
   },
 });

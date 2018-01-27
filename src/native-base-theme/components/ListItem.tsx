@@ -77,11 +77,27 @@ export default (variables = variable) => {
     '.first': {
       '.itemHeader': {
         paddingTop: variables.listItemPadding + 3,
+        paddingBottom: variables.listItemPadding + 4,
+        borderBottomColor: '#d6d6d6',
+        borderBottomWidth: 1,
+        'NativeBase.Text' : {
+          fontWeight: 'bold',
+          color: variables.listNoteColor,
+          alignSelf: 'center',
+        },
       },
     },
     '.itemHeader': {
       '.first': {
         paddingTop: variables.listItemPadding + 3,
+        paddingBottom: variables.listItemPadding + 4,
+        borderBottomColor: '#d6d6d6',
+        borderBottomWidth: 1,
+        'NativeBase.Text' : {
+          fontWeight: 'bold',
+          color: variables.listNoteColor,
+          alignSelf: 'center',
+        },
       },
       borderBottomWidth: platform === 'ios' ? variables.borderWidth : null,
       marginLeft: null,
@@ -190,7 +206,7 @@ export default (variables = variable) => {
       'NativeBase.Text': {
         '.note': {
           color: variables.listNoteColor,
-          fontWeight: '200',
+          // fontWeight: "200"
         },
         alignSelf: null,
       },
@@ -399,7 +415,7 @@ export default (variables = variable) => {
     alignItems: 'center',
     flexDirection: 'row',
     paddingRight: variables.listItemPadding + 5,
-    paddingVertical: variables.listItemPadding + 3,
+    paddingVertical: variables.listItemPadding + 2,
     marginLeft: variables.listItemPadding + 5,
     borderBottomWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
     backgroundColor: variables.listBg,
