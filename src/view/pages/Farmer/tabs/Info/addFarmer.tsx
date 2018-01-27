@@ -4,6 +4,11 @@ import { Content, Grid, Row, Col, Form, Item, Input, Label, Button } from 'nativ
 import { Text } from 'react-native';
 
 import styles from '../../styles';
+import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
+import { State } from '../../../../../store/types';
+import { Farmer } from '../../../../../store/modules/farmer/types';
+import farmerThunks from '../../../../../store/modules/farmer/thunks';
+import Composer from '../../../../hoc/PageComposer/index';
 
 interface OwnStateType {
 }
@@ -12,6 +17,7 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
+  createFarmer(farmer: Farmer): void;
 }
 
 interface StorePropsType {
@@ -26,8 +32,13 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
-    this.state = {
-    };
+
+    // Bindings
+    this.onAddPress = this.onAddPress.bind(this);
+  }
+
+  private onAddPress() {
+
   }
 
   /**
@@ -71,7 +82,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
             </Row>
             <Row style={styles.farmerInfoButtonRow}>
               <Col style={styles.farmerInfoButtonCol}>
-                <Button block success>
+                <Button onPress={this.onAddPress} block success>
                   <Text style={styles.buttonText}>ADD</Text>
                 </Button>
               </Col>
@@ -83,4 +94,24 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default AddFarmer;
+const AddFarmerPage = new Composer<PropsType>(AddFarmer)
+  .page;
+
+/************************* Redux ************************/
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    farmers: state.farmer.rows,
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    createFarmer: (farmer: Farmer) => dispatch(farmerThunks.createFarmer(farmer)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AddFarmerPage);

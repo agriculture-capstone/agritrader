@@ -15,14 +15,15 @@ import sensitiveReducer from './modules/sensitive/reducer';
 import farmerReducer from './modules/farmer/reducer';
 import dairyReducer from './modules/dairy/reducer';
 
+// Whitelist the core modules
 const whitelist = Object.values(CoreModule);
 
+// Create persist config using AsyncStorage for root
 const persistConfig: PersistConfig = {
   storage,
   whitelist,
   key: 'root',
 };
-
 
 const reducer = combineReducers<State>({
   drawer: drawerReducer,
