@@ -9,7 +9,7 @@ import { State } from '../../../../../store/types';
 import {
   getMonthlyFarmerDairyTotal,
   getWeeklyFarmerDairyTotal,
-  getFarmersTransactions,
+  getFormattedFarmersTransactions,
   getDaysDairyTotal,
 } from '../../../../../store/modules/dairy/selectors';
 import styles from './style';
@@ -66,7 +66,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'AM', 'PM']}
+              headers={['Date', 'Volume', 'quality', 'rate']}
               values={this.props.collectTransactions}
             />
           </Row>
@@ -92,7 +92,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
     monthlyTotal: getMonthlyFarmerDairyTotal(state),
     weeklyTotal: getWeeklyFarmerDairyTotal(state),
     dailyTotal: getDaysDairyTotal(state),
-    collectTransactions: getFarmersTransactions(state),
+    collectTransactions: getFormattedFarmersTransactions(state),
   };
 };
 
