@@ -6,9 +6,21 @@ import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
 
 import Styles from './style';
 
+// @TODO delete this
+const fakeValues = {
+  firstName: 'Patrick',
+  lastName: 'Kenaan',
+
+  date: 'Friday, Jan 25, 2018',
+  time: '9:35 pm',
+  volume: '14',
+  quality: '60',
+  costPerUnit: '3.6',
+};
+
 interface OwnPropsType {
-  farmer: Farmer;
-  milkEntry: MilkEntry;
+  // farmer: Farmer;
+  // milkEntry: MilkEntry;
 }
 
 interface DispatchPropsType {
@@ -71,19 +83,22 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
+            {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
+            {fakeValues.firstName} {fakeValues.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take date only */}
-            {this.props.milkEntry.datetime}
+            {/* {this.props.milkEntry.datetime} */}
+            {fakeValues.date}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
-            {this.props.milkEntry.datetime} 
+            {/* {this.props.milkEntry.datetime}  */}
+            {fakeValues.time} 
           </Text>
         </Row>
       </Grid>
@@ -109,13 +124,16 @@ export default class EntryDetails extends React.Component<PropsType, OwnStateTyp
     return (
       <List>
         <ListItem>
-          {this.formatRow('Amount (L)', this.props.milkEntry.volume)}
+          {/* {this.formatRow('Amount (L)', this.props.milkEntry.volume)} */}
+          {this.formatRow('Amount (L)', fakeValues.volume)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Quality', this.props.milkEntry.quality)}
+          {/* {this.formatRow('Quality', this.props.milkEntry.quality)} */}
+          {this.formatRow('Quality', fakeValues.quality)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Rate (UGX)', this.props.milkEntry.costPerUnit)}
+          {/* {this.formatRow('Rate (UGX)', this.props.milkEntry.costPerUnit)} */}
+          {this.formatRow('Rate (UGX)', fakeValues.costPerUnit)}
         </ListItem>
       </List>
     );
