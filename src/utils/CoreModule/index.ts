@@ -100,16 +100,16 @@ export function createReducer<Row>(name: CoreModuleName, initialState = createIn
 
     switch (action.type) {
 
-      case `CREATE_${UPPER_NAME}_LOCAL`: (function (action: CreateLocalPayload<any>) {
+      case `CREATE_${UPPER_NAME}_LOCAL`: return (function (action: CreateLocalPayload<any>) {
         status = 'local';
         isDirty = true;
-        const rows = { ...action.row, status };
-        const farmers = [...state.rows, rows];
+        const row = { ...action.row, status };
+        const rows = [...state.rows, row];
 
-        return { ...state, farmers, isDirty };
+        return { ...state, rows, isDirty };
       })(action as any);
 
-      case `CREATE_${UPPER_NAME}_REMOTE`: (function (action: CreateRemotePayload) {
+      case `CREATE_${UPPER_NAME}_REMOTE`: return (function (action: CreateRemotePayload) {
         status = 'clean';
         const { coreUUID: uuid, lastModified } = action;
         const rows = state.rows.map(r => r.uuid === action.localUUID ? { ...(r as any), uuid, lastModified } : r);
@@ -118,7 +118,7 @@ export function createReducer<Row>(name: CoreModuleName, initialState = createIn
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case `UPDATE_${UPPER_NAME}_LOCAL`: (function (action: UpdateLocalPayload<any>) {
+      case `UPDATE_${UPPER_NAME}_LOCAL`: return (function (action: UpdateLocalPayload<any>) {
         status = 'modified';
         isDirty = true;
         const { row: tempRow, row: { uuid } } = action;
@@ -128,7 +128,7 @@ export function createReducer<Row>(name: CoreModuleName, initialState = createIn
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case `UPDATE_${UPPER_NAME}_REMOTE`: (function (action: UpdateRemotePayload) {
+      case `UPDATE_${UPPER_NAME}_REMOTE`: return (function (action: UpdateRemotePayload) {
         status = 'clean';
         const { uuid, lastModified } = action;
         const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), uuid, lastModified, status } : r);
@@ -137,8 +137,9 @@ export function createReducer<Row>(name: CoreModuleName, initialState = createIn
         return { ...state, rows };
       })(action as any);
 
-      default:
+      default: {
         return state;
+      }
     }
   };
 }
