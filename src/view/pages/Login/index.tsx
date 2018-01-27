@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   Image,
   KeyboardAvoidingView,
+  View,
 } from 'react-native';
 import {
   Form,
@@ -22,7 +23,7 @@ import styles from './style';
 import { State } from '../../../store/types';
 import { Route } from '../../navigation/navigator';
 import navActions from '../../../store/modules/nav/actions';
-import createPage from '../../generators/Page/index';
+import Composer from '../../hoc/PageComposer';
 
 interface OwnState {
   username: string;
@@ -42,14 +43,14 @@ interface DispatchProps {
 /**
  *Login Properties
  */
-export type Props = OwnProps & StoreProps & DispatchProps;
+export type PropsType = OwnProps & StoreProps & DispatchProps;
 
 /**
  *Container for the Login screen
  */
-class Login extends React.Component<Props, OwnState> {
+class Login extends React.Component<PropsType, OwnState> {
 
-  public constructor(props: Props) {
+  public constructor(props: PropsType) {
     super(props);
 
     // TODO: Should not be storing password in memory if we can help it
@@ -90,14 +91,14 @@ class Login extends React.Component<Props, OwnState> {
   public render() {
     return (
       <KeyboardAvoidingView
-        style={{ backgroundColor: '#3F51B5', flex: 1 }}
+        style={styles.container}
       >
-        <Content padder>
+        <Content style={styles.container}>
           <Form >
             <Grid>
               <Row>
                 <Col style={styles.centerContent}>
-                  <Image style={styles.logo} source={images.logo_dark} />
+                  <Image style={styles.logo} source={images.logo} />
                 </Col>
               </Row>
               <Row>
@@ -123,19 +124,17 @@ class Login extends React.Component<Props, OwnState> {
                   </Item>
                 </Col>
               </Row>
-              <Row style={styles.buttonRow}>
-                <Col>
+              </Grid>
+              <View style={styles.buttonRow}>
                   <Button
                     block
-                    primary
-                    style={styles.loginButton}
+                    light
                     onPress={this.loginPress}
                   >
-                    <Text style={styles.buttonText}>Sign In</Text>
+                    <Text>Sign In</Text>
                   </Button>
-                </Col>
-              </Row>
-            </Grid>
+                </View>
+            
           </Form>
         </Content>
       </KeyboardAvoidingView>
@@ -144,7 +143,7 @@ class Login extends React.Component<Props, OwnState> {
   }
 }
 
-const LoginPage = createPage(Login);
+const LoginPage = new Composer<PropsType>(Login).page;
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
   return {};

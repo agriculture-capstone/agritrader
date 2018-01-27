@@ -1,5 +1,5 @@
 import * as React from 'react';
-import createTabManager from '../../generators/TabManager';
+import createTabManager from '../../hoc/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
 import Buy from './tabs/Buy';
@@ -8,26 +8,26 @@ import Info from './tabs/Info';
 const createCollect = () => (
   <Collect
     farmerName="Bradley the Farmer"
-    allTimeTotal="3944.L"
-    currentWeekTotal="3.4L"
-    currentMonthTotal="0.2L"
+    currentDayTotal="3944.2"
+    currentWeekTotal="3.4"
+    currentMonthTotal="0.2"
     collectTransactions={[{ date:'Jan 4', am: 2, pm:2 }, { date:'Jan 3', am: 2, pm:2 }, { date:'Jan 2', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
   />
 );
 
 const demoLoanTransactions = [
-  { date:'Jan 19', remainingBalance: '$25', weeklyPayment: '$5' },
-  { date:'Jan 18', remainingBalance: '$10', weeklyPayment: '$10' },
-  { date:'Jan 17', remainingBalance: '$10', weeklyPayment: '$50' },
-  { date:'Jan 16', remainingBalance: '$20', weeklyPayment: '$5' },
-  { date:'Jan 15', remainingBalance: '$10', weeklyPayment: '$12' },
+  { date:'Jan 19', remainingBalance: '25', weeklyPayment: '5' },
+  { date:'Jan 18', remainingBalance: '10', weeklyPayment: '10' },
+  { date:'Jan 17', remainingBalance: '10', weeklyPayment: '50' },
+  { date:'Jan 16', remainingBalance: '20', weeklyPayment: '5' },
+  { date:'Jan 15', remainingBalance: '10', weeklyPayment: '12' },
 ];
 
 const createLoan = () => (
   <Loan
     farmerName="Bradley the Farmer"
-    totalWeeklyPaymentBalence="$5"
-    totalRemainingBalance="$35"
+    totalWeeklyPaymentBalence="5"
+    totalRemainingBalance="35"
     loanTransactions={demoLoanTransactions}
   />
 );
@@ -43,9 +43,9 @@ const demoPurchaseTransactions = [
 const createBuy = () => (
   <Buy
     farmerName="Bradley the Farmer"
-    allTimeTotal="$1001.01"
-    currentWeekTotal="$50"
-    currentMonthTotal="$405.50"
+    currentDayTotal="1001.01"
+    currentWeekTotal="50"
+    currentMonthTotal="405.50"
     purchaseTransactions={demoPurchaseTransactions}
   />
 );
@@ -70,7 +70,7 @@ export default createTabManager(
       element: createLoan,
     },
     {
-      name: 'Buy',
+      name: 'Shop',
       element: createBuy,
     },
     {
