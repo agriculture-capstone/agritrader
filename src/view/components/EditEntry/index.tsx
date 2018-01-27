@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
+import { Dairy as MilkEntry, PartialDairy } from '../../../store/modules/dairy/types';
 import { Route } from '../../navigation/navigator';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
@@ -11,6 +11,7 @@ import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
 
+import dairyActions from '../../../store/modules/dairy/actions';
 
 import Styles from './style';
 
@@ -40,6 +41,7 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
+  updateDairy(newEntry: PartialDairy): void;
 }
 
 interface StorePropsType {
@@ -78,6 +80,10 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
+
+  private onAmountChange = (newAmount: string) => '';
+  private onQualityChange = (newQuality: string) => '';
+  private onRateChange = (newRate: string) => '';
 
   /**
    * Returns a button with text specified
@@ -122,7 +128,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: string) {
+  private formatEditRow(label: string, value: string, onChangeText: any) {
     return (
       <Grid>
         <Row>
@@ -131,7 +137,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
           </Col>
           <Col>
           <Item>
-            <Input>
+            <Input onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -147,9 +153,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         {/* {this.formatEditRow('Amount (L)', this.props.milkEntry.volume)} */}
         {/* {this.formatEditRow('Quality', this.props.milkEntry.quality)} */}
         {/* {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit)} */}
-        {this.formatEditRow('Amount (L)', fakeValues.volume)}
-        {this.formatEditRow('Quality', fakeValues.quality)}
-        {this.formatEditRow('Rate (UGX)', fakeValues.costPerUnit)}
+        {this.formatEditRow('Amount (L)', fakeValues.volume, this.onAmountChange)}
+        {this.formatEditRow('Quality', fakeValues.quality, this.onQualityChange)}
+        {this.formatEditRow('Rate (UGX)', fakeValues.costPerUnit, this.onRateChange)}
       </View>
     );
   }
@@ -187,6 +193,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
+    updateDairy: (newEntry: PartialDairy) => dispatch(dairyActions.updateDairy(newEntry)),
   };
 };
 
