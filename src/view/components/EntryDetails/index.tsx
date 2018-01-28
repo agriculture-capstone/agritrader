@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button } from 'native-base';
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
