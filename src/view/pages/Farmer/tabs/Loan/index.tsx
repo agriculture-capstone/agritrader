@@ -5,7 +5,7 @@ import DataTable from '../../../../components/DataTable';
 import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
 import ComingSoonOverlay, { default as createComingSoonOverlay } from '../../../../components/ComingSoon/index';
-import {connect} from "react-redux";
+import { connect } from 'react-redux';
 
 interface OwnPropsType {
   farmerName: string;
