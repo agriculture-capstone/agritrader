@@ -10,6 +10,11 @@ import { CoreModule } from '../../utils/CoreModule/index';
 */
 const INSTANCE_ACCESSOR = Symbol('Accessor for instance of SyncService');
 
+/**
+ * Promise representing the job taking place
+ */
+type Job = Promise<void>;
+
 /** Instance of the sync service */
 export interface SyncServiceInstance {
 
@@ -23,28 +28,30 @@ export interface SyncServiceInstance {
    *
    * @returns A promise that resolves when all modules have successfully synced
    */
-  syncAll(): Promise<void>;
+  syncAll(): Job;
 
   /**
    * Sync the specified module with the core
    *
    * @returns A promise that resolves when module has successfully synced
    */
-  syncModule(module: CoreModule): Promise<void>;
+  syncModule(module: CoreModule): Job;
 }
 
-interface CurrentlySyncing {
-  [key: string]: Promise<void> | undefined;
+interface CurrentModuleJobs {
+  [key: string]: Job | undefined;
 }
 
 /**
  * Syncs the specified module, without any concern to whether it is already syncing or not
  *
- * Should only be used by instance if the module is not currently syncing
+ * Should only be used by instance if the module is not currently syncing this module
  *
  * @param module Module to sync
+ *
+ * @returns Promise that resolves when job is over
  */
-async function syncModule(module: string): Promise<void> {
+async function createJob(module: string): Job {
 
 }
 
@@ -52,7 +59,7 @@ function createSyncService(): SyncServiceInstance {
 
   // Use closure for private variables / methods
   const _p = {
-    currentlySyncing: {} as CurrentlySyncing,
+    activeModuleJobs: {} as CurrentModuleJobs,
   };
 
   const instance: SyncServiceInstance = {
@@ -60,7 +67,7 @@ function createSyncService(): SyncServiceInstance {
     // A get property will call a function when accessed and return the value
     // Useful for abstracting away logic from the outside
     get syncing() {
-      return !!Object.values(_p.currentlySyncing).length;
+      return !!Object.values(_p.activeModuleJobs).length;
     },
 
     async syncAll() {
@@ -72,21 +79,22 @@ function createSyncService(): SyncServiceInstance {
     },
 
     async syncModule(module: CoreModule) {
-      if (_p.currentlySyncing[module]) {
-        return _p.currentlySyncing[module];
+      // Check if there is currently an active job for this module
+      if (_p.activeModuleJobs[module]) {
+        return _p.activeModuleJobs[module];
       }
 
-      const promise = syncModule(module);
+      const job = createJob(module);
 
-      // Add promise to currentlySyncing
-      _p.currentlySyncing[module] = promise;
+      // Add job to active module jobs
+      _p.activeModuleJobs[module] = job;
 
-      // When promise resolves, remove from currentlySyncing
-      promise.then(() => {
-        _p.currentlySyncing[module] = undefined;
+      // When job finishes, remove from active module jobs
+      job.then(() => {
+        _p.activeModuleJobs[module] = undefined;
       });
 
-      return promise;
+      return job;
     },
   };
 
