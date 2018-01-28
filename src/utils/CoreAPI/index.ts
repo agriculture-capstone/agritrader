@@ -1,5 +1,6 @@
+import { Config } from 'react-native-config';
+
 import HTTPCode from '../HTTPCode';
-import { AGRICORE_URL, AGRICORE_PORT } from '../../config';
 import store from '../../store';
 import sensitiveActions from '../../store/modules/sensitive/actions';
 import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
@@ -22,6 +23,14 @@ type CoreRequestMethod
   | 'HEAD'    // Timestamp
   ;
 
+// Validate config
+if (!Config.CORE_HOST || !Config.CORE_PORT) {
+  throw new Error(`
+    Failed to find required properties CORE_HOST or CORE_PORT
+    Please check your .env file, or make one using the example.env file
+  `);
+}
+
 /**
  * API for interacting with the core
  */
@@ -29,7 +38,7 @@ export default class CoreAPI {
   private url: string;
 
   constructor(path: CorePath) {
-    this.url = `${AGRICORE_URL}:${AGRICORE_PORT}${path}`;
+    this.url = `${Config.CORE_HOST}:${Config.CORE_PORT}${path}`;
   }
 
   /**

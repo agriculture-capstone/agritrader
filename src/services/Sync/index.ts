@@ -1,4 +1,5 @@
 import { CoreModule } from '../../utils/CoreModule/index';
+import { Config } from 'react-native-config';
 
 /*
 * A symbol is a primitive type that is guaranteed to be unique. That means
@@ -9,6 +10,15 @@ import { CoreModule } from '../../utils/CoreModule/index';
 * This is useful to mock out the SyncService during tests
 */
 const INSTANCE_ACCESSOR = Symbol('Accessor for instance of SyncService');
+
+/** Default number of seconds between automatic sync */
+const DEFAULT_FREQUENCY = 300;
+
+/** Number of milliseconds in a second */
+const TO_MILLISECONDS = 1000;
+
+/** The sync frequency for automatic sync */
+const SYNC_FREQUENCY = TO_MILLISECONDS * (Config.SYNC_FREQUENCY || DEFAULT_FREQUENCY);
 
 /**
  * Promise representing the job taking place
@@ -56,6 +66,7 @@ async function createJob(module: string): Job {
 }
 
 function createSyncService(): SyncServiceInstance {
+  let intervalId: number;
 
   // Use closure for private variables / methods
   const _p = {
@@ -70,7 +81,10 @@ function createSyncService(): SyncServiceInstance {
       return !!Object.values(_p.activeModuleJobs).length;
     },
 
-    async syncAll() {
+    syncAll() {
+      // Reset the time for next automatic sync
+      clearInterval(intervalId);
+      intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
       // Forcing the types to work because we know better than Typescript here (be careful)
       const modulesPending = Object.values(CoreModule).map(m => instance.syncModule(m as CoreModule));
@@ -91,12 +105,15 @@ function createSyncService(): SyncServiceInstance {
 
       // When job finishes, remove from active module jobs
       job.then(() => {
-        _p.activeModuleJobs[module] = undefined;
+        delete _p.activeModuleJobs[module];
       });
 
       return job;
     },
   };
+
+  // Setup interval to sync all modules
+  intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
   return instance;
 }

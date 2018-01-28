@@ -47,6 +47,7 @@
 		"native-base": "^2.3.4",
 		"react": "16.0.0-beta.5",
 		"react-native": "0.49.5",
+		"react-native-config": "^0.11.5",
 		"react-native-sensitive-info": "^5.1.0",
 		"react-native-vector-icons": "^4.5.0",
 		"react-navigation": "^1.0.0-beta.22",
