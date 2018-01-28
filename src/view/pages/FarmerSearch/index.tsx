@@ -10,72 +10,13 @@ import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
+import { getFormattedFarmers } from '../../../store/modules/farmer/selectors';
 
-/** This is just a table of phony information to populate the FarmerSearch UI */
-const fakeFarmerList = [
-  {
-    name: 'Swalleh',
-    phoneNumber: '(250) 234-1234',
-    id: 1,
-  },
-  {
-    name: 'James',
-    phoneNumber: '(526) 123-8123',
-    id: 2,
-  },
-  {
-    name: 'Alex',
-    phoneNumber: '(514) 235-6789',
-    id: 3,
-  },
-  {
-    name: 'Joseph',
-    phoneNumber: '(922) 789-2348',
-    id: 4,
-  },
-  {
-    name: 'Mary',
-    phoneNumber: '(626) 626-1236',
-    id: 5,
-  },
-  {
-    name: 'David',
-    phoneNumber: '(789) 231-2345',
-    id: 6,
-  },
-  {
-    name: 'Michael',
-    phoneNumber: '(899) 781-8786',
-    id: 7,
-  },
-  {
-    name: 'Mary',
-    phoneNumber: '(897) 768-6780',
-    id: 8,
-  },
-  {
-    name: 'Peter',
-    phoneNumber: '(123) 564-2315',
-    id: 9,
-  },
-  {
-    name: 'Jonah',
-    phoneNumber: '(011) 101-1001',
-    id: 10,
-  },
-  {
-    name: 'Simon',
-    phoneNumber: '(234) 456-7890',
-    id: 11,
-  },
-];
 
-/** Basic model for the FarmerType object */
-// TODO: Move to store --@jinglis
 interface FarmerType {
   name: string;
   phoneNumber: string;
-  id: number;
+  uuid: string;
 }
 
 /** FarmerSearch OwnPropsType */
@@ -85,7 +26,7 @@ export interface OwnPropsType {
 
 /** FarmerSearch StorePropsType */
 interface StorePropsType {
-  // farmerList: Farmer[];
+  farmerList: FarmerType[];
 }
 
 /** FarmerSearch DispatchPropsType */
@@ -148,7 +89,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   /** Function to render the individual list items */
   private renderItem(info: FarmerType) {
     return (
-      <ListItem key={info.id} onPress={this.itemClicked}>
+      <ListItem key={info.uuid} onPress={this.itemClicked}>
         <View>
           <H1>
             {info.name}
@@ -173,7 +114,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <Content>
         <List
-          dataArray={this.sortList(fakeFarmerList)}
+          dataArray={this.sortList(this.props.farmerList)}
           renderRow={this.renderItem}
         />
       </Content>
@@ -190,7 +131,9 @@ const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
 /************************* Redux ************************/
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  return {};
+  return {
+    farmerList: getFormattedFarmers(state),
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
