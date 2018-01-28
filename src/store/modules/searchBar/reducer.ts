@@ -6,36 +6,41 @@ import initialState from './state';
 const searchBarReducer: Reducer<SearchBarState> = (state = initialState, action: Action) => {
   switch (action.type) {
 
-    case 'SHOW_SEARCH_BAR':
+    case 'SHOW_SEARCH_BAR': {
       return {
         ...state,
         shown: true,
         placeholder: action.placeholder,
         value: '',
       };
+    }
 
-    case 'SET_SEARCH_BAR_VALUE':
+    case 'SET_SEARCH_BAR_VALUE': {
       if (!state.shown) throw Error('The search bar is not currently shown');
       return {
         ...state,
         value: action.value,
       };
+    }
 
-    case 'REMOVE_SEARCH_BAR':
+    case 'REMOVE_SEARCH_BAR': {
       return {
         ...state,
         shown: false,
         value: '',
       };
+    }
 
-    case 'CLEAR_SEARCH_VALUE':
+    case 'CLEAR_SEARCH_VALUE': {
       return {
         ...state,
         value: '',
       };
+    }
 
-    default:
+    default: {
       return state;
+    }
   }
 };
 
