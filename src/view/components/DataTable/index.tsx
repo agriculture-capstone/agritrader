@@ -4,11 +4,16 @@ import styles from './style';
 import { Route } from '../../navigation/navigator';
 
 
+/** Interface for clickable list item support */
+interface RoutedPropsType {
+  route: Route;
+  onPress(route: Route): void;
+}
+
 interface OwnPropsType {
   headers: string[];
   values: any[];
-  route?: Route;
-  onPress?(route: Route): void;
+  RoutedPropsType?: any;
 }
 
 interface DispatchPropsType {
@@ -36,8 +41,8 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   }
 
   private onPress = () => {
-    if (this.props.route && this.props.onPress) {
-      this.props.onPress(this.props.route);
+    if (this.props.RoutedPropsType) {
+      this.props.RoutedPropsType.onPress(this.props.RoutedPropsType.route);
     }
   }
 
