@@ -25,12 +25,11 @@ export const getAvgDaysDairyTotal = createSelector(
 );
 
 /**Selector to return a specific dairy transaction based on UUID */
-export const getSpecificDairyTransaction = createSelector(
-  [getDairyEntries, getCurrentFarmerUUID],
-  (dairyEntries: Dairy[], farmerUUID: string) => dairyEntries.filter(entry => !entry.fromUUID.localeCompare(farmerUUID)));
+/***Not sure how we are getting the transaction uuid**/
+// export const getSpecificDairyTransaction = createSelector(
+//   [getDairyEntries, getCurrentFarmerUUID],
+//   (dairyEntries: Dairy[], farmerUUID: string) => dairyEntries.filter(entry => !entry.uuid.localeCompare(uuid)));
 
-//TODO return specific transaction based on uuid
-//Return current farmer object
 /************Selectors for a specific farmer ***************/
 
 /**Selector to get all dairy transactions for a specific farmer  */
@@ -88,7 +87,6 @@ function calculateAverage(groupedEntries: any) {
   });
   return (averages.reduce((acc: number, entry: number) => acc + entry, 0) / averages.length).toFixed(0);
 }
-
 
 /**
  * @example
