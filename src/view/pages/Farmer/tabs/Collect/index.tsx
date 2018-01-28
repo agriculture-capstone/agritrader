@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Grid, Row, Col, Content, Button, Text } from 'native-base';
+import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
 
-import { InjectedSearchProps } from '../../../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../../store/modules/nav/actions';
@@ -67,6 +66,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
       units: 'L',
     },
     ];
+
     return (
       <Content style={styles.container}>
         <Grid style={styles.content}>
