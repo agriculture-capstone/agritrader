@@ -45,11 +45,11 @@ class Collect extends React.Component<PropsType, OwnStateType> {
       label: 'Today',
       value: this.props.dailyTotal,
       units: 'L',
-    },{
+    },                {
       label: 'This Week',
       value: this.props.weeklyTotal,
       units: 'L',
-    },{
+    },                {
       label: 'This Month',
       value: this.props.monthlyTotal,
       units: 'L',
