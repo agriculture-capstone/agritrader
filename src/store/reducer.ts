@@ -10,7 +10,6 @@ import sensitiveInfoReducer from './modules/sensitive/reducer';
 
 import farmerReducer from './modules/farmer/reducer';
 import currentFarmerReducer from './modules/currentFarmer/reducer';
-import dairyReducer from './modules/dairy/reducer';
 import milkReducer from './modules/milk/reducer';
 
 
@@ -23,6 +22,5 @@ export default combineReducers<State>({
   sensitiveInfo: sensitiveInfoReducer,
   farmer: farmerReducer,
   currentFarmer: currentFarmerReducer,
-  dairy: dairyReducer,
   milk: milkReducer,
 });
