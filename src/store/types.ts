@@ -6,10 +6,10 @@ import { NavState, Action as NavAction } from './modules/nav/types';
 import { TabState, Action as TabsAction } from './modules/tabs/types';
 import { SearchBarState, Action as SearchBarAction } from './modules/searchBar/types';
 import { HeaderState, Action as HeaderAction } from './modules/header/types';
-import { SensitiveState, Action as SensitiveAction } from './modules/sensitive/types';
+import { SensitiveInfoState, Action as SensitiveAction } from './modules/sensitive/types';
 
 import { FarmerState } from './modules/farmer/types';
-import { DairyState } from './modules/dairy/types';
+import { MilkState } from './modules/milk/types';
 
 /** Global redux state */
 export interface State {
@@ -18,9 +18,9 @@ export interface State {
   tabs: TabState;
   searchBar: SearchBarState;
   header: HeaderState;
-  sensitive: SensitiveState;
+  sensitiveInfo: SensitiveInfoState;
   farmer: FarmerState;
-  dairy: DairyState;
+  milk: MilkState;
 }
 
 /** Global redux action */

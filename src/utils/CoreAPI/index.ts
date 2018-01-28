@@ -9,7 +9,7 @@ import { NetworkError } from '../../errors/NetworkError';
 /** Paths on Core for specific data tables */
 export enum CorePath {
   FARMERS = '/people/farmers',
-  DAIRY = '/transactions/products/milk',
+  MILK = '/transactions/products/milk',
 }
 
 const LOGIN_PATH = '/actions/authenticate';
@@ -95,7 +95,7 @@ export default class CoreAPI {
 
   private getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
 
-    const { jwt } = store.getState().sensitive;
+    const { jwt } = store.getState().sensitiveInfo;
     if (!jwt) {
       throw new Error('Not authenticated');
     }

@@ -1,6 +1,6 @@
-import { SensitiveState } from './types';
+import { SensitiveInfoState } from './types';
 
-const initialState: SensitiveState = {
+const initialState: SensitiveInfoState = {
   jwt: '',
 };
 

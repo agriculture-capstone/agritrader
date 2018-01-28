@@ -2,8 +2,8 @@ import { CoreModuleState } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
-/** Model for a dairy entry */
-export interface DairyEntry {
+/** Model for a milk entry */
+export interface MilkEntry {
   datetime: string;
   toUUID: string;
   fromUUID: string;
@@ -14,5 +14,5 @@ export interface DairyEntry {
 
 /*----------------------- State -----------------------*/
 
-/** Dairy module state */
-export type DairyState = CoreModuleState<DairyEntry>;
+/** Milk module state */
+export type MilkState = CoreModuleState<MilkEntry>;

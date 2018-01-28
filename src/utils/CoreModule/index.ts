@@ -20,7 +20,7 @@ import {
 /** Different core modules */
 export type CoreModuleName
   = 'farmer'
-  | 'dairy'
+  | 'milk'
   | 'loan'
   ;
 
