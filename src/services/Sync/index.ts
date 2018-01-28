@@ -33,27 +33,26 @@ export interface SyncServiceInstance {
   syncModule(module: CoreModule): Promise<void>;
 }
 
-type CurrentlySyncing = (CoreModule | 'all')[];
+interface CurrentlySyncing {
+  [key: string]: Promise<void> | undefined;
+}
+
+/**
+ * Syncs the specified module, without any concern to whether it is already syncing or not
+ *
+ * Should only be used by instance if the module is not currently syncing
+ *
+ * @param module Module to sync
+ */
+async function syncModule(module: string): Promise<void> {
+
+}
 
 function createSyncService(): SyncServiceInstance {
 
   // Use closure for private variables / methods
   const _p = {
-    syncing: false,
-
-    _currentlySyncing: [] as CurrentlySyncing,
-
-    get currentlySyncing() {
-      return _p._currentlySyncing;
-    },
-
-    set currently(value: CurrentlySyncing) {
-
-    },
-
-    async syncModule(module: CoreModule): Promise<void> {
-
-    },
+    currentlySyncing: {} as CurrentlySyncing,
   };
 
   const instance: SyncServiceInstance = {
@@ -61,43 +60,49 @@ function createSyncService(): SyncServiceInstance {
     // A get property will call a function when accessed and return the value
     // Useful for abstracting away logic from the outside
     get syncing() {
-      return _p.syncing;
+      return !!Object.values(_p.currentlySyncing).length;
     },
 
     async syncAll() {
-      // Set syncing to true
-      _p.syncing = true;
-      _p.currentlySyncing = ['all'];
 
       // Forcing the types to work because we know better than Typescript here (be careful)
-      const modulesPending = Object.values(CoreModule).map(m => _p.syncModule(m as CoreModule));
+      const modulesPending = Object.values(CoreModule).map(m => instance.syncModule(m as CoreModule));
 
-      await Promise.all(modulesPending);
-
-      _p.syncing = false;
-
-      return;
+      return Promise.all(modulesPending).then(() => {});
     },
 
     async syncModule(module: CoreModule) {
-      _p.syncing = true;
+      if (_p.currentlySyncing[module]) {
+        return _p.currentlySyncing[module];
+      }
 
-      await _p.syncModule(module);
+      const promise = syncModule(module);
 
-      _p.syncing = false;
+      // Add promise to currentlySyncing
+      _p.currentlySyncing[module] = promise;
+
+      // When promise resolves, remove from currentlySyncing
+      promise.then(() => {
+        _p.currentlySyncing[module] = undefined;
+      });
+
+      return promise;
     },
   };
 
-  return Object.freeze(instance);
+  return instance;
 }
 
-function SyncService(): SyncServiceInstance {
-  // Again have to force types because Typescript doesn't understand symbols
+/**
+ * Accessor for SyncService
+ *
+ * @returns Singleton instance of SyncService
+ */
+export default function SyncService(): SyncServiceInstance {
+  // Have to force types because Typescript doesn't understand symbols
   if (!(SyncService as any)[INSTANCE_ACCESSOR]) {
     (SyncService as any)[INSTANCE_ACCESSOR] = createSyncService();
   }
 
   return (SyncService as any)[INSTANCE_ACCESSOR] as SyncServiceInstance;
 }
-
-export default SyncService;
