@@ -1,6 +1,6 @@
 import { BaseError } from './BaseError';
 
-const DEFAULT_MSG = 'failed to make request, poor network conditions';
+const DEFAULT_MSG = 'Failed to make request due to poor network conditions';
 
 /** Error thrown when network connection is expensive or absent */
 export class NetworkError extends BaseError {

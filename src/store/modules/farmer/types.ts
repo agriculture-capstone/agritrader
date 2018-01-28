@@ -5,7 +5,7 @@ import { CoreModuleState } from '../../types';
 /** Model for a farmer */
 export interface Farmer {
   firstName: string;
-  middleName?: string;
+  middleName: string;
   lastName: string;
   phoneCountry: string;
   phoneArea: string;

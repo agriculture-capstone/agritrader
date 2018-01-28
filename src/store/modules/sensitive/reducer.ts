@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { BaseReducer, PersistConfig, persistReducer } from 'redux-persist';
 import createSensitiveStorage from 'redux-persist-sensitive-storage';
 
-import { Action, SensitiveState } from './types';
+import { Action, SensitiveInfoState } from './types';
 import initialState from './state';
 
 const name = 'agritrader';
@@ -13,11 +13,11 @@ const sensitiveStorage = createSensitiveStorage({
 });
 
 const sensitivePersistConfig: PersistConfig = {
-  key: 'sensitive',
+  key: 'sensitiveInfo',
   storage: sensitiveStorage,
 };
 
-const sensitiveReducer: Reducer<SensitiveState> = (state = initialState, action: Action) => {
+const sensitiveInfoReducer: Reducer<SensitiveInfoState> = (state = initialState, action: Action) => {
 
   switch (action.type) {
     case 'SET_JWT': {
@@ -33,4 +33,4 @@ const sensitiveReducer: Reducer<SensitiveState> = (state = initialState, action:
   }
 };
 
-export default persistReducer(sensitivePersistConfig, sensitiveReducer as BaseReducer<SensitiveState, Action>);
+export default persistReducer(sensitivePersistConfig, sensitiveInfoReducer as BaseReducer<SensitiveInfoState, Action>);

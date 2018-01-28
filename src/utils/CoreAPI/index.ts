@@ -3,11 +3,13 @@ import { AGRICORE_URL, AGRICORE_PORT } from '../../config';
 import store from '../../store';
 import sensitiveActions from '../../store/modules/sensitive/actions';
 import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
+import { NetInfo } from 'react-native';
+import { NetworkError } from '../../errors/NetworkError';
 
 /** Paths on Core for specific data tables */
 export enum CorePath {
   FARMERS = '/people/farmers',
-  DAIRY = '/transactions/products/milk',
+  MILK = '/transactions/products/milk',
 }
 
 const LOGIN_PATH = '/actions/authenticate';
@@ -93,7 +95,7 @@ export default class CoreAPI {
 
   private getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
 
-    const { jwt } = store.getState().sensitive;
+    const { jwt } = store.getState().sensitiveInfo;
     if (!jwt) {
       throw new Error('Not authenticated');
     }
@@ -112,6 +114,10 @@ export default class CoreAPI {
   private async coreFetch(request: Request) {
     // Declare block scoped variables (let) at top of block
     let response: Response;
+
+    const { type: connectionType } = await NetInfo.getConnectionInfo();
+    if (connectionType === 'NONE') throw new NetworkError();
+
     { let attempts: number = 0;
       const maxAttempts = 10;
 

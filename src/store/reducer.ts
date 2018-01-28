@@ -10,10 +10,10 @@ import navReducer from './modules/nav/reducer';
 import tabsReducer from './modules/tabs/reducer';
 import searchBarReducer from './modules/searchBar/reducer';
 import headerReducer from './modules/header/reducer';
-import sensitiveReducer from './modules/sensitive/reducer';
+import sensitiveInfoReducer from './modules/sensitive/reducer';
 
 import farmerReducer from './modules/farmer/reducer';
-import dairyReducer from './modules/dairy/reducer';
+import milkReducer from './modules/milk/reducer';
 
 // Whitelist the core modules
 const whitelist = Object.values(CoreModule);
@@ -31,9 +31,9 @@ const reducer = combineReducers<State>({
   tabs: tabsReducer,
   searchBar: searchBarReducer,
   header: headerReducer,
-  sensitive: sensitiveReducer,
+  sensitiveInfo: sensitiveInfoReducer,
   farmer: farmerReducer,
-  dairy: dairyReducer,
+  milk: milkReducer,
 }) as BaseReducer<State, Action>;
 
 export default persistReducer(persistConfig, reducer);

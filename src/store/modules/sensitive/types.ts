@@ -1,7 +1,7 @@
 /*----------------------- State -----------------------*/
 
 /** State for sensitive information module */
-export interface SensitiveState {
+export interface SensitiveInfoState {
   jwt: string;
 }
 
