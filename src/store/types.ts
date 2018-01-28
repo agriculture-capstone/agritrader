@@ -44,7 +44,7 @@ export type Status
 
 /** Base state for modules synced with core  */
 export interface CoreModuleState<T> {
-  lastModified: string;
+  lastSynced: string;
   isDirty: boolean;
   rows: StoreRow<T>[];
 }
@@ -60,6 +60,11 @@ interface LastModifiedData {
 interface UUIDData {
   uuid: string;
 }
+
+/**
+ * Row as returned by core
+ */
+export type CoreRow<T> = T & LastModifiedData & UUIDData;
 
 /**
  * Data model in store
@@ -81,6 +86,8 @@ export type StoreLocalCreationRow<T> = T & LastModifiedData & UUIDData;
  * @template T Data model for module
  */
 export type StoreLocalUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
+
+export type StoreSyncUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
 /**
  * Data model for sending creation request to core

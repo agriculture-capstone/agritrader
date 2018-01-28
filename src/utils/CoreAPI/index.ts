@@ -3,7 +3,7 @@ import Config from 'react-native-config';
 import HTTPCode from '../HTTPCode';
 import store from '../../store';
 import sensitiveActions from '../../store/modules/sensitive/actions';
-import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
+import { CoreUpdateRequest, CoreCreationRequest, CoreRow } from '../../store/types';
 import { NetInfo } from 'react-native';
 import { NetworkError } from '../../errors/NetworkError';
 
@@ -48,18 +48,18 @@ export default class CoreAPI {
    *
    * @returns
    */
-  public async get<Row>(uuid: string) {
+  public async get<T>(uuid: string): Promise<CoreRow<T>> {
     const url = `${this.url}/${uuid}`;
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));
 
-    return await this.coreFetch(request) as Row;
+    return await this.coreFetch(request) as CoreRow<T>;
   }
 
   /**
    * Get all of the specified resource
    */
-  public async getAll() {
+  public async getAll<T>(): Promise<CoreRow<T>[]> {
     const url = this.url;
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));

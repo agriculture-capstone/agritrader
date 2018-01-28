@@ -23,24 +23,42 @@ export enum CoreModule {
   MILK = 'milk',
 }
 
+export function getModulePath(module: CoreModule): CorePath {
+  switch (module) {
+    case CoreModule.FARMER: {
+      return CorePath.FARMERS;
+    }
+
+    case CoreModule.MILK: {
+      return CorePath.MILK;
+    }
+
+    default: {
+      throw new Error(`No such module/path mapping for module ${module}`);
+    }
+  }
+}
+
 /*-------------------------------- Generic Actions --------------------------------*/
 
 type CreateLocalPayload<Row> = { row: StoreLocalCreationRow<Row> };
 type CreateRemotePayload = { localUUID: string, coreUUID: string, lastModified: string };
 type UpdateLocalPayload<Row> = { row: StoreLocalUpdateRow<Row> };
 type UpdateRemotePayload = { uuid: string, lastModified: string };
+type SetLastSyncedPayload = { lastSynced: string };
 type EmptyPayload = {};
 
 
-type ActionPayload<Row>
+type ThunkActionPayload<Row>
   = CreateLocalPayload<Row>
   | CreateRemotePayload
   | UpdateLocalPayload<Row>
   | UpdateRemotePayload
+  | SetLastSyncedPayload
   | EmptyPayload
   ;
 
-type Action<R> = ActionPayload<R> & ActionBase;
+type ThunkAction<R> = ThunkActionPayload<R> & ActionBase;
 
 /*-------------------------------- Helper Functions -------------------------------*/
 
@@ -64,27 +82,30 @@ function createInitialState<Row>(): CoreModuleState<Row> {
   return {
     isDirty: false,
     rows: [] as StoreRow<Row>[],
-    lastModified: UTCDate.OLD_DATE,
+    lastSynced: UTCDate.OLD_DATE,
   };
 }
 
 /*------------------------------------- Actions ------------------------------------*/
 
-function createActions<Row>(name: CoreModule) {
-  const UPPER_NAME = name.toUpperCase();
+function createThunkActions<Row>(module: CoreModule) {
+  const UPPER_NAME = module.toUpperCase();
 
   return {
-    createRowLocal: (row: StoreLocalCreationRow<Row>): Action<Row> =>
+    createRowLocal: (row: StoreLocalCreationRow<Row>): ThunkAction<Row> =>
     ({ row, type: `CREATE_${UPPER_NAME}_LOCAL` }),
 
-    createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): Action<Row> =>
+    createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): ThunkAction<Row> =>
       ({ localUUID, coreUUID, lastModified, type: `CREATE_${UPPER_NAME}_REMOTE` }),
 
-    updateRowLocal: (row: StoreLocalUpdateRow<Row>): Action<Row> =>
+    updateRowLocal: (row: StoreLocalUpdateRow<Row>): ThunkAction<Row> =>
       ({ row, type: `UPDATE_${UPPER_NAME}_LOCAL` }),
 
-    updateRowRemote: (uuid: string, lastModified: string): Action<Row> =>
+    updateRowRemote: (uuid: string, lastModified: string): ThunkAction<Row> =>
       ({ uuid, lastModified, type: `UPDATE_${UPPER_NAME}_REMOTE` }),
+
+    setLastSynced: (lastSynced: string): ThunkAction<Row> =>
+      ({ lastSynced, type: `SET_${UPPER_NAME}_LAST_SYNCED` }),
   };
 }
 
@@ -99,10 +120,16 @@ function createActions<Row>(name: CoreModule) {
 export function createReducer<Row>(name: CoreModule, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
   const UPPER_NAME = name.toUpperCase();
 
-  return (state = initialState, action: Action<Row>) => {
+  return (state = initialState, action: ThunkAction<Row>) => {
     let status: Status, isDirty: boolean;
 
     switch (action.type) {
+
+      case `SET_${UPPER_NAME}_LAST_SYNCED`: return (function (action: SetLastSyncedPayload) {
+        const { lastSynced } = action;
+
+        return { ...state, lastSynced };
+      })(action as any);
 
       case `CREATE_${UPPER_NAME}_LOCAL`: return (function (action: CreateLocalPayload<any>) {
         status = 'local';
@@ -138,7 +165,7 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
         const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), uuid, lastModified, status } : r);
         isDirty = deriveIsDirty(rows);
 
-        return { ...state, rows };
+        return { ...state, rows, isDirty };
       })(action as any);
 
       default: {
@@ -151,11 +178,12 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
 /**
  * Utility to create store thunks for core module
  *
- * @param name Name of the module
+ * @param module Name of the module
  * @param path Path for the module on the core
  */
-export function createThunks<Row>(name: CoreModule, path: CorePath) {
-  const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createActions(name);
+export function createThunks<Row>(module: CoreModule) {
+  const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createThunkActions(module);
+  const path = getModulePath(module);
 
   return {
 
@@ -212,7 +240,7 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
       dispatch(updateRowLocal(convertedRow));
 
       // Retrieve the updated row
-      const updatedRow = (getState() as any)[name].rows.find((f: StoreRow<Row>) => f.uuid === uuid);
+      const updatedRow = (getState() as any)[module].rows.find((f: StoreRow<Row>) => f.uuid === uuid);
 
       // Deal with no row found
       if (rowNotFound(updatedRow)) {

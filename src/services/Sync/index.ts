@@ -1,5 +1,11 @@
-import { CoreModule } from '../../utils/CoreModule/index';
 import Config from 'react-native-config';
+import { Action as ActionBase } from 'redux';
+
+import { CoreModule, getModulePath } from '../../utils/CoreModule';
+import store from '../../store';
+import { CoreModuleState, StoreRow, StoreSyncUpdateRow } from '../../store/types';
+import CoreAPI from '../../utils/CoreAPI/index';
+import * as _ from 'lodash';
 
 /**
  * Promise representing the job taking place
@@ -54,6 +60,31 @@ interface CurrentModuleJobs {
   [key: string]: Job | undefined;
 }
 
+type SyncCreatePayload<Row> = { row: StoreRow<Row> };
+type SyncUpdatePayload<Row> = { row: StoreSyncUpdateRow<Row> };
+type EmptyPayload = {};
+
+
+type SyncActionPayload<Row>
+  = SyncCreatePayload<Row>
+  | SyncUpdatePayload<Row>
+  | EmptyPayload
+  ;
+
+type SyncAction<Row> = SyncActionPayload<Row> & ActionBase;
+
+function createSyncActions<Row>(module: CoreModule) {
+  const UPPER_NAME = module.toUpperCase();
+
+  return {
+    syncCreateRow: (row: StoreRow<Row>): SyncAction<Row> =>
+    ({ row, type: `SYNC_CREATE_${UPPER_NAME}` }),
+
+    syncUpdateRow: (row: StoreSyncUpdateRow<Row>) =>
+      ({ row, type: `SYNC_UPDATE_${UPPER_NAME}` }),
+  };
+}
+
 /**
  * Syncs the specified module, without any concern to whether it is already syncing or not
  *
@@ -63,9 +94,50 @@ interface CurrentModuleJobs {
  *
  * @returns Promise that resolves when job is over
  */
-async function createJob(module: string): Job {
-  // TODO: Fix
-  return Promise.resolve(true);
+async function createJob(module: CoreModule): Job {
+  const actions = createSyncActions(module);
+  const moduleState = (store.getState() as any)[module] as CoreModuleState<{}>;
+  const path = getModulePath(module);
+  const api = new CoreAPI(path);
+
+  // TODO: Go through store and update local data
+  // TODO: Optimize
+  const dirtyRows = moduleState.rows.filter(r => r.status !== 'clean');
+  const cleanRows = moduleState.rows.filter(r => r.status === 'clean');
+  const remoteCreates = dirtyRows
+    .filter(r => r.status === 'local')
+    .map(r => api.create(r))
+  ;
+
+  const remoteUpdates = dirtyRows
+    .filter(r => r.status === 'modified')
+    .map(r => api.update(r))
+  ;
+
+  const localUpdates = api.getAll().then((remoteRows) => {
+    // For each row that is out of date and clean, replace with remote
+    const remote = _.keyBy(remoteRows, 'uuid');
+    const local = _.keyBy(cleanRows, 'uuid');
+    Object.keys(remote).map((remoteKey) => {
+      const value = remote[remoteKey];
+      const action = local[remoteKey] ? actions.syncUpdateRow(value) : actions.syncCreateRow({ ...value, status: 'clean' });
+      store.dispatch(action);
+    });
+
+    // TODO: There is a bug here
+    // If a row is in an updated state locally, and has been updated on the server, the
+    // servers changes will not propogate to the client. When a client requests to update
+    // via thunk, the core should return the row that was updated as response to fix this
+  });
+
+  { let success = false;
+    try {
+      await Promise.all([localUpdates, ...remoteCreates, ...remoteUpdates]);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
 }
 
 function createSyncService(): SyncServiceInstance {
