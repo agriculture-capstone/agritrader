@@ -5,11 +5,13 @@ import { CoreModuleState } from '../../types';
 /** Model for a milk entry */
 export interface MilkEntry {
   datetime: string;
-  toUUID: string;
-  fromUUID: string;
+  toPersonUuid: string;
+  fromPersonUuid: string;
+  amountOfProduct: number;
+  costPerUnit: number;
+  currency: string;
   volume: string;
   quality: string;
-  costPerUnit: string;
 }
 
 /*----------------------- State -----------------------*/
