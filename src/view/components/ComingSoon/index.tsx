@@ -16,9 +16,8 @@ export default function createComingSoonOverlay<InjectedProps>(
           style={style.overlay}
           pointerEvents={'none'}
         >
-          <WrappedComponent {...this.props} {...this.props.children}>
-            <Text style={style.comingSoonText}>{'Coming Soon!'}</Text>
-          </WrappedComponent>
+          <Text style={style.comingSoonText}>{'Coming Soon!'}</Text>
+          <WrappedComponent {...this.props} {...this.props.children}/>
         </View>
       );
     }
@@ -34,7 +33,7 @@ const style = StyleSheet.create({
     height,
     left: 0,
     top: 0,
-    opacity: 0.8,
+    opacity: 0.5,
     backgroundColor: 'black',
   },
   comingSoonText: {
