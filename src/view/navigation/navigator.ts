@@ -6,6 +6,9 @@ import FarmerPage from '../pages/Farmer';
 import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
+import AddEntryPage from '../components/AddEntry';
+import EditEntryPage from '../components/EditEntry';
+import MilkEntryDetails from '../components/EntryDetails';
 
 /** Different types of pages */
 export type PageType = 'menu' | 'back' | 'empty';
@@ -51,6 +54,9 @@ export enum Route {
   EXPORTS = 'Exports',
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmers',
+  ADD_MILK_ENTRY = 'AddMilkEntry',
+  MILK_ENTRY_DETAILS = 'MilkEntryDetails',
+  EDIT_MILK_ENTRY = 'EditMilkEntry',
 }
 
 /** App route information */
@@ -96,6 +102,24 @@ export const routesInfo: RouteInfo[] = [
     drawerInfo: {
       icon: 'person',
     },
+  },
+  {
+    route: Route.ADD_MILK_ENTRY,
+    name: 'Add Milk Entry',
+    component: AddEntryPage,
+    type: 'back',
+  },
+  {
+    route: Route.EDIT_MILK_ENTRY,
+    name: 'Edit Milk Entry',
+    component: EditEntryPage,
+    type: 'back',
+  },
+  {
+    route: Route.MILK_ENTRY_DETAILS,
+    name: 'Milk Entry Details',
+    component: MilkEntryDetails,
+    type: 'back',
   },
 ];
 
