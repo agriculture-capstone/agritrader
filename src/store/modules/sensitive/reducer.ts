@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { BaseReducer, PersistConfig, persistReducer } from 'redux-persist';
+import { BaseReducer, PersistConfig, persistReducer as createPersistedReducer } from 'redux-persist';
 import createSensitiveStorage from 'redux-persist-sensitive-storage';
 
 import { Action, SensitiveInfoState } from './types';
@@ -33,4 +33,4 @@ const sensitiveInfoReducer: Reducer<SensitiveInfoState> = (state = initialState,
   }
 };
 
-export default persistReducer(sensitivePersistConfig, sensitiveInfoReducer as BaseReducer<SensitiveInfoState, Action>);
+export default createPersistedReducer(sensitivePersistConfig, sensitiveInfoReducer as BaseReducer<SensitiveInfoState, Action>);

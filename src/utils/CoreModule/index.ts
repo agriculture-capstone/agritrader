@@ -21,7 +21,6 @@ import {
 export enum CoreModule {
   FARMER = 'farmer',
   MILK = 'milk',
-  LOAN = 'loan',
 }
 
 /*-------------------------------- Generic Actions --------------------------------*/
