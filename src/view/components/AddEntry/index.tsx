@@ -8,7 +8,6 @@ import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
 import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
-import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
 import dairyActions from '../../../store/modules/dairy/actions';
@@ -28,10 +27,8 @@ interface DispatchPropsType {
 interface StorePropsType {
 }
 
-type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
-
 /** AddEntry PropsType */
-type PropsType = InjectedFabProps & NestedPropsType;
+type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 interface OwnStateType {
   volume: string;
@@ -76,7 +73,8 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   
   /** Handle pressing save button */
   private onSavePress = () => {
-    const timeNow = moment().utc().toString();
+    // @TODO change time format to match core
+    const timeNow = moment().local().utc().toString();
     let newEntry: MilkEntry = {
       uuid: 'fakeEntryUuid',
       toUUID: 'fakeToUuid',
@@ -172,7 +170,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const AddEntryPage = new Composer<NestedPropsType>(AddEntry).page;
+const AddEntryPage = new Composer<PropsType>(AddEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
   return {};
