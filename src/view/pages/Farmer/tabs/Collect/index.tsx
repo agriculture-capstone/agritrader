@@ -10,7 +10,7 @@ import {
   getMonthlyFarmerDairyTotal,
   getWeeklyFarmerDairyTotal,
   getFormattedFarmersTransactions,
-  getDaysDairyTotal,
+  getFarmerDayTotal,
 } from '../../../../../store/modules/dairy/selectors';
 import styles from './style';
 
@@ -91,7 +91,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
   return {
     monthlyTotal: getMonthlyFarmerDairyTotal(state),
     weeklyTotal: getWeeklyFarmerDairyTotal(state),
-    dailyTotal: getDaysDairyTotal(state),
+    dailyTotal: getFarmerDayTotal(state),
     collectTransactions: getFormattedFarmersTransactions(state),
   };
 };

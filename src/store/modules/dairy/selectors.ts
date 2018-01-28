@@ -3,22 +3,25 @@ import { Dairy } from './types';
 import { State } from '../../types';
 
 import * as moment from 'moment';
+import 'moment/locale/pt-br';
 
 const getDairyEntries = (state: State) => state.dairy.dairyList;
 const getCurrentFarmerUUID = (state: State) => state.currentFarmer.currentFarmerUUID;
-
+const radix: number = 10;
 
 /************Selectors for all milk entries ***************/
 /**Selector to calculate the current days milk collection */
 export const getDaysDairyTotal = createSelector(
   [getDairyEntries],
-  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => inSameDay(entry.datetime) ? sum + parseInt(entry.volume, 10) : sum + 0, 0));
+  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => 
+  inSameDay(entry.datetime) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
 
 /**Selector to calculate the average daily milk collection */
 export const getAvgDaysDairyTotal = createSelector(
   [getDairyEntries],
   (dairyEntries: Dairy[]) => {
-    return calculateAverage(groupBy(dairyEntries.map(entry => ({ ...(entry as any), dateID: moment(entry.datetime).utc().format() })), 'dateID'));
+    return calculateAverage(groupBy(dairyEntries.map(entry => 
+      ({ ...(entry as any), dateID: moment(entry.datetime).utc().format() })), 'dateID'));
   },
 );
 
@@ -27,55 +30,62 @@ export const getAvgDaysDairyTotal = createSelector(
 //Return current farmer object
 /************Selectors for a specific farmer ***************/
 
-/**Selector to calculate the farmers total milk collected this week **Still struggling with this one** */
+/**Selector to calculate the farmers total milk collected this week  */
 export const getFarmersTransactions = createSelector(
   [getDairyEntries, getCurrentFarmerUUID],
-  (dairyEntries: Dairy[], farmerUUID: string) => dairyEntries.filter(entry => entry.fromUUID.localeCompare(farmerUUID)));
+  (dairyEntries: Dairy[], farmerUUID: string) => dairyEntries.filter(entry => !entry.fromUUID.localeCompare(farmerUUID)));
 
-/**Selector to calculate the farmers total milk collected this week **Still struggling with this one** */
+/**Selector to calculate the farmers total milk collected this week  */
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (dairyEntries: Dairy[]) => dairyEntries.map(entry => 
-    ({ datetime:moment(entry.datetime).format('MMM, Do[\n]kk:mm'), volume:entry.volume, quality:entry.quality, costPerUnit:entry.costPerUnit }), 
+    ({ datetime:moment(entry.datetime).format('MM-DD[\n]kk:mm'), 
+      volume:entry.volume, quality:entry.quality, costPerUnit:entry.costPerUnit }), 
   ),
 );
+
+/**Selector to calculate the current days milk collection */
+export const getFarmerDayTotal = createSelector(
+  [getFarmersTransactions],
+  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => 
+  inSameDay(entry.datetime) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
 
 /**Selector to calculate the farmers total milk collected this week */
 export const getWeeklyFarmerDairyTotal = createSelector(
   [getFarmersTransactions],
-  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => (inLastWeek(entry.datetime)) ? sum + parseInt(entry.volume, 10) : sum + 0, 0));
+  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => 
+  (inLastWeek(entry.datetime)) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
 
 /**Selector to calculate the farmers total milk collected this month */
 export const getMonthlyFarmerDairyTotal = createSelector(
   [getFarmersTransactions],
-  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => (inSameMonth(entry.datetime)) ? sum + parseInt(entry.volume, 10) : sum + 0, 0));
+  (dairyEntries: Dairy[]) => dairyEntries.reduce((sum: any, entry: any) => 
+  (inSameMonth(entry.datetime)) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
 
 
 /************Helper Methods************/
 
 
 function inSameDay(date: string) {
-  return moment(date).utc().isSame(moment().utc(), 'day') ? true : false;
+  return moment(date).local().isSame(moment().local(), 'day') ? true : false;
 }
 
 function inLastWeek(date: string) {
-  return moment(date).utc().isSame(moment().utc(), 'week') ? true : false;
+  return moment(date).local().isSame(moment().local(), 'week') ? true : false;
 }
 
 function inSameMonth(date: string) {
-  return moment(date).utc().isSame(moment().utc(), 'month') ? true : false;
+  return moment(date).local().isSame(moment().local(), 'month') ? true : false;
 }
 
-let averages = [4, 5, 6, 7];
-
+let averages: number[] = [];
 function calculateAverage(groupedEntries: any) {
   let keys: string[] = Object.keys(groupedEntries);
   keys.forEach((element) => {
-    //this is the array of same dates
-    console.log(averages.push(groupedEntries[element].reduce((sum: number, entry: Dairy) => sum + entry.volume, 0)));
+    averages.push(groupedEntries[element].reduce((sum: number, entry: Dairy) => 
+    sum + parseInt(entry.volume, radix), 0));
   });
-  return averages.reduce((acc: number, entry: number) => acc + entry, 0);
-
+  return (averages.reduce((acc: number, entry: number) => acc + entry, 0) / averages.length).toFixed(0);
 }
 
 
