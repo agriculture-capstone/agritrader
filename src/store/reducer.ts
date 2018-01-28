@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { BaseReducer, persistReducer, PersistConfig } from 'redux-persist';
+import { BaseReducer, persistReducer as createPersistedReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import { State, Action } from './types';
@@ -36,5 +36,5 @@ const reducer = combineReducers<State>({
   milk: milkReducer,
 }) as BaseReducer<State, Action>;
 
-export default persistReducer(persistConfig, reducer);
+export default createPersistedReducer(persistConfig, reducer);
 
