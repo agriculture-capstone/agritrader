@@ -1,33 +1,42 @@
 import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
+import * as moment from 'moment';
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
 
-import Composer from '../../hoc/PageComposer';
-import Styles from './style';
+import { Route } from '../../navigation/navigator';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../store/modules/nav/actions';
+import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
+import Composer from '../../hoc/PageComposer/index';
+import { State } from '../../../store/types';
+import dairyActions from '../../../store/modules/dairy/actions';
 
-// @TODO delete this
-const fakeValues = {
-  firstName: 'Patrick',
-  lastName: 'Kenaan',
-  date: 'Friday, Jan 25, 2018',
-  time: '9:35 pm',
-};
+import Styles from './style';
 
 interface OwnPropsType {
   farmer: Farmer;
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
+  goBack(): void;
+  createDairy(newEntry: MilkEntry): void;
 }
 
 interface StorePropsType {
 }
 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** AddEntry PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
 
 interface OwnStateType {
+  volume: string;
+  quality: string;
+  costPerUnit: string;
 }
 
 /**
@@ -44,30 +53,52 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *             />
  */
 
-export default class AddEntry extends React.Component<PropsType, OwnStateType> {
+class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
+    this.state = {
+      volume: '0',
+      quality: '0',
+      costPerUnit: '0',
+    };
   }
 
-  private renderCancelButton() {
-    return (this.renderButton('Cancel', 'INFO'));
-  }
+  /** Create page buttons */
+  private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
+  private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
 
-  private renderSaveButton() {
-    return (this.renderButton('Save', 'PRIMARY'));
+  /** Handle pressing cancel button */
+  private onCancelPress = () => this.props.goBack();
+  
+  /** Handle pressing save button */
+  private onSavePress = () => {
+    const timeNow = moment().utc().toString();
+    let newEntry: MilkEntry = {
+      uuid: 'fakeEntryUuid',
+      toUUID: 'fakeToUuid',
+      fromUUID: 'fakeFromUuid',
+      datetime: timeNow,
+      volume: this.state.volume,
+      quality: this.state.quality,
+      costPerUnit: this.state.costPerUnit,
+      lastModified: timeNow,
+      local: 'true',
+    };
+    this.props.createDairy(newEntry);
+    this.props.navigate(Route.MILK_ENTRY_DETAILS);
   }
 
   /**
    * Returns a button with text specified
    */
-  private renderButton(text: string, color: ButtonColor) {
+  private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
     return (
       <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary}>
+        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
           <Text>{text}</Text>
         </Button>
       </Col>
@@ -79,22 +110,17 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {/* {this.props.farmer.firstName} {this.props.farmer.lastName} */}
-            {fakeValues.firstName} {fakeValues.lastName}
+            {this.props.farmer.firstName} {this.props.farmer.lastName}
           </H1>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {/* @TODO Change this to take date only */}
-            {/* {this.props.farmer.datetime} */}
-            {fakeValues.date}
+            {moment().format('dddd, MMMM DD, YYYY')}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {/* @TODO Change this to take time only */}
-            {/* {this.props.farmer.datetime} */}
-            {fakeValues.time}
+            {moment().format('kk:mm')}
           </Text>
         </Row>
       </Grid>
@@ -142,3 +168,22 @@ export default class AddEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 }
+
+const AddEntryPage = new Composer<NestedPropsType>(AddEntry).page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
+  return {};
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    goBack: () => dispatch(navActions.goBack()),
+    createDairy: (newEntry: MilkEntry) => dispatch(dairyActions.updateDairy(newEntry)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AddEntryPage);

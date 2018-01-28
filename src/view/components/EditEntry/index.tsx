@@ -15,17 +15,6 @@ import dairyActions from '../../../store/modules/dairy/actions';
 
 import Styles from './style';
 
-// @TODO delete this
-const fakeValues = {
-  firstName: 'Patrick',
-  lastName: 'Kenaan',
-
-  date: 'Friday, Jan 25, 2018',
-  time: '9:35 pm',
-  volume: '14',
-  quality: '60',
-  costPerUnit: '3.6',
-};
 
 interface OwnPropsType {
   farmer: Farmer;
