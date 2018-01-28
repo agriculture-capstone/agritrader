@@ -11,6 +11,7 @@ export interface Farmer {
   phoneArea: string;
   phoneNumber: string;
   companyName?: string;
+  uuid:string;
 }
 
 /** Model for a farmer in store */

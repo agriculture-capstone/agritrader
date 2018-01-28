@@ -13,8 +13,10 @@ import headerReducer from './modules/header/reducer';
 import sensitiveInfoReducer from './modules/sensitive/reducer';
 
 import farmerReducer from './modules/farmer/reducer';
+import currentFarmerReducer from './modules/currentFarmer/reducer';
 import milkReducer from './modules/milk/reducer';
 
+<<<<<<< HEAD
 // Whitelist the core modules
 const whitelist = Object.values(CoreModule);
 
@@ -26,6 +28,10 @@ const persistConfig: PersistConfig = {
 };
 
 const reducer = combineReducers<State>({
+=======
+
+export default combineReducers<State>({
+>>>>>>> james/AT-104/dairy-redux
   drawer: drawerReducer,
   nav: navReducer,
   tabs: tabsReducer,
@@ -33,6 +39,7 @@ const reducer = combineReducers<State>({
   header: headerReducer,
   sensitiveInfo: sensitiveInfoReducer,
   farmer: farmerReducer,
+  currentFarmer: currentFarmerReducer,
   milk: milkReducer,
 }) as BaseReducer<State, Action>;
 
