@@ -106,12 +106,12 @@ async function createJob(module: CoreModule): Job {
   const cleanRows = moduleState.rows.filter(r => r.status === 'clean');
   const remoteCreates = dirtyRows
     .filter(r => r.status === 'local')
-    .map(r => api.create(r))
+    .map(async r => api.create(r))
   ;
 
   const remoteUpdates = dirtyRows
     .filter(r => r.status === 'modified')
-    .map(r => api.update(r))
+    .map(async r => api.update(r))
   ;
 
   const localUpdates = api.getAll().then((remoteRows) => {
@@ -130,13 +130,15 @@ async function createJob(module: CoreModule): Job {
     // via thunk, the core should return the row that was updated as response to fix this
   });
 
-  { let success = false;
+  { let successStatus: boolean;
     try {
       await Promise.all([localUpdates, ...remoteCreates, ...remoteUpdates]);
-      return true;
+      successStatus = true;
     } catch (err) {
-      return false;
+      successStatus = false;
     }
+
+    return successStatus;
   }
 }
 
@@ -156,13 +158,13 @@ function createSyncService(): SyncServiceInstance {
       return !!Object.values(_p.activeModuleJobs).length;
     },
 
-    syncAll(): Jobs {
+    async syncAll(): Jobs {
       // Reset the time for next automatic sync
       clearInterval(intervalId);
       intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
       // Forcing the types to work because we know better than Typescript here (be careful)
-      const modulesPending = Object.values(CoreModule).map(m => instance.syncModule(m as CoreModule));
+      const modulesPending = Object.values(CoreModule).map(async m => instance.syncModule(m as CoreModule));
 
       return Promise.all(modulesPending);
     },

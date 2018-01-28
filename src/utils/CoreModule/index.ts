@@ -23,19 +23,18 @@ export enum CoreModule {
   MILK = 'milk',
 }
 
+/**
+ * Get the module path for the specified module
+ *
+ * @param module Module to retrieve path for
+ */
 export function getModulePath(module: CoreModule): CorePath {
   switch (module) {
-    case CoreModule.FARMER: {
-      return CorePath.FARMERS;
-    }
+    case CoreModule.FARMER: return CorePath.FARMERS;
 
-    case CoreModule.MILK: {
-      return CorePath.MILK;
-    }
+    case CoreModule.MILK: return CorePath.MILK;
 
-    default: {
-      throw new Error(`No such module/path mapping for module ${module}`);
-    }
+    default: throw new Error(`No such module/path mapping for module ${module}`);
   }
 }
 
