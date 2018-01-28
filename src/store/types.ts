@@ -106,7 +106,7 @@ export type CoreUpdateRequest<T> = Partial<T> & LastModifiedData & UUIDData;
  *
  * @template T Data model for module
  */
-export type ThunkCreationRow<T> = T & UUIDData;
+export type ThunkCreationRow<T> = T;
 
 /**
  * Data model for thunk item update
