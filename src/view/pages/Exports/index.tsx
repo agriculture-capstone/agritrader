@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import Export from './tabs/Export';
+import { connect } from 'react-redux';
+import ComingSoonOverlay, { default as createComingSoonOverlay } from '../../components/ComingSoon';
 
 const demoExportValues = [
   { date: 'Jan 18 17:31', plate:'BRI8932', vol: 10 }, 
@@ -11,7 +13,7 @@ const demoExportValues = [
 /**
  * Container for Farmer
  */
-export default class Farmer extends React.Component<{}, {}> {
+export class Farmer extends React.Component<{}, {}> {
 
   /**
    * Render method for Farmer
@@ -28,3 +30,9 @@ export default class Farmer extends React.Component<{}, {}> {
     );
   }
 }
+
+const ExportsComingSoonPage = ComingSoonOverlay(Farmer);
+createComingSoonOverlay(Farmer);
+
+export default connect(
+)(ExportsComingSoonPage);

@@ -4,6 +4,8 @@ import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
+import ComingSoonOverlay, { default as createComingSoonOverlay } from '../../../../components/ComingSoon/index';
+import { connect } from 'react-redux';
 
 interface OwnPropsType {
   farmerName: string;
@@ -64,5 +66,12 @@ class Buy extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default new Composer<PropsType>(Buy)
-  .page;
+const LoanComingSoonPage = ComingSoonOverlay<PropsType>(Buy);
+createComingSoonOverlay(Buy);
+
+export default connect(
+)(LoanComingSoonPage);
+
+
+// export default new Composer<PropsType>(Buy)
+//   .page;
