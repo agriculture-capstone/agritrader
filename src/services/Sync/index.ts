@@ -1,6 +1,13 @@
 import { CoreModule } from '../../utils/CoreModule/index';
 import Config from 'react-native-config';
 
+/**
+ * Promise representing the job taking place
+ */
+type Job = Promise<boolean>;
+
+type Jobs = Promise<boolean[]>;
+
 /*
 * A symbol is a primitive type that is guaranteed to be unique. That means
 * the only thing that will match this symbol is this exact symbol right here.
@@ -20,11 +27,6 @@ const TO_MILLISECONDS = 1000;
 /** The sync frequency for automatic sync */
 const SYNC_FREQUENCY = TO_MILLISECONDS * (Config.SYNC_FREQUENCY || DEFAULT_FREQUENCY);
 
-/**
- * Promise representing the job taking place
- */
-type Job = Promise<void>;
-
 /** Instance of the sync service */
 export interface SyncServiceInstance {
 
@@ -38,7 +40,7 @@ export interface SyncServiceInstance {
    *
    * @returns A promise that resolves when all modules have successfully synced
    */
-  syncAll(): Job;
+  syncAll(): Jobs;
 
   /**
    * Sync the specified module with the core
@@ -62,7 +64,8 @@ interface CurrentModuleJobs {
  * @returns Promise that resolves when job is over
  */
 async function createJob(module: string): Job {
-
+  // TODO: Fix
+  return Promise.resolve(true);
 }
 
 function createSyncService(): SyncServiceInstance {
@@ -81,7 +84,7 @@ function createSyncService(): SyncServiceInstance {
       return !!Object.values(_p.activeModuleJobs).length;
     },
 
-    syncAll() {
+    syncAll(): Jobs {
       // Reset the time for next automatic sync
       clearInterval(intervalId);
       intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
@@ -89,13 +92,14 @@ function createSyncService(): SyncServiceInstance {
       // Forcing the types to work because we know better than Typescript here (be careful)
       const modulesPending = Object.values(CoreModule).map(m => instance.syncModule(m as CoreModule));
 
-      return Promise.all(modulesPending).then(() => {});
+      return Promise.all(modulesPending);
     },
 
     async syncModule(module: CoreModule) {
-      // Check if there is currently an active job for this module
-      if (_p.activeModuleJobs[module]) {
-        return _p.activeModuleJobs[module];
+      // Check if there is currently an active job for this module, return if so
+      const currentJob = _p.activeModuleJobs[module];
+      if (currentJob) {
+        return currentJob;
       }
 
       const job = createJob(module);
@@ -115,7 +119,7 @@ function createSyncService(): SyncServiceInstance {
   // Setup interval to sync all modules
   intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
-  return instance;
+  return Object.freeze(instance);
 }
 
 /**
