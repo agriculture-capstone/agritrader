@@ -7,11 +7,11 @@ import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
 import { State } from '../../../../../store/types';
 import {
-  getMonthlyFarmerDairyTotal,
-  getWeeklyFarmerDairyTotal,
+  getMonthlyFarmerMilkTotal,
+  getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,
   getFarmerDayTotal,
-} from '../../../../../store/modules/dairy/selectors';
+} from '../../../../../store/modules/milk/selectors';
 import styles from './style';
 
 interface OwnPropsType {
@@ -89,8 +89,8 @@ const collectPage = new Composer<PropsType>(Collect).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    monthlyTotal: getMonthlyFarmerDairyTotal(state),
-    weeklyTotal: getWeeklyFarmerDairyTotal(state),
+    monthlyTotal: getMonthlyFarmerMilkTotal(state),
+    weeklyTotal: getWeeklyFarmerMilkTotal(state),
     dailyTotal: getFarmerDayTotal(state),
     collectTransactions: getFormattedFarmersTransactions(state),
   };

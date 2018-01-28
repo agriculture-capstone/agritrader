@@ -10,13 +10,13 @@ const radix: number = 10;
 
 /************Selectors for all milk entries (used on Home page) ***************/
 /**Selector to calculate the current days milk collection */
-export const getDaysDairyTotal = createSelector(
+export const getDaysMilkTotal = createSelector(
   [getMilkEntries],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
     inSameDay(entry.datetime) ? sum + parseInt(entry.volume, radix) : sum + 0, 0).toFixed(0));
 
 /**Selector to calculate the average daily milk collection */
-export const getAvgDaysDairyTotal = createSelector(
+export const getAvgDaysMilkTotal = createSelector(
   [getMilkEntries],
   (milkEntries: MilkEntry[]) => {
     return calculateAverage(groupBy(milkEntries.map(entry =>
@@ -24,20 +24,20 @@ export const getAvgDaysDairyTotal = createSelector(
   },
 );
 
-/**Selector to return a specific dairy transaction based on UUID */
+/**Selector to return a specific milk transaction based on UUID */
 /***Not sure how we are getting the transaction uuid**/
-// export const getSpecificDairyTransaction = createSelector(
+// export const getSpecificMilkTransaction = createSelector(
 //   [getMilkEntries, getCurrentFarmerUUID],
 //   (milkEntries: MilkEntry[], farmerUUID: string) => milkEntries.filter(entry => !entry.uuid.localeCompare(uuid)));
 
 /************Selectors for a specific farmer ***************/
 
-/**Selector to get all dairy transactions for a specific farmer  */
+/**Selector to get all milk transactions for a specific farmer  */
 export const getFarmersTransactions = createSelector(
   [getMilkEntries, getCurrentFarmerUUID],
   (milkEntries: MilkEntry[], farmerUUID: string) => milkEntries.filter(entry => !entry.fromPersonUuid.localeCompare(farmerUUID)));
 
-/**Selector to get all dairy transactions for a specific farmer formatted for the collect page */
+/**Selector to get all milk transactions for a specific farmer formatted for the collect page */
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.map(entry =>
@@ -52,13 +52,13 @@ export const getFarmerDayTotal = createSelector(
     inSameDay(entry.datetime) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
 
 /**Selector to calculate the farmers total milk collected this week */
-export const getWeeklyFarmerDairyTotal = createSelector(
+export const getWeeklyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
     (inLastWeek(entry.datetime)) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
 
 /**Selector to calculate the farmers total milk collected this month */
-export const getMonthlyFarmerDairyTotal = createSelector(
+export const getMonthlyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
     (inSameMonth(entry.datetime)) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
