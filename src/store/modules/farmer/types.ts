@@ -1,8 +1,8 @@
-import { CoreModuleState } from '../../types';
+import { CoreModuleState, StoreRow } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
-/** Model for a farmer */
+/** Base model for a farmer */
 export interface Farmer {
   firstName: string;
   middleName: string;
@@ -12,6 +12,9 @@ export interface Farmer {
   phoneNumber: string;
   companyName?: string;
 }
+
+/** Model for a farmer in store */
+export type StoreFarmer = StoreRow<Farmer>;
 
 /*----------------------- State -----------------------*/
 

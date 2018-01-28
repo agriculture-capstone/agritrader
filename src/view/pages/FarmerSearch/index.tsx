@@ -7,10 +7,10 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
-import { State, StoreRow } from '../../../store/types';
+import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
-import { Farmer } from '../../../store/modules/farmer/types';
+import { StoreFarmer } from '../../../store/modules/farmer/types';
 
 /** FarmerSearch OwnPropsType */
 // TODO: Make required property when moving to StorePropsType
@@ -19,7 +19,7 @@ export interface OwnPropsType {
 
 /** FarmerSearch StorePropsType */
 interface StorePropsType {
-  farmers: StoreRow<Farmer>[];
+  farmers: StoreFarmer[];
 }
 
 /** FarmerSearch DispatchPropsType */
@@ -56,9 +56,9 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Function to sort the list data by Farmer name in alphabetical order */
-  private sortList(farmers: StoreRow<Farmer>[]): StoreRow<Farmer>[] {
+  private sortList(farmers: StoreFarmer[]): StoreFarmer[] {
     // Declare block scoped var (let) at top
-    let sortedList: StoreRow<Farmer>[] = [];
+    let sortedList: StoreFarmer[] = [];
     sortedList = farmers.sort((f1, f2) => {
       if (f1.firstName.toLowerCase() > f2.firstName.toLowerCase()) {
         return 1;
@@ -75,7 +75,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Function to render the individual list items */
-  private renderItem(farmer: StoreRow<Farmer>) {
+  private renderItem(farmer: StoreFarmer) {
     return (
       <ListItem key={farmer.uuid} onPress={this.itemClicked}>
         <View>
