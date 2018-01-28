@@ -64,6 +64,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     };
   }
 
+  /** Get current datetime in specified format */
+  private getDatetime = (format: string) => moment().format(format);
+
   /** Create page buttons */
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
@@ -115,12 +118,12 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment().format('dddd, MMMM DD, YYYY')}
+            {this.getDatetime('dddd, MMMM DD, YYYY')}
           </Text>
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment().format('kk:mm')}
+            {this.getDatetime('kk:mm')}
           </Text>
         </Row>
       </Grid>
