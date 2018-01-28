@@ -108,7 +108,7 @@
 			"<rootDir>/lib/"
 		],
 		"transformIgnorePatterns": [
-			"node_modules/(?!react-native|native-base|react-navigation)"
+			"node_modules/(?!react-native|native-base|react-navigation|redux-persist-sensitive-storage|redux-persist)"
 		],
 		"cacheDirectory": ".jest/cache",
 		"mapCoverage": true
