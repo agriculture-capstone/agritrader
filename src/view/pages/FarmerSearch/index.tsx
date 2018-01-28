@@ -10,73 +10,7 @@ import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
-
-/** This is just a table of phony information to populate the FarmerSearch UI */
-const fakeFarmerList = [
-  {
-    name: 'Swalleh',
-    phoneNumber: '(250) 234-1234',
-    id: 1,
-  },
-  {
-    name: 'James',
-    phoneNumber: '(526) 123-8123',
-    id: 2,
-  },
-  {
-    name: 'Alex',
-    phoneNumber: '(514) 235-6789',
-    id: 3,
-  },
-  {
-    name: 'Joseph',
-    phoneNumber: '(922) 789-2348',
-    id: 4,
-  },
-  {
-    name: 'Mary',
-    phoneNumber: '(626) 626-1236',
-    id: 5,
-  },
-  {
-    name: 'David',
-    phoneNumber: '(789) 231-2345',
-    id: 6,
-  },
-  {
-    name: 'Michael',
-    phoneNumber: '(899) 781-8786',
-    id: 7,
-  },
-  {
-    name: 'Mary',
-    phoneNumber: '(897) 768-6780',
-    id: 8,
-  },
-  {
-    name: 'Peter',
-    phoneNumber: '(123) 564-2315',
-    id: 9,
-  },
-  {
-    name: 'Jonah',
-    phoneNumber: '(011) 101-1001',
-    id: 10,
-  },
-  {
-    name: 'Simon',
-    phoneNumber: '(234) 456-7890',
-    id: 11,
-  },
-];
-
-/** Basic model for the FarmerType object */
-// TODO: Move to store --@jinglis
-interface FarmerType {
-  name: string;
-  phoneNumber: string;
-  id: number;
-}
+import { StoreFarmer } from '../../../store/modules/farmer/types';
 
 /** FarmerSearch OwnPropsType */
 // TODO: Make required property when moving to StorePropsType
@@ -85,7 +19,7 @@ export interface OwnPropsType {
 
 /** FarmerSearch StorePropsType */
 interface StorePropsType {
-  // farmerList: Farmer[];
+  farmers: StoreFarmer[];
 }
 
 /** FarmerSearch DispatchPropsType */
@@ -122,18 +56,14 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Function to sort the list data by Farmer name in alphabetical order */
-  // TODO: Make required property
-  private sortList(farmers?: FarmerType[]): FarmerType[] {
-
-    let sortedList: FarmerType[] = [];
-    if (farmers === undefined) {
-      return sortedList;
-    }
-    sortedList = farmers.sort((f1: FarmerType, f2: FarmerType) => {
-      if (f1.name > f2.name) {
+  private sortList(farmers: StoreFarmer[]): StoreFarmer[] {
+    // Declare block scoped var (let) at top
+    let sortedList: StoreFarmer[] = [];
+    sortedList = farmers.sort((f1, f2) => {
+      if (f1.firstName.toLowerCase() > f2.firstName.toLowerCase()) {
         return 1;
       }
-      if (f1.name < f2.name) {
+      if (f1.firstName < f2.firstName) {
         return -1;
       }
       return 0;
@@ -142,19 +72,18 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   private onFabPress() {
-
   }
 
   /** Function to render the individual list items */
-  private renderItem(info: FarmerType) {
+  private renderItem(farmer: StoreFarmer) {
     return (
-      <ListItem key={info.id} onPress={this.itemClicked}>
+      <ListItem key={farmer.uuid} onPress={this.itemClicked}>
         <View>
           <H1>
-            {info.name}
+            {`${farmer.firstName} ${farmer.lastName}`}
           </H1>
           <H3>
-            {info.phoneNumber}
+            {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
           </H3>
         </View>
       </ListItem>
@@ -173,7 +102,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <Content>
         <List
-          dataArray={this.sortList(fakeFarmerList)}
+          dataArray={this.sortList(this.props.farmers)}
           renderRow={this.renderItem}
         />
       </Content>
@@ -190,7 +119,9 @@ const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
 /************************* Redux ************************/
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  return {};
+  return {
+    farmers: state.farmer.rows,
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {

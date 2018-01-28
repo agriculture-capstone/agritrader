@@ -1,4 +1,4 @@
-import { createReducer } from '../../../utils/CoreModule';
+import { createReducer, CoreModule } from '../../../utils/CoreModule';
 import { MilkEntry } from './types';
 
-export default createReducer<MilkEntry>('milk');
+export default createReducer<MilkEntry>(CoreModule.MILK);
