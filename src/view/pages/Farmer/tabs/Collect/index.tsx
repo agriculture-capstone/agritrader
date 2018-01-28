@@ -1,22 +1,31 @@
 import * as React from 'react';
 import { Grid, Row, Col, Content, Button, Text } from 'native-base';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
+import { State } from '../../../../../store/types';
+import {
+  getMonthlyFarmerDairyTotal,
+  getWeeklyFarmerDairyTotal,
+  getFormattedFarmersTransactions,
+  getFarmerDayTotal,
+} from '../../../../../store/modules/dairy/selectors';
 import styles from './style';
 
 interface OwnPropsType {
   farmerName: string;
-  currentDayTotal: string;
-  currentWeekTotal: string;
-  currentMonthTotal: string;
-  collectTransactions: any[];
 }
 
 interface DispatchPropsType {
 }
 
 interface StorePropsType {
+  monthlyTotal: any;
+  weeklyTotal: any;
+  dailyTotal: any;
+  collectTransactions: any[];
 }
 
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
@@ -34,15 +43,15 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   public render() {
     const testData = [{
       label: 'Today',
-      value: this.props.currentDayTotal,
+      value: this.props.dailyTotal,
       units: 'L',
     },                {
       label: 'This Week',
-      value: this.props.currentWeekTotal,
+      value: this.props.weeklyTotal,
       units: 'L',
     },                {
       label: 'This Month',
-      value: this.props.currentMonthTotal,
+      value: this.props.monthlyTotal,
       units: 'L',
     },
     ];
@@ -57,7 +66,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'AM', 'PM']}
+              headers={['Date', 'Volume', 'quality', 'rate']}
               values={this.props.collectTransactions}
             />
           </Row>
@@ -76,5 +85,23 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default new Composer<PropsType>(Collect)
-  .page;
+const collectPage = new Composer<PropsType>(Collect).page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    monthlyTotal: getMonthlyFarmerDairyTotal(state),
+    weeklyTotal: getWeeklyFarmerDairyTotal(state),
+    dailyTotal: getFarmerDayTotal(state),
+    collectTransactions: getFormattedFarmersTransactions(state),
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(collectPage);
