@@ -1,4 +1,4 @@
-import { Config } from 'react-native-config';
+import Config from 'react-native-config';
 
 import HTTPCode from '../HTTPCode';
 import store from '../../store';

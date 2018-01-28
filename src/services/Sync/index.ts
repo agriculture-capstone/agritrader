@@ -1,5 +1,5 @@
 import { CoreModule } from '../../utils/CoreModule/index';
-import { Config } from 'react-native-config';
+import Config from 'react-native-config';
 
 /*
 * A symbol is a primitive type that is guaranteed to be unique. That means
