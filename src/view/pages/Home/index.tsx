@@ -12,13 +12,14 @@ import navActions from '../../../store/modules/nav/actions';
 import { getAvgDaysDairyTotal, getDaysDairyTotal } from '../../../store/modules/dairy/selectors';
 import Composer from '../../hoc/PageComposer';
 import styles from './style';
+import * as moment from 'moment';
+
 
 interface OwnPropsType { }
 
-//TODO change from any
 interface StorePropsType {
-  dayTotal: any;
-  avgDayTotal: any;
+  dayTotal: string;
+  avgDayTotal: string;
 }
 
 interface DispatchPropsType {
@@ -63,7 +64,7 @@ class Home extends React.Component<PropsType, {}> {
         <Panel title="Quality Milk" expandable={false}>
           <Grid>
             <Row>
-              <Col><Text style={styles.label}> {'Friday, January 19, 2018'.toUpperCase()}</Text></Col>
+              <Col><Text style={styles.label}> {moment().local().format('dddd, MMMM DD, YYYY').toUpperCase()}</Text></Col>
             </Row>
             <Row>
               <StatisicsBlock value={this.props.dayTotal} units="L" label="Today" />
