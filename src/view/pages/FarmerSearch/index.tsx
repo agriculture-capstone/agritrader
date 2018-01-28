@@ -10,14 +10,7 @@ import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
-import { getFormattedFarmers } from '../../../store/modules/farmer/selectors';
-
-
-interface FarmerType {
-  name: string;
-  phoneNumber: string;
-  uuid: string;
-}
+import { StoreFarmer } from '../../../store/modules/farmer/types';
 
 /** FarmerSearch OwnPropsType */
 // TODO: Make required property when moving to StorePropsType
@@ -26,7 +19,7 @@ export interface OwnPropsType {
 
 /** FarmerSearch StorePropsType */
 interface StorePropsType {
-  farmerList: FarmerType[];
+  farmers: StoreFarmer[];
 }
 
 /** FarmerSearch DispatchPropsType */
@@ -63,18 +56,14 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Function to sort the list data by Farmer name in alphabetical order */
-  // TODO: Make required property
-  private sortList(farmers?: FarmerType[]): FarmerType[] {
-
-    let sortedList: FarmerType[] = [];
-    if (farmers === undefined) {
-      return sortedList;
-    }
-    sortedList = farmers.sort((f1: FarmerType, f2: FarmerType) => {
-      if (f1.name > f2.name) {
+  private sortList(farmers: StoreFarmer[]): StoreFarmer[] {
+    // Declare block scoped var (let) at top
+    let sortedList: StoreFarmer[] = [];
+    sortedList = farmers.sort((f1, f2) => {
+      if (f1.firstName.toLowerCase() > f2.firstName.toLowerCase()) {
         return 1;
       }
-      if (f1.name < f2.name) {
+      if (f1.firstName < f2.firstName) {
         return -1;
       }
       return 0;
@@ -83,19 +72,18 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   private onFabPress() {
-
   }
 
   /** Function to render the individual list items */
-  private renderItem(info: FarmerType) {
+  private renderItem(farmer: StoreFarmer) {
     return (
-      <ListItem key={info.uuid} onPress={this.itemClicked}>
+      <ListItem key={farmer.uuid} onPress={this.itemClicked}>
         <View>
           <H1>
-            {info.name}
+            {`${farmer.firstName} ${farmer.lastName}`}
           </H1>
           <H3>
-            {info.phoneNumber}
+            {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
           </H3>
         </View>
       </ListItem>
@@ -114,7 +102,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <Content>
         <List
-          dataArray={this.sortList(this.props.farmerList)}
+          dataArray={this.sortList(this.props.farmers)}
           renderRow={this.renderItem}
         />
       </Content>
@@ -132,7 +120,7 @@ const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmerList: getFormattedFarmers(state),
+    farmers: state.farmer.rows,
   };
 };
 
