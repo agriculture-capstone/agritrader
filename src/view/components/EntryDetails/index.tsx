@@ -7,7 +7,6 @@ import { Route } from '../../navigation/navigator';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
-import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
 
@@ -29,10 +28,8 @@ interface StorePropsType {
 interface OwnStateType {
 }
 
-type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
-
 /** EntryDetails PropsType */
-type PropsType = InjectedFabProps & NestedPropsType;
+type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 /**
  * Button color
@@ -151,7 +148,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const EntryDetailsPage = new Composer<NestedPropsType>(EntryDetails).page;
+const EntryDetailsPage = new Composer<PropsType>(EntryDetails).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
   return {};
