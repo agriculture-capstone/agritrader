@@ -89,7 +89,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private onFirstNameChange = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
   private onLastNameChange = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
   private onPhoneChange = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
-  private onNotesChange = (newNotes: string) => this.setState(state => ({ phoneNumber: newNotes }));
+  private onNotesChange = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
   /**
    * Returns a button with text specified
