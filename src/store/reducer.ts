@@ -16,7 +16,6 @@ import farmerReducer from './modules/farmer/reducer';
 import currentFarmerReducer from './modules/currentFarmer/reducer';
 import milkReducer from './modules/milk/reducer';
 
-<<<<<<< HEAD
 // Whitelist the core modules
 const whitelist = Object.values(CoreModule);
 
@@ -28,10 +27,6 @@ const persistConfig: PersistConfig = {
 };
 
 const reducer = combineReducers<State>({
-=======
-
-export default combineReducers<State>({
->>>>>>> james/AT-104/dairy-redux
   drawer: drawerReducer,
   nav: navReducer,
   tabs: tabsReducer,
@@ -44,4 +39,3 @@ export default combineReducers<State>({
 }) as BaseReducer<State, Action>;
 
 export default createPersistedReducer(persistConfig, reducer);
-

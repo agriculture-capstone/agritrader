@@ -1,8 +1,9 @@
 import * as React from 'react';
-
-import { H1, H3, Content, List, ListItem } from 'native-base';
+import { H2, H3, Content, List, ListItem } from 'native-base';
 import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import * as Fuse from 'fuse.js';
+import { createSelector } from 'reselect';
 
 import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
@@ -11,9 +12,9 @@ import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import { StoreFarmer } from '../../../store/modules/farmer/types';
+import style from './style';
 
 /** FarmerSearch OwnPropsType */
-// TODO: Make required property when moving to StorePropsType
 export interface OwnPropsType {
 }
 
@@ -24,7 +25,8 @@ interface StorePropsType {
 
 /** FarmerSearch DispatchPropsType */
 interface DispatchPropsType {
-  navigateToFarmer(): void;
+  navigateToFarmer(uuid: string): void;
+  navigateToAddFarmer(): void;
 }
 
 /** FarmerSearch OwnStateType */
@@ -40,48 +42,81 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
   /************************* Member Variables ************************/
 
+  private searchList: (props: PropsType) => StoreFarmer[];
+
   /************************* Member Functions ************************/
 
-  public constructor(props: PropsType) {
-    super(props);
+  public constructor(constructorProps: PropsType) {
+    super(constructorProps);
 
+    // Bindings
     this.renderItem = this.renderItem.bind(this);
-    this.itemClicked = this.itemClicked.bind(this);
+    this.createOnItemClicked = this.createOnItemClicked.bind(this);
     this.onFabPress = this.onFabPress.bind(this);
+
+    // Selectors
+    const getSearchValue = (props: PropsType) => props.searchBarValue;
+    const getFarmers = (props: PropsType) => props.farmers;
+    const getFuse = (farmers: StoreFarmer[]) => this.createFuse(farmers);
+    const getFuseSearchResult = (props: PropsType) => getFuse(props.farmers).search(props.searchBarValue) as StoreFarmer[];
+    const getSortedFarmers = (props: PropsType) => this.sortList(getFarmers(props));
+    this.searchList = createSelector(
+      getSearchValue,
+      getFuseSearchResult,
+      getSortedFarmers,
+      (searchValue, fuseSearchResult, farmers) => searchValue ? fuseSearchResult : farmers,
+    );
   }
 
-  /** Function to take user to farmer that was clicked on */
-  private itemClicked() {
-    this.props.navigateToFarmer();
+  private createFuse(farmers: StoreFarmer[]) {
+    return new Fuse(farmers, {
+      caseSensitive: false,
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        'name',
+        'phoneNumber',
+      ],
+    });
+  }
+
+  private createOnItemClicked(uuid: string) {
+    return () => this.props.navigateToFarmer(uuid);
+  }
+
+  private onFabPress() {
+    this.props.navigateToAddFarmer();
   }
 
   /** Function to sort the list data by Farmer name in alphabetical order */
   private sortList(farmers: StoreFarmer[]): StoreFarmer[] {
-    // Declare block scoped var (let) at top
     let sortedList: StoreFarmer[] = [];
     sortedList = farmers.sort((f1, f2) => {
-      if (f1.firstName.toLowerCase() > f2.firstName.toLowerCase()) {
-        return 1;
-      }
-      if (f1.firstName < f2.firstName) {
-        return -1;
-      }
-      return 0;
-    });
-    return sortedList;
-  }
+      const n1 = f1.firstName.toLowerCase();
+      const n2 = f2.firstName.toLowerCase();
 
-  private onFabPress() {
+      if (n1 > n2) return 1;
+
+      else if (n1 < n2) return -1;
+
+      else return 0;
+    });
+
+    return sortedList;
   }
 
   /** Function to render the individual list items */
   private renderItem(farmer: StoreFarmer) {
     return (
-      <ListItem key={farmer.uuid} onPress={this.itemClicked}>
+      <ListItem key={farmer.uuid} onPress={this.createOnItemClicked(farmer.uuid)}>
         <View>
-          <H1>
+          <H2>
             {`${farmer.firstName} ${farmer.lastName}`}
-          </H1>
+          </H2>
           <H3>
             {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
           </H3>
@@ -100,9 +135,9 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   /** Render method to create the List */
   public render(): JSX.Element {
     return (
-      <Content>
+      <Content style={style.content}>
         <List
-          dataArray={this.sortList(this.props.farmers)}
+          dataArray={this.searchList(this.props)}
           renderRow={this.renderItem}
         />
       </Content>
@@ -115,7 +150,6 @@ const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
   .fab()
   .page;
 
-
 /************************* Redux ************************/
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
@@ -126,7 +160,8 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigateToFarmer: () => dispatch(navActions.navigateTo(Route.FARMER)),
+    navigateToFarmer: (uuid: string) => dispatch(navActions.navigateToFarmer(Route.FARMER, uuid)),
+    navigateToAddFarmer: () => dispatch(navActions.navigateTo(Route.ADD_FARMER)),
   };
 };
 

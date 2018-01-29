@@ -11,6 +11,12 @@ const currentFarmerReducer: Reducer<CurrentFarmerState> = (state = initialState,
         currentFarmerUUID : action.currentFarmerUUID,
       };
     }
+    case 'CLEAR_CURRENT_FARMER': {
+      return {
+        ...state,
+        currentFarmerUUID : '',
+      };
+    }
     default:
       return state;
   }
