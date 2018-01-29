@@ -4,10 +4,12 @@ import * as React from 'react';
 import { style } from './style';
 import { View, Text, Card, CardItem } from 'native-base';
 
+/** Function that wraps a component with a translucent overlay that displays 'Coming Soon' to the user. */
 export default function createComingSoonOverlay<InjectedProps>(WrappedComponent: React.ComponentType<InjectedProps>) {
 
   return class ComingSoonOverlay extends React.Component<InjectedProps> {
 
+    /** Render method to return the wrapped component */
     public render() {
       return (
         <View>
