@@ -85,7 +85,8 @@ function calculateAverage(groupedEntries: any) {
     averages.push(groupedEntries[element].reduce((sum: number, entry: MilkEntry) =>
       sum + parseInt(entry.volume, radix), 0));
   });
-  return (averages.reduce((acc: number, entry: number) => acc + entry, 0) / averages.length).toFixed(0);
+  let averagesLength = (averages.length === 0) ? 1 : averages.length; // make sure we arn't dividing by 0
+  return (averages.reduce((acc: number, entry: number) => acc + entry, 0) / averagesLength).toFixed(0);
 }
 
 /**

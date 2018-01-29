@@ -17,7 +17,7 @@ import activeRowsReducer from './modules/activeRows/reducer';
 import milkReducer from './modules/milk/reducer';
 
 // Whitelist the core modules
-const whitelist = Object.values(CoreModule);
+const whitelist = [...Object.values(CoreModule), 'activeRows'];
 
 // Create persist config using AsyncStorage for root
 const persistConfig: PersistConfig = {
