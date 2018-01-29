@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button } from 'native-base';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
+import { MilkEntry } from '../../../store/modules/milk/types';
 import { Route } from '../../navigation/navigator';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
@@ -14,8 +14,6 @@ import Styles from './style';
 
 
 interface OwnPropsType {
-  farmer: Farmer;
-  milkEntry: MilkEntry;
 }
 
 interface DispatchPropsType {
@@ -23,13 +21,15 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-}
-
-interface OwnStateType {
+  farmer: Farmer;
+  milkEntry: MilkEntry;
 }
 
 /** EntryDetails PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+interface OwnStateType {
+}
 
 /**
  * Button color
@@ -99,7 +99,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatRow(label: string, value: string) {
+  private formatRow(label: string, value: string | number) {
     return (
       <Grid>
         <Row>
@@ -118,7 +118,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <List>
         <ListItem>
-          {this.formatRow('Amount (L)', this.props.milkEntry.volume)}
+          {this.formatRow('Amount (L)', this.props.milkEntry.amountOfProduct)}
         </ListItem>
         <ListItem>
           {this.formatRow('Quality', this.props.milkEntry.quality)}
@@ -150,8 +150,13 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
 
 const EntryDetailsPage = new Composer<PropsType>(EntryDetails).page;
 
-const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
-  return {};
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
+    farmer: state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID'),
+    // @TODO replace 'fakeMilkEntryUUID' with the active MilkEntry uuid    
+    milkEntry: state.milk.rows.find(r => r.uuid === 'fakeMilkEntryUUID'),
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
