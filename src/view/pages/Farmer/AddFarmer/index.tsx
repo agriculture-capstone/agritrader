@@ -90,54 +90,42 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     );
   }
 
+  private renderFields() {
+    return (
+      <Form>
+      <Item floatingLabel>
+        <Label>First Name</Label>
+        <Input />
+      </Item>
+      <Item floatingLabel>
+        <Label>Last Name</Label>
+        <Input />
+      </Item>
+      <Item floatingLabel last>
+        <Label>Phone Number</Label>
+        <Input keyboardType={'numeric'}/>
+      </Item>
+      <Item floatingLabel last>
+        <Label>Notes</Label>
+        <Input />
+      </Item>
+    </Form>
+    );
+  }
+  
   /**
-   * Render method for adding a farmer
+   * Render method for AddFarmer
    */
   public render() {
-    return (
-      <Content>
-        <Form>
-          <Grid>
-            <Row>
-              <Col>
-                <Item floatingLabel>
-                  <Label>First Name</Label>
-                  <Input />
-                </Item>
-              </Col>
-              <Col>
-                <Item floatingLabel>
-                  <Label>Last Name</Label>
-                  <Input />
-                </Item>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <Item floatingLabel>
-                  <Label>Phone Number</Label>
-                  <Input keyboardType={'numeric'}/>
-                </Item>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Item floatingLabel>
-                  <Label>Notes</Label>
-                  <Input />
-                </Item>
-              </Col>
-            </Row>
-            <Row style={styles.farmerInfoButtonRow}>
-              <Col style={styles.farmerInfoButtonCol}>
-                <Button onPress={this.onAddPress} block success>
-                  <Text style={styles.buttonText}>ADD</Text>
-                </Button>
-              </Col>
-            </Row>
-          </Grid>
-        </Form>
+    return(
+      <Content padder style={styles.content}>
+        {this.renderFields()}
+        <Grid>
+          <Row style={styles.buttonRow}>
+            {this.renderCancelButton()}
+            {this.renderAddButton()}
+          </Row>
+        </Grid>
       </Content>
     );
   }
