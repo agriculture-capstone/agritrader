@@ -192,11 +192,19 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
+  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
+  if (farmerRow === undefined) {
+    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
+  }
+  // @TODO replace 'fakeMilkEntryUUID' with the active MilkEntry uuid    
+  const milkEntryRow = state.milk.rows.find(r => r.uuid === 'fakeMilkEntryUUID');
+  if (milkEntryRow === undefined) {
+    throw new Error('Error: could not locate MilkEntry: ' + 'fakeMilkEntryUUID');
+  }
   return {
-    // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
-    farmer: state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID'),
-    // @TODO replace 'fakeMilkEntryUUID' with the active MilkEntry uuid    
-    milkEntry: state.milk.rows.find(r => r.uuid === 'fakeMilkEntryUUID'),
+    farmer: farmerRow,
+    milkEntry: milkEntryRow,
   };
 };
 
