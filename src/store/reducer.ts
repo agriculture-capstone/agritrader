@@ -39,4 +39,3 @@ const reducer = combineReducers<State>({
 }) as BaseReducer<State, Action>;
 
 export default createPersistedReducer(persistConfig, reducer);
-

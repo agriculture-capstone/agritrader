@@ -12,6 +12,7 @@ export interface Farmer {
   phoneNumber: string;
   notes: string;
   companyName?: string;
+  uuid:string;
 }
 
 /** Model for a farmer in store */
