@@ -26,7 +26,8 @@ interface StorePropsType {
 
 /** FarmerSearch DispatchPropsType */
 interface DispatchPropsType {
-  navigateToFarmer(uuid: string): void;
+  setActiveFarmer(uuid: string): void;
+  navigateToFarmer(): void;
   navigateToAddFarmer(): void;
 }
 
@@ -87,7 +88,10 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   }
 
   private createOnItemClicked(uuid: string) {
-    return () => this.props.navigateToFarmer(uuid);
+    return () => {
+      this.props.setActiveFarmer(uuid);
+      this.props.navigateToFarmer();
+    };
   }
 
   private onFabPress() {

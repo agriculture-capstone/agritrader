@@ -9,7 +9,7 @@ import StatisicsBlock from '../../components/StatisticsBlock';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
-import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';
+// import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';
 import Composer from '../../hoc/PageComposer';
 import styles from './style';
 import * as moment from 'moment';
