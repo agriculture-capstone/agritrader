@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
 import * as moment from 'moment';
 
-import { Farmer, FarmerState } from '../../../store/modules/farmer/types';
-import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
+import { Farmer } from '../../../store/modules/farmer/types';
+import { MilkEntry } from '../../../store/modules/milk/types';
 
 import { Route } from '../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
-import dairyActions from '../../../store/modules/dairy/actions';
+import milkThunks from '../../../store/modules/milk/thunks';
 
 import Styles from './style';
 
@@ -20,20 +20,20 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  createDairy(newEntry: MilkEntry): void;
+  createMilkEntry(newEntry: MilkEntry): void;
 }
 
 interface StorePropsType {
-  farmer: FarmerState;
+  farmer: Farmer;
 }
 
 /** AddEntry PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 interface OwnStateType {
-  volume: string;
+  amountOfProduct: number;
   quality: string;
-  costPerUnit: string;
+  costPerUnit: number;
 }
 
 /**
@@ -54,9 +54,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     super(props);
     /** Init state */
     this.state = {
-      volume: '0',
+      amountOfProduct: 0,
       quality: '0',
-      costPerUnit: '0',
+      costPerUnit: 0,
     };
   }
 
@@ -75,17 +75,15 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
     let newEntry: MilkEntry = {
-      uuid: 'fakeEntryUuid',
-      toUUID: 'fakeToUuid',
-      fromUUID: 'fakeFromUuid',
       datetime: timeNow,
-      volume: this.state.volume,
-      quality: this.state.quality,
+      toPersonUuid: 'fakeToPersonUuid',
+      fromPersonUuid: 'fakeFromPerosnUuid',
+      amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
-      lastModified: timeNow,
-      local: 'true',
+      currency: 'UGX',
+      quality: this.state.quality,
     };
-    this.props.createDairy(newEntry);
+    this.props.createMilkEntry(newEntry);
     this.props.navigate(Route.MILK_ENTRY_DETAILS);
   }
 
@@ -173,7 +171,8 @@ const AddEntryPage = new Composer<PropsType>(AddEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
   return {
-    // farmer: state.farmer.
+    // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
+    farmer: state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID'),
   };
 };
 
@@ -181,7 +180,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createDairy: (newEntry: MilkEntry) => dispatch(dairyActions.updateDairy(newEntry)),
+    createMilkEntry: (newEntry: MilkEntry) => dispatch(milkThunks.createMilkEntry(newEntry)),
   };
 };
 
