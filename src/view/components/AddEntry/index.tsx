@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
 import * as moment from 'moment';
 
-import { StoreFarmer } from '../../../store/modules/farmer/types';
+import { Farmer } from '../../../store/modules/farmer/types';
 import { MilkEntry } from '../../../store/modules/milk/types';
 
 import { Route } from '../../navigation/navigator';
@@ -24,7 +24,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  farmer: StoreFarmer;
+  farmer: Farmer;
 }
 
 /** AddEntry PropsType */
