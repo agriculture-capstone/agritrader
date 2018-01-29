@@ -10,7 +10,7 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
-import { State } from '../../../store/types';
+import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
 
 import milkThunks from '../../../store/modules/milk/thunks';
 
@@ -23,12 +23,12 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  updateDairy(newEntry: MilkEntry): void;
+  updateDairy(newEntry: ThunkUpdateRow<MilkEntry>): void;
 }
 
 interface StorePropsType {
   farmer: Farmer;
-  milkEntry: MilkEntry;
+  milkEntry: StoreRow<MilkEntry>;
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
@@ -74,11 +74,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   
   /** Handle pressing save button */
   private onSavePress = () => {
-    // @TODO change time format to match core
-    const timeNow = moment().local().utc().toString();
-
-    let newEntry: MilkEntry = {
-      datetime: timeNow,
+    let newEntry: ThunkUpdateRow<MilkEntry> = {
+      uuid: this.props.milkEntry.uuid,
       toPersonUuid: 'fakeToPersonUuid',
       fromPersonUuid: 'fakeFromPerosnUuid',
       amountOfProduct: this.state.amountOfProduct,
@@ -212,7 +209,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateDairy: (newEntry: MilkEntry) => dispatch(milkThunks.updateMilkEntry(newEntry)),
+    updateDairy: (newEntry: ThunkUpdateRow<MilkEntry>) => dispatch(milkThunks.updateMilkEntry(newEntry)),
   };
 };
 
