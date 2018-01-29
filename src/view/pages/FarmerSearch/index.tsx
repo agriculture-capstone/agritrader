@@ -1,93 +1,26 @@
 import * as React from 'react';
 
-import { Content, List, ListItem } from 'native-base';
-import { Text, View } from 'react-native';
+import { H1, H3, Content, List, ListItem } from 'native-base';
+import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
-import createSearchPage, { InjectedSearchProps } from '../../generators/SearchPage';
+import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
-import style from './style';
-import * as Fuse from 'fuse.js';
-
-/** This is just a table of phony information to populate the FarmerSearch UI */
-const farmerList: Farmer[] = [
-  {
-    name: 'Swalleh',
-    phoneNumber: '(250) 234-1234',
-    id: 1,
-  },
-  {
-    name: 'James',
-    phoneNumber: '(526) 123-8123',
-    id: 2,
-  },
-  {
-    name: 'Alex',
-    phoneNumber: '(514) 235-6789',
-    id: 3,
-  },
-  {
-    name: 'Joseph',
-    phoneNumber: '(922) 789-2348',
-    id: 4,
-  },
-  {
-    name: 'Mary',
-    phoneNumber: '(626) 626-1236',
-    id: 5,
-  },
-  {
-    name: 'David',
-    phoneNumber: '(789) 231-2345',
-    id: 6,
-  },
-  {
-    name: 'Michael',
-    phoneNumber: '(899) 781-8786',
-    id: 7,
-  },
-  {
-    name: 'Mary',
-    phoneNumber: '(897) 768-6780',
-    id: 8,
-  },
-  {
-    name: 'Peter',
-    phoneNumber: '(123) 564-2315',
-    id: 9,
-  },
-  {
-    name: 'Jonah',
-    phoneNumber: '(011) 101-1001',
-    id: 10,
-  },
-  {
-    name: 'Simon',
-    phoneNumber: '(234) 456-7890',
-    id: 11,
-  },
-];
-
-/** Basic model for the Farmer object */
-// TODO: Move to store --@jinglis
-// TODO: should match Core API for farmer @nick
-// TODO: Phones should be shown (123) 456-7890 @nick
-interface Farmer {
-  name: string;
-  phoneNumber: string;
-  id: number;
-}
+import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
+import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
+import { StoreFarmer } from '../../../store/modules/farmer/types';
 
 /** FarmerSearch OwnPropsType */
 // TODO: Make required property when moving to StorePropsType
 export interface OwnPropsType {
-
 }
 
 /** FarmerSearch StorePropsType */
-interface StorePropsType { }
+interface StorePropsType {
+  farmers: StoreFarmer[];
+}
 
 /** FarmerSearch DispatchPropsType */
 interface DispatchPropsType {
@@ -95,19 +28,15 @@ interface DispatchPropsType {
 }
 
 /** FarmerSearch OwnStateType */
-interface OwnStateType { }
+interface OwnStateType {}
 
-/** FarmerSearch WrappedPropsType */
-type WrappedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 /** FarmerSearch PropsType */
-type PropsType = WrappedPropsType & InjectedSearchProps;
-
-/** FarmerSearch StateType */
-type StateType = OwnStateType;
+type PropsType = InjectedSearchProps & InjectedFabProps & NestedPropsType;
 
 /** Farmer Search component for displaying and searching through farmers */
-class FarmerSearch extends React.Component<PropsType, StateType> {
+class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
   /************************* Member Variables ************************/
 
@@ -127,43 +56,24 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
 
     // Bindings
     this.renderItem = this.renderItem.bind(this);
-    this.onItemClick = this.onItemClick.bind(this);
+    this.itemClicked = this.itemClicked.bind(this);
+    this.onFabPress = this.onFabPress.bind(this);
   }
 
-  /** Click listener for list item */
-  private onItemClick() {
+  /** Function to take user to farmer that was clicked on */
+  private itemClicked() {
     this.props.navigateToFarmer();
   }
 
-  private createFuse(farmerList: Farmer[]) {
-    this.fuse = new Fuse(farmerList, {
-      caseSensitive: false,
-      shouldSort: true,
-      threshold: 0.5,
-      location: 0,
-      distance: 100,
-      maxPatternLength: 32,
-      minMatchCharLength: 1,
-      keys: [
-        'name',
-        'phoneNumber',
-      ],
-    });
-  }
-
   /** Function to sort the list data by Farmer name in alphabetical order */
-  // TODO: Make required property
-  private sortList(farmers: Farmer[]): Farmer[] {
-
-    let sortedList: Farmer[] = [];
-    if (farmers === undefined) {
-      return sortedList;
-    }
-    sortedList = farmers.sort((f1: Farmer, f2: Farmer) => {
-      if (f1.name > f2.name) {
+  private sortList(farmers: StoreFarmer[]): StoreFarmer[] {
+    // Declare block scoped var (let) at top
+    let sortedList: StoreFarmer[] = [];
+    sortedList = farmers.sort((f1, f2) => {
+      if (f1.firstName.toLowerCase() > f2.firstName.toLowerCase()) {
         return 1;
       }
-      if (f1.name < f2.name) {
+      if (f1.firstName < f2.firstName) {
         return -1;
       }
       return 0;
@@ -171,65 +81,56 @@ class FarmerSearch extends React.Component<PropsType, StateType> {
     return sortedList;
   }
 
-  /** Function to return either the result of the fuzzy search, or the default list in alphabetical order */
-  private searchList(): Farmer[] {
-    return (this.props.searchBarValue) ?
-      this.fuse.search(this.props.searchBarValue) :
-      this.sortList(farmerList);
+  private onFabPress() {
+  }
+
+  /** Function to render the individual list items */
+  private renderItem(farmer: StoreFarmer) {
+    return (
+      <ListItem key={farmer.uuid} onPress={this.itemClicked}>
+        <View>
+          <H1>
+            {`${farmer.firstName} ${farmer.lastName}`}
+          </H1>
+          <H3>
+            {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
+          </H3>
+        </View>
+      </ListItem>
+    );
   }
 
   /************************* React *************************/
 
-  public componentWillReceiveProps(nextProps: PropsType) {
-    // TODO: Uncomment when connecting to store for optimization @James
-    // Again ask if you have any questions
-    // if ((nextProps.farmerList.length !== this.props.farmerList.length)
-    //   || (nextProps.farmerList.every((val, i) => val === this.props.farmerList[i]))
-    // ) {
-    //   this.createFuse(nextProps.farmerList)
-    // }
+  /** React componentDidMount */
+  public componentDidMount() {
+    this.props.listenToFab(this.onFabPress);
   }
 
-  // TODO: @nick, render should ideally always be at the bottom of the function
-  // Don't worry it takes some getting used to, I still forget all the time
+  /** Render method to create the List */
   public render(): JSX.Element {
     return (
-      <Content style={style.background} >
+      <Content>
         <List
-          dataArray={this.searchList()}
+          dataArray={this.sortList(this.props.farmers)}
           renderRow={this.renderItem}
         />
       </Content>
     );
   }
-
-  // TODO: This is not a React lifecycle method and should be a member function
-  /** Function to render the individual list items */
-  private renderItem(info: Farmer) {
-    return (
-      <ListItem
-        key={info.id}
-        onPress={this.onItemClick}
-      >
-        <View>
-          <Text style={style.name}>
-            {info.name}
-          </Text>
-          <Text style={style.phone}>
-            Phone: {info.phoneNumber}
-          </Text>
-        </View>
-      </ListItem>
-    );
-  }
 }
 
-const FarmerSearchPage = createSearchPage<WrappedPropsType>(FarmerSearch, 'Search Farmers');
+const FarmerSearchPage = new Composer<NestedPropsType>(FarmerSearch)
+  .search('Search Farmers')
+  .fab()
+  .page;
 
 /************************* Redux ************************/
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  return {};
+  return {
+    farmers: state.farmer.rows,
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {

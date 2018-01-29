@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { List, ListItem, Text, Grid, Col } from 'native-base';
+import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
+import styles from './style';
 
 
 interface OwnPropsType {
@@ -34,8 +35,8 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   private formatValues(values: any[]) {
     return values.map((value) => {
       return (
-        <Col key={value}>
-          <Text>
+        <Col key={value} style={{ justifyContent: 'center' }}>
+          <Text style={styles.values}>
             {value}
           </Text>
         </Col>
@@ -45,8 +46,8 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem>
-        <Grid>
+      <ListItem style={{ justifyContent: 'center' }}>
+        <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>
       </ListItem>
@@ -68,11 +69,13 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   */
   public render() {
     return (
+      <Card>
       <List
         dataArray={this.props.values}
         renderRow={this.renderRow}
         renderSectionHeader={this.renderSectionHeader}
       />
+      </Card>
     );
   }
 }

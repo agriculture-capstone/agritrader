@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ListItem, Icon, Text, Left, Body } from 'native-base';
 
 import { Route } from '../../../navigation/navigator';
+import styles from './style';
 
 /** DrawerItem props */
 export interface OwnProps {
@@ -23,12 +24,12 @@ const DrawerItem: React.StatelessComponent<OwnProps> = (props) => {
   onPresses[props.route] || (onPresses[props.route] = (() => props.onPress(props.route)));
 
   return (
-    <ListItem icon onPress={onPresses[props.route]}>
+    <ListItem icon onPress={onPresses[props.route]} style={styles.contents}>
       <Left>
-        <Icon name={props.icon} />
+        <Icon name={props.icon} style={[styles.contents, styles.menuItems]} />
       </Left>
       <Body>
-        <Text>{props.name}</Text>
+        <Text style={[styles.contents, styles.menuItems]}>{props.name}</Text>
       </Body>
     </ListItem>
   );

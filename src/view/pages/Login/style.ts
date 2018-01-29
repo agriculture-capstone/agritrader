@@ -1,14 +1,12 @@
+import { StyleSheet } from 'react-native';
 
-const React = require('react-native');
-const { Platform, Dimensions, StyleSheet } = React;
+import { MATERIAL_COLORS } from '../../../native-base-theme/variables/styles';
 
-export const deviceWidth = Dimensions.get('window').width;
-export const deviceHeight = Dimensions.get('window').height;
-
-
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
-    backgroundColor: '#3F51B5',
+    backgroundColor: MATERIAL_COLORS.primary.normal,
+    flex: 1, 
+    padding: 30,
   },
   centerContent: {
     justifyContent: 'center',
@@ -22,13 +20,10 @@ export const styles = StyleSheet.create({
     left: -8,
   },
   loginButton: {
-    backgroundColor: 'white',
   },
   buttonRow: {
-    paddingTop: 14,
-  },
-  buttonText: {
-    color: 'black',
+    marginTop: 40,
+    padding: 10,
   },
   labelText: {
     color: 'white',
