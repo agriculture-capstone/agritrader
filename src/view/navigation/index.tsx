@@ -126,7 +126,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
   }
 
   private setHeaderTitle(title: string) {
-    if (title === "Farmer") {
+    if (title === 'Farmer') {
       const farmerName = `${this.props.currentFarmer.firstName} ${this.props.currentFarmer.lastName}`;  
       this.props.updateHeaderTitle(farmerName);
     } else {

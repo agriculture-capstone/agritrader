@@ -12,6 +12,9 @@ const maybeGetActiveFarmer = createSelector(
   (uuid, farmers) => farmers.find(f => f.uuid === uuid),
 );
 
+/**
+ * Selector for getting the active farmer.
+ */
 export const getActiveFarmer = createSelector(
   maybeGetActiveFarmer,
   (maybeFarmer) => {
