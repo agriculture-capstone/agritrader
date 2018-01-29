@@ -8,10 +8,6 @@ import Info from './tabs/Info';
 const createCollect = () => (
   <Collect
     farmerName="Bradley the Farmer"
-    currentDayTotal="3944.2"
-    currentWeekTotal="3.4"
-    currentMonthTotal="0.2"
-    collectTransactions={[{ date:'Jan 4', am: 2, pm:2 }, { date:'Jan 3', am: 2, pm:2 }, { date:'Jan 2', am: 2, pm:2 }, { date:'Jan 1', am: 2, pm:2 }]}
   />
 );
 
@@ -51,12 +47,7 @@ const createBuy = () => (
 );
 
 const createInfo = () => (
-  <Info
-    farmerFirstName="Patrick"
-    farmerLastName="Keena"
-    farmerPhoneNumber="123-456-789"
-    farmerNotes="Doctor from village A"
-  />
+  <Info />
 );
 
 export default createTabManager(

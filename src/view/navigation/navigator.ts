@@ -57,6 +57,8 @@ export enum Route {
   ADD_MILK_ENTRY = 'AddMilkEntry',
   MILK_ENTRY_DETAILS = 'MilkEntryDetails',
   EDIT_MILK_ENTRY = 'EditMilkEntry',
+  EDIT_FARMER = 'EditFarmer',
+  ADD_FARMER = 'AddFarmer',
 }
 
 /** App route information */
@@ -120,6 +122,18 @@ export const routesInfo: RouteInfo[] = [
     name: 'Milk Entry Details',
     component: MilkEntryDetails,
     type: 'back',
+  },
+  {
+    route: Route.ADD_FARMER,
+    name: 'AddFarmer',
+    component: AddFarmerPage,
+    type: 'menu',
+  },
+  {
+    route: Route.EDIT_FARMER,
+    name: 'EditFarmer',
+    component: EditFarmerPage,
+    type: 'menu',
   },
 ];
 

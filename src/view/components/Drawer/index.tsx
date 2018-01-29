@@ -9,7 +9,7 @@ import headerActions from '../../../store/modules/header/actions';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
-/** Drawer OwnProps */
+/** Drawer OwnPropsType */
 export interface OwnPropsType {}
 
 /** Drawer State */
@@ -18,9 +18,6 @@ export interface OwnState {}
 interface StorePropsType {
   open: boolean;
   locked: boolean;
-  // TODO: These should be retrieved from the store
-  // name: string;
-  // username: string;
 }
 
 interface DispatchPropsType {
@@ -49,7 +46,6 @@ class Drawer extends React.Component<PropsType, OwnState> {
     this.onPress = this.onPress.bind(this);
     this.onLogout = this.onLogout.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
-    this.createDrawerContents = this.createDrawerContents.bind(this);
   }
 
   private openDrawer() {
@@ -70,7 +66,6 @@ class Drawer extends React.Component<PropsType, OwnState> {
   }
 
   private createDrawerContents() {
-    // TODO: Change placeholder names to this.props.name/this.props.username
     return (
       <DrawerContents
         name={'Joe Trader'}
@@ -87,10 +82,10 @@ class Drawer extends React.Component<PropsType, OwnState> {
   public render(): JSX.Element {
     return (
       <BaseDrawer
+        content={this.createDrawerContents()}
         open={this.props.open}
         onClose={this.props.closeDrawer}
         onOpen={this.openDrawer}
-        content={this.createDrawerContents()}
         type="overlay"
         panOpenMask={this.PAN_OPEN_MASK}
         disabled={this.props.locked}

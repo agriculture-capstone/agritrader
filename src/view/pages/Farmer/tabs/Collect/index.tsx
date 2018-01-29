@@ -11,14 +11,16 @@ import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
 
 
+import {
+  getMonthlyFarmerMilkTotal,
+  getWeeklyFarmerMilkTotal,
+  getFormattedFarmersTransactions,
+  getFarmerDayTotal,
+} from '../../../../../store/modules/milk/selectors';
 import styles from './style';
 
 interface OwnPropsType {
   farmerName: string;
-  currentDayTotal: string;
-  currentWeekTotal: string;
-  currentMonthTotal: string;
-  collectTransactions: any[];
 }
 
 interface DispatchPropsType {
@@ -26,6 +28,10 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
+  monthlyTotal: any;
+  weeklyTotal: any;
+  dailyTotal: any;
+  collectTransactions: any[];
 }
 
 interface OwnStateType {
@@ -54,15 +60,15 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   public render() {
     const testData = [{
       label: 'Today',
-      value: this.props.currentDayTotal,
+      value: this.props.dailyTotal,
       units: 'L',
     },                {
       label: 'This Week',
-      value: this.props.currentWeekTotal,
+      value: this.props.weeklyTotal,
       units: 'L',
     },                {
       label: 'This Month',
-      value: this.props.currentMonthTotal,
+      value: this.props.monthlyTotal,
       units: 'L',
     },
     ];
@@ -92,8 +98,13 @@ const CollectPage = new Composer<NestedPropsType>(Collect)
 .fab()
 .page;
 
-const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
-  return {};
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    monthlyTotal: getMonthlyFarmerMilkTotal(state),
+    weeklyTotal: getWeeklyFarmerMilkTotal(state),
+    dailyTotal: getFarmerDayTotal(state),
+    collectTransactions: getFormattedFarmersTransactions(state),
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
