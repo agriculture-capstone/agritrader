@@ -6,14 +6,13 @@ import * as moment from 'moment';
 
 const getMilkEntries = (state: State) => state.milk.rows;
 const getCurrentFarmerUUID = (state: State) => state.currentFarmer.currentFarmerUUID;
-const radix: number = 10;
 
 /************Selectors for all milk entries (used on Home page) ***************/
 /**Selector to calculate the current days milk collection */
 export const getDaysMilkTotal = createSelector(
   [getMilkEntries],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    inSameDay(entry.datetime) ? sum + parseInt(entry.volume, radix) : sum + 0, 0).toFixed(0));
+    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(0));
 
 /**Selector to calculate the average daily milk collection */
 export const getAvgDaysMilkTotal = createSelector(
@@ -41,7 +40,9 @@ export const getFarmersTransactions = createSelector(
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.map(entry =>
-    ({ datetime: moment(entry.datetime).format('MM-DD[\n]kk:mm'), volume: entry.volume, quality: entry.quality, costPerUnit: entry.costPerUnit }),
+    ({datetime: moment(entry.datetime).format('MM-DD[\n]kk:mm'),
+      amountOfProduct: entry.amountOfProduct, quality: entry.quality, costPerUnit: entry.costPerUnit, 
+    }),
   ),
 );
 
@@ -49,19 +50,19 @@ export const getFormattedFarmersTransactions = createSelector(
 export const getFarmerDayTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    inSameDay(entry.datetime) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
+    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0));
 
 /**Selector to calculate the farmers total milk collected this week */
 export const getWeeklyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inLastWeek(entry.datetime)) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
+    (inLastWeek(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0));
 
 /**Selector to calculate the farmers total milk collected this month */
 export const getMonthlyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inSameMonth(entry.datetime)) ? sum + parseInt(entry.volume, radix) : sum + 0, 0));
+    (inSameMonth(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0));
 
 
 /************Helper Methods************/
@@ -83,7 +84,7 @@ let averages: number[] = [];
 function calculateAverage(groupedEntries: any) {
   Object.keys(groupedEntries).forEach((element) => {
     averages.push(groupedEntries[element].reduce((sum: number, entry: MilkEntry) =>
-      sum + parseInt(entry.volume, radix), 0));
+      sum + entry.amountOfProduct, 0));
   });
   let averagesLength = (averages.length === 0) ? 1 : averages.length; // make sure we arn't dividing by 0
   return (averages.reduce((acc: number, entry: number) => acc + entry, 0) / averagesLength).toFixed(0);
