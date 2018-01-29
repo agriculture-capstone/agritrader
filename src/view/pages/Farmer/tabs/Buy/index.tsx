@@ -4,9 +4,9 @@ import { View } from 'react-native';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import styles from './style';
-import Composer from '../../../../hoc/PageComposer';
+// import Composer from '../../../../hoc/PageComposer';
 import { connect } from 'react-redux';
-import ComingSoonOverlay, { default as createComingSoonOverlay } from '../../../../components/ComingSoon/index';
+import ComingSoonOverlay, { default as createComingSoonOverlay } from '../../../../hoc/PageComposer/ComingSoon/index';
 
 interface OwnPropsType {
   farmerName: string;
