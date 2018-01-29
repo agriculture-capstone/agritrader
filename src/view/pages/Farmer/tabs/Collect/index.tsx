@@ -79,8 +79,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Amount (L)', 'Quality', 'Rate (UGX)']}
               values={this.props.collectTransactions}
-              route={Route.MILK_ENTRY_DETAILS}
-              onPress={this.onEntryPress}
+              routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.onEntryPress }}
             />
           </Row>
         </Grid>
