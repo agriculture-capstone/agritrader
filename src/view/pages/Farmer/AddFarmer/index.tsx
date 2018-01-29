@@ -74,6 +74,16 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     this.props.navigate(Route.FARMER);
   }
 
+
+  /**
+   * Handle farmer details changes, update local state
+   */
+  private onFirstNameChange = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
+  private onLastNameChange = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
+  private onPhoneChange = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
+  private onNotesChange = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
+
+  
   /**
    * Returns a button with text specified
    */
@@ -95,23 +105,24 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       <Form>
       <Item floatingLabel>
         <Label>First Name</Label>
-        <Input />
+        <Input onChangeText={this.onFirstNameChange}/>
       </Item>
       <Item floatingLabel>
         <Label>Last Name</Label>
-        <Input />
+        <Input onChangeText={this.onLastNameChange}/>
       </Item>
       <Item floatingLabel last>
         <Label>Phone Number</Label>
-        <Input keyboardType={'numeric'}/>
+        <Input keyboardType={'numeric'} onChangeText={this.onPhoneChange}/>
       </Item>
       <Item floatingLabel last>
         <Label>Notes</Label>
-        <Input />
+        <Input onChangeText={this.onNotesChange}/>
       </Item>
     </Form>
     );
   }
+
   
   /**
    * Render method for AddFarmer
