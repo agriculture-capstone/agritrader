@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text } from 'native-base';
+import { H1, Content, Grid, Row, Col, Button, Text, List, ListItem } from 'native-base';
 
 import Composer from '../../../../hoc/PageComposer';
 import { StoreRow } from '../../../../../store/types';
@@ -26,11 +26,16 @@ interface OwnStateType {
 }
 
 /**
+ * Button color
+ */
+type ButtonColor = 'PRIMARY' | 'INFO';
+
+/**
  * Container for application
  */
 class Info extends React.Component<PropsType, OwnStateType> {
 
-  constructor(props: OwnPropsType) {
+  constructor(props: PropsType) {
     super(props);
   }
 
@@ -40,9 +45,25 @@ class Info extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Handle pressing edit button */
-  private onEditPress = () => this.props.navigate(Route.);
+  private onEditPress = () => this.props.navigate(Route.EDIT_FARMER);
 
-  private formatRow(label: string, value: string | number) {
+  /**
+   * Returns a button with text specified
+   */
+  private renderButton(text: string, color: ButtonColor) {
+    const isInfo = color === 'INFO';
+    const isPrimary = color === 'PRIMARY';
+
+    return (
+      <Col style={styles.button}>
+        <Button block info={isInfo} primary={isPrimary} onPress={this.onEditPress}>
+          <Text>{text}</Text>
+        </Button>
+      </Col>
+    );
+  }
+
+  private formatRow(label: string, value: string) {
     return (
       <Grid>
         <Row>
@@ -61,10 +82,10 @@ class Info extends React.Component<PropsType, OwnStateType> {
     return (
       <List>
         <ListItem>
-          {this.formatRow('Phone Number', this.props.milkEntry.amountOfProduct)}
+          {this.formatRow('Phone Number', this.props.farmer.phoneNumber)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Notes', this.props.milkEntry.quality)}
+          {this.formatRow('Notes', this.props.farmer.notes)}
         </ListItem>
       </List>
     );
@@ -78,7 +99,7 @@ class Info extends React.Component<PropsType, OwnStateType> {
       <Content padder style={styles.content}>
       <Grid>
         <Row style={styles.farmerName}>
-          <H1>{this.props.farmerFirstName} {this.props.farmerLastName}</H1>
+          <H1>{this.props.farmer.firstName} {this.props.farmer.lastName}</H1>
         </Row>
         {this.renderDetailFields()}
         <Row style={styles.buttonRow}>
