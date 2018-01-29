@@ -3,12 +3,12 @@ import * as React from 'react';
 import { Content, Grid, Row, Col, Form, Item, Input, Label, Button } from 'native-base';
 import { Text } from 'react-native';
 
-import styles from '../../styles';
+import styles from '../styles';
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
-import { State } from '../../../../../store/types';
-import { Farmer } from '../../../../../store/modules/farmer/types';
-import farmerThunks from '../../../../../store/modules/farmer/thunks';
-import Composer from '../../../../hoc/PageComposer/index';
+import { State } from '../../../../store/types';
+import { Farmer } from '../../../../store/modules/farmer/types';
+import farmerThunks from '../../../../store/modules/farmer/thunks';
+import Composer from '../../../hoc/PageComposer/index';
 
 interface OwnStateType {
 }
