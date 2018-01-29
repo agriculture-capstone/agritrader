@@ -9,7 +9,6 @@ import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
 import Composer from '../../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
-
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 
 import Styles from './style';

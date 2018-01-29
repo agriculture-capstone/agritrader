@@ -14,7 +14,6 @@ interface OwnPropsType {
 
 interface DispatchPropsType {
   navigate(route: Route): void;
-  goBack(): void;
 }
 
 interface StorePropsType {
@@ -35,37 +34,58 @@ class Info extends React.Component<PropsType, OwnStateType> {
     super(props);
   }
 
+  /** Create edit button */
+  private renderEditButton = () => {
+    return (this.renderButton('Edit', 'PRIMARY'));
+  }
+
+  /** Handle pressing edit button */
+  private onEditPress = () => this.props.navigate(Route.);
+
+  private formatRow(label: string, value: string | number) {
+    return (
+      <Grid>
+        <Row>
+          <Col>
+            <Text>{label}</Text>
+          </Col>
+          <Col>
+            <Text>{value}</Text>
+          </Col>
+        </Row>
+      </Grid>
+    );
+  }
+
+  private renderDetailFields() {
+    return (
+      <List>
+        <ListItem>
+          {this.formatRow('Phone Number', this.props.milkEntry.amountOfProduct)}
+        </ListItem>
+        <ListItem>
+          {this.formatRow('Notes', this.props.milkEntry.quality)}
+        </ListItem>
+      </List>
+    );
+  }
+
   /**
    * Render method for Farmer Information
    */
   public render() {
-    return (
-      <Content padder>
-        <Grid>
-          <Row style={styles.farmerName}>
-            <H1>{this.props.farmerFirstName} {this.props.farmerLastName}</H1>
-          </Row>
-          <Row style={styles.infoLabel}>
-            <Label>Phone Number</Label>
-          </Row>
-          <Row style={styles.infoLabel}>
-            <H2>{this.props.farmerPhoneNumber}</H2>
-          </Row>
-          <Row style={styles.infoLabel}>
-            <Label>Notes</Label>
-          </Row>
-          <Row style={styles.infoLabel}>
-            <H2>{this.props.farmerNotes}</H2>
-          </Row>
-          <Row style={styles.editButton}>
-            <Col>
-              <Button block danger onPress={this.changeToEditMode}>
-                <Text style={styles.buttonText}>Edit</Text>
-              </Button>
-            </Col>
-          </Row>
-        </Grid>
-      </Content>
+    return(
+      <Content padder style={styles.content}>
+      <Grid>
+        <Row style={styles.farmerName}>
+          <H1>{this.props.farmerFirstName} {this.props.farmerLastName}</H1>
+        </Row>
+        {this.renderDetailFields()}
+        <Row style={styles.buttonRow}>
+          {this.renderEditButton()}
+        </Row>
+      </Grid>
+    </Content>
     );
   }
 }
