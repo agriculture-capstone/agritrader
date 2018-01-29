@@ -9,6 +9,8 @@ import FarmerSearch from '../pages/FarmerSearch';
 import AddEntryPage from '../components/AddEntry';
 import EditEntryPage from '../components/EditEntry';
 import MilkEntryDetails from '../components/EntryDetails';
+import AddFarmerPage from '../pages/Farmer/AddFarmer';
+import EditFarmerPage from '../pages/Farmer/EditFarmer';
 
 /** Different types of pages */
 export type PageType = 'menu' | 'back' | 'empty';
