@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
-import { State, StoreRow } from '../../../../store/types';
+import { State } from '../../../../store/types';
 import { Farmer } from '../../../../store/modules/farmer/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 import Composer from '../../../hoc/PageComposer/index';
@@ -17,7 +17,7 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
-  createFarmer(farmer: StoreRow<Farmer>): void;
+  createFarmer(farmer: Farmer): void;
   goBack(): void;
   navigate(route: Route): void;
 }
@@ -64,7 +64,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing add button */
   private onAddPress = () => { 
-    let newFarmer: StoreRow<Farmer> = {
+    let newFarmer: Farmer = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       phoneNumber: this.state.phoneNumber,
@@ -146,7 +146,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createFarmer: async (farmer: StoreRow<Farmer>) => dispatch(farmerThunks.createFarmer(farmer)),
+    createFarmer: async (farmer: Farmer) => dispatch(farmerThunks.createFarmer(farmer)),
   };
 };
 
