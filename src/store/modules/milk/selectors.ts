@@ -6,7 +6,6 @@ import * as moment from 'moment';
 
 const getMilkEntries = (state: State) => state.milk.rows;
 const getCurrentFarmerUUID = (state: State) => state.currentFarmer.currentFarmerUUID;
-const radix: number = 10;
 
 /************Selectors for all milk entries (used on Home page) ***************/
 /**Selector to calculate the current days milk collection */
@@ -42,7 +41,7 @@ export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.map(entry =>
     ({datetime: moment(entry.datetime).format('MM-DD[\n]kk:mm'),
-      amountOfProduct: entry.amountOfProduct,quality: entry.quality, costPerUnit: entry.costPerUnit, 
+      amountOfProduct: entry.amountOfProduct, quality: entry.quality, costPerUnit: entry.costPerUnit, 
     }),
   ),
 );
