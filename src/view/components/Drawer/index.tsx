@@ -65,12 +65,24 @@ class Drawer extends React.Component<PropsType, OwnState> {
     this.props.goToLogin();
   }
 
+  private createDrawerContents() {
+    return (
+      <DrawerContents
+        name={'Joe Trader'}
+        username={'joe@qualitymilk.ca'}
+        onPress={this.onPress}
+        onLogout={this.onLogout}
+      />
+    );
+  }
+
   /****************************** React ******************************/
 
   /** React render method */
   public render(): JSX.Element {
     return (
       <BaseDrawer
+        content={this.createDrawerContents()}
         open={this.props.open}
         onClose={this.props.closeDrawer}
         onOpen={this.openDrawer}

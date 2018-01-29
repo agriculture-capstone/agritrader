@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import store from '../../../../store';
+import { Unsubscribe } from 'redux';
 
 interface SearchPageState {
   /** Value from the search bar */
@@ -68,6 +69,7 @@ export default function createSearchPage<InjectedProps>(
       });
     }
 
+    /** React componentWillUnmount */
     public componentWillUnmount() {
       this.unsubscribe && this.unsubscribe();
     }
