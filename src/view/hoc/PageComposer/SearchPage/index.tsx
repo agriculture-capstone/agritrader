@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import store from '../../../../store';
+import { Unsubscribe } from 'redux';
 
 interface SearchPageState {
   /** Value from the search bar */
@@ -17,9 +18,9 @@ export type InjectedSearchProps = SearchPageState;
  *
  * @example
  *
-  class MyPage extends React.Component<Props, OwnState> {
+  class MyPage extends React.Component<PropsType, OwnState> {
 
-    constructor(props: Props) {
+    constructor(props: PropsType) {
       super(props);
     }
 
@@ -41,6 +42,8 @@ export default function createSearchPage<InjectedProps>(
   /** Higher order class for wrapping search pages */
   return class SearchPageContainer extends React.Component<InjectedProps, SearchPageState> {
 
+    private unsubscribe: Unsubscribe;
+
     public constructor(props: InjectedProps) {
       super(props);
 
@@ -56,7 +59,7 @@ export default function createSearchPage<InjectedProps>(
     /** React componentDidMount */
     public componentDidMount() {
       // Listen to updates to search bar value and propogate to local state
-      store.subscribe(() => {
+      this.unsubscribe = store.subscribe(() => {
         const newSearchValue = store.getState().searchBar.value;
         if (newSearchValue !== this.state.searchBarValue) {
           this.setState(() => ({
@@ -64,6 +67,11 @@ export default function createSearchPage<InjectedProps>(
           }));
         }
       });
+    }
+
+    /** React componentWillUnmount */
+    public componentWillUnmount() {
+      this.unsubscribe && this.unsubscribe();
     }
 
     /** React render */
