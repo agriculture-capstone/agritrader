@@ -12,6 +12,7 @@ import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 
 import Styles from './style';
+import { getActiveFarmer } from '../../../../store/modules/farmer/selectors';
 
 interface OwnPropsType {
 }
@@ -45,8 +46,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Page for EditFarmer
- * 
- * @example 
+ *
+ * @example
  *          <EditFarmer
  *          />
  */
@@ -68,7 +69,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
-  
+
   /** Handle pressing save button */
   private onSavePress = () => {
     let newFarmer: ThunkUpdateRow<Farmer> = {
@@ -157,13 +158,9 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
 const EditFarmerPage = new Composer<NestedPropsType>(EditFarmer).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
-  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
-  if (farmerRow === undefined) {
-    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
-  }
+
   return {
-    farmer: farmerRow,
+    farmer: getActiveFarmer(state),
   };
 };
 

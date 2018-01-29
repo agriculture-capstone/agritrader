@@ -1,7 +1,7 @@
 /*----------------------- State -----------------------*/
 /** currentFarmer State*/
-export interface CurrentFarmerState{
-  currentFarmerUUID: string;
+export interface ActiveRowsState {
+  activeFarmerUUID: string;
 }
 
 /*----------------------- Actions -----------------------*/
@@ -13,4 +13,4 @@ export type Action = {
   type: 'CLEAR_CURRENT_FARMER',
 } | {
   type: 'DO_NOT_USE',
-}; 
+};

@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
+import activeRowsActions from '../../../../store/modules/activeRows/actions';
 import { State } from '../../../../store/types';
 import { Farmer } from '../../../../store/modules/farmer/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
@@ -17,9 +18,10 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
-  createFarmer(farmer: Farmer): void;
+  createFarmer(farmer: Farmer): Promise<string>;
   goBack(): void;
   navigate(route: Route): void;
+  setActiveFarmer(uuid: string): void;
 }
 
 interface StorePropsType {
@@ -63,14 +65,15 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private onCancelPress = () => this.props.goBack();
 
   /** Handle pressing add button */
-  private onAddPress = () => { 
+  private onAddPress = async () => {
     let newFarmer: Farmer = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       phoneNumber: this.state.phoneNumber,
       notes: this.state.notes,
     };
-    this.props.createFarmer(newFarmer);
+    const uuid = await this.props.createFarmer(newFarmer);
+    this.props.setActiveFarmer(uuid);
     this.props.navigate(Route.FARMER);
   }
 
@@ -112,7 +115,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     </Form>
     );
   }
-  
+
   /**
    * Render method for AddFarmer
    */
@@ -147,6 +150,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
     createFarmer: async (farmer: Farmer) => dispatch(farmerThunks.createFarmer(farmer)),
+    setActiveFarmer: (uuid: string) => dispatch(activeRowsActions.setActiveFarmer(uuid)),
   };
 };
 

@@ -7,6 +7,7 @@ import { createSelector } from 'reselect';
 
 import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
+import activeRowsActions from '../../../store/modules/activeRows/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
@@ -160,7 +161,8 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigateToFarmer: (uuid: string) => dispatch(navActions.navigateToFarmer(Route.FARMER, uuid)),
+    setActiveFarmer: (uuid: string) => dispatch(activeRowsActions.setActiveFarmer(uuid)),
+    navigateToFarmer: () => dispatch(navActions.navigateTo(Route.FARMER)),
     navigateToAddFarmer: () => dispatch(navActions.navigateTo(Route.ADD_FARMER)),
   };
 };

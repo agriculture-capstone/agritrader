@@ -15,7 +15,6 @@ import {
 import styles from './style';
 
 interface OwnPropsType {
-  farmerName: string;
 }
 
 interface DispatchPropsType {
