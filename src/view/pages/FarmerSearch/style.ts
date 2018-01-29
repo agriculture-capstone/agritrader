@@ -6,16 +6,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 
-  background: {
+  content: {
     backgroundColor: 'white',
-  },
-
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  phone: {
-    fontSize: 18,
-    fontWeight: 'normal',
   },
 });

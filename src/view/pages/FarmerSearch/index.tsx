@@ -12,6 +12,7 @@ import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import { StoreFarmer } from '../../../store/modules/farmer/types';
+import style from './style';
 
 /** FarmerSearch OwnPropsType */
 export interface OwnPropsType {
@@ -41,15 +42,12 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
 
   /************************* Member Variables ************************/
 
-  private fuse: Fuse;
-  private searchList: (instance: FarmerSearch) => StoreFarmer[];
+  private searchList: (props: PropsType) => StoreFarmer[];
 
   /************************* Member Functions ************************/
 
-  public constructor(props: PropsType) {
-    super(props);
-
-    this.createFuse(props.farmers);
+  public constructor(constructorProps: PropsType) {
+    super(constructorProps);
 
     // Bindings
     this.renderItem = this.renderItem.bind(this);
@@ -57,18 +55,21 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     this.onFabPress = this.onFabPress.bind(this);
 
     // Selectors
-    const getSearchValue = (instance: FarmerSearch) => instance.props.searchBarValue;
-    const getFarmers = (instance: FarmerSearch) => instance.props.farmers;
-    const getSortedFarmers = (instance: FarmerSearch) => this.sortList(getFarmers(instance));
+    const getSearchValue = (props: PropsType) => props.searchBarValue;
+    const getFarmers = (props: PropsType) => props.farmers;
+    const getFuse = (farmers: StoreFarmer[]) => this.createFuse(farmers);
+    const getFuseSearchResult = (props: PropsType) => getFuse(props.farmers).search(props.searchBarValue) as StoreFarmer[];
+    const getSortedFarmers = (props: PropsType) => this.sortList(getFarmers(props));
     this.searchList = createSelector(
       getSearchValue,
+      getFuseSearchResult,
       getSortedFarmers,
-      (searchValue, farmers) => searchValue ? this.fuse.search(searchValue) : farmers,
+      (searchValue, fuseSearchResult, farmers) => searchValue ? fuseSearchResult : farmers,
     );
   }
 
   private createFuse(farmers: StoreFarmer[]) {
-    this.fuse = new Fuse(farmers, {
+    return new Fuse(farmers, {
       caseSensitive: false,
       shouldSort: true,
       threshold: 0.6,
@@ -134,9 +135,9 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
   /** Render method to create the List */
   public render(): JSX.Element {
     return (
-      <Content>
+      <Content style={style.content}>
         <List
-          dataArray={this.searchList(this)}
+          dataArray={this.searchList(this.props)}
           renderRow={this.renderItem}
         />
       </Content>
