@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
-import * as moment from 'moment';
 
 import { Farmer } from '../../../../store/modules/farmer/types';
 import { Route } from '../../../navigation/navigator';
@@ -9,12 +8,19 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
 import Composer from '../../../hoc/PageComposer/index';
-import { State } from '../../../../store/types';
+import { State, ThunkUpdateRow } from '../../../../store/types';
 
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 
 import Styles from './style';
+import { Alert } from 'react-native';
 
+const fakeFarmer = {
+  firstName: 'Moath',
+  lastName: 'Faisal',
+  phoneNumber: '403-401-4090',
+  notes: 'my cool notes',
+};
 
 interface OwnPropsType {
 }
@@ -22,7 +28,7 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  updateFarmer(newFarmer: Farmer): void;
+  updateFarmer(newFarmer: ThunkUpdateRow<Farmer>): void;
 }
 
 interface StorePropsType {
@@ -38,7 +44,7 @@ interface OwnStateType {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  notes: string;
+  notes: string; // notes can be empty
 }
 
 /**
@@ -74,28 +80,24 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   
   /** Handle pressing save button */
   private onSavePress = () => {
-    // @TODO change time format to match core
-    const timeNow = moment().local().utc().toString();
-
-    let newFarmer: MilkEntry = {
-      datetime: timeNow,
-      toPersonUuid: 'fakeToPersonUuid',
-      fromPersonUuid: 'fakeFromPerosnUuid',
-      amountOfProduct: this.state.amountOfProduct,
-      costPerUnit: this.state.costPerUnit,
-      currency: 'UGX',
-      quality: this.state.quality,
-    };
-    this.props.updateFarmer(newFarmer);
-    this.props.navigate(Route.MILK_ENTRY_DETAILS);
+    // let newFarmer: ThunkUpdateRow<Farmer> = {
+    //   firstName: this.state.firstName,
+    //   lastName: this.state.lastName,
+    //   phoneNumber: this.state.phoneNumber,
+    //   notes: this.state.notes,
+    // };
+    // this.props.updateFarmer(newFarmer);
+    Alert.alert('New farmer created');
+    this.props.navigate(Route.FARMER);
   }
 
   /**
-   * Handle entry changes, update local state
+   * Handle farmer details changes, update local state
    */
-  private onAmountChange = (newAmount: number) => this.setState(state => ({ amountOfProduct: newAmount }));
-  private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onRateChange = (newCostPerUnit: number) => this.setState(state => ({ costPerUnit: newCostPerUnit }));
+  private onFirstNameChange = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
+  private onLastNameChange = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
+  private onPhoneChange = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
+  private onNotesChange = (newNotes: string) => this.setState(state => ({ phoneNumber: newNotes }));
 
   /**
    * Returns a button with text specified
@@ -110,30 +112,6 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
           <Text>{text}</Text>
         </Button>
       </Col>
-    );
-  }
-
-  private renderHeader() {
-    return (
-      <Grid>
-        <Row style={Styles.headerRow}>
-          <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
-          </H1>
-        </Row>
-        <Row style={Styles.headerRow}>
-          <Text style={Styles.header}>
-            {/* @TODO Change this to take date only */}
-            {this.props.milkEntry.datetime}
-          </Text>
-        </Row>
-        <Row style={Styles.headerRow}>
-          <Text style={Styles.header}>
-            {/* @TODO Change this to take time only */}
-            {this.props.milkEntry.datetime} 
-          </Text>
-        </Row>
-      </Grid>
     );
   }
 
@@ -159,9 +137,10 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Quality', this.props.milkEntry.quality, this.onQualityChange)}
-        {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit, this.onRateChange)}
+        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onFirstNameChange)}
+        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onLastNameChange)}
+        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onPhoneChange)}
+        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange)}
       </View>
     );
   }
@@ -172,11 +151,6 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   public render() {
     return(
       <Content padder style={{ backgroundColor: 'white' }}>
-      <List>
-        <ListItem>
-          {this.renderHeader()}
-        </ListItem>
-      </List>
       {this.renderEditFields()}
       <Grid>
         <Row style={Styles.buttonRow}>
@@ -192,9 +166,13 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
 const EditFarmerPage = new Composer<NestedPropsType>(EditFarmer).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
+  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
+  if (farmerRow === undefined) {
+    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
+  }
   return {
-    // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
-    farmer: state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID'),
+    farmer: farmerRow,
   };
 };
 
@@ -202,7 +180,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateFarmer: (newFarmer: Farmer) => dispatch(farmerThunks.updateFarmer(newFarmer)),
+    updateFarmer: (newFarmer: ThunkUpdateRow<Farmer>) => dispatch(farmerThunks.updateFarmer(newFarmer)),
   };
 };
 

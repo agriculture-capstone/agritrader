@@ -10,7 +10,7 @@ export interface Farmer {
   phoneCountry: string;
   phoneArea: string;
   phoneNumber: string;
-  notes?: string;
+  notes: string;
   companyName?: string;
 }
 
