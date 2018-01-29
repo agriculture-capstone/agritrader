@@ -51,6 +51,7 @@ export enum Route {
   EXPORTS = 'Exports',
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmers',
+  ADD_FARMER = 'AddFarmer',
 }
 
 /** App route information */
