@@ -49,6 +49,7 @@
     "import-name": false,
     "jsx-boolean-value": false,
     "strict-boolean-expressions": false,
-    "prefer-const": false
+    "prefer-const": false,
+    "one-variable-per-declaration": false
   }
 }
