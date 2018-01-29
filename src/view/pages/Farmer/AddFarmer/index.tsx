@@ -11,7 +11,7 @@ import farmerThunks from '../../../../store/modules/farmer/thunks';
 import Composer from '../../../hoc/PageComposer/index';
 import { Route } from '../../../navigation/navigator';
 
-import styles from '../styles';
+import styles from './style';
 
 interface OwnPropsType {
 }
