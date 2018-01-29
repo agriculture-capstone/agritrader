@@ -15,7 +15,8 @@ import drawerActions from '../../store/modules/drawer/actions';
 import searchBarActions from '../../store/modules/searchBar/actions';
 import navActions from '../../store/modules/nav/actions';
 import store from '../../store';
-// import { CurrentFarmerState } from '../../store/modules/currentFarmer/types';
+import { Farmer } from '../../store/modules/farmer/types';
+import { getActiveFarmer } from '../../store/modules/farmer/selectors'; 
 
 interface StorePropsType {
   nav: NavigationState;
@@ -24,7 +25,7 @@ interface StorePropsType {
   routeType: PageType | undefined;
   searchBarShown: boolean;
   searchPlaceholder: string | undefined;
-  // currentFarmer: CurrentFarmerState; 
+  currentFarmer: Farmer; 
 }
 
 interface DispatchPropsType {
@@ -126,7 +127,8 @@ class AppNavigation extends React.Component<PropsType, {}> {
 
   private setHeaderTitle(title: string) {
     if (title === "Farmer") {
-      this.props.updateHeaderTitle(this.props.currentFarmer);
+      const farmerName = `${this.props.currentFarmer.firstName} ${this.props.currentFarmer.lastName}`;  
+      this.props.updateHeaderTitle(farmerName);
     } else {
       this.props.updateHeaderTitle(title);
     }
@@ -196,7 +198,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, {}, State> = (state, ownP
     routeName: routeName,
     searchBarShown: !!currentRouteInfo && !!currentRouteInfo.searchInfo,
     searchPlaceholder: currentRouteInfo && currentRouteInfo.searchInfo && currentRouteInfo.searchInfo.placeholder,
-    // currentFarmer: state.currentFarmer,
+    currentFarmer: getActiveFarmer(state),
   };
 };
 
