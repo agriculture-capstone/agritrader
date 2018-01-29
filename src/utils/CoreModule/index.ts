@@ -275,6 +275,8 @@ export function createThunks<Row>(module: CoreModule) {
           }
         }
 
+        // TODO: Should be getting the response from core w/ the value of the updated row
+
         // Create updated model and update store
         dispatch(updateRowRemote(uuid, lastModified));
       }

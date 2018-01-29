@@ -3,9 +3,9 @@ import { Action as ActionBase } from 'redux';
 
 import { CoreModule, getModulePath } from '../../utils/CoreModule';
 import store from '../../store';
-import { CoreModuleState, StoreRow, StoreSyncUpdateRow } from '../../store/types';
+import { CoreModuleState, StoreRow, StoreSyncUpdateRow, CoreRow } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
-import * as _ from 'lodash';
+import * as R from 'ramda';
 
 /**
  * Promise representing the job taking place
@@ -71,14 +71,14 @@ type SyncActionPayload<Row>
   | EmptyPayload
   ;
 
-type SyncAction<Row> = SyncActionPayload<Row> & ActionBase;
+export type SyncAction<Row> = SyncActionPayload<Row> & ActionBase;
 
 function createSyncActions<Row>(module: CoreModule) {
   const UPPER_NAME = module.toUpperCase();
 
   return {
-    syncCreateRow: (row: StoreRow<Row>): SyncAction<Row> =>
-    ({ row, type: `SYNC_CREATE_${UPPER_NAME}` }),
+    syncCreateRow: (row: CoreRow<Row>): SyncAction<Row> =>
+      ({ row, type: `SYNC_CREATE_${UPPER_NAME}` }),
 
     syncUpdateRow: (row: StoreSyncUpdateRow<Row>) =>
       ({ row, type: `SYNC_UPDATE_${UPPER_NAME}` }),
@@ -102,37 +102,50 @@ async function createJob(module: CoreModule): Job {
 
   // TODO: Go through store and update local data
   // TODO: Optimize
-  const dirtyRows = moduleState.rows.filter(r => r.status !== 'clean');
-  const cleanRows = moduleState.rows.filter(r => r.status === 'clean');
+  const [cleanRows, dirtyRows] = R.partition(R.propEq('status', 'clean'), moduleState.rows);
+
+  // Aggregate requests to create rows
   const remoteCreates = dirtyRows
     .filter(r => r.status === 'local')
     .map(async r => api.create(r))
   ;
 
+  // Aggregate requests to update rows
   const remoteUpdates = dirtyRows
     .filter(r => r.status === 'modified')
     .map(async r => api.update(r))
   ;
 
-  const localUpdates = api.getAll().then((remoteRows) => {
-    // For each row that is out of date and clean, replace with remote
-    const remote = _.keyBy(remoteRows, 'uuid');
-    const local = _.keyBy(cleanRows, 'uuid');
-    Object.keys(remote).map((remoteKey) => {
-      const value = remote[remoteKey];
-      const action = local[remoteKey] ? actions.syncUpdateRow(value) : actions.syncCreateRow({ ...value, status: 'clean' });
-      store.dispatch(action);
-    });
+  // Aggregate all local requests to remote
+  const localToRemoteSync = Promise.all([
+    ...remoteCreates,
+    ...remoteUpdates,
+  ]);
 
-    // TODO: There is a bug here
-    // If a row is in an updated state locally, and has been updated on the server, the
-    // servers changes will not propogate to the client. When a client requests to update
-    // via thunk, the core should return the row that was updated as response to fix this
+  const remoteToLocalSync = api.getAll().then((remoteRows) => {
+    // Get the rows that exist locally
+    const exists = R.innerJoin(
+      (remoteRows, localRows) => remoteRows.uuid === localRows.uuid,
+      remoteRows,
+      cleanRows,
+    );
+
+    // Get the rows that do not exist locally
+    const notExists = R.differenceWith(
+      (a, b) => a === b,
+      remoteRows,
+      exists,
+    );
+
+    // Map to appropriate dispatches
+    exists.map(r => actions.syncUpdateRow(r));
+    notExists.map(r => actions.syncCreateRow({ ...r }));
   });
 
   { let successStatus: boolean;
     try {
-      await Promise.all([localUpdates, ...remoteCreates, ...remoteUpdates]);
+      // Come back when all requests have finished
+      await Promise.all([remoteToLocalSync, localToRemoteSync]);
       successStatus = true;
     } catch (err) {
       successStatus = false;
