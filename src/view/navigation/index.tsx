@@ -125,9 +125,9 @@ class AppNavigation extends React.Component<PropsType, {}> {
     searchBarShown ? this.props.showSearch(placeholder) : this.props.hideSearch();
   }
 
-  private setHeaderTitle(title: string) {
+  private setHeaderTitle(title: string, { firstName, lastName }: any) {
     if (title === 'Farmer') {
-      const farmerName = `${this.props.currentFarmer.firstName} ${this.props.currentFarmer.lastName}`;  
+      const farmerName = `${firstName} ${lastName}`;  
       this.props.updateHeaderTitle(farmerName);
     } else {
       this.props.updateHeaderTitle(title);
@@ -139,7 +139,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
   /** React componentWillMount */
   public componentWillMount() {
     this.setHeaderAndDrawer(this.props.routeType);
-    this.setHeaderTitle(this.props.routeName);
+    this.setHeaderTitle(this.props.routeName, this.props.currentFarmer);
     this.setSearchBar(this.props.searchBarShown, this.props.searchPlaceholder);
   }
 
@@ -160,7 +160,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
       this.setHeaderAndDrawer(type);
     }
     if (nextProps.routeName !== this.props.routeName) {
-      this.setHeaderTitle(nextProps.routeName);
+      this.setHeaderTitle(nextProps.routeName, nextProps.currentFarmer);
     }
 
     if (nextProps.searchBarShown !== this.props.searchBarShown) {
