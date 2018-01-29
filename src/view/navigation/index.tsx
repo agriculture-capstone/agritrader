@@ -19,6 +19,7 @@ import store from '../../store';
 interface StorePropsType {
   nav: NavigationState;
   headerShown: boolean;
+  routeName: string;
   routeType: PageType | undefined;
   searchBarShown: boolean;
   searchPlaceholder: string | undefined;
@@ -32,6 +33,7 @@ interface DispatchPropsType {
   goBack(): void;
   showSearch(placeholder?: string): void;
   hideSearch(): void;
+  updateHeaderTitle(title: string): void;
 }
 
 /** AppNavigation props */
@@ -120,11 +122,16 @@ class AppNavigation extends React.Component<PropsType, {}> {
     searchBarShown ? this.props.showSearch(placeholder) : this.props.hideSearch();
   }
 
+  private setHeaderTitle(title: string) {
+    this.props.updateHeaderTitle(title);
+  }
+
   /****************************** React ******************************/
 
   /** React componentWillMount */
   public componentWillMount() {
     this.setHeaderAndDrawer(this.props.routeType);
+    this.setHeaderTitle(this.props.routeName);
     this.setSearchBar(this.props.searchBarShown, this.props.searchPlaceholder);
   }
 
@@ -143,6 +150,9 @@ class AppNavigation extends React.Component<PropsType, {}> {
     if (nextProps.routeType !== this.props.routeType) {
       const type = nextProps.routeType;
       this.setHeaderAndDrawer(type);
+    }
+    if (nextProps.routeName !== this.props.routeName) {
+      this.setHeaderTitle(nextProps.routeName);
     }
 
     if (nextProps.searchBarShown !== this.props.searchBarShown) {
@@ -177,6 +187,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, {}, State> = (state, ownP
     nav: state.nav,
     headerShown: state.header.shown,
     routeType: currentRouteInfo && currentRouteInfo.type,
+    routeName: routeName,
     searchBarShown: !!currentRouteInfo && !!currentRouteInfo.searchInfo,
     searchPlaceholder: currentRouteInfo && currentRouteInfo.searchInfo && currentRouteInfo.searchInfo.placeholder,
   };
@@ -191,6 +202,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, {}> = (dispatch)
     goBack: () => dispatch(navActions.goBack()),
     showSearch: (placeholder?: string) => dispatch(searchBarActions.showSearchBar(placeholder)),
     hideSearch: () => dispatch(searchBarActions.removeSearchBar()),
+    updateHeaderTitle: (title: string) => dispatch(headerActions.setTitle(title)),
   };
 };
 
