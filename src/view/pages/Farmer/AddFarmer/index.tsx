@@ -151,7 +151,6 @@ const AddFarmerPage = new Composer<PropsType>(AddFarmer)
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmers: state.farmer.rows,
   };
 };
 

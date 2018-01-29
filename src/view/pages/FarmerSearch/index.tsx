@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { H2, H3, Content, List, ListItem } from 'native-base';
+import { Text, Content, List, ListItem } from 'native-base';
 import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import * as Fuse from 'fuse.js';
@@ -79,7 +79,8 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
-        'name',
+        'firstName',
+        'lastName',
         'phoneNumber',
       ],
     });
@@ -115,12 +116,12 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <ListItem key={farmer.uuid} onPress={this.createOnItemClicked(farmer.uuid)}>
         <View>
-          <H2>
+          <Text style={style.name}>
             {`${farmer.firstName} ${farmer.lastName}`}
-          </H2>
-          <H3>
+          </Text>
+          <Text style={style.phone}>
             {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
-          </H3>
+          </Text>
         </View>
       </ListItem>
     );
