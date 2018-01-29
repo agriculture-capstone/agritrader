@@ -5,7 +5,7 @@ import { CoreModuleState, StoreRow } from '../../types';
 /** Base model for a farmer */
 export interface Farmer {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
   phoneCountry: string;
   phoneArea: string;
