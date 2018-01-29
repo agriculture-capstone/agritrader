@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
-import * as moment from 'moment';
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { MilkEntry } from '../../../store/modules/milk/types';
