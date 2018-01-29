@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
+import { Content, View, Text, Grid, Row, Col, Button, Input, Item } from 'native-base';
 
 import { Farmer } from '../../../../store/modules/farmer/types';
 import { Route } from '../../../navigation/navigator';
@@ -8,19 +8,11 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
 import Composer from '../../../hoc/PageComposer/index';
-import { State, ThunkUpdateRow } from '../../../../store/types';
+import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
 
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 
 import Styles from './style';
-import { Alert } from 'react-native';
-
-const fakeFarmer = {
-  firstName: 'Moath',
-  lastName: 'Faisal',
-  phoneNumber: '403-401-4090',
-  notes: 'my cool notes',
-};
 
 interface OwnPropsType {
 }
@@ -32,7 +24,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  farmer: Farmer;
+  farmer: StoreRow<Farmer>;
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
@@ -80,14 +72,14 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   
   /** Handle pressing save button */
   private onSavePress = () => {
-    // let newFarmer: ThunkUpdateRow<Farmer> = {
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName,
-    //   phoneNumber: this.state.phoneNumber,
-    //   notes: this.state.notes,
-    // };
-    // this.props.updateFarmer(newFarmer);
-    Alert.alert('New farmer created');
+    let newFarmer: ThunkUpdateRow<Farmer> = {
+      uuid: this.props.farmer.uuid,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      phoneNumber: this.state.phoneNumber,
+      notes: this.state.notes,
+    };
+    this.props.updateFarmer(newFarmer);
     this.props.navigate(Route.FARMER);
   }
 
