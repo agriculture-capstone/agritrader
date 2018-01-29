@@ -6,6 +6,8 @@ import FarmerPage from '../pages/Farmer';
 import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
+import EditFarmerPage from '../pages/Farmer/EditFarmer';
+import AddFarmerPage from '../pages/Farmer/AddFarmer';
 
 /** Different types of pages */
 export type PageType = 'menu' | 'back' | 'empty';
@@ -51,6 +53,7 @@ export enum Route {
   EXPORTS = 'Exports',
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmers',
+  EDIT_FARMER = 'EditFarmer',
   ADD_FARMER = 'AddFarmer',
 }
 
@@ -97,6 +100,18 @@ export const routesInfo: RouteInfo[] = [
     drawerInfo: {
       icon: 'person',
     },
+  },
+  {
+    route: Route.ADD_FARMER,
+    name: 'AddFarmer',
+    component: AddFarmerPage,
+    type: 'menu',
+  },
+  {
+    route: Route.EDIT_FARMER,
+    name: 'EditFarmer',
+    component: EditFarmerPage,
+    type: 'menu',
   },
 ];
 
