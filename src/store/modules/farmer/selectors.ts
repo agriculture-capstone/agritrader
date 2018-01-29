@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { State } from '../../types';
-import { StoreFarmer } './types';
+import { StoreFarmer } from './types';
 
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
@@ -21,7 +21,7 @@ export const getActiveFarmer = createSelector(
     // TODO: Re-evaluate this
     // if (!maybeFarmer) throw new Error('Active farmer should be a match for a farmer');
     if (!maybeFarmer) {
-      const empty: StoreFarmer = { 
+      const empty: StoreFarmer = {
         firstName: '',
         middleName: '',
         lastName: '',
@@ -30,7 +30,7 @@ export const getActiveFarmer = createSelector(
         phoneNumber: '',
         notes: '',
         companyName: '',
-        status: 'clean', 
+        status: 'clean',
         lastModified: '',
         uuid: '',
       };

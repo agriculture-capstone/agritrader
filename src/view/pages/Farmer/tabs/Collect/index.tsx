@@ -27,6 +27,39 @@ interface StorePropsType {
   collectTransactions: any[];
 }
 
+const fakeData = [
+  [
+    'Jan 1, 2017',
+    '5.2',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 2, 2017',
+    '5.6',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 3, 2017',
+    '4.8',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 4, 2017',
+    '5.9',
+    '-',
+    '13.1',
+  ],
+  [
+    'Jan 5, 2017',
+    '3.2',
+    '-',
+    '13.2',
+  ],
+];
+
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 
 interface OwnStateType {
@@ -65,8 +98,8 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Volume', 'quality', 'rate']}
-              values={this.props.collectTransactions}
+              headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
+              values={fakeData}
             />
           </Row>
           <Row style={styles.addEntryButton}>
