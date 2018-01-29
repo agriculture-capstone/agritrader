@@ -171,7 +171,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateFarmer: (newFarmer: ThunkUpdateRow<Farmer>) => dispatch(farmerThunks.updateFarmer(newFarmer)),
+    updateFarmer: async (newFarmer: ThunkUpdateRow<Farmer>) => dispatch(farmerThunks.updateFarmer(newFarmer)),
   };
 };
 
