@@ -76,7 +76,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private onSavePress = () => {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
-    
+
     let newEntry: MilkEntry = {
       datetime: timeNow,
       toPersonUuid: 'fakeToPersonUuid',
@@ -93,9 +93,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   /**
    * Handle entry changes, update local state
    */
-  private onAmountChange = (newVolume: string) => this.setState(state => ({ volume: newVolume }));
+  private onAmountChange = (newAmount: number) => this.setState(state => ({ amountOfProduct: newAmount }));
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onRateChange = (newCostPerUnit: string) => this.setState(state => ({ costPerUnit: newCostPerUnit }));
+  private onRateChange = (newCostPerUnit: number) => this.setState(state => ({ costPerUnit: newCostPerUnit }));
 
   /**
    * Returns a button with text specified
@@ -137,7 +137,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: string, onChangeText: any) {
+  private formatEditRow(label: string, value: number | string, onChangeText: any) {
     return (
       <Grid>
         <Row>
@@ -159,7 +159,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.volume, this.onAmountChange)}
+        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
         {this.formatEditRow('Quality', this.props.milkEntry.quality, this.onQualityChange)}
         {this.formatEditRow('Rate (UGX)', this.props.milkEntry.costPerUnit, this.onRateChange)}
       </View>
