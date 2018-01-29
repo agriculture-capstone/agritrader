@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
 import * as moment from 'moment';
 
-import { Farmer } from '../../../store/modules/farmer/types';
+import { Farmer, FarmerState } from '../../../store/modules/farmer/types';
 import { Dairy as MilkEntry } from '../../../store/modules/dairy/types';
 
 import { Route } from '../../navigation/navigator';
@@ -15,7 +15,6 @@ import dairyActions from '../../../store/modules/dairy/actions';
 import Styles from './style';
 
 interface OwnPropsType {
-  farmer: Farmer;
 }
 
 interface DispatchPropsType {
@@ -25,6 +24,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
+  farmer: FarmerState;
 }
 
 /** AddEntry PropsType */
@@ -42,9 +42,7 @@ interface OwnStateType {
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
- * Component for AddEntry
- * @requires values
- * 
+ * AddEntry page
  * @example 
  *             <AddEntry
  *             />
@@ -54,6 +52,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
+    /** Init state */
     this.state = {
       volume: '0',
       quality: '0',
@@ -172,8 +171,10 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
 const AddEntryPage = new Composer<PropsType>(AddEntry).page;
 
-const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
-  return {};
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
+  return {
+    // farmer: state.farmer.
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
