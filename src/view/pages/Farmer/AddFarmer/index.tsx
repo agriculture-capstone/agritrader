@@ -9,21 +9,27 @@ import { State } from '../../../../store/types';
 import { Farmer } from '../../../../store/modules/farmer/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 import Composer from '../../../hoc/PageComposer/index';
-
-interface OwnStateType {
-}
+import { Route } from '../../../navigation/navigator';
 
 interface OwnPropsType {
 }
 
 interface DispatchPropsType {
   createFarmer(farmer: Farmer): void;
+  navigate(route: Route): void;
 }
 
 interface StorePropsType {
 }
 
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
+interface OwnStateType {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  notes: string;
+}
 
 /**
  * Component for viewing farmer information
@@ -32,13 +38,18 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
-
-    // Bindings
-    this.onAddPress = this.onAddPress.bind(this);
+    /** Init state */
+    this.state = {
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      notes: '',
+    };
   }
 
-  private onAddPress() {
-
+  /** Handle pressing add button */
+  private onAddPress = () => { 
+    this.props.navigate(Route.EDIT_FARMER);
   }
 
   /**
