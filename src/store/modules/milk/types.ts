@@ -10,7 +10,6 @@ export interface MilkEntry {
   amountOfProduct: number;
   costPerUnit: number;
   currency: string;
-  volume: string;
   quality: string;
 }
 
