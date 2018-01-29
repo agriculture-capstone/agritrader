@@ -34,7 +34,7 @@ const reducer = combineReducers<State>({
   header: headerReducer,
   sensitiveInfo: sensitiveInfoReducer,
   farmer: farmerReducer,
-  currentFarmer: activeRowsReducer,
+  activeRows: activeRowsReducer,
   milk: milkReducer,
 }) as BaseReducer<State, Action>;
 

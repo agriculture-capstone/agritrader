@@ -61,6 +61,8 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderAddButton = () => this.renderButton('Add', 'PRIMARY', this.onAddPress);
 
+
+
   /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
 
@@ -71,6 +73,9 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       lastName: this.state.lastName,
       phoneNumber: this.state.phoneNumber,
       notes: this.state.notes,
+      phoneArea: '576',
+      phoneCountry: '1',
+      middleName: '',
     };
     const uuid = await this.props.createFarmer(newFarmer);
     this.props.setActiveFarmer(uuid);
@@ -93,24 +98,29 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     );
   }
 
+  private onChangeFirstName = (firstName: string) => this.setState(state => ({ firstName }));
+  private onChangeLastName = (lastName: string) => this.setState(state => ({ lastName }));
+  private onChangePhoneNumber = (phoneNumber: string) => this.setState(state => ({ phoneNumber }));
+  private onChangeNotes = (notes: string) => this.setState(state => ({ notes }));
+
   private renderFields() {
     return (
       <Form>
       <Item floatingLabel>
         <Label>First Name</Label>
-        <Input />
+        <Input onChangeText={this.onChangeFirstName} />
       </Item>
       <Item floatingLabel>
         <Label>Last Name</Label>
-        <Input />
+        <Input onChangeText={this.onChangeLastName} />
       </Item>
       <Item floatingLabel last>
         <Label>Phone Number</Label>
-        <Input keyboardType={'numeric'}/>
+        <Input onChangeText={this.onChangePhoneNumber} keyboardType={'numeric'}/>
       </Item>
       <Item floatingLabel last>
         <Label>Notes</Label>
-        <Input />
+        <Input onChangeText={this.onChangeNotes} />
       </Item>
     </Form>
     );
