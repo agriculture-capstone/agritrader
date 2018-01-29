@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
+import * as moment from 'moment';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { Dairy as MilkEntry, PartialDairy } from '../../../store/modules/dairy/types';
+import { MilkEntry } from '../../../store/modules/milk/types';
 import { Route } from '../../navigation/navigator';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
@@ -11,23 +12,23 @@ import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
 
-import dairyActions from '../../../store/modules/dairy/actions';
+import milkThunks from '../../../store/modules/milk/thunks';
 
 import Styles from './style';
 
 
 interface OwnPropsType {
-  farmer: Farmer;
-  milkEntry: MilkEntry;
 }
 
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  updateDairy(newEntry: PartialDairy): void;
+  updateDairy(newEntry: MilkEntry): void;
 }
 
 interface StorePropsType {
+  farmer: Farmer;
+  milkEntry: MilkEntry;
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
@@ -36,9 +37,9 @@ type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 type PropsType = InjectedFabProps & NestedPropsType;
 
 interface OwnStateType {
-  volume: string;
+  amountOfProduct: number;
   quality: string;
-  costPerUnit: string;
+  costPerUnit: number;
 }
 
 /**
@@ -48,8 +49,6 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Page for EditEntry
- * @requires farmer
- * @requires milkEntry
  * 
  * @example 
  *          <EditEntry
@@ -60,7 +59,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      volume: this.props.milkEntry.volume,
+      amountOfProduct: this.props.milkEntry.amountOfProduct,
       quality: this.props.milkEntry.quality,
       costPerUnit: this.props.milkEntry.costPerUnit,
     };
@@ -75,11 +74,17 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   
   /** Handle pressing save button */
   private onSavePress = () => {
-    let newEntry: PartialDairy = {
-      uuid: this.props.milkEntry.uuid,
-      volume: this.state.volume,
-      quality: this.state.quality,
+    // @TODO change time format to match core
+    const timeNow = moment().local().utc().toString();
+    
+    let newEntry: MilkEntry = {
+      datetime: timeNow,
+      toPersonUuid: 'fakeToPersonUuid',
+      fromPersonUuid: 'fakeFromPerosnUuid',
+      amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
+      currency: 'UGX',
+      quality: this.state.quality,
     };
     this.props.updateDairy(newEntry);
     this.props.navigate(Route.MILK_ENTRY_DETAILS);
@@ -186,15 +191,20 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 
 const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
 
-const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = () => {
-  return {};
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
+    farmer: state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID'),
+    // @TODO replace 'fakeMilkEntryUUID' with the active MilkEntry uuid    
+    milkEntry: state.milk.rows.find(r => r.uuid === 'fakeMilkEntryUUID'),
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateDairy: (newEntry: PartialDairy) => dispatch(dairyActions.updateDairy(newEntry)),
+    updateDairy: (newEntry: MilkEntry) => dispatch(milkThunks.updateMilkEntry(newEntry)),
   };
 };
 

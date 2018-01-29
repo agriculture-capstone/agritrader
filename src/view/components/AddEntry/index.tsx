@@ -74,6 +74,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private onSavePress = () => {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
+    
     let newEntry: MilkEntry = {
       datetime: timeNow,
       toPersonUuid: 'fakeToPersonUuid',
@@ -169,7 +170,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
 const AddEntryPage = new Composer<PropsType>(AddEntry).page;
 
-const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state, ownProps) => {
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
     farmer: state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID'),
