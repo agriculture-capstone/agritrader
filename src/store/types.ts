@@ -6,7 +6,7 @@ import { NavState, Action as NavAction } from './modules/nav/types';
 import { TabState, Action as TabsAction } from './modules/tabs/types';
 import { SearchBarState, Action as SearchBarAction } from './modules/searchBar/types';
 import { HeaderState, Action as HeaderAction } from './modules/header/types';
-import { CurrentFarmerState, Action as CurrentFarmerAction } from './modules/currentFarmer/types';
+import { ActiveRowsState, Action as ActiveRowsAction } from './modules/activeRows/types';
 import { SensitiveInfoState, Action as SensitiveAction } from './modules/sensitive/types';
 import { FarmerState } from './modules/farmer/types';
 import { MilkState } from './modules/milk/types';
@@ -21,7 +21,7 @@ export interface State {
   header: HeaderState;
   sensitiveInfo: SensitiveInfoState;
   farmer: FarmerState;
-  currentFarmer: CurrentFarmerState;
+  activeRows: ActiveRowsState;
   milk: MilkState;
 
 }
@@ -33,7 +33,7 @@ export type Action
   | TabsAction
   | SearchBarAction
   | HeaderAction
-  | CurrentFarmerAction
+  | ActiveRowsAction
   | SensitiveAction
 
   ;
@@ -125,4 +125,4 @@ export type Thunk<T> = ThunkAction<T, State, { CoreAPI: typeof CoreAPI }>;
 /**
  * Function definition for core module thunks
  */
-export type CoreThunk = Thunk<Promise<void>>;
+export type CoreThunk = Thunk<Promise<string>>;

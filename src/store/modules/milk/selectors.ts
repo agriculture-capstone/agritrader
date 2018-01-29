@@ -5,7 +5,7 @@ import { State } from '../../types';
 import * as moment from 'moment';
 
 const getMilkEntries = (state: State) => state.milk.rows;
-const getCurrentFarmerUUID = (state: State) => state.currentFarmer.currentFarmerUUID;
+const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 const radix: number = 10;
 
 /************Selectors for all milk entries (used on Home page) ***************/
@@ -102,7 +102,7 @@ var myList = [
 
 var byLocation = myList.groupBy('location');
 
-***RESULT** 
+***RESULT**
   byLocation = {
     mall: [
       {time: '9:00',  location: 'mall'  },

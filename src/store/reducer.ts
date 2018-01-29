@@ -13,7 +13,7 @@ import headerReducer from './modules/header/reducer';
 import sensitiveInfoReducer from './modules/sensitive/reducer';
 
 import farmerReducer from './modules/farmer/reducer';
-import currentFarmerReducer from './modules/currentFarmer/reducer';
+import activeRowsReducer from './modules/activeRows/reducer';
 import milkReducer from './modules/milk/reducer';
 
 // Whitelist the core modules
@@ -34,7 +34,7 @@ const reducer = combineReducers<State>({
   header: headerReducer,
   sensitiveInfo: sensitiveInfoReducer,
   farmer: farmerReducer,
-  currentFarmer: currentFarmerReducer,
+  activeRows: activeRowsReducer,
   milk: milkReducer,
 }) as BaseReducer<State, Action>;
 
