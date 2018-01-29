@@ -7,7 +7,7 @@ import tabsActions from '../../../store/modules/tabs/actions';
 import searchBarActions from '../../../store/modules/searchBar/actions';
 import { State } from '../../../store/types';
 
-/** TabManager OwnProps */
+/** TabManager OwnPropsType */
 interface OwnPropsType {}
 
 interface StorePropsType {
@@ -133,8 +133,6 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
  *
  * The first tab in the 'tabs' list will be rendered on the far left, and the last
  * will be rendered on the far right.
- *
- * @param {ElementTabList} [tabs]
  *
  * @example
  *
