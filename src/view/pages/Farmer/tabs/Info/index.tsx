@@ -2,11 +2,14 @@ import * as React from 'react';
 import { H1, Content, Grid, Row, Col, Button, Text, List, ListItem } from 'native-base';
 
 import Composer from '../../../../hoc/PageComposer';
-import { StoreRow } from '../../../../../store/types';
+import { StoreRow, State } from '../../../../../store/types';
 import { Farmer } from '../../../../../store/modules/farmer/types';
 import { Route } from '../../../../navigation/navigator';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../../../store/modules/nav/actions';
 
 import styles from '../../styles';
+
 
 
 interface OwnPropsType {
@@ -111,5 +114,29 @@ class Info extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default new Composer<PropsType>(Info)
-  .page;
+const FarmerInfoPage = new Composer<PropsType>(Info)
+.page;
+
+/************************* Redux ************************/
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
+  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
+  if (farmerRow === undefined) {
+    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
+  }
+  return {
+    farmer: farmerRow,
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FarmerInfoPage);

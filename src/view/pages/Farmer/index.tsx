@@ -51,12 +51,7 @@ const createBuy = () => (
 );
 
 const createInfo = () => (
-  <Info
-    farmerFirstName="Patrick"
-    farmerLastName="Keena"
-    farmerPhoneNumber="123-456-789"
-    farmerNotes="Doctor from village A"
-  />
+  <Info />
 );
 
 export default createTabManager(
