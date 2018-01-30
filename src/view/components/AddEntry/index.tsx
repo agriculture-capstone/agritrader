@@ -86,7 +86,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
       quality: this.state.quality,
     };
     this.props.createMilkEntry(newEntry);
-    this.props.navigate(Route.MILK_ENTRY_DETAILS);
+    this.props.navigate(Route.FARMER);
   }
 
   /**

@@ -85,7 +85,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       quality: this.state.quality,
     };
     this.props.updateDairy(newEntry);
-    this.props.navigate(Route.MILK_ENTRY_DETAILS);
+    this.props.navigate(Route.FARMER);
   }
 
   /**
