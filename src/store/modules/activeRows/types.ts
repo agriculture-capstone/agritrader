@@ -1,11 +1,7 @@
 /*----------------------- State -----------------------*/
-/** currentFarmer State*/
+/** currentFarmer & currentMilkEntryState*/
 export interface ActiveRowsState {
   activeFarmerUUID: string;
-}
-
-/** currentMilkEntry State*/
-export interface ActiveRowsState {
   activeMilkEntryUUID: string;
 }
 
