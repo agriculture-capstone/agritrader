@@ -62,7 +62,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
   private onEditPress = () => this.props.navigate(Route.EDIT_MILK_ENTRY);
 
   /**
-   * Returns a button with text specified
+   * Returns a button with text, color, and onPress callback specified
    */
   private renderButton(text: string, color: ButtonColor) {
     const isInfo = color === 'INFO';
