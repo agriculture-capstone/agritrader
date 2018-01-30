@@ -9,7 +9,7 @@ import StatisicsBlock from '../../components/StatisticsBlock';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
-// import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';
+import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';
 import Composer from '../../hoc/PageComposer';
 import styles from './style';
 import * as moment from 'moment';
@@ -86,13 +86,9 @@ class Home extends React.Component<PropsType, {}> {
 const HomePage = new Composer<PropsType>(Home).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  // return {
-  //   dayTotal: getDaysMilkTotal(state),
-  //   avgDayTotal: getAvgDaysMilkTotal(state),
-  // };
   return {
-    avgDayTotal: '45.6',
-    dayTotal: '33.2',
+    dayTotal: getDaysMilkTotal(state),
+    avgDayTotal: getAvgDaysMilkTotal(state),
   };
 };
 
