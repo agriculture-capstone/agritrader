@@ -90,7 +90,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   }
 
   /**
-   * Returns a button with text specified
+   * Returns a button with text, color, and onPress callback specified
    */
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
