@@ -33,38 +33,7 @@ interface StorePropsType {
   collectTransactions: any[];
 }
 
-const fakeData = [
-  [
-    'Jan 1, 2017',
-    '5.2',
-    '-',
-    '13.2',
-  ],
-  [
-    'Jan 2, 2017',
-    '5.6',
-    '-',
-    '13.2',
-  ],
-  [
-    'Jan 3, 2017',
-    '4.8',
-    '-',
-    '13.2',
-  ],
-  [
-    'Jan 4, 2017',
-    '5.9',
-    '-',
-    '13.1',
-  ],
-  [
-    'Jan 5, 2017',
-    '3.2',
-    '-',
-    '13.2',
-  ],
-];
+const collectData = [{}];
 
 interface OwnStateType {
 }
@@ -91,15 +60,15 @@ class Collect extends React.Component<PropsType, OwnStateType> {
    * Render method for Farmer
    */
   public render() {
-    const testData = [{
+    const dataSummary = [{
       label: 'Today',
       value: this.props.dailyTotal,
       units: 'L',
-    },                {
+    },                   {
       label: 'This Week',
       value: this.props.weeklyTotal,
       units: 'L',
-    },                {
+    },                   {
       label: 'This Month',
       value: this.props.monthlyTotal,
       units: 'L',
@@ -111,13 +80,13 @@ class Collect extends React.Component<PropsType, OwnStateType> {
         <Grid style={styles.content}>
           <Row>
             <CardSummary
-              data={testData}
+              data={dataSummary}
             />
           </Row>
           <Row>
             <DataTable
               headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
-              values={fakeData}
+              values={collectData}
               routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.onEntryPress }}
             />
           </Row>
