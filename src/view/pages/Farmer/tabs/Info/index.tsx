@@ -43,9 +43,7 @@ class Info extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Create edit button */
-  private renderEditButton = () => {
-    return (this.renderButton('Edit', 'PRIMARY'));
-  }
+  private renderEditButton = () => this.renderButton('Edit', 'PRIMARY');
 
   /** Handle pressing edit button */
   private onEditPress = () => this.props.navigate(Route.EDIT_FARMER);
