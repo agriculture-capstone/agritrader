@@ -13,6 +13,7 @@ import { State } from '../../../store/types';
 import milkThunks from '../../../store/modules/milk/thunks';
 
 import Styles from './style';
+import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
 
 interface OwnPropsType {
 }
@@ -78,7 +79,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     let newEntry: MilkEntry = {
       datetime: timeNow,
       toPersonUuid: 'fakeToPersonUuid',
-      fromPersonUuid: 'fakeFromPerosnUuid',
+      fromPersonUuid: 'fakeFromPersonUuid',
       amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
       currency: 'UGX',
@@ -171,13 +172,8 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 const AddEntryPage = new Composer<PropsType>(AddEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
-  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
-  if (farmerRow === undefined) {
-    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
-  }
   return {
-    farmer: farmerRow,
+    farmer: getActiveFarmer(state),
   };
 };
 
