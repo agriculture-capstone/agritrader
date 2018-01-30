@@ -20,7 +20,6 @@ import {
 import styles from './style';
 
 interface OwnPropsType {
-  farmerName: string;
 }
 
 interface DispatchPropsType {
@@ -33,6 +32,39 @@ interface StorePropsType {
   dailyTotal: any;
   collectTransactions: any[];
 }
+
+const fakeData = [
+  [
+    'Jan 1, 2017',
+    '5.2',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 2, 2017',
+    '5.6',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 3, 2017',
+    '4.8',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 4, 2017',
+    '5.9',
+    '-',
+    '13.1',
+  ],
+  [
+    'Jan 5, 2017',
+    '3.2',
+    '-',
+    '13.2',
+  ],
+];
 
 interface OwnStateType {
 }
@@ -83,8 +115,8 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Amount (L)', 'Quality', 'Rate (UGX)']}
-              values={this.props.collectTransactions}
+              headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
+              values={fakeData}
               routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.onEntryPress }}
             />
           </Row>

@@ -127,13 +127,13 @@ export const routesInfo: RouteInfo[] = [
   },
   {
     route: Route.ADD_FARMER,
-    name: 'AddFarmer',
+    name: 'Add a Farmer',
     component: AddFarmerPage,
     type: 'menu',
   },
   {
     route: Route.EDIT_FARMER,
-    name: 'EditFarmer',
+    name: 'Edit a Farmer',
     component: EditFarmerPage,
     type: 'menu',
   },

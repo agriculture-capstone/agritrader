@@ -1,20 +1,20 @@
 import { Reducer } from 'redux';
 
-import { CurrentFarmerState, Action } from './types';
+import { ActiveRowsState, Action } from './types';
 import initialState from './state';
 
-const currentFarmerReducer: Reducer<CurrentFarmerState> = (state = initialState, action: Action) => {
+const activeRowReducer: Reducer<ActiveRowsState> = (state = initialState, action: Action) => {
   switch (action.type) {
     case 'UPDATE_CURRENT_FARMER': {
       return {
         ...state,
-        currentFarmerUUID : action.currentFarmerUUID,
+        activeFarmerUUID : action.currentFarmerUUID,
       };
     }
     case 'CLEAR_CURRENT_FARMER': {
       return {
         ...state,
-        currentFarmerUUID : '',
+        activeFarmerUUID : '',
       };
     }
     default:
@@ -22,4 +22,4 @@ const currentFarmerReducer: Reducer<CurrentFarmerState> = (state = initialState,
   }
 };
 
-export default currentFarmerReducer;
+export default activeRowReducer;
