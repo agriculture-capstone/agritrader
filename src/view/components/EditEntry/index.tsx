@@ -14,6 +14,8 @@ import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
 import milkThunks from '../../../store/modules/milk/thunks';
 
 import Styles from './style';
+import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
+import { getActiveMilkEntry } from '../../../store/modules/milk/selectors';
 
 
 interface OwnPropsType {
@@ -75,8 +77,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private onSavePress = () => {
     let newEntry: ThunkUpdateRow<MilkEntry> = {
       uuid: this.props.milkEntry.uuid,
-      toPersonUuid: 'fakeToPersonUuid',
-      fromPersonUuid: 'fakeFromPerosnUuid',
+      toPersonUuid: this.props.milkEntry.toPersonUuid,
+      fromPersonUuid: this.props.milkEntry.fromPersonUuid,
       amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
       currency: 'UGX',
@@ -188,19 +190,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
-  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
-  if (farmerRow === undefined) {
-    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
-  }
-  // @TODO replace 'fakeMilkEntryUUID' with the active MilkEntry uuid    
-  const milkEntryRow = state.milk.rows.find(r => r.uuid === 'fakeMilkEntryUUID');
-  if (milkEntryRow === undefined) {
-    throw new Error('Error: could not locate MilkEntry: ' + 'fakeMilkEntryUUID');
-  }
   return {
-    farmer: farmerRow,
-    milkEntry: milkEntryRow,
+    farmer: getActiveFarmer(state),
+    milkEntry: getActiveMilkEntry(state),
   };
 };
 
