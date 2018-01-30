@@ -187,15 +187,15 @@ class AppNavigation extends React.Component<PropsType, {}> {
 
 const mapStateToProps: MapStateToProps<StorePropsType, {}, State> = (state, ownProps) => {
   // Get current route name
-  const routeName = state.nav.routes[state.nav.index].routeName;
+  const currentRouteName = state.nav.routes[state.nav.index].routeName;
   // Get current route information (should never be undefined)
-  const currentRouteInfo = routesInfo.find(r => r.route === routeName);
+  const currentRouteInfo = routesInfo.find(r => r.route === currentRouteName);
 
   return {
     nav: state.nav,
     headerShown: state.header.shown,
     routeType: currentRouteInfo && currentRouteInfo.type,
-    routeName: routeName,
+    routeName: currentRouteName,
     searchBarShown: !!currentRouteInfo && !!currentRouteInfo.searchInfo,
     searchPlaceholder: currentRouteInfo && currentRouteInfo.searchInfo && currentRouteInfo.searchInfo.placeholder,
     currentFarmer: getActiveFarmer(state),

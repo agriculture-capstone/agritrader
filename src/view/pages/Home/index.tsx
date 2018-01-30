@@ -93,7 +93,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
   return {
     avgDayTotal: '45.6',
     dayTotal: '33.2',
-  }
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {

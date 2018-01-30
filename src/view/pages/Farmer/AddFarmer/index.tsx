@@ -70,18 +70,28 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private onAddPress = async () => {
     let newFarmer: Farmer = {
       firstName: this.state.firstName,
+      middleName: '',
       lastName: this.state.lastName,
       phoneNumber: this.state.phoneNumber,
-      notes: this.state.notes,
-      phoneArea: '576',
+      phoneArea: '403',
       phoneCountry: '1',
-      middleName: '',
+      notes: this.state.notes,
     };
     const uuid = await this.props.createFarmer(newFarmer);
     this.props.setActiveFarmer(uuid);
     this.props.navigate(Route.FARMER);
   }
 
+
+  /**
+   * Handle farmer details changes, update local state
+   */
+  private onChangeFirstName = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
+  private onChangeLastName = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
+  private onChangePhoneNumber = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
+  private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
+
+  
   /**
    * Returns a button with text specified
    */
@@ -97,11 +107,6 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       </Col>
     );
   }
-
-  private onChangeFirstName = (firstName: string) => this.setState(state => ({ firstName }));
-  private onChangeLastName = (lastName: string) => this.setState(state => ({ lastName }));
-  private onChangePhoneNumber = (phoneNumber: string) => this.setState(state => ({ phoneNumber }));
-  private onChangeNotes = (notes: string) => this.setState(state => ({ notes }));
 
   private renderFields() {
     return (

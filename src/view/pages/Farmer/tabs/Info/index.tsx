@@ -8,7 +8,7 @@ import { Route } from '../../../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../../store/modules/nav/actions';
 
-import styles from '../../styles';
+import styles from './style';
 import { getActiveFarmer } from '../../../../../store/modules/farmer/selectors';
 
 
@@ -43,9 +43,7 @@ class Info extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Create edit button */
-  private renderEditButton = () => {
-    return (this.renderButton('Edit', 'PRIMARY'));
-  }
+  private renderEditButton = () => this.renderButton('Edit', 'PRIMARY');
 
   /** Handle pressing edit button */
   private onEditPress = () => this.props.navigate(Route.EDIT_FARMER);
@@ -101,7 +99,7 @@ class Info extends React.Component<PropsType, OwnStateType> {
     return(
       <Content padder style={styles.content}>
       <Grid>
-        <Row style={styles.farmerName}>
+        <Row style={styles.headerRow}>
           <H1>{this.props.farmer.firstName} {this.props.farmer.lastName}</H1>
         </Row>
         {this.renderDetailFields()}
