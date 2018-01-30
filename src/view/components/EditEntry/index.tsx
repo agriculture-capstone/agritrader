@@ -24,7 +24,7 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  updateDairy(newEntry: ThunkUpdateRow<MilkEntry>): void;
+  updateMilkEntry(newEntry: ThunkUpdateRow<MilkEntry>): void;
 }
 
 interface StorePropsType {
@@ -84,7 +84,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       currency: 'UGX',
       quality: this.state.quality,
     };
-    this.props.updateDairy(newEntry);
+    this.props.updateMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
 
@@ -200,7 +200,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateDairy: async (newEntry: ThunkUpdateRow<MilkEntry>) => dispatch(milkThunks.updateMilkEntry(newEntry)),
+    updateMilkEntry: async (newEntry: ThunkUpdateRow<MilkEntry>) => dispatch(milkThunks.updateMilkEntry(newEntry)),
   };
 };
 
