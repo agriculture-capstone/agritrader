@@ -8,7 +8,7 @@ import { Route } from '../../../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../../store/modules/nav/actions';
 
-import styles from '../../styles';
+import styles from './style';
 import { getActiveFarmer } from '../../../../../store/modules/farmer/selectors';
 
 
