@@ -82,6 +82,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
   private onEntryPress = (route: Route) => this.props.navigate(route);
 
+  /** React componentDidMount */
   public componentDidMount() {
     this.props.listenToFab(this.onAddPress);
   }

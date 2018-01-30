@@ -181,7 +181,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createMilkEntry: (newEntry: MilkEntry) => dispatch(milkThunks.createMilkEntry(newEntry)),
+    createMilkEntry: async (newEntry: MilkEntry) => dispatch(milkThunks.createMilkEntry(newEntry)),
   };
 };
 
