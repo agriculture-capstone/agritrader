@@ -101,7 +101,7 @@ class Info extends React.Component<PropsType, OwnStateType> {
     return(
       <Content padder style={styles.content}>
       <Grid>
-        <Row style={styles.farmerName}>
+        <Row style={styles.headerRow}>
           <H1>{this.props.farmer.firstName} {this.props.farmer.lastName}</H1>
         </Row>
         {this.renderDetailFields()}
