@@ -1,11 +1,44 @@
 import { createSelector } from 'reselect';
-import { MilkEntry } from './types';
+import { MilkEntry, StoreMilkEntry } from './types';
 import { State } from '../../types';
 
 import * as moment from 'moment';
 
 const getMilkEntries = (state: State) => state.milk.rows;
-const getCurrentFarmerUUID = (state: State) => state.currentFarmer.currentFarmerUUID;
+const getCurrentMilkEntryUUID = (state: State) => state.activeRows.activeMilkEntryUUID;
+const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
+
+const maybeGetActiveMilkEntry = createSelector(
+  getCurrentMilkEntryUUID,
+  getMilkEntries,
+  (uuid, getMilkEntries) => getMilkEntries.find(e => e.uuid === uuid),
+);
+
+/**
+ * Selector for getting the active milk entry
+ */
+export const getActiveMilkEntry = createSelector(
+  maybeGetActiveMilkEntry,
+  (maybeMilkEntry) => {
+    // TODO: Re-evaluate this
+    if (!maybeMilkEntry) {
+      const empty: StoreMilkEntry = {
+        datetime: '',
+        toPersonUuid: '',
+        fromPersonUuid: '',
+        amountOfProduct: 0,
+        costPerUnit: 0,
+        currency: '',
+        quality: '',
+        status: 'clean',
+        lastModified: '',
+        uuid: '',
+      };
+      return empty;
+    }
+    return maybeMilkEntry;
+  },
+);
 
 /************Selectors for all milk entries (used on Home page) ***************/
 /**Selector to calculate the current days milk collection */
@@ -103,7 +136,7 @@ var myList = [
 
 var byLocation = myList.groupBy('location');
 
-***RESULT** 
+***RESULT**
   byLocation = {
     mall: [
       {time: '9:00',  location: 'mall'  },

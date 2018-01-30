@@ -1,11 +1,16 @@
 import * as React from 'react';
-import { Grid, Row, Col, Content, Button, Text } from 'native-base';
-import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
-
+import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
+
+import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../../../store/modules/nav/actions';
+import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
+
+
 import {
   getMonthlyFarmerMilkTotal,
   getWeeklyFarmerMilkTotal,
@@ -15,10 +20,10 @@ import {
 import styles from './style';
 
 interface OwnPropsType {
-  farmerName: string;
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
 }
 
 interface StorePropsType {
@@ -28,15 +33,60 @@ interface StorePropsType {
   collectTransactions: any[];
 }
 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+const fakeData = [
+  [
+    'Jan 1, 2017',
+    '5.2',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 2, 2017',
+    '5.6',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 3, 2017',
+    '4.8',
+    '-',
+    '13.2',
+  ],
+  [
+    'Jan 4, 2017',
+    '5.9',
+    '-',
+    '13.1',
+  ],
+  [
+    'Jan 5, 2017',
+    '3.2',
+    '-',
+    '13.2',
+  ],
+];
 
 interface OwnStateType {
 }
+
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** FarmerSearch PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
 
 /**
  * Collect Tab Component
  */
 class Collect extends React.Component<PropsType, OwnStateType> {
+
+  private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
+  private onEntryPress = (route: Route) => this.props.navigate(route);
+
+  /** React componentDidMount */
+  public componentDidMount() {
+    this.props.listenToFab(this.onAddPress);
+  }
+
   /**
    * Render method for Farmer
    */
@@ -55,29 +105,21 @@ class Collect extends React.Component<PropsType, OwnStateType> {
       units: 'L',
     },
     ];
+
     return (
       <Content style={styles.container}>
         <Grid style={styles.content}>
           <Row>
             <CardSummary
               data={testData}
-
             />
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Volume', 'quality', 'rate']}
-              values={this.props.collectTransactions}
+              headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
+              values={fakeData}
+              routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.onEntryPress }}
             />
-          </Row>
-          <Row style={styles.addEntryButton}>
-            <Col>
-              <Button block primary >
-                <Text>
-                  ADD ENTRY
-                </Text>
-              </Button>
-            </Col>
           </Row>
         </Grid>
       </Content>
@@ -85,7 +127,9 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const collectPage = new Composer<PropsType>(Collect).page;
+const CollectPage = new Composer<NestedPropsType>(Collect)
+.fab()
+.page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
@@ -98,10 +142,11 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(collectPage);
+)(CollectPage);

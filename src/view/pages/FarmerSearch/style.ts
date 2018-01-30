@@ -9,4 +9,13 @@ export default StyleSheet.create({
   content: {
     backgroundColor: 'white',
   },
+
+  name: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+
+  phone: {
+    fontSize: 14,
+  },
 });
