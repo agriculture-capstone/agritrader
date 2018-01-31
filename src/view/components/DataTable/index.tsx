@@ -2,6 +2,7 @@ import * as React from 'react';
 import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
 import styles from './style';
 import { Route } from '../../navigation/navigator';
+import * as moment from 'moment';
 
 
 interface OwnPropsType {
@@ -49,7 +50,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   private formatValues(values: any[]) {
     return values.map((value) => {
       return (
-        <Col key={value} style={{ justifyContent: 'center' }}>
+        <Col key={moment().format() + value} style={{ justifyContent: 'center' }}>
           <Text style={styles.values}>
             {value}
           </Text>
