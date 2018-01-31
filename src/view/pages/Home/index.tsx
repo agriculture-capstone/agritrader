@@ -55,8 +55,8 @@ class Home extends React.Component<PropsType, {}> {
             Welcome to the Beta Version of Agritrader!
           </Text>
           <Text style={styles.betaContents}>
-            This application is continuously being developed to provide users 
-            like you with rich features to ease your workflow. 
+            This application is continuously being developed to provide users
+            like you with rich features to ease your workflow.
           </Text>
           </Body>
           </CardItem>
