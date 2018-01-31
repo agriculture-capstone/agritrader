@@ -140,20 +140,16 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <Form>
         <Item floatingLabel>
-          <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
           <Label>Amount (L)</Label>
-          <Input />
+          <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
         <Item floatingLabel>
-          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
-
           <Label>Quality</Label>
-          <Input />
+          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'}/>
         </Item>
         <Item floatingLabel last>
-          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'} />
           <Label>Rate (UGX)</Label>
-          <Input />
+          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
         </Item>
       </Form>
     );
