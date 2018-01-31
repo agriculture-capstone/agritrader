@@ -4,6 +4,7 @@ let { width, height } = Dimensions.get('window');
 
 const width_mult = 0.9;
 
+/** This is the stylesheet for the Coming Soon overlay */
 export const style = StyleSheet.create({
   overlay: {
     width,
