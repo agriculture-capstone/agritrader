@@ -1,11 +1,11 @@
 import Config from 'react-native-config';
 import { Action as ActionBase } from 'redux';
+import * as R from 'ramda';
 
-import { CoreModule, getModulePath } from '../../utils/CoreModule';
+import { CoreModule, getModulePath, createThunks } from '../../utils/CoreModule';
 import store from '../../store';
 import { CoreModuleState, StoreRow, StoreSyncUpdateRow, CoreRow } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
-import * as R from 'ramda';
 
 /**
  * Promise representing the job taking place
@@ -13,16 +13,6 @@ import * as R from 'ramda';
 type Job = Promise<boolean>;
 
 type Jobs = Promise<boolean[]>;
-
-/*
-* A symbol is a primitive type that is guaranteed to be unique. That means
-* the only thing that will match this symbol is this exact symbol right here.
-* The only way to access the instance of SyncServiceInstance is using this symbol
-* defined here.
-*
-* This is useful to mock out the SyncService during tests
-*/
-const INSTANCE_ACCESSOR = Symbol('Accessor for instance of SyncService');
 
 /** Default number of seconds between automatic sync */
 const DEFAULT_FREQUENCY = 300;
@@ -99,21 +89,22 @@ async function createJob(module: CoreModule): Job {
   const moduleState = (store.getState() as any)[module] as CoreModuleState<{}>;
   const path = getModulePath(module);
   const api = new CoreAPI(path);
+  const thunks = createThunks(module);
 
-  // TODO: Go through store and update local data
+  // Go through store and update local data
   // TODO: Optimize
   const [cleanRows, dirtyRows] = R.partition(R.propEq('status', 'clean'), moduleState.rows);
 
-  // Aggregate requests to create rows
+  // Aggregate requests to create local rows
   const remoteCreates = dirtyRows
     .filter(r => r.status === 'local')
-    .map(async r => api.create(r))
+    .map(async r => store.dispatch(thunks.createRow(r)))
   ;
 
-  // Aggregate requests to update rows
+  // Aggregate requests to update local rows
   const remoteUpdates = dirtyRows
     .filter(r => r.status === 'modified')
-    .map(async r => api.update(r))
+    .map(async r => store.dispatch(thunks.updateRow(r)))
   ;
 
   // Aggregate all local requests to remote
@@ -122,6 +113,8 @@ async function createJob(module: CoreModule): Job {
     ...remoteUpdates,
   ]);
 
+  // Get ALL the rows on the core
+  // TODO: Change to conditional GET to only get updated/new farmers
   const remoteToLocalSync = api.getAll().then((remoteRows) => {
     // Get the rows that exist locally
     const exists = R.innerJoin(
@@ -155,70 +148,52 @@ async function createJob(module: CoreModule): Job {
   }
 }
 
-function createSyncService(): SyncServiceInstance {
-  let intervalId: number;
+// tslint:disable-next-line:no-var-keyword
+var intervalId: number;
 
-  // Use closure for private variables / methods
-  const _p = {
-    activeModuleJobs: {} as CurrentModuleJobs,
-  };
+const activeModuleJobs = {} as CurrentModuleJobs;
 
-  const instance: SyncServiceInstance = {
+const instance: SyncServiceInstance = Object.freeze({
 
-    // A get property will call a function when accessed and return the value
-    // Useful for abstracting away logic from the outside
-    get syncing() {
-      return !!Object.values(_p.activeModuleJobs).length;
-    },
+  // A get property will call a function when accessed and return the value
+  // Useful for abstracting away logic from the outside
+  get syncing() {
+    return !!Object.values(activeModuleJobs).length;
+  },
 
-    async syncAll(): Jobs {
-      // Reset the time for next automatic sync
-      clearInterval(intervalId);
-      intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
+  async syncAll(): Jobs {
+    // Reset the time for next automatic sync
+    clearInterval(intervalId);
+    intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
-      // Forcing the types to work because we know better than Typescript here (be careful)
-      const modulesPending = Object.values(CoreModule).map(async m => instance.syncModule(m as CoreModule));
+    // Forcing the types to work because we know better than Typescript here (be careful)
+    const modulesPending = Object.values(CoreModule).map(async m => instance.syncModule(m as CoreModule));
 
-      return Promise.all(modulesPending);
-    },
+    return Promise.all(modulesPending);
+  },
 
-    async syncModule(module: CoreModule) {
-      // Check if there is currently an active job for this module, return if so
-      const currentJob = _p.activeModuleJobs[module];
-      if (currentJob) {
-        return currentJob;
-      }
+  async syncModule(module: CoreModule) {
+    // Check if there is currently an active job for this module, return if so
+    const currentJob = activeModuleJobs[module];
+    if (currentJob) {
+      return currentJob;
+    }
 
-      const job = createJob(module);
+    const job = createJob(module);
 
-      // Add job to active module jobs
-      _p.activeModuleJobs[module] = job;
+    // Add job to active module jobs
+    activeModuleJobs[module] = job;
 
-      // When job finishes, remove from active module jobs
-      job.then(() => {
-        delete _p.activeModuleJobs[module];
-      });
+    // When job finishes, remove from active module jobs
+    job.then(() => {
+      delete activeModuleJobs[module];
+    });
 
-      return job;
-    },
-  };
+    return job;
+  },
+});
 
-  // Setup interval to sync all modules
-  intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
+// Setup interval to sync all modules
+intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
-  return Object.freeze(instance);
-}
-
-/**
- * Accessor for SyncService
- *
- * @returns Singleton instance of SyncService
- */
-export default function SyncService(): SyncServiceInstance {
-  // Have to force types because Typescript doesn't understand symbols
-  if (!(SyncService as any)[INSTANCE_ACCESSOR]) {
-    (SyncService as any)[INSTANCE_ACCESSOR] = createSyncService();
-  }
-
-  return (SyncService as any)[INSTANCE_ACCESSOR] as SyncServiceInstance;
-}
+export default instance;
