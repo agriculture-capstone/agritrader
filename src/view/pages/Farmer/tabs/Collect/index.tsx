@@ -33,8 +33,6 @@ interface StorePropsType {
   collectTransactions: any[];
 }
 
-const collectData = [{}];
-
 interface OwnStateType {
 }
 
@@ -86,7 +84,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           <Row>
             <DataTable
               headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
-              values={collectData}
+              values={this.props.collectTransactions}
               routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.onEntryPress }}
             />
           </Row>
