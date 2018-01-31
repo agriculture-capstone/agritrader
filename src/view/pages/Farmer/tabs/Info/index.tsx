@@ -1,143 +1,135 @@
 import * as React from 'react';
-
-import { H1, H2, H3, Input, Content, Grid, Row, Col, Label, Button, Text } from 'native-base';
+import { H1, Content, Grid, Row, Col, Button, Text, List, ListItem } from 'native-base';
 
 import Composer from '../../../../hoc/PageComposer';
+import { StoreRow, State } from '../../../../../store/types';
+import { Farmer } from '../../../../../store/modules/farmer/types';
+import { Route } from '../../../../navigation/navigator';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../../../store/modules/nav/actions';
 
-import styles from '../../styles';
+import styles from './style';
+import { getActiveFarmer } from '../../../../../store/modules/farmer/selectors';
 
-interface OwnStateType {
-  mode: PageMode;
-}
 
 interface OwnPropsType {
-  farmerFirstName: string;
-  farmerLastName: string;
-  farmerPhoneNumber: string;
-  farmerNotes: string;
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
 }
 
 interface StorePropsType {
+  farmer: StoreRow<Farmer>;
 }
 
 type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 
+interface OwnStateType {
+}
+
 /**
- * Modes to determine how to render farmer information
+ * Button color
  */
-type PageMode = 'view' | 'edit';
+type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Container for application
  */
 class Info extends React.Component<PropsType, OwnStateType> {
 
-  constructor(props: OwnPropsType) {
+  constructor(props: PropsType) {
     super(props);
-    this.state = {
-      mode: 'view',
-    };
   }
 
-  private changeToViewMode = () => this.changeMode('view');
+  /** Create edit button */
+  private renderEditButton = () => this.renderButton('Edit', 'PRIMARY');
 
-  private changeToEditMode = () => this.changeMode('edit');
+  /** Handle pressing edit button */
+  private onEditPress = () => this.props.navigate(Route.EDIT_FARMER);
 
-  private changeMode = (newMode: PageMode) => {
-    this.setState(state => ({ mode: newMode }));
+  /**
+   * Returns a button with text specified
+   */
+  private renderButton(text: string, color: ButtonColor) {
+    const isInfo = color === 'INFO';
+    const isPrimary = color === 'PRIMARY';
+
+    return (
+      <Col style={styles.button}>
+        <Button block info={isInfo} primary={isPrimary} onPress={this.onEditPress}>
+          <Text>{text}</Text>
+        </Button>
+      </Col>
+    );
+  }
+
+  private formatRow(label: string, value: string) {
+    return (
+      <Grid>
+        <Row>
+          <Col>
+            <Text>{label}</Text>
+          </Col>
+          <Col>
+            <Text>{value}</Text>
+          </Col>
+        </Row>
+      </Grid>
+    );
+  }
+
+  private renderDetailFields() {
+    return (
+      <List>
+        <ListItem>
+          {this.formatRow('Phone Number', this.props.farmer.phoneNumber)}
+        </ListItem>
+        <ListItem>
+          {this.formatRow('Notes', this.props.farmer.notes)}
+        </ListItem>
+      </List>
+    );
   }
 
   /**
    * Render method for Farmer Information
    */
   public render() {
-    if (this.state.mode === 'view') {
-      return (
-        <Content padder>
-          <Grid>
-            <Row style={styles.farmerName}>
-              <H1>{this.props.farmerFirstName} {this.props.farmerLastName}</H1>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Phone Number</Label>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <H2>{this.props.farmerPhoneNumber}</H2>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Notes</Label>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <H2>{this.props.farmerNotes}</H2>
-            </Row>
-            <Row style={styles.editButton}>
-              <Col>
-                <Button block danger onPress={this.changeToEditMode}>
-                  <Text style={styles.buttonText}>Edit</Text>
-                </Button>
-              </Col>
-            </Row>
-          </Grid>
-        </Content>
-      );
-    } else if (this.state.mode === 'edit') {
-      return (
-        <Content padder>
-          <Grid>
-            <Row style={styles.infoLabel}>
-              <Col>
-                <Label>First Name</Label>
-                </Col>
-                <Col>
-                <Label>Last Name</Label>
-              </Col>
-            </Row>
-            <Row style={styles.input}>
-              <Col>
-                <Input>
-                <H3>{this.props.farmerFirstName}</H3>
-                </Input>
-              </Col>
-              <Col>
-                <Input>
-                <H3>{this.props.farmerLastName}</H3>
-                </Input>
-              </Col>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Phone Number</Label>
-            </Row>
-            <Row style={styles.input}>
-              <Input>
-              <H3>{this.props.farmerPhoneNumber}</H3>
-              </Input>
-            </Row>
-            <Row style={styles.infoLabel}>
-              <Label>Notes</Label>
-            </Row>
-            <Row style={styles.input}>
-              <Input>
-                <H3>{this.props.farmerNotes}</H3>
-              </Input>
-            </Row>
-            <Row style={styles.farmerInfoButtonRow}>
-              <Col style={styles.farmerInfoButtonCol}>
-              <Button block success onPress={this.changeToViewMode}>
-                <Text style={styles.buttonText}>SAVE</Text>
-              </Button>
-              </Col>
-            </Row>
-          </Grid>
-        </Content>
-      );
-    } else {
-      throw new Error('Error: invalid mode ' + this.state.mode);
-    }
+    return(
+      <Content padder style={styles.content}>
+      <Grid>
+        <Row style={styles.headerRow}>
+          <H1>{this.props.farmer.firstName} {this.props.farmer.lastName}</H1>
+        </Row>
+        {this.renderDetailFields()}
+        <Row style={styles.buttonRow}>
+          {this.renderEditButton()}
+        </Row>
+      </Grid>
+    </Content>
+    );
   }
 }
 
-export default new Composer<PropsType>(Info)
-  .page;
+const FarmerInfoPage = new Composer<PropsType>(Info)
+.page;
+
+/************************* Redux ************************/
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    farmer: getActiveFarmer(state),
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FarmerInfoPage);

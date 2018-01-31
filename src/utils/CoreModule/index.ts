@@ -185,21 +185,22 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
             // tslint:disable-next-line:no-console
             console.log(response.status);
 
-            return;
+            return localUUID;
           } else if (isNetworkError(err)) {
             // Currently no network, let request fail and allow sync service to resolve
-            return;
+            return localUUID;
           } else {
             // Not a response error, should be logged
             // TODO: Log me
             // tslint:disable-next-line:no-console
             console.log(err.message || err);
-            return;
+            return localUUID;
           }
         }
 
         // Create updated model and update store
         dispatch(createRowRemote(localUUID, coreUUID, lastModified));
+        return coreUUID;
       }
     },
 
@@ -217,7 +218,7 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
       // Deal with no row found
       if (rowNotFound(updatedRow)) {
         // TODO: Deal with me
-        return;
+        return uuid;
       }
 
       // Send update to the core
@@ -235,21 +236,22 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
             const response = err;
             // tslint:disable-next-line:no-console
             console.log(response.status);
-            return;
+            return uuid;
           } else if (isNetworkError(err)) {
             // Currently no network, let request fail and allow sync service to resolve
-            return;
+            return uuid;
           } else {
             // Not a response error, should be logged
             // TODO: Log me
             // tslint:disable-next-line:no-console
             console.log(err.message || err);
-            return;
+            return uuid;
           }
         }
 
         // Create updated model and update store
         dispatch(updateRowRemote(uuid, lastModified));
+        return uuid;
       }
     },
   };
