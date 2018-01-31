@@ -7,14 +7,15 @@ import { Route } from '../../navigation/navigator';
 interface OwnPropsType {
   headers: string[];
   values: any[];
-  routed?: RoutedPropsType;
+  // routed?: RoutedPropsType;
+  onPress(uuid: string): void;
 }
 
 /** Interface for clickable list item support */
-interface RoutedPropsType {
-  route: Route;
-  onPress(route: Route): void;
-}
+// interface RoutedPropsType {
+//   route: Route;
+//   onPress(route: Route): void;
+// }
 
 interface DispatchPropsType {
 
@@ -38,11 +39,12 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     super(props);
     this.renderSectionHeader = this.renderSectionHeader.bind(this);
     this.renderRow = this.renderRow.bind(this);
+    this.onPress = this.onPress.bind(this);
   }
 
-  private onPress = () => {
-    if (this.props.routed !== undefined) {
-      this.props.routed.onPress(this.props.routed.route);
+  private onPress = (uuid: string) => {
+    if (uuid !== undefined) {
+      this.props.onPress(uuid);
     }
   }
 
@@ -60,7 +62,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }} button onPress={this.onPress}>
+      <ListItem style={{ justifyContent: 'center' }} button key={item.uuid} onPress={this.onPress(item.uuid)}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Grid, Row, Content, Card, List, ListItem, Col, Text } from 'native-base';
+import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
-// import DataTable from '../../../../components/DataTable';
+import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
 
 import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
@@ -57,7 +57,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   }
 
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
-  // private onEntryPress = (route: Route) => this.props.navigate(route);
+  private onEntryPress = (route: Route) => this.props.navigate(route);
   private createOnItemClicked(uuid: string) {
     return () => {
       this.props.setActiveMilkEntry(uuid);
@@ -68,38 +68,6 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   /** React componentDidMount */
   public componentDidMount() {
     this.props.listenToFab(this.onAddPress);
-  }
-
-  private formatValues(values: any[]) {
-    return values.map((value) => {
-      return (
-        <Col key={value} style={{ justifyContent: 'center' }}>
-          <Text style={styles.values}>
-            {value}
-          </Text>
-        </Col>
-      );
-    });
-  }
-  
-  private renderRow(item: any) {
-    return (
-      <ListItem style={{ justifyContent: 'center' }} button key={item.uuid} onPress={this.createOnItemClicked(item.uuid)}>
-        <Grid style={{ justifyContent: 'center' }}>
-          {this.formatValues(Object.values(item))}
-        </Grid>
-      </ListItem>
-    );
-  }
-
-  private renderSectionHeader() {
-    return (
-      <ListItem itemHeader first>
-        <Grid>
-          {this.formatValues(['Date', 'Volume (L)', 'Quality', 'Rate (UGX)'])}
-        </Grid>
-      </ListItem>
-    );
   }
 
   /**
@@ -130,18 +98,11 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
           <Row>
-            {/* <DataTable
+            <DataTable
               headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
               values={this.props.collectTransactions}
-              routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.createOnItemClicked }}
-            /> */}
-            <Card>
-              <List
-                dataArray={this.props.collectTransactions}
-                renderRow={this.renderRow}
-                renderSectionHeader={this.renderSectionHeader}
-              />
-            </Card>
+              onPress={this.createOnItemClicked}
+            />
           </Row>
         </Grid>
       </Content>
