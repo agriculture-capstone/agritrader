@@ -20,7 +20,7 @@ const activeRowReducer: Reducer<ActiveRowsState> = (state = initialState, action
     case 'UPDATE_CURRENT_TRADER': {
       return {
         ...state,
-        activeFarmerUUID : action.currentTraderUUID,
+        activeTraderUUID : action.currentTraderUUID,
       };
     }
     case 'CLEAR_CURRENT_TRADER': {
