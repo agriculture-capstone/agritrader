@@ -8,7 +8,6 @@ const activeRowsActions = {
   clearActiveFarmer: (): Action => ({
     type: 'CLEAR_CURRENT_FARMER',
   }),
-
   setActiveTrader: (currentTraderUUID: string): Action => ({
     currentTraderUUID,
     type: 'UPDATE_CURRENT_TRADER',
