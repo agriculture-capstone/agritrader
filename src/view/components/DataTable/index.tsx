@@ -13,7 +13,7 @@ interface OwnPropsType {
 /** Interface for clickable list item support */
 interface RoutedPropsType {
   route: Route;
-  onPress(uuid: string): void;
+  onPress(route: Route): void;
 }
 
 interface DispatchPropsType {
@@ -40,12 +40,10 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.renderRow = this.renderRow.bind(this);
   }
 
-  private onPress(uuid: string) {
-    return () => {
-      if (this.props.routed !== undefined && uuid !== undefined) {
-        this.props.routed.onPress(uuid);
-      }
-    };
+  private onPress = () => {
+    if (this.props.routed !== undefined) {
+      this.props.routed.onPress(this.props.routed.route);
+    }
   }
 
   private formatValues(values: any[]) {
@@ -62,19 +60,12 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem key={item.uuid} style={{ justifyContent: 'center' }} button onPress={this.onPress(item.uuid)}>
+      <ListItem style={{ justifyContent: 'center' }} button onPress={this.onPress}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>
       </ListItem>
     );
-    // return (
-    //   <ListItem style={{ justifyContent: 'center' }} button onPress={this.onPress}>
-    //     <Grid style={{ justifyContent: 'center' }}>
-    //       {this.formatValues(Object.values(item))}
-    //     </Grid>
-    //   </ListItem>
-    // );
   }
 
   private renderSectionHeader() {
