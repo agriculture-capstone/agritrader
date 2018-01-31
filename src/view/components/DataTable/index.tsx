@@ -8,7 +8,7 @@ import * as moment from 'moment';
 interface OwnPropsType {
   headers: string[];
   values: any[];
-  onPress(uuid: string): void;
+  onPress?(uuid: string): void;
 }
 
 interface DispatchPropsType {
@@ -38,7 +38,9 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
 
   private onPress(uuid: string) {
     return () => {
-      this.props.onPress(uuid);
+      if (this.props.onPress !== undefined) {
+        this.props.onPress(uuid);
+      }
     };
   }
 

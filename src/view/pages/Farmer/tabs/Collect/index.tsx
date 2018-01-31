@@ -59,10 +59,8 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
   // private onEntryPress = (route: Route) => this.props.navigate(route);
   private createOnItemClicked(uuid: string) {
-    return () => {
-      this.props.setActiveMilkEntry(uuid);
-      this.props.navigateToMilkEntry();
-    };
+    this.props.setActiveMilkEntry(uuid);
+    this.props.navigateToMilkEntry();
   }
 
   /** React componentDidMount */
