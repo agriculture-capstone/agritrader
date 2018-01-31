@@ -8,6 +8,13 @@ const activeRowsActions = {
   clearActiveFarmer: (): Action => ({
     type: 'CLEAR_CURRENT_FARMER',
   }),
+  setActiveMilkEntry: (currentMilkEntryUUID: string): Action => ({
+    currentMilkEntryUUID,
+    type: 'UPDATE_CURRENT_MILK_ENTRY',
+  }),
+  clearActiveMilkEntry: (): Action => ({
+    type: 'CLEAR_CURRENT_MILK_ENTRY',
+  }),
 };
 
 export default activeRowsActions;
