@@ -92,7 +92,7 @@ export type StoreLocalCreationRow<T> = T & LastModifiedData & UUIDData;
  */
 export type StoreLocalUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
-export type StoreSyncUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
+export type CoreSyncUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
 /**
  * Data model for sending creation request to core

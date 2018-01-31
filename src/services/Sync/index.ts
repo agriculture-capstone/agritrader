@@ -1,10 +1,9 @@
 import Config from 'react-native-config';
-import { Action as ActionBase } from 'redux';
 import * as R from 'ramda';
 
-import { CoreModule, getModulePath, createThunks } from '../../utils/CoreModule';
+import { CoreModule, getModulePath, createThunks, createSyncActions } from '../../utils/CoreModule';
 import store from '../../store';
-import { CoreModuleState, StoreRow, StoreSyncUpdateRow, CoreRow } from '../../store/types';
+import { CoreModuleState } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
 
 /**
@@ -48,31 +47,6 @@ export interface SyncServiceInstance {
 
 interface CurrentModuleJobs {
   [key: string]: Job | undefined;
-}
-
-type SyncCreatePayload<Row> = { row: StoreRow<Row> };
-type SyncUpdatePayload<Row> = { row: StoreSyncUpdateRow<Row> };
-type EmptyPayload = {};
-
-
-type SyncActionPayload<Row>
-  = SyncCreatePayload<Row>
-  | SyncUpdatePayload<Row>
-  | EmptyPayload
-  ;
-
-export type SyncAction<Row> = SyncActionPayload<Row> & ActionBase;
-
-function createSyncActions<Row>(module: CoreModule) {
-  const UPPER_NAME = module.toUpperCase();
-
-  return {
-    syncCreateRow: (row: CoreRow<Row>): SyncAction<Row> =>
-      ({ row, type: `SYNC_CREATE_${UPPER_NAME}` }),
-
-    syncUpdateRow: (row: StoreSyncUpdateRow<Row>) =>
-      ({ row, type: `SYNC_UPDATE_${UPPER_NAME}` }),
-  };
 }
 
 /**
