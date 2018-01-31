@@ -64,10 +64,6 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
       costPerUnit: 0,
     };
   }
-  private onChangeAmount = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix) }));
-  private onChangeQuality = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onChangeRate = (newRate: string) => this.setState(state => ({ costPerUnit : parseInt(newRate, radix) }));
-
   /** Get current datetime in specified format */
   private getDatetime = (format: string) => moment().format(format);
 
@@ -76,12 +72,10 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderSaveButton = () => this.renderButton('Save', 'PRIMARY', this.onSavePress);
 
   /** Handle pressing cancel button */
-  //private onCancelPress = () => this.props.goBack();
-  private onCancelPress = () => console.log(this.state.amountOfProduct);
-
+  private onCancelPress = () => this.props.goBack();
 
   /** Handle pressing save button */
-  private onSavePress = () => {
+  private onSavePress = async () => {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
 
@@ -97,6 +91,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     this.props.createMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
+  private onChangeAmount = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix) }));
+  private onChangeQuality = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
+  private onChangeRate = (newRate: string) => this.setState(state => ({ costPerUnit : parseInt(newRate, radix) }));
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -145,7 +142,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
         </Item>
         <Item floatingLabel>
           <Label>Quality</Label>
-          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'}/>
+          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
         </Item>
         <Item floatingLabel last>
           <Label>Rate (UGX)</Label>
@@ -185,7 +182,6 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
     farmer: getActiveFarmer(state),
     activeTrader: state.activeRows.activeTraderUUID,
     activeFarmer: state.activeRows.activeFarmerUUID,
-
   };
 };
 
