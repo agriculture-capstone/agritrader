@@ -1,6 +1,7 @@
 /*----------------------- State -----------------------*/
 /** currentFarmer & currentMilkEntryState*/
 export interface ActiveRowsState {
+  activeTraderUUID: string;
   activeFarmerUUID: string;
   activeMilkEntryUUID: string;
 }
@@ -17,6 +18,11 @@ export type Action = {
   currentMilkEntryUUID: string,
 } | {
   type: 'CLEAR_CURRENT_MILK_ENTRY',
+} | {
+  type: 'UPDATE_CURRENT_TRADER',
+  currentTraderUUID: string,
+} | {
+  type: 'CLEAR_CURRENT_TRADER',
 } | {
   type: 'DO_NOT_USE',
 };
