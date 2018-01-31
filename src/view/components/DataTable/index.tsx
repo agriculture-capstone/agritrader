@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
 import styles from './style';
-import { Route } from '../../navigation/navigator';
 
 
 interface OwnPropsType {
@@ -10,12 +9,6 @@ interface OwnPropsType {
   // routed?: RoutedPropsType;
   onPress(uuid: string): void;
 }
-
-/** Interface for clickable list item support */
-// interface RoutedPropsType {
-//   route: Route;
-//   onPress(route: Route): void;
-// }
 
 interface DispatchPropsType {
 
@@ -42,10 +35,10 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.onPress = this.onPress.bind(this);
   }
 
-  private onPress = (uuid: string) => {
-    if (uuid !== undefined) {
+  private onPress(uuid: string) {
+    return () => {
       this.props.onPress(uuid);
-    }
+    };
   }
 
   private formatValues(values: any[]) {
