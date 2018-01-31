@@ -21,7 +21,7 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  createMilkEntry(newEntry: MilkEntry): void;
+  createMilkEntry(newEntry: MilkEntry): Promise<string>;
 }
 
 interface StorePropsType {
