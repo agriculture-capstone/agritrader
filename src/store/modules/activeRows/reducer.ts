@@ -17,6 +17,18 @@ const activeRowReducer: Reducer<ActiveRowsState> = (state = initialState, action
         activeFarmerUUID : '',
       };
     }
+    case 'UPDATE_CURRENT_MILK_ENTRY': {
+      return {
+        ...state,
+        activeMilkEntryUUID : action.currentMilkEntryUUID,
+      };
+    }
+    case 'CLEAR_CURRENT_MILK_ENTRY': {
+      return {
+        ...state,
+        activeMilkEntryUUID : '',
+      };
+    }
     case 'UPDATE_CURRENT_TRADER': {
       return {
         ...state,
