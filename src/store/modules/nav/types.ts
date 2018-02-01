@@ -13,4 +13,7 @@ export type NavState = NavigationState;
 export type Action = NavigationAction | RootAction | {
   type: 'NAV/GO_TO_WITHOUT_HISTORY',
   route: Route,
+} | {
+  type: 'NAV/GO_TO_DRAWER_ROUTE',
+  route: Route,
 };

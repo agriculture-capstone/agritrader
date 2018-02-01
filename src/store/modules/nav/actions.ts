@@ -15,6 +15,11 @@ const navActions = {
     route,
     type: 'NAV/GO_TO_WITHOUT_HISTORY',
   }),
+
+  navigateToDrawerRoute: (route: Route): Action => ({
+    route,
+    type: 'NAV/GO_TO_DRAWER_ROUTE',
+  }),
 };
 
 
