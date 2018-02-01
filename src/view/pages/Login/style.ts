@@ -6,7 +6,7 @@ export default StyleSheet.create({
   container: {
     backgroundColor: MATERIAL_COLORS.primary.normal,
     flex: 1, 
-    padding: 30,
+    padding: 20,
   },
   centerContent: {
     justifyContent: 'center',
@@ -22,7 +22,8 @@ export default StyleSheet.create({
   loginButton: {
   },
   buttonRow: {
-    marginTop: 40,
+    marginTop: 30,
+    marginBottom: 20,
     padding: 10,
   },
   labelText: {
