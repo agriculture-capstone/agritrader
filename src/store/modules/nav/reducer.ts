@@ -6,11 +6,6 @@ import initialState from './state';
 import Navigator, { Route } from '../../../view/navigation/navigator';
 import { NavigationActions, NavigationState } from 'react-navigation';
 
-interface RouteIndex {
-  routeName: string;
-  key: string;
-}
-
 const navReducer: Reducer<NavState> = (state = initialState, action: Action) => {
   switch (action.type) {
 
@@ -47,9 +42,10 @@ const navReducer: Reducer<NavState> = (state = initialState, action: Action) => 
     case 'NAV/GO_TO_DRAWER_ROUTE': {
       let navigateAction = NavigationActions.navigate({ routeName: action.route });
       let nextState = Navigator.router.getStateForAction(navigateAction, state) as NavigationState;
-      let routes = [R.head(nextState.routes), R.last(nextState.routes)];
-
-      let index = 1;
+      let firstRoute = R.head(nextState.routes);
+      let lastRoute = R.last(nextState.routes);
+      let routes = (firstRoute.routeName === lastRoute.routeName) ? [firstRoute] : [firstRoute, lastRoute];
+      let index = routes.length - 1;
 
       return { routes, index };
     }
