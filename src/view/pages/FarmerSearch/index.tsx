@@ -124,7 +124,7 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
             {`${farmer.firstName} ${farmer.lastName}`}
           </Text>
           <Text style={style.phone}>
-            {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
+            {`${farmer.phoneNumber}`}
           </Text>
         </View>
       </ListItem>
