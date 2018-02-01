@@ -99,7 +99,6 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Volume', 'Quality', 'Rate']}
               values={this.props.collectTransactions}
-              onPress={this.createOnItemClicked}
             />
           </Row>
         </Grid>
