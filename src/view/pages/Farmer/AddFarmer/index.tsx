@@ -1,8 +1,6 @@
 import * as React from 'react';
-
-import { Content, Grid, Row, Col, Form, Item, Input, Label, Button } from 'native-base';
-import { Text } from 'react-native';
-
+import { Keyboard } from 'react-native';
+import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Text } from 'native-base';
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import activeRowsActions from '../../../../store/modules/activeRows/actions';
@@ -73,13 +71,15 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       middleName: '',
       lastName: this.state.lastName,
       phoneNumber: this.state.phoneNumber,
-      phoneArea: '403',
-      phoneCountry: '1',
+      phoneArea: '',
+      phoneCountry: '',
       notes: this.state.notes,
     };
     const uuid = await this.props.createFarmer(newFarmer);
     this.props.setActiveFarmer(uuid);
     this.props.navigate(Route.FARMER);
+    // Dismiss the keyboard manually here
+    Keyboard.dismiss();
   }
 
 
@@ -91,7 +91,6 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private onChangePhoneNumber = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
   private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
-  
   /**
    * Returns a button with text specified
    */
@@ -113,11 +112,11 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       <Form>
       <Item floatingLabel>
         <Label>First Name</Label>
-        <Input onChangeText={this.onChangeFirstName} />
+        <Input autoCapitalize="words" onChangeText={this.onChangeFirstName} />
       </Item>
       <Item floatingLabel>
         <Label>Last Name</Label>
-        <Input onChangeText={this.onChangeLastName} />
+        <Input autoCapitalize="words" onChangeText={this.onChangeLastName} />
       </Item>
       <Item floatingLabel last>
         <Label>Phone Number</Label>
@@ -125,7 +124,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       </Item>
       <Item floatingLabel last>
         <Label>Notes</Label>
-        <Input onChangeText={this.onChangeNotes} />
+        <Input autoCapitalize="words" onChangeText={this.onChangeNotes} />
       </Item>
     </Form>
     );

@@ -52,7 +52,7 @@ export const getAvgDaysMilkTotal = createSelector(
   [getMilkEntries],
   (milkEntries: MilkEntry[]) => {
     return calculateAverage(groupBy(milkEntries.map(entry =>
-      ({ ...(entry as any), dateID: moment(entry.datetime).utc().format() })), 'dateID'));
+      ({ ...(entry as any), dateID: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').utc().format() })), 'dateID'));
   },
 );
 
@@ -73,8 +73,8 @@ export const getFarmersTransactions = createSelector(
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.map(entry =>
-    ({datetime: moment(entry.datetime).format('MM-DD[\n]kk:mm'),
-      amountOfProduct: entry.amountOfProduct, quality: entry.quality, costPerUnit: entry.costPerUnit, 
+    ({datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MM-DD[\n]kk:mm'),
+      amountOfProduct: entry.amountOfProduct, costPerUnit: entry.costPerUnit, 
     }),
   ),
 );
@@ -102,15 +102,15 @@ export const getMonthlyFarmerMilkTotal = createSelector(
 
 
 function inSameDay(date: string) {
-  return moment(date).local().isSame(moment().local(), 'day') ? true : false;
+  return moment(date, 'ddd MMM DD Y kk:mm:ss ZZ').local().isSame(moment().local(), 'day') ? true : false;
 }
 
 function inLastWeek(date: string) {
-  return moment(date).local().isSame(moment().local(), 'week') ? true : false;
+  return moment(date, 'ddd MMM DD Y kk:mm:ss ZZ').local().isSame(moment().local(), 'week') ? true : false;
 }
 
 function inSameMonth(date: string) {
-  return moment(date).local().isSame(moment().local(), 'month') ? true : false;
+  return moment(date, 'ddd MMM DD Y kk:mm:ss ZZ').local().isSame(moment().local(), 'month') ? true : false;
 }
 
 let averages: number[] = [];
