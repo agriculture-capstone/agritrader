@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { Content, Grid, Row, Col, Form, Item, Input, Label, Button } from 'native-base';
-import { Text } from 'react-native';
+import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Text } from 'native-base';
 
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
@@ -113,11 +112,11 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       <Form>
       <Item floatingLabel>
         <Label>First Name</Label>
-        <Input onChangeText={this.onChangeFirstName} />
+        <Input autoCapitalize="words" onChangeText={this.onChangeFirstName} />
       </Item>
       <Item floatingLabel>
         <Label>Last Name</Label>
-        <Input onChangeText={this.onChangeLastName} />
+        <Input autoCapitalize="words" onChangeText={this.onChangeLastName} />
       </Item>
       <Item floatingLabel last>
         <Label>Phone Number</Label>
@@ -125,7 +124,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       </Item>
       <Item floatingLabel last>
         <Label>Notes</Label>
-        <Input onChangeText={this.onChangeNotes} />
+        <Input autoCapitalize="words" onChangeText={this.onChangeNotes} />
       </Item>
     </Form>
     );
