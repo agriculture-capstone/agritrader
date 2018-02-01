@@ -71,8 +71,8 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       middleName: '',
       lastName: this.state.lastName,
       phoneNumber: this.state.phoneNumber,
-      phoneArea: '403',
-      phoneCountry: '1',
+      phoneArea: '',
+      phoneCountry: '',
       notes: this.state.notes,
     };
     const uuid = await this.props.createFarmer(newFarmer);
