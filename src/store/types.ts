@@ -25,12 +25,14 @@ export interface State {
   milk: MilkState;
 }
 
+/** Root actions for application */
 export type RootAction = {
   type: 'LOGOUT',
 } | {
   type: 'LOGIN',
 };
 
+/** Combine module specific actions with RootAction */
 export type ModuleAction<T> = T | RootAction;
 
 /** Global redux action */
