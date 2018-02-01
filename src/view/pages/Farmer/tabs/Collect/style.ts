@@ -15,4 +15,8 @@ export default StyleSheet.create({
   content: {
     margin: 10, 
   },
+  values: {
+    color: COLORS.icons,
+    textAlign: 'center',
+  },
 });
