@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Export from './tabs/Export';
+import Composer from '../../hoc/PageComposer';
 
 const demoExportValues = [
   { date: 'Jan 18 17:31', plate:'BRI8932', vol: 10 }, 
@@ -11,7 +12,7 @@ const demoExportValues = [
 /**
  * Container for Farmer
  */
-export default class Farmer extends React.Component<{}, {}> {
+export class Farmer extends React.Component<{}, {}> {
 
   /**
    * Render method for Farmer
@@ -28,3 +29,7 @@ export default class Farmer extends React.Component<{}, {}> {
     );
   }
 }
+
+export default new Composer<{}>(Farmer)
+  .comingSoon()
+  .page;

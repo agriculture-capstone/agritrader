@@ -3,6 +3,7 @@ import * as React from 'react';
 import createPage from './Page';
 import createSearchPage from './SearchPage/index';
 import createFabPage, { FabType } from './FabPage/index';
+import createComingSoonOverlay from './ComingSoon/index';
 
 /**
  * Class to compose different Higher Order Components on a page
@@ -20,6 +21,15 @@ export default class Composer<T> {
 
   public constructor(component: React.ComponentType<any>) {
     this.component = component;
+  }
+
+  /**
+   * Compose with a Coming Soon wrapper
+   *
+   * See createComingSoonOverlay for API
+   */
+  public comingSoon() {
+    return new Composer<T>(createComingSoonOverlay(this.component));
   }
 
   /**

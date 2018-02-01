@@ -126,7 +126,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
           {this.formatRow('Quality', this.props.milkEntry.quality)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Rate (UGX)', this.props.milkEntry.costPerUnit)}
+          {this.formatRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit)}
         </ListItem>
       </List>
     );
