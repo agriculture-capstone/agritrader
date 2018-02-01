@@ -97,7 +97,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           <Row>
             <DataTable
               headers={['Date', 'Volume', 'Rate']}
-              values={dateSort.sortAscending(this.props.collectTransactions)}
+              values={dateSort.sortDescending(this.props.collectTransactions)}
             />
           </Row>
         </Grid>
