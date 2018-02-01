@@ -18,7 +18,7 @@ interface OwnPropsType {
 }
 
 interface DispatchPropsType {
-  navigate(route: Route): void;
+  navigateToFarmer(): void;
   goBack(): void;
   updateFarmer(newFarmer: ThunkUpdateRow<Farmer>): void;
 }
@@ -80,7 +80,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
       notes: this.state.notes,
     };
     this.props.updateFarmer(newFarmer);
-    this.props.navigate(Route.FARMER);
+    this.props.navigateToFarmer();
   }
 
   /**
@@ -166,7 +166,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    navigateToFarmer: () => dispatch(navActions.navigateToWithoutHistory(Route.FARMER)),
     goBack: () => dispatch(navActions.goBack()),
     updateFarmer: async (newFarmer: ThunkUpdateRow<Farmer>) => dispatch(farmerThunks.updateFarmer(newFarmer)),
   };
