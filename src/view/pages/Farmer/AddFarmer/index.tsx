@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { Content, Grid, Row, Col, Form, Item, Input, Label, Button } from 'native-base';
-import { Text } from 'react-native';
+import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Text } from 'native-base';
 
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
