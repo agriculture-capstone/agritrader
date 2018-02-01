@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
 import styles from './style';
-// import { Route } from '../../navigation/navigator';
-import * as moment from 'moment';
+import { Route } from '../../navigation/navigator';
 
 
 interface OwnPropsType {
   headers: string[];
   values: any[];
-  onPress?(uuid: string): void;
+  routed?: RoutedPropsType;
+}
+
+/** Interface for clickable list item support */
+interface RoutedPropsType {
+  route: Route;
+  onPress(route: Route): void;
 }
 
 interface DispatchPropsType {
@@ -33,21 +38,18 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     super(props);
     this.renderSectionHeader = this.renderSectionHeader.bind(this);
     this.renderRow = this.renderRow.bind(this);
-    this.onPress = this.onPress.bind(this);
   }
 
-  private onPress(uuid: string) {
-    return () => {
-      if (this.props.onPress !== undefined) {
-        this.props.onPress(uuid);
-      }
-    };
+  private onPress = () => {
+    if (this.props.routed !== undefined) {
+      this.props.routed.onPress(this.props.routed.route);
+    }
   }
 
   private formatValues(values: any[]) {
     return values.map((value) => {
       return (
-        <Col key={moment().format() + value} style={{ justifyContent: 'center' }}>
+        <Col key={value} style={{ justifyContent: 'center' }}>
           <Text style={styles.values}>
             {value}
           </Text>
@@ -58,7 +60,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }} button key={item.uuid} onPress={this.onPress(item.uuid)}>
+      <ListItem style={{ justifyContent: 'center' }} button onPress={this.onPress}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>
