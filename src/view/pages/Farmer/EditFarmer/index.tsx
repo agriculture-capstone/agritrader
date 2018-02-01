@@ -107,8 +107,8 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any, numeric: boolean) {
-    if (numeric) {
+  private formatEditRow(label: string, value: number | string, onChangeText: any, isNumeric: boolean) {
+    if (isNumeric) {
       return (
         <Grid>
           <Row>
