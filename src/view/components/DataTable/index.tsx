@@ -60,7 +60,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }} button onPress={this.onPress}>
+      <ListItem style={{ justifyContent: 'center' }} button={false} onPress={this.onPress}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>
