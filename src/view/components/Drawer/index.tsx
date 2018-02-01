@@ -68,8 +68,8 @@ class Drawer extends React.Component<PropsType, OwnState> {
   private createDrawerContents() {
     return (
       <DrawerContents
-        name={'Joe Trader'}
-        username={'joe@qualitymilk.ca'}
+        name={'Quality Milk'}
+        username={''}
         onPress={this.onPress}
         onLogout={this.onLogout}
       />

@@ -74,7 +74,7 @@ export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.map(entry =>
     ({datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MM-DD[\n]kk:mm'),
-      amountOfProduct: entry.amountOfProduct, quality: entry.quality, costPerUnit: entry.costPerUnit, 
+      amountOfProduct: entry.amountOfProduct, costPerUnit: entry.costPerUnit, 
     }),
   ),
 );
