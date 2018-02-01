@@ -1,9 +1,6 @@
 import * as React from 'react';
-
 import { Keyboard } from 'react-native';
-
 import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Text } from 'native-base';
-
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import activeRowsActions from '../../../../store/modules/activeRows/actions';
