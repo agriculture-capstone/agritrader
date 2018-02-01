@@ -21,11 +21,13 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  createMilkEntry(newEntry: MilkEntry): void;
+  createMilkEntry(newEntry: MilkEntry): Promise<string>;
 }
 
 interface StorePropsType {
   farmer: Farmer;
+  activeTrader: any;
+  activeFarmer: any;
 }
 
 /** AddEntry PropsType */
@@ -42,6 +44,7 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
+let radix: number = 10;
 /**
  * AddEntry page
  * @example 
@@ -60,7 +63,6 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
       costPerUnit: 0,
     };
   }
-
   /** Get current datetime in specified format */
   private getDatetime = (format: string) => moment().format(format);
 
@@ -70,7 +72,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
-  
+
   /** Handle pressing save button */
   private onSavePress = () => {
     // @TODO change time format to match core
@@ -78,8 +80,8 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
     let newEntry: MilkEntry = {
       datetime: timeNow,
-      toPersonUuid: 'fakeToPersonUuid',
-      fromPersonUuid: 'fakeFromPersonUuid',
+      toPersonUuid: this.props.activeTrader,
+      fromPersonUuid: this.props.activeFarmer,
       amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
       currency: 'UGX',
@@ -88,6 +90,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     this.props.createMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
+  private onChangeAmount = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix) }));
+  private onChangeQuality = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
+  private onChangeRate = (newRate: string) => this.setState(state => ({ costPerUnit : parseInt(newRate, radix) }));
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -130,19 +135,19 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderFields() {
     return (
       <Form>
-      <Item floatingLabel>
-        <Label>Amount (L)</Label>
-        <Input />
-      </Item>
-      <Item floatingLabel>
-        <Label>Quality</Label>
-        <Input />
-      </Item>
-      <Item floatingLabel last>
-        <Label>Rate (UGX)</Label>
-        <Input />
-      </Item>
-    </Form>
+        <Item floatingLabel>
+          <Label>Amount (L)</Label>
+          <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
+        </Item>
+        <Item floatingLabel>
+          <Label>Quality</Label>
+          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
+        </Item>
+        <Item floatingLabel last>
+          <Label>Rate (UGX)</Label>
+          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
+        </Item>
+      </Form>
     );
   }
 
@@ -150,7 +155,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
    * Render method for AddEntry
    */
   public render() {
-    return(
+    return (
       <Content padder style={Styles.content}>
         <List>
           <ListItem>
@@ -174,6 +179,8 @@ const AddEntryPage = new Composer<PropsType>(AddEntry).page;
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     farmer: getActiveFarmer(state),
+    activeTrader: state.activeRows.activeTraderUUID,
+    activeFarmer: state.activeRows.activeFarmerUUID,
   };
 };
 

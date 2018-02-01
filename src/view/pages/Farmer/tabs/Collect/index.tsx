@@ -6,6 +6,7 @@ import Composer from '../../../../hoc/PageComposer';
 
 import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import activeRowsActions from '../../../../../store/modules/activeRows/actions';
 import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
@@ -24,6 +25,8 @@ interface OwnPropsType {
 
 interface DispatchPropsType {
   navigate(route: Route): void;
+  setActiveMilkEntry(uuid: string): void;
+  navigateToMilkEntry(): void;
 }
 
 interface StorePropsType {
@@ -32,8 +35,6 @@ interface StorePropsType {
   dailyTotal: any;
   collectTransactions: any[];
 }
-
-const collectData = [{}];
 
 interface OwnStateType {
 }
@@ -48,8 +49,19 @@ type PropsType = InjectedFabProps & NestedPropsType;
  */
 class Collect extends React.Component<PropsType, OwnStateType> {
 
+  public constructor(constructorProps: PropsType) {
+    super(constructorProps);
+
+    // Bindings
+    this.createOnItemClicked = this.createOnItemClicked.bind(this);
+  }
+
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
-  private onEntryPress = (route: Route) => this.props.navigate(route);
+  // private onEntryPress = (route: Route) => this.props.navigate(route);
+  private createOnItemClicked(uuid: string) {
+    this.props.setActiveMilkEntry(uuid);
+    this.props.navigateToMilkEntry();
+  }
 
   /** React componentDidMount */
   public componentDidMount() {
@@ -85,9 +97,8 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Volume (L)', 'Quality', 'Rate (UGX)']}
-              values={collectData}
-              routed={{ route:Route.MILK_ENTRY_DETAILS, onPress:this.onEntryPress }}
+              headers={['Date', 'Volume', 'Quality', 'Rate']}
+              values={this.props.collectTransactions}
             />
           </Row>
         </Grid>
@@ -112,6 +123,8 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    setActiveMilkEntry: (uuid: string) => dispatch(activeRowsActions.setActiveMilkEntry(uuid)),
+    navigateToMilkEntry: () => dispatch(navActions.navigateTo(Route.MILK_ENTRY_DETAILS)),
   };
 };
 
