@@ -10,6 +10,7 @@ import activeRowsActions from '../../../../../store/modules/activeRows/actions';
 import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
+import { dateSort } from '../../../../../utils/DateSort';
 
 
 import {
@@ -98,7 +99,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           <Row>
             <DataTable
               headers={['Date', 'Volume', 'Quality', 'Rate']}
-              values={this.props.collectTransactions}
+              values={dateSort.sortDescending(this.props.collectTransactions)}
             />
           </Row>
         </Grid>
