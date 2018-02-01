@@ -1,7 +1,6 @@
 import * as React from 'react';
-
+import { Keyboard } from 'react-native';
 import { Content, Grid, Row, Col, Form, Item, Input, Label, Button, Text } from 'native-base';
-
 import { MapDispatchToProps, MapStateToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import activeRowsActions from '../../../../store/modules/activeRows/actions';
@@ -79,6 +78,8 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     const uuid = await this.props.createFarmer(newFarmer);
     this.props.setActiveFarmer(uuid);
     this.props.navigate(Route.FARMER);
+    // Dismiss the keyboard manually here
+    Keyboard.dismiss();
   }
 
 
@@ -90,7 +91,6 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private onChangePhoneNumber = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
   private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
-  
   /**
    * Returns a button with text specified
    */
