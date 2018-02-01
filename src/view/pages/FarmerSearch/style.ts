@@ -13,9 +13,11 @@ export default StyleSheet.create({
   name: {
     fontWeight: 'bold',
     fontSize: 18,
+    alignSelf: 'flex-start',
   },
 
   phone: {
     fontSize: 14,
+    alignSelf: 'flex-start',
   },
 });
