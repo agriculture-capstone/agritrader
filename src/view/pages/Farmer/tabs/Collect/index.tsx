@@ -11,8 +11,6 @@ import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort';
-
-
 import {
   getMonthlyFarmerMilkTotal,
   getWeeklyFarmerMilkTotal,
@@ -99,7 +97,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           <Row>
             <DataTable
               headers={['Date', 'Volume', 'Rate']}
-              values={dateSort.sortDescending(this.props.collectTransactions)}
+              values={dateSort.sortAscending(this.props.collectTransactions)}
             />
           </Row>
         </Grid>
