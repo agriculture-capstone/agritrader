@@ -28,7 +28,6 @@ interface StorePropsType {
   farmer: Farmer;
   activeTrader: any;
   activeFarmer: any;
-
 }
 
 /** AddEntry PropsType */
@@ -75,7 +74,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private onCancelPress = () => this.props.goBack();
 
   /** Handle pressing save button */
-  private onSavePress = async () => {
+  private onSavePress = () => {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
 
