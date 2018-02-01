@@ -107,7 +107,25 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any) {
+  private formatEditRow(label: string, value: number | string, onChangeText: any, numeric: boolean) {
+    if (numeric) {
+      return (
+        <Grid>
+          <Row>
+            <Col>
+              <Text>{label}</Text>
+            </Col>
+            <Col>
+            <Item>
+              <Input keyboardType={'numeric'} onChangeText={onChangeText}>
+                <Text>{value}</Text>
+              </Input>
+            </Item>
+            </Col>
+          </Row>
+        </Grid>
+      );
+    }
     return (
       <Grid>
         <Row>
@@ -116,7 +134,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
           </Col>
           <Col>
           <Item>
-            <Input onChangeText={onChangeText}>
+            <Input autoCapitalize = 'words' onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -129,10 +147,10 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onFirstNameChange)}
-        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onLastNameChange)}
-        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onPhoneChange)}
-        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange)}
+        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onFirstNameChange, false)}
+        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onLastNameChange, false)}
+        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onPhoneChange, true)}
+        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange, false)}
       </View>
     );
   }
