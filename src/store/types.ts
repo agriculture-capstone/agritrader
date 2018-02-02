@@ -23,8 +23,17 @@ export interface State {
   farmer: FarmerState;
   activeRows: ActiveRowsState;
   milk: MilkState;
-
 }
+
+/** Root actions for application */
+export type RootAction = {
+  type: 'LOGOUT',
+} | {
+  type: 'LOGIN',
+};
+
+/** Combine module specific actions with RootAction */
+export type ModuleAction<T> = T | RootAction;
 
 /** Global redux action */
 export type Action
@@ -35,7 +44,7 @@ export type Action
   | HeaderAction
   | ActiveRowsAction
   | SensitiveAction
-
+  | RootAction
   ;
 
 /*----------------------- Core Module Models -----------------------*/

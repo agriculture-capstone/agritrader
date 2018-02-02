@@ -6,6 +6,7 @@ import { State } from '../../../store/types';
 import drawerActions from '../../../store/modules/drawer/actions';
 import navActions from '../../../store/modules/nav/actions';
 import headerActions from '../../../store/modules/header/actions';
+import rootActions from '../../../store/actions';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
@@ -25,7 +26,7 @@ interface DispatchPropsType {
   openDrawer(): void;
   navigate(route: Route): void;
   showHeader(): void;
-  goToLogin(): void;
+  logout(): void;
 }
 
 /** Drawer props */
@@ -62,7 +63,7 @@ class Drawer extends React.Component<PropsType, OwnState> {
 
   private onLogout() {
     // TODO: Actually log people out (build a service for this)
-    this.props.goToLogin();
+    this.props.logout();
   }
 
   private createDrawerContents() {
@@ -110,9 +111,9 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     closeDrawer: () => dispatch(drawerActions.setDrawerShown(false)),
     openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),
-    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    navigate: (route: Route) => dispatch(navActions.navigateToDrawerRoute(route)),
     showHeader: () => dispatch(headerActions.setHeaderShown(true)),
-    goToLogin: () => dispatch(navActions.navigateTo(Route.LOGIN)),
+    logout: () => dispatch(rootActions.logout()),
   };
 };
 
