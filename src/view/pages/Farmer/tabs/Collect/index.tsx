@@ -12,10 +12,10 @@ import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort';
 import {
-  getMonthlyFarmerMilkTotal,
   getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,
   getFarmerDayTotal,
+  getFarmerWeeklyBalance,
 } from '../../../../../store/modules/milk/selectors';
 import styles from './style';
 
@@ -29,7 +29,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  monthlyTotal: any;
+  balance: any;
   weeklyTotal: any;
   dailyTotal: any;
   collectTransactions: any[];
@@ -52,15 +52,16 @@ class Collect extends React.Component<PropsType, OwnStateType> {
     super(constructorProps);
 
     // Bindings
-    this.createOnItemClicked = this.createOnItemClicked.bind(this);
   }
 
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
-  // private onEntryPress = (route: Route) => this.props.navigate(route);
-  private createOnItemClicked(uuid: string) {
-    this.props.setActiveMilkEntry(uuid);
-    this.props.navigateToMilkEntry();
+  private onEntryPress = (uuid?: string) => {
+    return () => {
+      this.props.setActiveMilkEntry(uuid);
+      this.props.navigateToMilkEntry();
+    };
   }
+
 
   /** React componentDidMount */
   public componentDidMount() {
@@ -80,9 +81,9 @@ class Collect extends React.Component<PropsType, OwnStateType> {
       value: this.props.weeklyTotal,
       units: 'L',
     },                   {
-      label: 'This Month',
-      value: this.props.monthlyTotal,
-      units: 'L',
+      label: 'Weekly Balance',
+      value: this.props.balance,
+      units: 'UGX',
     },
     ];
 
@@ -96,8 +97,9 @@ class Collect extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Volume (L)', 'Rate (UGX/L)']}
+              headers={['Date', 'Volume (L)', 'Value (UGX)']}
               values={dateSort.sortDescending(this.props.collectTransactions)}
+              onEntryPress={this.onEntryPress()}
             />
           </Row>
         </Grid>
@@ -107,15 +109,15 @@ class Collect extends React.Component<PropsType, OwnStateType> {
 }
 
 const CollectPage = new Composer<NestedPropsType>(Collect)
-.fab()
-.page;
+  .fab()
+  .page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    monthlyTotal: getMonthlyFarmerMilkTotal(state),
     weeklyTotal: getWeeklyFarmerMilkTotal(state),
     dailyTotal: getFarmerDayTotal(state),
     collectTransactions: getFormattedFarmersTransactions(state),
+    balance: getFarmerWeeklyBalance(state),
   };
 };
 

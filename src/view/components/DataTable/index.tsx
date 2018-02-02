@@ -10,6 +10,7 @@ interface OwnPropsType {
   headers: string[];
   values: any[];
   routed?: RoutedPropsType;
+  onEntryPress(uuid:string) : any;
 }
 
 /** Interface for clickable list item support */
@@ -42,27 +43,25 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.renderRow = this.renderRow.bind(this);
   }
 
-  private onPress = () => {
-    if (this.props.routed !== undefined) {
-      this.props.routed.onPress(this.props.routed.route);
-    }
-  }
-
   private formatValues(values: any[]) {
     return values.map((value, index) => {
-      return (
-        <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
-          <Text style={styles.values}>
-            {value}
-          </Text>
-        </Col>
-      );
+      if (index === 3) {
+        return;
+      } else {
+        return (
+          <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
+            <Text style={styles.values}>
+              {value}
+            </Text>
+          </Col>
+        );
+      }
     });
   }
-  
+
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }} button={false} onPress={this.onPress}>
+      <ListItem style={{ justifyContent: 'center' }} button={true} onPress={this.props.onEntryPress(item.uuid)}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>
@@ -86,11 +85,11 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   public render() {
     return (
       <Card>
-      <List
-        dataArray={this.props.values}
-        renderRow={this.renderRow}
-        renderSectionHeader={this.renderSectionHeader}
-      />
+        <List
+          dataArray={this.props.values}
+          renderRow={this.renderRow}
+          renderSectionHeader={this.renderSectionHeader}
+        />
       </Card>
     );
   }
