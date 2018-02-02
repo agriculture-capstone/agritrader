@@ -56,12 +56,6 @@ export const getAvgDaysMilkTotal = createSelector(
   },
 );
 
-/**Selector to return a specific milk transaction based on UUID */
-/***Not sure how we are getting the transaction uuid**/
-// export const getSpecificMilkTransaction = createSelector(
-//   [getMilkEntries, getCurrentFarmerUUID],
-//   (milkEntries: MilkEntry[], farmerUUID: string) => milkEntries.filter(entry => !entry.uuid.localeCompare(uuid)));
-
 /************Selectors for a specific farmer ***************/
 
 /**Selector to get all milk transactions for a specific farmer  */
@@ -69,7 +63,10 @@ export const getFarmersTransactions = createSelector(
   [getMilkEntries, getCurrentFarmerUUID],
   (milkEntries: StoreMilkEntry[], farmerUUID: string) => milkEntries.filter(entry => !entry.fromPersonUuid.localeCompare(farmerUUID)));
 
-/**Selector to get all milk transactions for a specific farmer formatted for the collect page */
+/**
+ * Selector to get all milk transactions for a specific farmer formatted for the collect page
+ * if using in with the DataTable ensure that the last element in the array is the uuid. 
+ */
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: StoreMilkEntry[]) => milkEntries.map(entry =>

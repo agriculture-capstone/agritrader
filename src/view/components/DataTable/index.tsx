@@ -10,7 +10,7 @@ interface OwnPropsType {
   headers: string[];
   values: any[];
   routed?: RoutedPropsType;
-  onEntryPress(uuid:string) : any;
+  onEntryPress(uuid: string): any;
 }
 
 /** Interface for clickable list item support */
@@ -43,9 +43,14 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.renderRow = this.renderRow.bind(this);
   }
 
-  private formatValues(values: any[]) {
+  /**
+   * All array items will be written to the table in the order passed
+   * with the exception of the last element which is expected to be the uuid
+   * @param values
+   */
+  private formatTableValues(values: any[]) {
     return values.map((value, index) => {
-      if (index === 3) {
+      if (index === values.length - 1) {
         return;
       } else {
         return (
@@ -59,11 +64,23 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     });
   }
 
+  private formatHeaderValues(values: any[]) {
+    return values.map((value, index) => {
+      return (
+        <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
+          <Text style={styles.values}>
+            {value}
+          </Text>
+        </Col>
+      );
+    });
+  }
+
   private renderRow(item: any) {
     return (
       <ListItem style={{ justifyContent: 'center' }} button={true} onPress={this.props.onEntryPress(item.uuid)}>
         <Grid style={{ justifyContent: 'center' }}>
-          {this.formatValues(Object.values(item))}
+          {this.formatTableValues(Object.values(item))}
         </Grid>
       </ListItem>
     );
@@ -73,7 +90,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     return (
       <ListItem itemHeader first>
         <Grid>
-          {this.formatValues(this.props.headers)}
+          {this.formatHeaderValues(this.props.headers)}
         </Grid>
       </ListItem>
     );
