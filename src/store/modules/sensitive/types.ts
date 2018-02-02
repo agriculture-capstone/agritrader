@@ -1,3 +1,5 @@
+import { RootAction } from '../../types';
+
 /*----------------------- State -----------------------*/
 
 /** State for sensitive information module */
@@ -8,9 +10,7 @@ export interface SensitiveInfoState {
 /*----------------------- Actions -----------------------*/
 
 /** Action for sensitive module */
-export type Action = {
+export type Action = RootAction | {
   type: 'SET_JWT',
   jwt: string,
-} | {
-  type: 'DO_NOT_USE',
 };

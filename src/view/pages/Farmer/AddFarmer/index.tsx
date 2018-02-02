@@ -18,7 +18,7 @@ interface OwnPropsType {
 interface DispatchPropsType {
   createFarmer(farmer: Farmer): Promise<string>;
   goBack(): void;
-  navigate(route: Route): void;
+  navigateToFarmer(): void;
   setActiveFarmer(uuid: string): void;
 }
 
@@ -59,8 +59,6 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
   private renderAddButton = () => this.renderButton('Add', 'PRIMARY', this.onAddPress);
 
-
-
   /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
 
@@ -77,7 +75,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     };
     const uuid = await this.props.createFarmer(newFarmer);
     this.props.setActiveFarmer(uuid);
-    this.props.navigate(Route.FARMER);
+    this.props.navigateToFarmer();
     // Dismiss the keyboard manually here
     Keyboard.dismiss();
   }
@@ -160,7 +158,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    navigateToFarmer: () => dispatch(navActions.navigateToWithoutHistory(Route.FARMER)),
     goBack: () => dispatch(navActions.goBack()),
     createFarmer: async (farmer: Farmer) => dispatch(farmerThunks.createFarmer(farmer)),
     setActiveFarmer: (uuid: string) => dispatch(activeRowsActions.setActiveFarmer(uuid)),
