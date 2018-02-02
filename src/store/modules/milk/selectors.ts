@@ -65,7 +65,7 @@ export const getFarmersTransactions = createSelector(
 
 /**
  * Selector to get all milk transactions for a specific farmer formatted for the collect page
- * if using in with the DataTable ensure that the last element in the array is the uuid. 
+ * if using with the DataTable ensure that the last element in the array is the uuid. 
  */
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
