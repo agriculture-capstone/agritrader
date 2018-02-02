@@ -55,7 +55,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   }
 
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
-  private onEntryPress = (uuid?: string) => {
+  private onEntryPress = (uuid: string) => {
     return () => {
       this.props.setActiveMilkEntry(uuid);
       this.props.navigateToMilkEntry();
@@ -99,7 +99,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Volume (L)', 'Value (UGX)']}
               values={dateSort.sortDescending(this.props.collectTransactions)}
-              onEntryPress={this.onEntryPress()}
+              onEntryPress={this.onEntryPress}
             />
           </Row>
         </Grid>
