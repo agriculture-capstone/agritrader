@@ -6,9 +6,7 @@ import Buy from './tabs/Buy';
 import Info from './tabs/Info';
 
 const createCollect = () => (
-  <Collect
-    farmerName="Bradley the Farmer"
-  />
+  <Collect />
 );
 
 const demoLoanTransactions = [

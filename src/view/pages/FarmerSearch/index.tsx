@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { H2, H3, Content, List, ListItem } from 'native-base';
+import { Text, Content, List, ListItem } from 'native-base';
 import { View } from 'react-native';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import * as Fuse from 'fuse.js';
@@ -7,6 +7,7 @@ import { createSelector } from 'reselect';
 
 import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
+import activeRowsActions from '../../../store/modules/activeRows/actions';
 import { Route } from '../../navigation/navigator';
 import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
@@ -25,7 +26,8 @@ interface StorePropsType {
 
 /** FarmerSearch DispatchPropsType */
 interface DispatchPropsType {
-  navigateToFarmer(uuid: string): void;
+  setActiveFarmer(uuid: string): void;
+  navigateToFarmer(): void;
   navigateToAddFarmer(): void;
 }
 
@@ -78,14 +80,18 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
-        'name',
+        'firstName',
+        'lastName',
         'phoneNumber',
       ],
     });
   }
 
   private createOnItemClicked(uuid: string) {
-    return () => this.props.navigateToFarmer(uuid);
+    return () => {
+      this.props.setActiveFarmer(uuid);
+      this.props.navigateToFarmer();
+    };
   }
 
   private onFabPress() {
@@ -114,12 +120,12 @@ class FarmerSearch extends React.Component<PropsType, OwnStateType> {
     return (
       <ListItem key={farmer.uuid} onPress={this.createOnItemClicked(farmer.uuid)}>
         <View>
-          <H2>
+          <Text style={style.name}>
             {`${farmer.firstName} ${farmer.lastName}`}
-          </H2>
-          <H3>
-            {`+${farmer.phoneCountry} (${farmer.phoneArea}) ${farmer.phoneNumber}`}
-          </H3>
+          </Text>
+          <Text style={style.phone}>
+            {`${farmer.phoneNumber}`}
+          </Text>
         </View>
       </ListItem>
     );
@@ -160,7 +166,8 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigateToFarmer: (uuid: string) => dispatch(navActions.navigateToFarmer(Route.FARMER, uuid)),
+    setActiveFarmer: (uuid: string) => dispatch(activeRowsActions.setActiveFarmer(uuid)),
+    navigateToFarmer: () => dispatch(navActions.navigateTo(Route.FARMER)),
     navigateToAddFarmer: () => dispatch(navActions.navigateTo(Route.ADD_FARMER)),
   };
 };

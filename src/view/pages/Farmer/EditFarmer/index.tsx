@@ -12,6 +12,7 @@ import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 
 import Styles from './style';
+import { getActiveFarmer } from '../../../../store/modules/farmer/selectors';
 
 interface OwnPropsType {
 }
@@ -45,8 +46,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Page for EditFarmer
- * 
- * @example 
+ *
+ * @example
  *          <EditFarmer
  *          />
  */
@@ -68,7 +69,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
-  
+
   /** Handle pressing save button */
   private onSavePress = () => {
     let newFarmer: ThunkUpdateRow<Farmer> = {
@@ -88,7 +89,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private onFirstNameChange = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
   private onLastNameChange = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
   private onPhoneChange = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
-  private onNotesChange = (newNotes: string) => this.setState(state => ({ phoneNumber: newNotes }));
+  private onNotesChange = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
   /**
    * Returns a button with text specified
@@ -106,7 +107,25 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any) {
+  private formatEditRow(label: string, value: number | string, onChangeText: any, isNumeric: boolean) {
+    if (isNumeric) {
+      return (
+        <Grid>
+          <Row>
+            <Col>
+              <Text>{label}</Text>
+            </Col>
+            <Col>
+            <Item>
+              <Input keyboardType={'numeric'} onChangeText={onChangeText}>
+                <Text>{value}</Text>
+              </Input>
+            </Item>
+            </Col>
+          </Row>
+        </Grid>
+      );
+    }
     return (
       <Grid>
         <Row>
@@ -115,7 +134,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
           </Col>
           <Col>
           <Item>
-            <Input onChangeText={onChangeText}>
+            <Input autoCapitalize="words" onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -128,10 +147,10 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onFirstNameChange)}
-        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onLastNameChange)}
-        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onPhoneChange)}
-        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange)}
+        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onFirstNameChange, false)}
+        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onLastNameChange, false)}
+        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onPhoneChange, true)}
+        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange, false)}
       </View>
     );
   }
@@ -157,13 +176,9 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
 const EditFarmerPage = new Composer<NestedPropsType>(EditFarmer).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-  // @TODO replace 'fakeFarmerUUID' with the active farmer uuid
-  const farmerRow = state.farmer.rows.find(r => r.uuid === 'fakeFarmerUUID');
-  if (farmerRow === undefined) {
-    throw new Error('Error: could not locate farmer: ' + 'fakeFarmerUUID');
-  }
+
   return {
-    farmer: farmerRow,
+    farmer: getActiveFarmer(state),
   };
 };
 

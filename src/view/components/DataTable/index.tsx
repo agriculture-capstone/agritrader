@@ -1,11 +1,21 @@
 import * as React from 'react';
 import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
+import * as moment from 'moment';
+
 import styles from './style';
+import { Route } from '../../navigation/navigator';
 
 
 interface OwnPropsType {
   headers: string[];
   values: any[];
+  routed?: RoutedPropsType;
+}
+
+/** Interface for clickable list item support */
+interface RoutedPropsType {
+  route: Route;
+  onPress(route: Route): void;
 }
 
 interface DispatchPropsType {
@@ -32,10 +42,16 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.renderRow = this.renderRow.bind(this);
   }
 
+  private onPress = () => {
+    if (this.props.routed !== undefined) {
+      this.props.routed.onPress(this.props.routed.route);
+    }
+  }
+
   private formatValues(values: any[]) {
-    return values.map((value) => {
+    return values.map((value, index) => {
       return (
-        <Col key={value} style={{ justifyContent: 'center' }}>
+        <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
           <Text style={styles.values}>
             {value}
           </Text>
@@ -46,7 +62,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }}>
+      <ListItem style={{ justifyContent: 'center' }} button={false} onPress={this.onPress}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatValues(Object.values(item))}
         </Grid>

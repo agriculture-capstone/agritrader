@@ -15,13 +15,17 @@ import drawerActions from '../../store/modules/drawer/actions';
 import searchBarActions from '../../store/modules/searchBar/actions';
 import navActions from '../../store/modules/nav/actions';
 import store from '../../store';
+import { Farmer } from '../../store/modules/farmer/types';
+import { getActiveFarmer } from '../../store/modules/farmer/selectors'; 
 
 interface StorePropsType {
   nav: NavigationState;
   headerShown: boolean;
+  routeName: string;
   routeType: PageType | undefined;
   searchBarShown: boolean;
   searchPlaceholder: string | undefined;
+  currentFarmer: Farmer; 
 }
 
 interface DispatchPropsType {
@@ -32,6 +36,7 @@ interface DispatchPropsType {
   goBack(): void;
   showSearch(placeholder?: string): void;
   hideSearch(): void;
+  updateHeaderTitle(title: string): void;
 }
 
 /** AppNavigation props */
@@ -120,11 +125,21 @@ class AppNavigation extends React.Component<PropsType, {}> {
     searchBarShown ? this.props.showSearch(placeholder) : this.props.hideSearch();
   }
 
+  private setHeaderTitle(title: string, { firstName, lastName }: any) {
+    if (title === 'Farmer') {
+      const farmerName = `${firstName} ${lastName}`;  
+      this.props.updateHeaderTitle(farmerName);
+    } else {
+      this.props.updateHeaderTitle(title);
+    }
+  }
+
   /****************************** React ******************************/
 
   /** React componentWillMount */
   public componentWillMount() {
     this.setHeaderAndDrawer(this.props.routeType);
+    this.setHeaderTitle(this.props.routeName, this.props.currentFarmer);
     this.setSearchBar(this.props.searchBarShown, this.props.searchPlaceholder);
   }
 
@@ -143,6 +158,9 @@ class AppNavigation extends React.Component<PropsType, {}> {
     if (nextProps.routeType !== this.props.routeType) {
       const type = nextProps.routeType;
       this.setHeaderAndDrawer(type);
+    }
+    if (nextProps.routeName !== this.props.routeName) {
+      this.setHeaderTitle(nextProps.routeName, nextProps.currentFarmer);
     }
 
     if (nextProps.searchBarShown !== this.props.searchBarShown) {
@@ -169,16 +187,18 @@ class AppNavigation extends React.Component<PropsType, {}> {
 
 const mapStateToProps: MapStateToProps<StorePropsType, {}, State> = (state, ownProps) => {
   // Get current route name
-  const routeName = state.nav.routes[state.nav.index].routeName;
+  const currentRouteName = state.nav.routes[state.nav.index].routeName;
   // Get current route information (should never be undefined)
-  const currentRouteInfo = routesInfo.find(r => r.route === routeName);
+  const currentRouteInfo = routesInfo.find(r => r.route === currentRouteName);
 
   return {
     nav: state.nav,
     headerShown: state.header.shown,
     routeType: currentRouteInfo && currentRouteInfo.type,
+    routeName: currentRouteName,
     searchBarShown: !!currentRouteInfo && !!currentRouteInfo.searchInfo,
     searchPlaceholder: currentRouteInfo && currentRouteInfo.searchInfo && currentRouteInfo.searchInfo.placeholder,
+    currentFarmer: getActiveFarmer(state),
   };
 };
 
@@ -191,6 +211,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, {}> = (dispatch)
     goBack: () => dispatch(navActions.goBack()),
     showSearch: (placeholder?: string) => dispatch(searchBarActions.showSearchBar(placeholder)),
     hideSearch: () => dispatch(searchBarActions.removeSearchBar()),
+    updateHeaderTitle: (title: string) => dispatch(headerActions.setTitle(title)),
   };
 };
 

@@ -1,4 +1,4 @@
-import { CoreModuleState } from '../../types';
+import { CoreModuleState, StoreRow } from '../../types';
 
 /*----------------------- Models -----------------------*/
 
@@ -10,9 +10,11 @@ export interface MilkEntry {
   amountOfProduct: number;
   costPerUnit: number;
   currency: string;
-  volume: string;
   quality: string;
 }
+
+/** Model for a milk entry in store */
+export type StoreMilkEntry = StoreRow<MilkEntry>;
 
 /*----------------------- State -----------------------*/
 
