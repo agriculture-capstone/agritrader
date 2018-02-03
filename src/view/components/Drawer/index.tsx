@@ -6,7 +6,7 @@ import { State } from '../../../store/types';
 import drawerActions from '../../../store/modules/drawer/actions';
 import navActions from '../../../store/modules/nav/actions';
 import headerActions from '../../../store/modules/header/actions';
-import rootActions from '../../../store/actions';
+// import rootActions from '../../../store/actions';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
