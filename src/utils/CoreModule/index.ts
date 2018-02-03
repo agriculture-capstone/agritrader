@@ -88,6 +88,10 @@ function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
   return (row === undefined);
 }
 
+function hasUUID<T>(row: ThunkCreationRow<T>): row is StoreLocalCreationRow<T> {
+  return typeof row.uuid !== 'undefined' && row.uuid !== null;
+}
+
 function deriveIsDirty<T>(rows: StoreRow<T>[]) {
   return rows.some(r => r.status !== 'clean');
 }
@@ -244,11 +248,20 @@ export function createThunks<Row>(module: CoreModule) {
 
     /** Create a new row */
     createRow: (newRow: ThunkCreationRow<Row>): CoreThunk => async (dispatch, getState, { CoreAPI }) => {
-      const creationRow = StoreUtils.convertCreationRow(newRow);
+      let creationRow: StoreLocalCreationRow<Row>;
+
+      if (hasUUID(newRow)) {
+        // Already been created locally
+        creationRow = newRow;
+      } else {
+        creationRow = StoreUtils.convertCreationRow(newRow);
+
+        // Store the local copy
+        dispatch(createRowLocal(creationRow));
+      }
+
       const { uuid } = creationRow;
 
-      // Store the local copy
-      dispatch(createRowLocal(creationRow));
 
       // Send the new row to the core
       const api = new CoreAPI(path);
@@ -262,10 +275,9 @@ export function createThunks<Row>(module: CoreModule) {
         } catch (err) {
           // Failed to create resource on Core
           if (isResponse(err)) {
-            // TODO: Deal with different core errors
             const response = err;
             // tslint:disable-next-line:no-console
-            console.error(response.status);
+            console.log(response.status);
 
             return uuid;
           } else if (isNetworkError(err)) {
@@ -273,9 +285,8 @@ export function createThunks<Row>(module: CoreModule) {
             return uuid;
           } else {
             // Not a response error, should be logged
-            // TODO: Log me
             // tslint:disable-next-line:no-console
-            console.error(err.message || err);
+            console.log(err.message || err);
             return uuid;
           }
         }
@@ -292,6 +303,7 @@ export function createThunks<Row>(module: CoreModule) {
       const convertedRow = StoreUtils.convertUpdateRow(rowUpdate);
 
       // Update the row in store
+      // TODO: Only perform if it hasn't been updated in store already (optimization)
       dispatch(updateRowLocal(convertedRow));
 
       // Retrieve the updated row
@@ -299,9 +311,8 @@ export function createThunks<Row>(module: CoreModule) {
 
       // Deal with no row found
       if (rowNotFound(updatedRow)) {
-        // TODO: Deal with me
         // tslint:disable-next-line:no-console
-        console.error(`No such row found for uuid: ${uuid}`);
+        console.log(`No such row found for uuid: ${uuid}`);
         return uuid;
       }
 
@@ -319,7 +330,7 @@ export function createThunks<Row>(module: CoreModule) {
             // TODO: Deal with different core errors
             const response = err;
             // tslint:disable-next-line:no-console
-            console.error(response.status);
+            console.log(response.status);
             return uuid;
           } else if (isNetworkError(err)) {
             // Currently no network, let request fail and allow sync service to resolve
@@ -328,7 +339,7 @@ export function createThunks<Row>(module: CoreModule) {
             // Not a response error, should be logged
             // TODO: Log me
             // tslint:disable-next-line:no-console
-            console.error(err.message || err);
+            console.log(err.message || err);
             return uuid;
           }
         }

@@ -24,7 +24,7 @@ type Job = Promise<boolean>;
 type Jobs = Promise<boolean[]>;
 
 /** Default number of seconds between automatic sync */
-const DEFAULT_FREQUENCY = 300;
+const DEFAULT_FREQUENCY = 30;
 
 /** Number of milliseconds in a second */
 const TO_MILLISECONDS = 1000;
