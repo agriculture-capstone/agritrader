@@ -27,6 +27,14 @@ interface OwnStateType {
 * Buy Tab Component
 */
 class Buy extends React.Component<PropsType, OwnStateType> {
+
+  private onPressEntry = (uuid: string) => {
+    return () => {
+      // example from collect
+      // this.props.setActiveMilkEntry(uuid);
+      // this.props.navigateToMilkEntry();
+    };
+  }
   /**
   * Render method for Buy
   */
@@ -53,6 +61,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Remaining Balance', 'Weekly Payment']}
               values={this.props.loanTransactions}
+              onPressEntry={this.onPressEntry}
             />
           </Row>
         </Grid>

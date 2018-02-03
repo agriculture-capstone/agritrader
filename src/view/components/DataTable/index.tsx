@@ -10,6 +10,7 @@ interface OwnPropsType {
   headers: string[];
   values: any[];
   routed?: RoutedPropsType;
+  onPressEntry(uuid: string): any;
 }
 
 /** Interface for clickable list item support */
@@ -42,13 +43,28 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     this.renderRow = this.renderRow.bind(this);
   }
 
-  private onPress = () => {
-    if (this.props.routed !== undefined) {
-      this.props.routed.onPress(this.props.routed.route);
-    }
+  /**
+   * All array items will be written to the table in the order passed
+   * with the exception of the last element which is expected to be the uuid
+   * @param values
+   */
+  private formatTableValues(values: any[]) {
+    return values.map((value, index) => {
+      if (index === values.length - 1) {
+        return;
+      } else {
+        return (
+          <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
+            <Text style={styles.values}>
+              {value}
+            </Text>
+          </Col>
+        );
+      }
+    });
   }
 
-  private formatValues(values: any[]) {
+  private formatHeaderValues(values: any[]) {
     return values.map((value, index) => {
       return (
         <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
@@ -59,12 +75,12 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
       );
     });
   }
-  
+
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }} button={false} onPress={this.onPress}>
+      <ListItem style={{ justifyContent: 'center' }} button={true} onPress={this.props.onPressEntry(item.uuid)}>
         <Grid style={{ justifyContent: 'center' }}>
-          {this.formatValues(Object.values(item))}
+          {this.formatTableValues(Object.values(item))}
         </Grid>
       </ListItem>
     );
@@ -74,7 +90,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
     return (
       <ListItem itemHeader first>
         <Grid>
-          {this.formatValues(this.props.headers)}
+          {this.formatHeaderValues(this.props.headers)}
         </Grid>
       </ListItem>
     );
@@ -86,11 +102,11 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   public render() {
     return (
       <Card>
-      <List
-        dataArray={this.props.values}
-        renderRow={this.renderRow}
-        renderSectionHeader={this.renderSectionHeader}
-      />
+        <List
+          dataArray={this.props.values}
+          renderRow={this.renderRow}
+          renderSectionHeader={this.renderSectionHeader}
+        />
       </Card>
     );
   }

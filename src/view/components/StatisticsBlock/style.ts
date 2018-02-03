@@ -8,7 +8,6 @@ export default StyleSheet.create({
   },
   stats: {
     textAlign: 'center',
-    color: MATERIAL_COLORS.secondary.light,
   },
   label: {
     color: 'black', 
@@ -16,10 +15,12 @@ export default StyleSheet.create({
     fontSize: 12,
   },
   unit : {
+    color:MATERIAL_COLORS.secondary.light,
     fontSize:14,
     fontWeight: 'bold',
   }, 
   value : {
+    color: MATERIAL_COLORS.secondary.light,
     fontSize: 20,
     fontWeight: 'bold',
   },
