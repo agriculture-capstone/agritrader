@@ -32,9 +32,9 @@ interface OwnStateType {
   lastName: string;
   phoneNumber: string;
   notes: string;
-  validFirstName: boolean,
-  validLastName: boolean,
-  validPhoneNumber: boolean,
+  validFirstName: boolean;
+  validLastName: boolean;
+  validPhoneNumber: boolean;
 }
 
 /**
@@ -91,7 +91,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     this.state.validFirstName 
     && this.state.validLastName 
     // && this.state.validPhoneNumber
-  );
+  )
  
   /**
    * Handle farmer details changes, update local state

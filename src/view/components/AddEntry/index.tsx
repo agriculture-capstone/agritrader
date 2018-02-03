@@ -100,10 +100,10 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private allValid = () => (
     this.state.validAmount 
     && this.state.validRate
-  );
+  )
 
   private onChangeAmount = (newAmount: string) => {
-    const newAmountInt = parseInt(newAmount, radix)
+    const newAmountInt = parseInt(newAmount, radix);
 
     if (!newAmount.match(this.numbers) || newAmountInt < 0) {
       this.setState(state => ({ validAmount: false }));
@@ -117,7 +117,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   }
 
   private onChangeRate = (newRate: string) => {
-    const newRateInt = parseInt(newRate, radix)
+    const newRateInt = parseInt(newRate, radix);
 
     if (!newRate.match(this.numbers) || newRateInt < 0) {
       this.setState(state => ({ validRate: false }));
