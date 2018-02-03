@@ -47,6 +47,7 @@ interface OwnStateType {
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 let radix: number = 10;
+
 /**
  * AddEntry page
  * @example 
@@ -55,8 +56,8 @@ let radix: number = 10;
  */
 
 class AddEntry extends React.Component<PropsType, OwnStateType> {
+  
   private numbers = /^[0-9]+$/;
-
   constructor(props: PropsType) {
     super(props);
     /** Init state */
