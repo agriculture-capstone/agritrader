@@ -68,6 +68,7 @@ export default function createFabPage<InjectedProps>(WrappedComponent: React.Com
         <Fab
           onPress={this.emit}
           position="bottomRight"
+          style={{ backgroundColor: '#0277bd' }}
         >
           <Icon name={type || 'add'} />
         </Fab>
