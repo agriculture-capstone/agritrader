@@ -9,14 +9,14 @@ import material from '../../native-base-theme/variables/material';
 import Header from '../../view/components/Header';
 import Drawer from '../../view/components/Drawer';
 import { State } from '../../store/types';
-import Navigator, { routesInfo, PageType, Route } from './navigator';
+import Navigator, { routesInfo, PageType } from './navigator';
 import headerActions from '../../store/modules/header/actions';
 import drawerActions from '../../store/modules/drawer/actions';
 import searchBarActions from '../../store/modules/searchBar/actions';
 import navActions from '../../store/modules/nav/actions';
 import store from '../../store';
 import { Farmer } from '../../store/modules/farmer/types';
-import { getActiveFarmer } from '../../store/modules/farmer/selectors'; 
+import { getActiveFarmer } from '../../store/modules/farmer/selectors';
 
 interface StorePropsType {
   nav: NavigationState;
@@ -25,7 +25,7 @@ interface StorePropsType {
   routeType: PageType | undefined;
   searchBarShown: boolean;
   searchPlaceholder: string | undefined;
-  currentFarmer: Farmer; 
+  currentFarmer: Farmer;
 }
 
 interface DispatchPropsType {
@@ -58,13 +58,16 @@ class AppNavigation extends React.Component<PropsType, {}> {
 
   /** Handle the hardware back button being pressed */
   private onBackPress() {
-    const { nav } = this.props;
-    // If the stack is empty or the previous page was login
-    if (nav.index === 0 || nav.routes[nav.index - 1].routeName === Route.LOGIN) {
+    const CLOSE = false;
+    const DO_NOT_CLOSE = true;
 
+    const { nav } = this.props;
+
+    // If the stack is empty
+    if (nav.index === 0) {
       // If second time pressing button, close the application
       if (this.closeApp) {
-        return false;
+        return CLOSE;
       } else {
         // First time closing app, setup to close app on second press
         this.closeApp = true;
@@ -77,8 +80,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
           buttonText: 'Okay',
         });
 
-        // Do not close application
-        return true;
+        return DO_NOT_CLOSE;
       }
     }
 
@@ -86,7 +88,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
     this.props.goBack();
 
     // Do not close application
-    return true;
+    return DO_NOT_CLOSE;
   }
 
   /** Create navigation helpers */
@@ -127,7 +129,7 @@ class AppNavigation extends React.Component<PropsType, {}> {
 
   private setHeaderTitle(title: string, { firstName, lastName }: any) {
     if (title === 'Farmer') {
-      const farmerName = `${firstName} ${lastName}`;  
+      const farmerName = `${firstName} ${lastName}`;
       this.props.updateHeaderTitle(farmerName);
     } else {
       this.props.updateHeaderTitle(title);

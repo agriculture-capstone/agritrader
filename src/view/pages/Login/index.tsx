@@ -21,8 +21,7 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { images } from '../../assets/';
 import styles from './style';
 import { State } from '../../../store/types';
-import { Route } from '../../navigation/navigator';
-import navActions from '../../../store/modules/nav/actions';
+import rootActions from '../../../store/actions';
 import Composer from '../../hoc/PageComposer';
 
 interface OwnState {
@@ -38,7 +37,7 @@ interface StoreProps {
 }
 
 interface DispatchProps {
-  navigateToHome(): void;
+  login(): void;
 }
 /**
  *Login Properties
@@ -69,7 +68,7 @@ class Login extends React.Component<PropsType, OwnState> {
   }
   private loginPress = () => {
     // TODO: Don't just let into app
-    this.props.navigateToHome();
+    this.props.login();
 
     /*
     auth: boolean = authenticate(this.state.username, this.state.password);
@@ -134,11 +133,9 @@ class Login extends React.Component<PropsType, OwnState> {
                     <Text>Sign In</Text>
                   </Button>
                 </View>
-            
           </Form>
         </Content>
       </KeyboardAvoidingView>
-
     );
   }
 }
@@ -151,7 +148,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) =>
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    navigateToHome: () => dispatch(navActions.navigateTo(Route.HOME)),
+    login: () => dispatch(rootActions.login()),
   };
 };
 

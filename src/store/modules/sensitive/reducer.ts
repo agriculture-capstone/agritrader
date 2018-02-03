@@ -27,6 +27,10 @@ const sensitiveInfoReducer: Reducer<SensitiveInfoState> = (state = initialState,
       };
     }
 
+    case 'LOGOUT': {
+      return { ...state, jwt: '' };
+    }
+
     default: {
       return state;
     }
