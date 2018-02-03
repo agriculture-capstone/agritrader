@@ -11,7 +11,6 @@ import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort'; 
-import { StoreMilkEntry } from '../../../../../store/modules/milk/types';
 import {
   getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,
