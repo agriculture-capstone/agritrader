@@ -14,7 +14,7 @@ import milkThunks from '../../../store/modules/milk/thunks';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
-import {Alert} from "react-native";
+import { Alert } from 'react-native';
 
 interface OwnPropsType {
 }
