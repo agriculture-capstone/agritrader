@@ -1,6 +1,7 @@
 import * as React from 'react';
 import EventEmitter = require('wolfy87-eventemitter');
 import { View, Fab, Icon } from 'native-base';
+import { MATERIAL_COLORS } from '../../../../native-base-theme/variables/styles';
 
 /** Type of Floating Action Button */
 export type FabType = 'add' | 'share';
@@ -68,6 +69,7 @@ export default function createFabPage<InjectedProps>(WrappedComponent: React.Com
         <Fab
           onPress={this.emit}
           position="bottomRight"
+          style={{ backgroundColor: MATERIAL_COLORS.secondary.normal }}
         >
           <Icon name={type || 'add'} />
         </Fab>
