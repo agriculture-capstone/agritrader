@@ -33,7 +33,7 @@ interface StorePropsType {
   weeklybalance: string;
   weeklyTotal: string;
   dailyTotal: string;
-  collectTransactions: StoreMilkEntry[];
+  collectTransactions: any[];
 }
 
 interface OwnStateType {
