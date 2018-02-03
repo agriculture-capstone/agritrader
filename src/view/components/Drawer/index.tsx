@@ -113,7 +113,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
     openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),
     navigate: (route: Route) => dispatch(navActions.navigateToDrawerRoute(route)),
     showHeader: () => dispatch(headerActions.setHeaderShown(true)),
-    logout: () => dispatch(rootActions.logout()),
+    // logout: () => dispatch(rootActions.logout()),
+    logout: () => dispatch(navActions.navigateTo(Route.LOGIN)),
   };
 };
 
