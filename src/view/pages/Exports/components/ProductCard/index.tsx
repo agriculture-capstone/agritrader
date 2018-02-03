@@ -24,8 +24,9 @@ const PRODUCT_CARD_HEADERS = ['Date/Time', 'Licence Plate #', 'Volume (L)'];
 */
 export default class ProductCard extends React.Component<PropsType, OwnStateType> {
 
-  private onEntryPress = (uuid: string) => {
+  private onPressEntry = (uuid: string) => {
     return () => {
+      // this is an example from the milk collect page
       // this.props.setActiveMilkEntry(uuid);
       // this.props.navigateToMilkEntry();
     };
@@ -38,7 +39,7 @@ export default class ProductCard extends React.Component<PropsType, OwnStateType
       <DataTable
         headers={PRODUCT_CARD_HEADERS}
         values={this.props.values}
-        onEntryPress={this.onEntryPress}
+        onPressEntry={this.onPressEntry}
       />
     );
   }
