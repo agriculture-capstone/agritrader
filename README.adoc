@@ -70,7 +70,7 @@ Any other actions can be done with the `run` action.
 
 . Ensure the image is initalized with `./dockerize.sh init` and dependencies installed with `./dockerize.sh install`.
 
-. Copy `gradle.properties.tmpl` in the root directory to the home directory and rename it `gradle.properties`.
+. Copy `gradle.properties.tmpl` in the root directory to the `$HOME/.gradle/` directory and rename it to `gradle.properties`.
 `gradle.properties` is the file that will actually be used.
 Fill in the `AGRITRADER_DEPLOY_UNSTABLE_STORE_PASSWORD` and `AGRITRADER_DEPLOY_UNSTABLE_KEY_PASSWORD` fields with the password.
 Ask someone for the password, it is not version controlled.
