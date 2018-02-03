@@ -32,7 +32,9 @@ interface OwnStateType {
   lastName: string;
   phoneNumber: string;
   notes: string;
-  addEnabled: boolean;
+  validFirstName: boolean,
+  validLastName: boolean,
+  validPhoneNumber: boolean,
 }
 
 /**
@@ -53,9 +55,12 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       lastName: '',
       phoneNumber: '',
       notes: '',
-      addEnabled: false,
+      validFirstName: false,
+      validLastName: false,
+      validPhoneNumber: false,
     };
   }
+
 
   /** Create page buttons */
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
@@ -82,19 +87,39 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     Keyboard.dismiss();
   }
 
-
+  private allValid = () => (
+    this.state.validFirstName 
+    && this.state.validLastName 
+    && this.state.validPhoneNumber
+  );
+ 
   /**
    * Handle farmer details changes, update local state
    */
   private onChangeFirstName = (newFirstName: string) => {
     if (!newFirstName) {
-
+      this.setState(state => ({ validFirstName: false }));
     } else {
-      this.setState(state => ({ firstName: newFirstName }));
+      this.setState(state => ({ firstName: newFirstName, validFirstName: true }));
     }
   } 
-  private onChangeLastName = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
-  private onChangePhoneNumber = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
+
+  private onChangeLastName = (newLastName: string) => { 
+    if (!newLastName) {
+      this.setState(state => ({ validLastName: false }));
+    } else {
+      this.setState(state => ({ lastName: newLastName, validLastName: true }));
+    }
+  }
+
+  private onChangePhoneNumber = (newPhone: string) => { 
+    if (!newPhone) {
+      this.setState(state => ({ validPhoneNumber: false }));
+    } else {
+      this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
+    }
+  }
+
   private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
   /**
@@ -107,7 +132,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     if (isPrimary) {
       return (
         <Col style={styles.button}>
-          <Button disabled={!this.state.addEnabled} block info={isInfo} primary={isPrimary} onPress={onPress}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
             <Text>{text}</Text>
           </Button>
         </Col>
@@ -134,7 +159,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
         <Label>Last Name</Label>
         <Input autoCapitalize="words" onChangeText={this.onChangeLastName} />
       </Item>
-      <Item floatingLabel last>
+      <Item floatingLabel>
         <Label>Phone Number</Label>
         <Input onChangeText={this.onChangePhoneNumber} keyboardType={'numeric'}/>
       </Item>
