@@ -45,7 +45,7 @@ export function getModulePath(module: CoreModule): CorePath {
 type EmptyPayload = {};
 
 type CreateLocalPayload<Row> = { row: StoreLocalCreationRow<Row> };
-type CreateRemotePayload = { localUUID: string, coreUUID: string, lastModified: string };
+type CreateRemotePayload = { uuid: string, lastModified: string };
 type UpdateLocalPayload<Row> = { row: StoreLocalUpdateRow<Row> };
 type UpdateRemotePayload<Row> = { row: CoreRow<Row> };
 type SetLastSyncedPayload = { lastSynced: string };
@@ -119,8 +119,8 @@ function createThunkActions<Row>(module: CoreModule) {
     createRowLocal: (row: StoreLocalCreationRow<Row>): ThunkAction<Row> =>
       ({ row, type: createRowLocalType(upperModule) }),
 
-    createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): ThunkAction<Row> =>
-      ({ localUUID, coreUUID, lastModified, type: createRowRemoteType(upperModule) }),
+    createRowRemote: (uuid: string, lastModified: string): ThunkAction<Row> =>
+      ({ uuid, lastModified, type: createRowRemoteType(upperModule) }),
 
     updateRowLocal: (row: StoreLocalUpdateRow<Row>): ThunkAction<Row> =>
       ({ row, type: updateRowLocalType(upperModule) }),
@@ -178,14 +178,14 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
 
       case createRowRemoteType(upperName): return (function (action: CreateRemotePayload) {
         status = 'clean';
-        const { coreUUID: uuid, lastModified } = action;
-        const rows = state.rows.map(r => r.uuid === action.localUUID ? { ...(r as any), uuid, lastModified } : r);
+        const { uuid, lastModified } = action;
+        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), lastModified, status } : r);
         isDirty = deriveIsDirty(rows);
 
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case updateRowLocalType(upperName): return (function (action: UpdateLocalPayload<any>) {
+      case updateRowLocalType(upperName): return (function (action: UpdateLocalPayload<{}>) {
         status = 'modified';
         isDirty = true;
         const { row: tempRow, row: { uuid } } = action;
@@ -195,10 +195,12 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case updateRowRemoteType(upperName): return (function (action: UpdateRemotePayload) {
+      case updateRowRemoteType(upperName): return (function (action: UpdateRemotePayload<{}>) {
         status = 'clean';
-        const { uuid, lastModified } = action;
-        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), uuid, lastModified, status } : r);
+        const { uuid } = action.row;
+        const row = { ...action.row, status };
+        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), row } : r);
+
         isDirty = deriveIsDirty(rows);
 
         return { ...state, rows, isDirty };
@@ -241,46 +243,45 @@ export function createThunks<Row>(module: CoreModule) {
 
     /** Create a new row */
     createRow: (newRow: ThunkCreationRow<Row>): CoreThunk => async (dispatch, getState, { CoreAPI }) => {
-      const storeCreationRow = StoreUtils.convertCreationRow(newRow);
-      const { uuid: localUUID } = storeCreationRow;
+      const creationRow = StoreUtils.convertCreationRow(newRow);
+      const { uuid } = creationRow;
 
       // Store the local copy
-      dispatch(createRowLocal(storeCreationRow));
+      dispatch(createRowLocal(creationRow));
 
       // Send the new row to the core
       const api = new CoreAPI(path);
-      const requestRow = StoreUtils.convertToCreateRequest(storeCreationRow);
 
       // Create new block for block scoped variables (let) to avoid errors
-      { let coreUUID: string, lastModified: string;
+      { let lastModified: string;
 
         // Attempt to create resource on core
         try {
-          ({ lastModified, uuid: coreUUID } = await api.create(requestRow));
+          ({ lastModified } = await api.create(creationRow));
         } catch (err) {
           // Failed to create resource on Core
           if (isResponse(err)) {
             // TODO: Deal with different core errors
             const response = err;
             // tslint:disable-next-line:no-console
-            console.log(response.status);
+            console.error(response.status);
 
-            return localUUID;
+            return uuid;
           } else if (isNetworkError(err)) {
             // Currently no network, let request fail and allow sync service to resolve
-            return localUUID;
+            return uuid;
           } else {
             // Not a response error, should be logged
             // TODO: Log me
             // tslint:disable-next-line:no-console
-            console.log(err.message || err);
-            return localUUID;
+            console.error(err.message || err);
+            return uuid;
           }
         }
 
         // Create updated model and update store
-        dispatch(createRowRemote(localUUID, coreUUID, lastModified));
-        return coreUUID;
+        dispatch(createRowRemote(uuid, lastModified));
+        return uuid;
       }
     },
 
@@ -298,6 +299,8 @@ export function createThunks<Row>(module: CoreModule) {
       // Deal with no row found
       if (rowNotFound(updatedRow)) {
         // TODO: Deal with me
+        // tslint:disable-next-line:no-console
+        console.error(`No such row found for uuid: ${uuid}`);
         return uuid;
       }
 
@@ -315,7 +318,7 @@ export function createThunks<Row>(module: CoreModule) {
             // TODO: Deal with different core errors
             const response = err;
             // tslint:disable-next-line:no-console
-            console.log(response.status);
+            console.error(response.status);
             return uuid;
           } else if (isNetworkError(err)) {
             // Currently no network, let request fail and allow sync service to resolve
@@ -324,7 +327,7 @@ export function createThunks<Row>(module: CoreModule) {
             // Not a response error, should be logged
             // TODO: Log me
             // tslint:disable-next-line:no-console
-            console.log(err.message || err);
+            console.error(err.message || err);
             return uuid;
           }
         }

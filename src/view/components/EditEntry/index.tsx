@@ -50,8 +50,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
  * Page for EditEntry
- * 
- * @example 
+ *
+ * @example
  *          <EditEntry
  *          />
  */
@@ -61,7 +61,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     super(props);
     this.state = {
       amountOfProduct: this.props.milkEntry.amountOfProduct,
-      quality: this.props.milkEntry.quality,
+      quality: this.props.milkEntry.milkQuality,
       costPerUnit: this.props.milkEntry.costPerUnit,
     };
   }
@@ -72,7 +72,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing cancel button */
   private onCancelPress = () => this.props.goBack();
-  
+
   /** Handle pressing save button */
   private onSavePress = () => {
     let newEntry: ThunkUpdateRow<MilkEntry> = {
@@ -82,7 +82,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
       currency: 'UGX',
-      quality: this.state.quality,
+      milkQuality: this.state.quality,
     };
     this.props.updateMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);
@@ -128,7 +128,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {/* @TODO Change this to take time only */}
-            {this.props.milkEntry.datetime} 
+            {this.props.milkEntry.datetime}
           </Text>
         </Row>
       </Grid>
@@ -158,7 +158,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <View style={Styles.editView}>
         {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Quality', this.props.milkEntry.quality, this.onQualityChange)}
+        {this.formatEditRow('Quality', this.props.milkEntry.milkQuality, this.onQualityChange)}
         {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange)}
       </View>
     );

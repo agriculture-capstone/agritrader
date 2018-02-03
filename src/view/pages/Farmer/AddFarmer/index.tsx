@@ -74,6 +74,8 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       phoneArea: '',
       phoneCountry: '',
       notes: this.state.notes,
+      companyName: 'Quality Milk',
+      paymentFrequency: '54/GX',
     };
     const uuid = await this.props.createFarmer(newFarmer);
     this.props.setActiveFarmer(uuid);

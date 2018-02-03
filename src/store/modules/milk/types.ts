@@ -4,13 +4,14 @@ import { CoreModuleState, StoreRow } from '../../types';
 
 /** Model for a milk entry */
 export interface MilkEntry {
+  type: 'milk';
   datetime: string;
   toPersonUuid: string;
   fromPersonUuid: string;
   amountOfProduct: number;
   costPerUnit: number;
   currency: string;
-  quality: string;
+  milkQuality: string;
 }
 
 /** Model for a milk entry in store */

@@ -99,7 +99,7 @@ export type CoreSyncUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
  *
  * @template T Data model for module
  */
-export type CoreCreationRequest<T> = T & LastModifiedData;
+export type CoreCreationRequest<T> = T & LastModifiedData & UUIDData;
 
 /**
  * Data model for sending update request to core

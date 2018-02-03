@@ -47,7 +47,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 let radix: number = 10;
 /**
  * AddEntry page
- * @example 
+ * @example
  *             <AddEntry
  *             />
  */
@@ -79,13 +79,14 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     const timeNow = moment().local().utc().toString();
 
     let newEntry: MilkEntry = {
+      type: 'milk',
       datetime: timeNow,
-      toPersonUuid: this.props.activeTrader,
+      toPersonUuid: 'a2b121fd-1a1f-4425-97db-876af3c5bd2f',
       fromPersonUuid: this.props.activeFarmer,
       amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
       currency: 'UGX',
-      quality: this.state.quality,
+      milkQuality: this.state.quality,
     };
     this.props.createMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);

@@ -42,8 +42,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  * Page for EntryDetails
  * @requires farmer
  * @requires milkEntry
- * 
- * @example 
+ *
+ * @example
  *          <EntryDetails
  *          />
  */
@@ -123,7 +123,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
           {this.formatRow('Amount (L)', this.props.milkEntry.amountOfProduct)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Quality', this.props.milkEntry.quality)}
+          {this.formatRow('Quality', this.props.milkEntry.milkQuality)}
         </ListItem>
         <ListItem>
           {this.formatRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit)}

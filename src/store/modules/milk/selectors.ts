@@ -23,13 +23,14 @@ export const getActiveMilkEntry = createSelector(
     // TODO: Re-evaluate this
     if (!maybeMilkEntry) {
       const empty: StoreMilkEntry = {
+        type: 'milk',
         datetime: '',
         toPersonUuid: '',
         fromPersonUuid: '',
         amountOfProduct: 0,
         costPerUnit: 0,
         currency: '',
-        quality: '',
+        milkQuality: '',
         status: 'clean',
         lastModified: '',
         uuid: '',
@@ -74,7 +75,7 @@ export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.map(entry =>
     ({datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MM-DD[\n]kk:mm'),
-      amountOfProduct: entry.amountOfProduct, costPerUnit: entry.costPerUnit, 
+      amountOfProduct: entry.amountOfProduct, costPerUnit: entry.costPerUnit,
     }),
   ),
 );
