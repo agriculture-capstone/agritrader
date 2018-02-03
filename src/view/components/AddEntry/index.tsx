@@ -37,12 +37,16 @@ interface OwnStateType {
   amountOfProduct: number;
   quality: string;
   costPerUnit: number;
+  validAmount: boolean;
+  validRate: boolean;
 }
 
 /**
  * Button color
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
+
+let radix: number = 10;
 
 /**
  * AddEntry page
@@ -52,7 +56,8 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  */
 
 class AddEntry extends React.Component<PropsType, OwnStateType> {
-
+  
+  private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     /** Init state */
@@ -60,6 +65,8 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
       amountOfProduct: 0,
       quality: '0',
       costPerUnit: 0,
+      validAmount: false,
+      validRate: false,
     };
   }
   /** Get current datetime in specified format */
@@ -89,9 +96,35 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     this.props.createMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
-  private onChangeAmount = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
-  private onChangeQuality = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onChangeRate = (newRate: string) => this.setState(state => ({ costPerUnit : parseFloat(newRate) }));
+
+  private allValid = () => (
+    this.state.validAmount 
+    && this.state.validRate
+  )
+
+  private onChangeAmount = (newAmount: string) => {
+    const newAmountInt = parseInt(newAmount, radix);
+
+    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+      this.setState(state => ({ validAmount: false }));
+    } else {
+      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
+    }
+  }
+
+  private onChangeQuality = (newQuality: string) => {
+    this.setState(state => ({ quality: newQuality }));
+  }
+
+  private onChangeRate = (newRate: string) => {
+    const newRateInt = parseInt(newRate, radix);
+
+    if (!newRate.match(this.numbers) || newRateInt < 0) {
+      this.setState(state => ({ validRate: false }));
+    } else {
+      this.setState(state => ({ costPerUnit : newRateInt, validRate: true }));
+    }
+  }
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -99,14 +132,24 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
-
-    return (
-      <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    
+    if (isPrimary) {
+      return (
+        <Col style={Styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={Styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderHeader() {
@@ -134,7 +177,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderFields() {
     return (
       <Form>
-        <Item floatingLabel>
+        <Item success={this.state.validAmount} error={!this.state.validAmount} floatingLabel>
           <Label>Amount (L)</Label>
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
@@ -142,7 +185,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
           <Label>Quality</Label>
           <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
         </Item>
-        <Item floatingLabel last>
+        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
           <Label>Rate (UGX/L)</Label>
           <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
         </Item>
