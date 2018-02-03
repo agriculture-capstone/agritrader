@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Text } from 'native-base';
+import { Col, Text, Row } from 'native-base';
 import styles from './style';
 
 interface OwnPropsType {
@@ -14,8 +14,8 @@ interface DispatchPropsType {
 
 interface StorePropsType {
 }
- 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType; 
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 
 interface OwnStateType {
 }
@@ -30,9 +30,9 @@ export default class StatisticsBlock extends React.Component<PropsType, OwnState
   public render() {
     return (
       <Col style={styles.content}>
-        <Text style={[styles.stats, styles.value, (this.props.valueColor ? { color: this.props.valueColor } : undefined)]}>
-          {this.props.value}
-          <Text style={[styles.stats, styles.unit, (this.props.valueColor ? { color: this.props.valueColor } : undefined)]}>
+        <Text style={[styles.stats]}>
+          <Text style={styles.value}> {this.props.value} </Text>
+          <Text style={[styles.stats, styles.unit]}>
             {this.props.units}
           </Text>
         </Text>
