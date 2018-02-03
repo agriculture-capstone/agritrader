@@ -14,6 +14,7 @@ import milkThunks from '../../../store/modules/milk/thunks';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
+import { Alert } from 'react-native';
 
 interface OwnPropsType {
 }
@@ -81,6 +82,20 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing save button */
   private onSavePress = () => {
+    // Make sure that the fields don't contain negative values
+    if (this.state.amountOfProduct < 0) {
+      Alert.alert('Error', 'Amount must a positive number');
+      return;
+    }
+    if (parseInt(this.state.quality, radix) < 0) {
+      Alert.alert('Error', 'Quality must a positive number');
+      return;
+    }
+    if (this.state.costPerUnit < 0) {
+      Alert.alert('Error', 'Cost per unit must a positive number');
+      return;
+    }
+
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
 
