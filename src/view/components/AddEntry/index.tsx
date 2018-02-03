@@ -170,7 +170,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderFields() {
     return (
       <Form>
-        <Item floatingLabel>
+        <Item success={this.state.validAmount} error={!this.state.validAmount} floatingLabel>
           <Label>Amount (L)</Label>
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
@@ -178,7 +178,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
           <Label>Quality</Label>
           <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
         </Item>
-        <Item floatingLabel last>
+        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel last>
           <Label>Rate (UGX/L)</Label>
           <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
         </Item>
