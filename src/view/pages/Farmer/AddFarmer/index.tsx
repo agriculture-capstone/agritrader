@@ -112,8 +112,22 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     }
   }
 
+  /**
+   * @requires phone number to be all numeric and be 10 digits
+   * 
+   * Valid phone formats:
+   *    (123) 456-7890
+   *    (123)456-7890
+   *    123-456-7890
+   *    123.456.7890
+   *    1234567890
+   *    +31636363634
+   *    075-63546725
+   */
   private onChangePhoneNumber = (newPhone: string) => { 
-    if (!newPhone) {
+    // let numbers = /^[0-9]+$/;
+    let numbers = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    if (!newPhone || !newPhone.match(numbers)) {
       this.setState(state => ({ validPhoneNumber: false }));
     } else {
       this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
