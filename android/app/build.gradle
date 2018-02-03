@@ -101,20 +101,20 @@ android {
         applicationId "com.agritrader"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 6
-        versionName "1.6-alpha"
+        versionCode 7
+        versionName "1.7-alpha"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
-    // signingConfigs {
-    //     release {
-    //         storeFile file(AGRITRADER_DEPLOY_UNSTABLE_STORE_FILE)
-    //         storePassword AGRITRADER_DEPLOY_UNSTABLE_STORE_PASSWORD
-    //         keyAlias AGRITRADER_DEPLOY_UNSTABLE_KEY_ALIAS
-    //         keyPassword AGRITRADER_DEPLOY_UNSTABLE_KEY_PASSWORD
-    //     }
-    // }
+    signingConfigs {
+        release {
+            storeFile file(AGRITRADER_DEPLOY_UNSTABLE_STORE_FILE)
+            storePassword AGRITRADER_DEPLOY_UNSTABLE_STORE_PASSWORD
+            keyAlias AGRITRADER_DEPLOY_UNSTABLE_KEY_ALIAS
+            keyPassword AGRITRADER_DEPLOY_UNSTABLE_KEY_PASSWORD
+        }
+    }
     splits {
         abi {
             reset()
@@ -123,13 +123,13 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
-    // buildTypes {
-    //     release {
-    //         minifyEnabled enableProguardInReleaseBuilds
-    //         proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-    //         signingConfig signingConfigs.release
-    //     }
-    // }
+    buildTypes {
+        release {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
