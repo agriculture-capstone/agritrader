@@ -32,6 +32,7 @@ interface OwnStateType {
   lastName: string;
   phoneNumber: string;
   notes: string;
+  addEnabled: boolean;
 }
 
 /**
@@ -52,6 +53,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       lastName: '',
       phoneNumber: '',
       notes: '',
+      addEnabled: false,
     };
   }
 
@@ -84,7 +86,13 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   /**
    * Handle farmer details changes, update local state
    */
-  private onChangeFirstName = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
+  private onChangeFirstName = (newFirstName: string) => {
+    if (!newFirstName) {
+
+    } else {
+      this.setState(state => ({ firstName: newFirstName }));
+    }
+  } 
   private onChangeLastName = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
   private onChangePhoneNumber = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
   private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
@@ -96,13 +104,23 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={styles.button}>
+          <Button disabled={!this.state.addEnabled} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderFields() {
