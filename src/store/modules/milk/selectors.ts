@@ -8,7 +8,7 @@ const getMilkEntries = (state: State) => state.milk.rows;
 const getCurrentMilkEntryUUID = (state: State) => state.activeRows.activeMilkEntryUUID;
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
-const decimalPlaces = 2;
+const decimals = 1;
 
 const maybeGetActiveMilkEntry = createSelector(
   getCurrentMilkEntryUUID,
@@ -47,7 +47,7 @@ export const getActiveMilkEntry = createSelector(
 export const getDaysMilkTotal = createSelector(
   [getMilkEntries],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimalPlaces));
+    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimals));
 
 /**Selector to calculate the average daily milk collection */
 export const getAvgDaysMilkTotal = createSelector(
@@ -74,8 +74,8 @@ export const getFormattedFarmersTransactions = createSelector(
   (milkEntries: StoreMilkEntry[]) => milkEntries.map(entry =>
     ({
       datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MMM DD[\n]h:mm a'),
-      amountOfProduct: entry.amountOfProduct.toFixed(decimalPlaces),
-      milkValue: (entry.costPerUnit * entry.amountOfProduct).toFixed(decimalPlaces), uuid: entry.uuid,
+      amountOfProduct: entry.amountOfProduct.toFixed(decimals),
+      milkValue: (entry.costPerUnit * entry.amountOfProduct).toFixed(decimals), uuid: entry.uuid,
     }),
   ),
 );
@@ -102,7 +102,7 @@ export const getWeeklyFarmerMilkTotal = createSelector(
 export const getMonthlyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inSameMonth(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimalPlaces));
+    (inSameMonth(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimals));
 
 
 /************Helper Methods************/
@@ -171,15 +171,14 @@ function numberFormatter(num : number) {
   const thousand = 1000;
   const million = 1000000;
   const billion = 1000000000;
-
   if (num >= billion) {
-    return (num / billion).toFixed(1).replace(/\.0$/, '') + 'B';
+    return (num / billion).toFixed(decimals).replace(/\.0$/, '') + 'B';
   }
   if (num >= million) {
-    return (num / million).toFixed(1).replace(/\.0$/, '') + 'M';
+    return (num / million).toFixed(decimals).replace(/\.0$/, '') + 'M';
   }
   if (num >= thousand) {
-    return (num / thousand).toFixed(1).replace(/\.0$/, '') + 'K';
+    return (num / thousand).toFixed(decimals).replace(/\.0$/, '') + 'K';
   }
   return num;
 }
