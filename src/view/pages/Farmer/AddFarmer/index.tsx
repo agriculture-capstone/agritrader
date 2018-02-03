@@ -166,15 +166,15 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private renderFields() {
     return (
       <Form>
-      <Item floatingLabel>
+      <Item success={this.state.validFirstName} error={!this.state.validFirstName} floatingLabel>
         <Label>First Name</Label>
         <Input autoCapitalize="words" onChangeText={this.onChangeFirstName} />
       </Item>
-      <Item floatingLabel>
+      <Item success={this.state.validLastName} error={!this.state.validLastName} floatingLabel>
         <Label>Last Name</Label>
         <Input autoCapitalize="words" onChangeText={this.onChangeLastName} />
       </Item>
-      <Item floatingLabel>
+      <Item success={this.state.validPhoneNumber} error={!this.state.validPhoneNumber} floatingLabel>
         <Label>Phone Number</Label>
         <Input onChangeText={this.onChangePhoneNumber} keyboardType={'numeric'}/>
       </Item>
