@@ -144,7 +144,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
           </Col>
           <Col>
           <Item>
-            <Input onChangeText={onChangeText}>
+            <Input onChangeText={onChangeText} keyboardType={'numeric'}>
               <Text>{value}</Text>
             </Input>
           </Item>
