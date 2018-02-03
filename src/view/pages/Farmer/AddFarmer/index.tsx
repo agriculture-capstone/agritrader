@@ -90,7 +90,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private allValid = () => (
     this.state.validFirstName 
     && this.state.validLastName 
-    && this.state.validPhoneNumber
+    // && this.state.validPhoneNumber
   );
  
   /**
@@ -113,7 +113,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   }
 
   /**
-   * @requires phone number to be all numeric and be 10 digits
+   * @requires phone number to be all numeric and be 10 digits (optional)
    * 
    * @source: https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
    * Valid phone formats:
