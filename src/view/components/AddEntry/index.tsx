@@ -44,7 +44,6 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-let radix: number = 10;
 /**
  * AddEntry page
  * @example 
@@ -90,9 +89,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     this.props.createMilkEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
-  private onChangeAmount = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix) }));
+  private onChangeAmount = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
   private onChangeQuality = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onChangeRate = (newRate: string) => this.setState(state => ({ costPerUnit : parseInt(newRate, radix) }));
+  private onChangeRate = (newRate: string) => this.setState(state => ({ costPerUnit : parseFloat(newRate) }));
 
   /**
    * Returns a button with text, color, and onPress callback specified

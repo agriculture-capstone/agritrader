@@ -10,7 +10,7 @@ interface OwnPropsType {
   headers: string[];
   values: any[];
   routed?: RoutedPropsType;
-  onEntryPress(uuid: string): any;
+  onPressEntry(uuid: string): any;
 }
 
 /** Interface for clickable list item support */
@@ -78,7 +78,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
 
   private renderRow(item: any) {
     return (
-      <ListItem style={{ justifyContent: 'center' }} button={true} onPress={this.props.onEntryPress(item.uuid)}>
+      <ListItem style={{ justifyContent: 'center' }} button={true} onPress={this.props.onPressEntry(item.uuid)}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatTableValues(Object.values(item))}
         </Grid>

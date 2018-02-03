@@ -65,7 +65,7 @@ export const getFarmersTransactions = createSelector(
 
 /**
  * Selector to get all milk transactions for a specific farmer formatted for the collect page
- * if using with the DataTable ensure that the last element in the array is the uuid. 
+ * if using with the DataTable ensure that the last element in the array is the milk transaction uuid. 
  */
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
@@ -77,7 +77,7 @@ export const getFormattedFarmersTransactions = createSelector(
   ),
 );
 
-/**Selector to calculate the current days milk collection */
+/**Selector for the weekly farmer account balance */
 export const getFarmerWeeklyBalance = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>

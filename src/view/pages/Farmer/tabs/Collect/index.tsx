@@ -29,7 +29,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  balance: any;
+  weeklybalance: any;
   weeklyTotal: any;
   dailyTotal: any;
   collectTransactions: any[];
@@ -50,12 +50,10 @@ class Collect extends React.Component<PropsType, OwnStateType> {
 
   public constructor(constructorProps: PropsType) {
     super(constructorProps);
-
-    // Bindings
   }
 
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
-  private onEntryPress = (uuid: string) => {
+  private onPressEntry = (uuid: string) => {
     return () => {
       this.props.setActiveMilkEntry(uuid);
       this.props.navigateToMilkEntry();
@@ -82,7 +80,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
       units: 'L',
     },                   {
       label: 'Weekly Balance',
-      value: this.props.balance,
+      value: this.props.weeklybalance,
       units: 'UGX',
     },
     ];
@@ -99,7 +97,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Volume (L)', 'Value (UGX)']}
               values={dateSort.sortDescending(this.props.collectTransactions)}
-              onEntryPress={this.onEntryPress}
+              onPressEntry={this.onPressEntry}
             />
           </Row>
         </Grid>
@@ -117,7 +115,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
     weeklyTotal: getWeeklyFarmerMilkTotal(state),
     dailyTotal: getFarmerDayTotal(state),
     collectTransactions: getFormattedFarmersTransactions(state),
-    balance: getFarmerWeeklyBalance(state),
+    weeklybalance: getFarmerWeeklyBalance(state),
   };
 };
 
