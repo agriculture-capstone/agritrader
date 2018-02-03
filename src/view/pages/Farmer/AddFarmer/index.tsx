@@ -115,6 +115,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   /**
    * @requires phone number to be all numeric and be 10 digits
    * 
+   * @source: https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
    * Valid phone formats:
    *    (123) 456-7890
    *    (123)456-7890
