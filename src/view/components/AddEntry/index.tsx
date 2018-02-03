@@ -103,10 +103,12 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   );
 
   private onChangeAmount = (newAmount: string) => {
-    if (!newAmount.match(this.numbers)) {
+    const newAmountInt = parseInt(newAmount, radix)
+
+    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix), validAmount: true }));
+      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
     }
   }
 
@@ -115,10 +117,12 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   }
 
   private onChangeRate = (newRate: string) => {
-    if (!newRate.match(this.numbers)) {
+    const newRateInt = parseInt(newRate, radix)
+
+    if (!newRate.match(this.numbers) || newRateInt < 0) {
       this.setState(state => ({ validRate: false }));
     } else {
-      this.setState(state => ({ costPerUnit : parseInt(newRate, radix), validRate: true }));
+      this.setState(state => ({ costPerUnit : newRateInt, validRate: true }));
     }
   }
 
