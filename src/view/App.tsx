@@ -1,7 +1,9 @@
+import 'es6-symbol/implement';
 import * as React from 'react';
 import { Root, Toast, ActionSheet, Spinner } from 'native-base';
 import { Provider } from 'react-redux';
 
+import SyncService from '../services/Sync';
 import store, { persistor } from '../store';
 import NavContainer from './navigation';
 import { PersistGate } from 'redux-persist/lib/integration/react';
@@ -15,6 +17,11 @@ export default class App extends React.Component<{}, {}> {
   public componentWillUnmount() {
     (Toast as any).toastInstance = null;
     (ActionSheet as any).actionsheetInstance = null;
+  }
+
+  /** React componentDidMount */
+  public componentDidMount() {
+    SyncService();
   }
 
   /** Render the application */

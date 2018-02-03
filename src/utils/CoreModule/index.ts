@@ -21,6 +21,7 @@ import {
 
 /** Different core modules */
 export enum CoreModule {
+  // FARMER MUST COME FIRST IN THE LIST, THIS ORDER SPECIFIES THE ORDER OF THE SYNC
   FARMER = 'farmer',
   MILK = 'milk',
 }
