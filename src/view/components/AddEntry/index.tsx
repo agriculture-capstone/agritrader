@@ -104,8 +104,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private onChangeAmount = (newAmount: string) => {
     if (!newAmount.match(this.numbers)) {
       this.setState(state => ({ validAmount: false }));
+    } else {
+      this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix), validAmount: true }));
     }
-    this.setState(state => ({ amountOfProduct: parseInt(newAmount, radix), validAmount: true }));
   }
 
   private onChangeQuality = (newQuality: string) => {
@@ -115,8 +116,9 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private onChangeRate = (newRate: string) => {
     if (!newRate.match(this.numbers)) {
       this.setState(state => ({ validRate: false }));
+    } else {
+      this.setState(state => ({ costPerUnit : parseInt(newRate, radix), validRate: true }));
     }
-    this.setState(state => ({ costPerUnit : parseInt(newRate, radix), validRate: true }));
   }
 
   /**
@@ -178,7 +180,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
           <Label>Quality</Label>
           <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
         </Item>
-        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel last>
+        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
           <Label>Rate (UGX/L)</Label>
           <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
         </Item>
