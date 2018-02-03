@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Text, Row } from 'native-base';
+import { Col, Text } from 'native-base';
 import styles from './style';
 
 interface OwnPropsType {
