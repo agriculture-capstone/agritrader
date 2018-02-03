@@ -16,6 +16,7 @@ import milkThunks from '../../../store/modules/milk/thunks';
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
 import { getActiveMilkEntry } from '../../../store/modules/milk/selectors';
+import * as moment from 'moment';
 
 
 interface OwnPropsType {
@@ -47,7 +48,6 @@ interface OwnStateType {
  * Button color
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
-
 /**
  * Page for EditEntry
  * 
@@ -91,9 +91,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   /**
    * Handle entry changes, update local state
    */
-  private onAmountChange = (newAmount: number) => this.setState(state => ({ amountOfProduct: newAmount }));
+  private onAmountChange = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onRateChange = (newCostPerUnit: number) => this.setState(state => ({ costPerUnit: newCostPerUnit }));
+  private onRateChange = (newCostPerUnit: string) => this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -121,14 +121,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {/* @TODO Change this to take date only */}
-            {this.props.milkEntry.datetime}
-          </Text>
-        </Row>
-        <Row style={Styles.headerRow}>
-          <Text style={Styles.header}>
-            {/* @TODO Change this to take time only */}
-            {this.props.milkEntry.datetime} 
+            {moment(this.props.milkEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
