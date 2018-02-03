@@ -10,7 +10,8 @@ import activeRowsActions from '../../../../../store/modules/activeRows/actions';
 import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
-import { dateSort } from '../../../../../utils/DateSort';
+import { dateSort } from '../../../../../utils/DateSort'; 
+import { StoreMilkEntry } from '../../../../../store/modules/milk/types';
 import {
   getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,
@@ -29,10 +30,10 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  weeklybalance: any;
-  weeklyTotal: any;
-  dailyTotal: any;
-  collectTransactions: any[];
+  weeklybalance: string;
+  weeklyTotal: string;
+  dailyTotal: string;
+  collectTransactions: StoreMilkEntry[];
 }
 
 interface OwnStateType {

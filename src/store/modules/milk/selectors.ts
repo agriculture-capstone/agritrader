@@ -8,6 +8,8 @@ const getMilkEntries = (state: State) => state.milk.rows;
 const getCurrentMilkEntryUUID = (state: State) => state.activeRows.activeMilkEntryUUID;
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
+const decimalPlaces = 2;
+
 const maybeGetActiveMilkEntry = createSelector(
   getCurrentMilkEntryUUID,
   getMilkEntries,
@@ -45,7 +47,7 @@ export const getActiveMilkEntry = createSelector(
 export const getDaysMilkTotal = createSelector(
   [getMilkEntries],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(0));
+    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimalPlaces));
 
 /**Selector to calculate the average daily milk collection */
 export const getAvgDaysMilkTotal = createSelector(
@@ -72,7 +74,8 @@ export const getFormattedFarmersTransactions = createSelector(
   (milkEntries: StoreMilkEntry[]) => milkEntries.map(entry =>
     ({
       datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MM-DD[\n]kk:mm'),
-      amountOfProduct: entry.amountOfProduct, milkValue: (entry.costPerUnit * entry.amountOfProduct), uuid:entry.uuid,
+      amountOfProduct: entry.amountOfProduct.toFixed(decimalPlaces), milkValue: (entry.costPerUnit * entry.amountOfProduct).toFixed(decimalPlaces), 
+      uuid:entry.uuid,
     }),
   ),
 );
@@ -81,25 +84,25 @@ export const getFormattedFarmersTransactions = createSelector(
 export const getFarmerWeeklyBalance = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-  (inLastWeek(entry.datetime)) ? sum + (entry.costPerUnit * entry.amountOfProduct) : sum + 0, 0));
+  (inLastWeek(entry.datetime)) ? sum + (entry.costPerUnit * entry.amountOfProduct) : sum + 0, 0).toFixed(decimalPlaces));
 
 /**Selector to calculate the current days milk collection */
 export const getFarmerDayTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0));
+    inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimalPlaces));
 
 /**Selector to calculate the farmers total milk collected this week */
 export const getWeeklyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inLastWeek(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0));
+    (inLastWeek(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimalPlaces));
 
 /**Selector to calculate the farmers total milk collected this month */
 export const getMonthlyFarmerMilkTotal = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inSameMonth(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0));
+    (inSameMonth(entry.datetime)) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimalPlaces));
 
 
 /************Helper Methods************/
