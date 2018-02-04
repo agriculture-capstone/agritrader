@@ -48,4 +48,7 @@ export default StyleSheet.create({
   },
   spinner: {
   },
+  errorMessage: {
+    color: '#ff0033',
+  },
 });

@@ -105,13 +105,13 @@ export default class CoreAPI {
 
   private getOptions<T>(method: CoreRequestMethod, body?: T): RequestInit {
 
-    // const { jwt } = store.getState().sensitiveInfo;
-    // if (!jwt) {
-    //   throw new Error('Not authenticated');
-    // }
+    const { jwt } = store.getState().sensitiveInfo;
+    if (!jwt) {
+      throw new Error('Not authenticated');
+    }
     const headers = new Headers({
       'content-type': 'application/json',
-      // Authorization: `Bearer ${jwt}`,
+      Authorization: `Bearer ${jwt}`,
     });
 
     return {

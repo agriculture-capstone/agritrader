@@ -75,7 +75,7 @@ class Login extends React.Component<PropsType, OwnState> {
       loggingIn
         .then(payload => void this.props.login(payload))
         .catch((e) => {
-          if (e instanceof AuthenticationError) {
+          if (e.name === AuthenticationError.name) {
             this.setState(state => ({ showError: true }));
           } else {
             throw e;
@@ -129,7 +129,7 @@ class Login extends React.Component<PropsType, OwnState> {
               </Row>
               <Row>
                 <Col>
-                  <Item floatingLabel style={styles.label} error={this.state.showError}>
+                  <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
                     <Input
                       secureTextEntry={true}
@@ -140,7 +140,7 @@ class Login extends React.Component<PropsType, OwnState> {
                 </Col>
               </Row>
               <Row>
-                {this.state.showError && <Text style={{  }}>Invalid username or password, please try again</Text>}
+                {this.state.showError && <Text style={styles.errorMessage}>Invalid username or password, please try again</Text>}
               </Row>
               </Grid>
               <View style={styles.buttonRow}>

@@ -31,6 +31,12 @@ const sensitiveInfoReducer: Reducer<SensitiveInfoState> = (state = initialState,
       return { ...state, jwt: '' };
     }
 
+    case 'LOGIN': {
+      const { jwt } = action.payload;
+
+      return { ...state, jwt };
+    }
+
     default: {
       return state;
     }
