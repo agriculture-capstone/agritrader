@@ -70,6 +70,7 @@ type SyncActionPayload<Row>
   | EmptyPayload
   ;
 
+/** Sync action type */
 export type SyncAction<Row> = SyncActionPayload<Row> & ActionBase;
 
 type ThunkAction<R> = ThunkActionPayload<R> & ActionBase;
@@ -138,6 +139,7 @@ function createThunkActions<Row>(module: CoreModule) {
   };
 }
 
+/** Used to create async actions for core modules */
 export function createSyncActions<Row>(module: CoreModule) {
   const upperModule = module.toUpperCase();
 

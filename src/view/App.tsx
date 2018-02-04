@@ -15,6 +15,7 @@ export default class App extends React.Component<{}, {}> {
 
   /** React componentWillUnmount */
   public componentWillUnmount() {
+    SyncService.stop();
     (Toast as any).toastInstance = null;
     (ActionSheet as any).actionsheetInstance = null;
   }

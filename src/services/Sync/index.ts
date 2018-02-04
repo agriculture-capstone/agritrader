@@ -55,6 +55,7 @@ export interface SyncServiceInstance {
   syncModule(module: CoreModule): Job;
 }
 
+/** Sync service module */
 export interface SyncService {
   (): SyncServiceInstance;
   stop(): void;
@@ -158,6 +159,7 @@ function createSyncService(): SyncServiceInstance {
       return !!Object.values(activeModuleJobs).length;
     },
 
+    /** Sync all modules */
     async syncAll(): Jobs {
       // Reset the time for next automatic sync
       if (~intervalId) clearInterval(intervalId);
@@ -169,6 +171,11 @@ function createSyncService(): SyncServiceInstance {
       return Promise.all(modulesPending);
     },
 
+    /**
+     * Sync a specific module
+     *
+     * @param module Module to sync
+     */
     async syncModule(module: CoreModule) {
       // Check if there is currently an active job for this module, return if so
       const currentJob = activeModuleJobs[module];

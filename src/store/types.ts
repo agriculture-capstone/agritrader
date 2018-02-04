@@ -101,6 +101,11 @@ export type StoreLocalCreationRow<T> = T & LastModifiedData & UUIDData;
  */
 export type StoreLocalUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
+/**
+ * Data model for sync update
+ *
+ * @template T Data model for module
+ */
 export type CoreSyncUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
 /**
