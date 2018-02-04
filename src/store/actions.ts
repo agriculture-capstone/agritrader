@@ -5,7 +5,8 @@ const rootActions = {
     type: 'LOGOUT',
   }),
 
-  login: (): RootAction => ({
+  login: (payload: { uuid: string, jwt: string }): RootAction => ({
+    payload,
     type: 'LOGIN',
   }),
 };

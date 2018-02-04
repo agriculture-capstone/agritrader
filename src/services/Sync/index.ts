@@ -1,20 +1,11 @@
 import Config from 'react-native-config';
 import * as R from 'ramda';
 
-import { CoreModule, getModulePath, createThunks, createSyncActions } from '../../utils/CoreModule';
+import { CoreModuleName, getModulePath, createThunks, createSyncActions } from '../../utils/CoreModule';
 import store from '../../store';
 import { CoreModuleState } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
 
-/*
-* A symbol is a primitive type that is guaranteed to be unique. That means
-* the only thing that will match this symbol is this exact symbol right here.
-* The only way to access the instance of SyncServiceInstance is using this symbol
-* defined here.
-*
-* This is useful to mock out the SyncService during tests
-*/
-const INSTANCE_ACCESSOR = Symbol('Accessor for instance of SyncService');
 
 /**
  * Promise representing the job taking place
@@ -23,14 +14,9 @@ type Job = Promise<boolean>;
 
 type Jobs = Promise<boolean[]>;
 
-/** Default number of seconds between automatic sync */
-const DEFAULT_FREQUENCY = 30;
-
-/** Number of milliseconds in a second */
-const TO_MILLISECONDS = 1000;
-
-/** The sync frequency for automatic sync */
-const SYNC_FREQUENCY = TO_MILLISECONDS * (Config.SYNC_FREQUENCY || DEFAULT_FREQUENCY);
+interface CurrentModuleJobs {
+  [key: string]: Job | undefined;
+}
 
 /** Instance of the sync service */
 export interface SyncServiceInstance {
@@ -52,7 +38,7 @@ export interface SyncServiceInstance {
    *
    * @returns A promise that resolves when module has successfully synced
    */
-  syncModule(module: CoreModule): Job;
+  syncModule(module: CoreModuleName): Job;
 }
 
 /** Sync service module */
@@ -61,10 +47,35 @@ export interface SyncService {
   stop(): void;
 }
 
-interface CurrentModuleJobs {
-  [key: string]: Job | undefined;
-}
+/**
+ * Keeps track of the current sync interval id
+ */
+let intervalId = -1;
 
+/*
+* A symbol is a primitive type that is guaranteed to be unique. That means
+* the only thing that will match this symbol is this exact symbol right here.
+* The only way to access the instance of SyncServiceInstance is using this symbol
+* defined here.
+*
+* This is useful to mock out the SyncService during tests
+*/
+const INSTANCE_ACCESSOR = Symbol('Accessor for instance of SyncService');
+
+/** Default number of seconds between automatic sync */
+const DEFAULT_FREQUENCY = 30;
+
+/** Number of milliseconds in a second */
+const TO_MILLISECONDS = 1000;
+
+/** The sync frequency for automatic sync */
+const SYNC_FREQUENCY = TO_MILLISECONDS * (Config.SYNC_FREQUENCY || DEFAULT_FREQUENCY);
+
+/**
+ * Keep track of the current module jobs
+ *
+ * Represents active modules that are currently syncing
+ */
 const activeModuleJobs = {} as CurrentModuleJobs;
 
 /**
@@ -76,7 +87,7 @@ const activeModuleJobs = {} as CurrentModuleJobs;
  *
  * @returns Promise that resolves when job is over
  */
-async function createJob(module: CoreModule): Job {
+async function createJob(module: CoreModuleName): Job {
   const actions = createSyncActions(module);
   const { rows: localRows } = (store.getState() as any)[module] as CoreModuleState<{}>;
   const path = getModulePath(module);
@@ -84,8 +95,8 @@ async function createJob(module: CoreModule): Job {
   const thunks = createThunks(module);
 
   return new Promise(async (resolve, reject) => {
-    if (R.contains(module, [CoreModule.MILK]) && activeModuleJobs[CoreModule.FARMER]) {
-      await activeModuleJobs[CoreModule.FARMER];
+    if (R.contains(module, [CoreModuleName.MILK]) && activeModuleJobs[CoreModuleName.FARMER]) {
+      await activeModuleJobs[CoreModuleName.FARMER];
     }
 
     // Go through store and update local data
@@ -146,9 +157,6 @@ async function createJob(module: CoreModule): Job {
   }) as Job;
 }
 
-// tslint:disable-next-line:no-var-keyword
-var intervalId = -1;
-
 function createSyncService(): SyncServiceInstance {
 
   const instance: SyncServiceInstance = {
@@ -166,7 +174,7 @@ function createSyncService(): SyncServiceInstance {
       intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
       // Forcing the types to work because we know better than Typescript here (be careful)
-      const modulesPending = Object.values(CoreModule).map(async m => instance.syncModule(m as CoreModule));
+      const modulesPending = Object.values(CoreModuleName).map(async m => instance.syncModule(m as CoreModuleName));
 
       return Promise.all(modulesPending);
     },
@@ -176,7 +184,7 @@ function createSyncService(): SyncServiceInstance {
      *
      * @param module Module to sync
      */
-    async syncModule(module: CoreModule) {
+    async syncModule(module: CoreModuleName) {
       // Check if there is currently an active job for this module, return if so
       const currentJob = activeModuleJobs[module];
       if (currentJob) {
@@ -184,8 +192,8 @@ function createSyncService(): SyncServiceInstance {
       }
 
       // Deal with dependencies
-      if (R.contains(module, [CoreModule.MILK])) {
-        await instance.syncModule(CoreModule.FARMER);
+      if (R.contains(module, [CoreModuleName.MILK])) {
+        await instance.syncModule(CoreModuleName.FARMER);
       }
 
       const job = createJob(module);
@@ -223,7 +231,7 @@ const SyncService: SyncService = function SyncService(): SyncServiceInstance {
 } as SyncService;
 
 SyncService.stop = function () {
-  clearInterval(intervalId);
+  if (~intervalId) clearInterval(intervalId);
 };
 
 export default SyncService;

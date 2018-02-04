@@ -30,7 +30,15 @@ export type RootAction = {
   type: 'LOGOUT',
 } | {
   type: 'LOGIN',
+  payload: LoginPayload;
 };
+
+/** Root action models */
+
+export interface LoginPayload {
+  jwt: string;
+  uuid: string;
+}
 
 /** Combine module specific actions with RootAction */
 export type ModuleAction<T> = T | RootAction;

@@ -105,14 +105,13 @@
 			"node"
 		],
 		"transform": {
-			"^.+\\.tsx?$": "ts-jest",
 			"^.+\\.jsx?$": "babel-jest"
 		},
-		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?)$",
 		"testPathIgnorePatterns": [
 			"\\.snap$",
 			"<rootDir>/node_modules/",
-			"<rootDir>/lib/"
+			"<rootDir>/src/"
 		],
 		"transformIgnorePatterns": [
 			"node_modules/(?!react-native|native-base|react-navigation|redux-persist-sensitive-storage|redux-persist)"

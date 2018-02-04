@@ -20,7 +20,7 @@ import {
 /*--------------------------------- Utility Types ---------------------------------*/
 
 /** Different core modules */
-export enum CoreModule {
+export enum CoreModuleName {
   // FARMER MUST COME FIRST IN THE LIST, THIS ORDER SPECIFIES THE ORDER OF THE SYNC
   FARMER = 'farmer',
   MILK = 'milk',
@@ -31,11 +31,11 @@ export enum CoreModule {
  *
  * @param module Module to retrieve path for
  */
-export function getModulePath(module: CoreModule): CorePath {
+export function getModulePath(module: CoreModuleName): CorePath {
   switch (module) {
-    case CoreModule.FARMER: return CorePath.FARMERS;
+    case CoreModuleName.FARMER: return CorePath.FARMERS;
 
-    case CoreModule.MILK: return CorePath.MILK;
+    case CoreModuleName.MILK: return CorePath.MILK;
 
     default: throw new Error(`No such module/path mapping for module ${module}`);
   }
@@ -118,7 +118,7 @@ const syncUpdateRowType = (upperModule: string) => `SYNC_UPDATE_${upperModule}_R
 
 /*------------------------------------- Actions ------------------------------------*/
 
-function createThunkActions<Row>(module: CoreModule) {
+function createThunkActions<Row>(module: CoreModuleName) {
   const upperModule = module.toUpperCase();
 
   return {
@@ -140,7 +140,7 @@ function createThunkActions<Row>(module: CoreModule) {
 }
 
 /** Used to create async actions for core modules */
-export function createSyncActions<Row>(module: CoreModule) {
+export function createSyncActions<Row>(module: CoreModuleName) {
   const upperModule = module.toUpperCase();
 
   return {
@@ -160,7 +160,7 @@ export function createSyncActions<Row>(module: CoreModule) {
  * @param name Name of the module
  * @param initialState initialState for application
  */
-export function createReducer<Row>(name: CoreModule, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
+export function createReducer<Row>(name: CoreModuleName, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
   const upperName = name.toUpperCase();
 
   return (state = initialState, action: ThunkAction<Row>) => {
@@ -242,7 +242,7 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
  * @param module Name of the module
  * @param path Path for the module on the core
  */
-export function createThunks<Row>(module: CoreModule) {
+export function createThunks<Row>(module: CoreModuleName) {
   const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createThunkActions(module);
   const path = getModulePath(module);
 

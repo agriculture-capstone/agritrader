@@ -6,6 +6,7 @@ import sensitiveActions from '../../store/modules/sensitive/actions';
 import { CoreUpdateRequest, CoreCreationRequest, CoreRow } from '../../store/types';
 import { NetInfo } from 'react-native';
 import { NetworkError } from '../../errors/NetworkError';
+import { AuthenticationError } from '../../errors/AuthenticationError';
 
 /** Paths on Core for specific data tables */
 export enum CorePath {
@@ -151,8 +152,8 @@ export default class CoreAPI {
    *
    * @return {boolean} Success status (true if successful)
    */
-  public static async login(username: string, password: string): Promise<boolean> {
-    const url = LOGIN_PATH;
+  public static async login(username: string, password: string): Promise<{ uuid: string, jwt: string }> {
+    const url = `${Config.CORE_HOST}:${Config.CORE_PORT}${LOGIN_PATH}`;
     const method: CoreRequestMethod = 'POST';
     const headers = new Headers({
       'content-type': 'application/json',
@@ -171,12 +172,15 @@ export default class CoreAPI {
 
     const response = await fetch(request);
 
-    // Check response
-    if (!response.ok) return false;
+    // tslint:disable-next-line:no-console
+    console.log(response);
 
-    const { jwt } = await response.json();
+    // Check response
+    if (!response.ok) throw new AuthenticationError();
+
+    const { jwt, uuid } = await response.json();
     store.dispatch(sensitiveActions.setJwt(jwt));
 
-    return true;
+    return { uuid, jwt };
   }
 }
