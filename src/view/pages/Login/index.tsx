@@ -22,7 +22,7 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import { images } from '../../assets/';
 import styles from './style';
 import { State, LoginPayload } from '../../../store/types';
-import rootActions from '../../../store/actions';
+import rootThunks from '../../../store/thunks';
 import Composer from '../../hoc/PageComposer';
 import CoreAPI from '../../../utils/CoreAPI/index';
 import { AuthenticationError } from '../../../errors/AuthenticationError';
@@ -43,7 +43,7 @@ interface StoreProps {
 }
 
 interface DispatchProps {
-  login(payload: { uuid: string, jwt: string }): void;
+  login(payload: { uuid: string, jwt: string }): Promise<void>;
 }
 /**
  *Login Properties
@@ -72,19 +72,26 @@ class Login extends React.Component<PropsType, OwnState> {
     if (!this.state.loggingIn) {
       const loggingIn = CoreAPI.login(username, password);
       this.setState(state => ({ loggingIn }));
+
       loggingIn
-        .then(payload => void this.props.login(payload))
+        // If successful, login
+        .then(async (payload) => {
+          this.setState(state => ({ loggingIn: null }));
+          await this.props.login(payload);
+        })
+        // If unsuccessful, stop spinner and check error
         .catch((e) => {
+          this.setState(state => ({ loggingIn: null }));
           if (e.name === AuthenticationError.name) {
             this.setState(state => ({ showError: true }));
           } else {
             throw e;
           }
         })
+        // If unknown error, log it
         // tslint:disable-next-line:no-console
         .catch(e => void console.log(e.message || e))
-        .then(() => void (this.setState(state => ({ loggingIn: null }))))
-        ;
+      ;
     }
   }
 
@@ -167,7 +174,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) =>
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    login: (payload: { uuid: string, jwt: string }) => dispatch(rootActions.login(payload)),
+    login: async (payload: { uuid: string, jwt: string }) => dispatch(rootThunks.login(payload)),
   };
 };
 

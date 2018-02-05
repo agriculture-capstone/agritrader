@@ -149,9 +149,9 @@ export type ThunkUpdateRow<T> = Partial<T> & UUIDData;
  *
  * @template T Return type of thunk
  */
-export type Thunk<T> = ThunkAction<T, State, { CoreAPI: typeof CoreAPI }>;
+export type Thunk<T> = ThunkAction<Promise<T>, State, { CoreAPI: typeof CoreAPI }>;
 
 /**
  * Function definition for core module thunks
  */
-export type CoreThunk = Thunk<Promise<string>>;
+export type CoreThunk = Thunk<string>;

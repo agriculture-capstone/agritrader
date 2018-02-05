@@ -9,10 +9,7 @@ import { NetworkError } from '../../errors/NetworkError';
 import { AuthenticationError } from '../../errors/AuthenticationError';
 
 /** Paths on Core for specific data tables */
-export enum CorePath {
-  FARMERS = '/people/farmers',
-  MILK = '/transactions/products/milk',
-}
+export type CorePath = '/people/farmers' | '/transactions/products/milk';
 
 const LOGIN_PATH = '/actions/authenticate';
 

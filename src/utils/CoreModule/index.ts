@@ -19,12 +19,15 @@ import {
 
 /*--------------------------------- Utility Types ---------------------------------*/
 
-/** Different core modules */
-export enum CoreModuleName {
+/** Different types of modules */
+export type CoreModuleName = 'farmer' | 'milk';
+
+/** Map for modules */
+export const CoreModuleNames: CoreModuleName[] = [
   // FARMER MUST COME FIRST IN THE LIST, THIS ORDER SPECIFIES THE ORDER OF THE SYNC
-  FARMER = 'farmer',
-  MILK = 'milk',
-}
+  'farmer',
+  'milk',
+];
 
 /**
  * Get the module path for the specified module
@@ -33,9 +36,9 @@ export enum CoreModuleName {
  */
 export function getModulePath(module: CoreModuleName): CorePath {
   switch (module) {
-    case CoreModuleName.FARMER: return CorePath.FARMERS;
+    case 'farmer': return '/people/farmers';
 
-    case CoreModuleName.MILK: return CorePath.MILK;
+    case 'milk': return '/transactions/products/milk';
 
     default: throw new Error(`No such module/path mapping for module ${module}`);
   }
@@ -82,7 +85,7 @@ function isResponse(response: any): response is Response {
 }
 
 function isNetworkError(err: any): err is NetworkError {
-  return (err instanceof NetworkError);
+  return (err.name === NetworkError.name);
 }
 
 function rowNotFound<T>(row?: StoreRow<T>): row is undefined {

@@ -3,7 +3,7 @@ import { BaseReducer, persistReducer as createPersistedReducer, PersistConfig } 
 import storage from 'redux-persist/lib/storage';
 
 import { State, Action } from './types';
-import { CoreModuleName } from '../utils/CoreModule/index';
+import { CoreModuleNames } from '../utils/CoreModule/index';
 
 import drawerReducer from './modules/drawer/reducer';
 import navReducer from './modules/nav/reducer';
@@ -17,7 +17,7 @@ import activeRowsReducer from './modules/activeRows/reducer';
 import milkReducer from './modules/milk/reducer';
 
 // Whitelist the core modules
-const whitelist = [...Object.values(CoreModuleName), 'activeRows'];
+const whitelist = [...CoreModuleNames, 'activeRows'];
 
 // Create persist config using AsyncStorage for root
 const persistConfig: PersistConfig = {

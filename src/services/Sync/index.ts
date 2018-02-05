@@ -1,7 +1,7 @@
 import Config from 'react-native-config';
 import * as R from 'ramda';
 
-import { CoreModuleName, getModulePath, createThunks, createSyncActions } from '../../utils/CoreModule';
+import { CoreModuleName, getModulePath, createThunks, createSyncActions, CoreModuleNames } from '../../utils/CoreModule';
 import store from '../../store';
 import { CoreModuleState } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
@@ -44,7 +44,7 @@ export interface SyncServiceInstance {
 /** Sync service module */
 export interface SyncService {
   (): SyncServiceInstance;
-  stop(): void;
+  stop(): Promise<void>;
 }
 
 /**
@@ -79,6 +79,15 @@ const SYNC_FREQUENCY = TO_MILLISECONDS * (Config.SYNC_FREQUENCY || DEFAULT_FREQU
 const activeModuleJobs = {} as CurrentModuleJobs;
 
 /**
+ * Type guard to determine if a module is an active job
+ *
+ * @param a Object to test
+ */
+function isJob<T>(a: Promise<T> | undefined): a is Promise<T> {
+  return (typeof a !== 'undefined');
+}
+
+/**
  * Syncs the specified module, without any concern to whether it is already syncing or not
  *
  * Should only be used by instance if the module is not currently syncing this module
@@ -95,8 +104,8 @@ async function createJob(module: CoreModuleName): Job {
   const thunks = createThunks(module);
 
   return new Promise(async (resolve, reject) => {
-    if (R.contains(module, [CoreModuleName.MILK]) && activeModuleJobs[CoreModuleName.FARMER]) {
-      await activeModuleJobs[CoreModuleName.FARMER];
+    if (R.contains(module, ['milk']) && activeModuleJobs['farmer']) {
+      await activeModuleJobs['farmer'];
     }
 
     // Go through store and update local data
@@ -174,7 +183,7 @@ function createSyncService(): SyncServiceInstance {
       intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
 
       // Forcing the types to work because we know better than Typescript here (be careful)
-      const modulesPending = Object.values(CoreModuleName).map(async m => instance.syncModule(m as CoreModuleName));
+      const modulesPending = CoreModuleNames.map(async m => instance.syncModule(m as CoreModuleName));
 
       return Promise.all(modulesPending);
     },
@@ -192,8 +201,8 @@ function createSyncService(): SyncServiceInstance {
       }
 
       // Deal with dependencies
-      if (R.contains(module, [CoreModuleName.MILK])) {
-        await instance.syncModule(CoreModuleName.FARMER);
+      if (R.contains(module, ['milk'])) {
+        await instance.syncModule('farmer');
       }
 
       const job = createJob(module);
@@ -230,8 +239,9 @@ const SyncService: SyncService = function SyncService(): SyncServiceInstance {
   return (SyncService as any)[INSTANCE_ACCESSOR] as SyncServiceInstance;
 } as SyncService;
 
-SyncService.stop = function () {
+SyncService.stop = async function () {
   if (~intervalId) clearInterval(intervalId);
+  return Promise.all(Object.values(activeModuleJobs).filter(isJob)).then(v => void NaN);
 };
 
 export default SyncService;
