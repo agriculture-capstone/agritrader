@@ -15,7 +15,7 @@ const rootThunks = {
 
   logout: (): Thunk<void> => async (dispatch) => {
     // Stop the sync service, wait for any current jobs
-    await SyncService.stop();
+    SyncService.stop();
 
     // Dispatch logout action
     dispatch({

@@ -10,7 +10,9 @@ const navReducer: Reducer<NavState> = (state = initialState, action: Action) => 
   switch (action.type) {
 
     case 'LOGOUT': {
-      let routes = state.routes.filter(r => r.routeName === Route.LOGIN);
+      let navigateAction = NavigationActions.navigate({ routeName: Route.LOGIN });
+      let nextState = Navigator.router.getStateForAction(navigateAction, state) as NavigationState;
+      let routes = nextState.routes.filter(r => r.routeName === Route.LOGIN);
       let index = 0;
 
       return { ...state, routes, index };

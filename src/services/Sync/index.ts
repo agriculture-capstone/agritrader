@@ -179,8 +179,10 @@ function createSyncService(): SyncServiceInstance {
     /** Sync all modules */
     async syncAll(): Jobs {
       // Reset the time for next automatic sync
-      if (~intervalId) clearInterval(intervalId);
-      intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
+      if (!~intervalId) {
+        intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
+      }
+
 
       // Forcing the types to work because we know better than Typescript here (be careful)
       const modulesPending = CoreModuleNames.map(async m => instance.syncModule(m as CoreModuleName));

@@ -175,7 +175,7 @@ export default class CoreAPI {
     // Check response
     if (!response.ok) throw new AuthenticationError();
 
-    const { jwt, uuid } = await response.json();
+    const { token: jwt, uuid } = await response.json();
     store.dispatch(sensitiveActions.setJwt(jwt));
 
     return { uuid, jwt };

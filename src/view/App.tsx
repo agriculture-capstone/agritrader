@@ -1,4 +1,3 @@
-import 'es6-symbol/implement';
 import * as React from 'react';
 import { Root, Toast, ActionSheet, Spinner } from 'native-base';
 import { Provider } from 'react-redux';
@@ -21,6 +20,13 @@ export default class App extends React.Component {
     // Reset toast and actionsheet in attempt to prevent an active bug in native-base
     (Toast as any).toastInstance = null;
     (ActionSheet as any).actionsheetInstance = null;
+  }
+
+  public componentWillMount() {
+    // If logged in, start sync service
+    if (store.getState().sensitiveInfo.jwt) {
+      SyncService();
+    }
   }
 
   /** Render the application */
