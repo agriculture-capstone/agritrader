@@ -10,7 +10,7 @@ const rootThunks = {
     });
 
     // Start sync service
-    SyncService();
+    SyncService().start();
   },
 
   logout: (): Thunk<void> => async (dispatch) => {

@@ -22,10 +22,11 @@ export default class App extends React.Component {
     (ActionSheet as any).actionsheetInstance = null;
   }
 
+  /** React componentWillMount */
   public componentWillMount() {
     // If logged in, start sync service
     if (store.getState().sensitiveInfo.jwt) {
-      SyncService();
+      SyncService().start();
     }
   }
 

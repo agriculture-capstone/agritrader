@@ -27,6 +27,11 @@ export interface SyncServiceInstance {
   readonly syncing: boolean;
 
   /**
+   * Start the sync service
+   */
+  start(): void;
+
+  /**
    * Sync all the core modules
    *
    * @returns A promise that resolves when all modules have successfully synced
@@ -43,7 +48,10 @@ export interface SyncServiceInstance {
 
 /** Sync service module */
 export interface SyncService {
+  /** Get instance of sync service */
   (): SyncServiceInstance;
+
+  /** Stop the sync service from running */
   stop(): Promise<void>;
 }
 
@@ -85,6 +93,15 @@ const activeModuleJobs = {} as CurrentModuleJobs;
  */
 function isJob<T>(a: Promise<T> | undefined): a is Promise<T> {
   return (typeof a !== 'undefined');
+}
+
+/**
+ * Determine whether the sync service interval is active or not
+ *
+ * @param intervalId ID for sync service interval
+ */
+function isRunning(intervalId: number) {
+  return !!~intervalId;
 }
 
 /**
@@ -170,6 +187,13 @@ function createSyncService(): SyncServiceInstance {
 
   const instance: SyncServiceInstance = {
 
+    /** Will start the sync service if it is not already running */
+    start() {
+      if (!isRunning(intervalId)) {
+        intervalId = setInterval(instance.syncAll);
+      }
+    },
+
     // A get property will call a function when accessed and return the value
     // Useful for abstracting away logic from the outside
     get syncing() {
@@ -179,10 +203,10 @@ function createSyncService(): SyncServiceInstance {
     /** Sync all modules */
     async syncAll(): Jobs {
       // Reset the time for next automatic sync
-      if (!~intervalId) {
+      if (isRunning(intervalId)) {
+        clearInterval(intervalId);
         intervalId = setInterval(instance.syncAll, SYNC_FREQUENCY);
       }
-
 
       // Forcing the types to work because we know better than Typescript here (be careful)
       const modulesPending = CoreModuleNames.map(async m => instance.syncModule(m as CoreModuleName));
@@ -221,8 +245,6 @@ function createSyncService(): SyncServiceInstance {
     },
   };
 
-  setTimeout(instance.syncAll, 0);
-
   // Return a frozen instance
   return Object.freeze(instance);
 }
@@ -241,8 +263,9 @@ const SyncService: SyncService = function SyncService(): SyncServiceInstance {
   return (SyncService as any)[INSTANCE_ACCESSOR] as SyncServiceInstance;
 } as SyncService;
 
-SyncService.stop = async function () {
-  if (~intervalId) clearInterval(intervalId);
+SyncService.stop = async function stop() {
+  if (isRunning(intervalId)) clearInterval(intervalId);
+  intervalId = -1;
   return Promise.all(Object.values(activeModuleJobs).filter(isJob)).then(v => void NaN);
 };
 
