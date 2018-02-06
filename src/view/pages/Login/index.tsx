@@ -15,17 +15,23 @@ import {
   Row,
   Col,
   Content,
+  Spinner,
 } from 'native-base';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import { images } from '../../assets/';
 import styles from './style';
-import { State } from '../../../store/types';
-import rootActions from '../../../store/actions';
+import { State, LoginPayload } from '../../../store/types';
+import rootThunks from '../../../store/thunks';
 import Composer from '../../hoc/PageComposer';
+import CoreAPI from '../../../utils/CoreAPI/index';
+import { AuthenticationError } from '../../../errors/AuthenticationError';
 
 interface OwnState {
   username: string;
+  password: string;
+  showError: boolean;
+  loggingIn: Promise<LoginPayload> | null;
 }
 
 interface OwnProps {
@@ -37,7 +43,7 @@ interface StoreProps {
 }
 
 interface DispatchProps {
-  login(): void;
+  login(payload: { uuid: string, jwt: string }): Promise<void>;
 }
 /**
  *Login Properties
@@ -52,48 +58,65 @@ class Login extends React.Component<PropsType, OwnState> {
   public constructor(props: PropsType) {
     super(props);
 
-    // TODO: Should not be storing password in memory if we can help it
     this.state = {
       username: '',
+      password: '',
+      showError: false,
+      loggingIn: null,
     };
   }
 
-  private updateUsername = (value: string) => {
-    // TODO: Use function argument
-    this.setState(state => ({ username: value }));
-  }
-
-  private updatePassword = (value: string) => {
-    // TODO: Use function argument
-  }
   private loginPress = () => {
-    // TODO: Don't just let into app
-    this.props.login();
+    const { username, password } = this.state;
 
-    /*
-    auth: boolean = authenticate(this.state.username, this.state.password);
-    if(auth){
-      this.updatePassord('');
-      save username to redux state
-      store.dispatch({type: string, username: this.state.username})
-      redirect to landing page
-    }
-    else {
-      alert('incorrect username or password')
-    }
-    */
+    if (!this.state.loggingIn) {
+      const loggingIn = CoreAPI.login(username, password);
+      this.setState(state => ({ loggingIn }));
 
+      loggingIn
+        // If successful, login
+        .then(async (payload) => {
+          this.setState(state => ({ loggingIn: null }));
+          await this.props.login(payload);
+        })
+        // If unsuccessful, stop spinner and check error
+        .catch((e) => {
+          this.setState(state => ({ loggingIn: null }));
+          if (e.name === AuthenticationError.name) {
+            this.setState(state => ({ showError: true }));
+          } else {
+            throw e;
+          }
+        })
+        // If unknown error, log it
+        // tslint:disable-next-line:no-console
+        .catch(e => void console.log(e.message || e))
+      ;
+    }
   }
-/**
- *Render method for Login screen
- */
+
+  private onUsernameChange = (username: string) => void (this.setState(state => ({ username })));
+  private onPasswordChange = (password: string) => void (this.setState(state => ({ password })));
+
+  private spinnerOverlay = () => {
+    return (
+      <View style={styles.spinnerContainer}>
+        <Spinner color="red" style={styles.spinner} />
+      </View>
+    );
+  }
+
+  /**
+   *Render method for Login screen
+  */
   public render() {
     return (
       <KeyboardAvoidingView
         style={styles.container}
       >
+      {this.state.loggingIn && this.spinnerOverlay()}
         <Content style={styles.container}>
-          <Form >
+          <Form style={styles.form}>
             <Grid>
               <Row>
                 <Col style={styles.centerContent}>
@@ -105,8 +128,8 @@ class Login extends React.Component<PropsType, OwnState> {
                   <Item floatingLabel style={styles.label} >
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Username</Label>
                     <Input
-                      onChangeText={this.updateUsername}
                       style={{ color:'white' }}
+                      onChangeText={this.onUsernameChange}
                     />
                   </Item>
                 </Col>
@@ -116,12 +139,15 @@ class Login extends React.Component<PropsType, OwnState> {
                   <Item floatingLabel style={styles.label}>
                     <Label style={{ color: 'white', paddingLeft: 8 }}>Password</Label>
                     <Input
-                      onChangeText={this.updatePassword}
                       secureTextEntry={true}
                       style={{ color:'white' }}
+                      onChangeText={this.onPasswordChange}
                     />
                   </Item>
                 </Col>
+              </Row>
+              <Row>
+                {this.state.showError && <Text style={styles.errorMessage}>Invalid username or password, please try again</Text>}
               </Row>
               </Grid>
               <View style={styles.buttonRow}>
@@ -148,7 +174,7 @@ const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) =>
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    login: () => dispatch(rootActions.login()),
+    login: async (payload: { uuid: string, jwt: string }) => dispatch(rootThunks.login(payload)),
   };
 };
 

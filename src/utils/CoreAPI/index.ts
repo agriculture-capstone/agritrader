@@ -1,16 +1,15 @@
+import Config from 'react-native-config';
+
 import HTTPCode from '../HTTPCode';
-import { AGRICORE_URL, AGRICORE_PORT } from '../../config';
 import store from '../../store';
 import sensitiveActions from '../../store/modules/sensitive/actions';
-import { CoreUpdateRequest, CoreCreationRequest } from '../../store/types';
+import { CoreUpdateRequest, CoreCreationRequest, CoreRow } from '../../store/types';
 import { NetInfo } from 'react-native';
 import { NetworkError } from '../../errors/NetworkError';
+import { AuthenticationError } from '../../errors/AuthenticationError';
 
 /** Paths on Core for specific data tables */
-export enum CorePath {
-  FARMERS = '/people/farmers',
-  MILK = '/transactions/products/milk',
-}
+export type CorePath = '/people/farmers' | '/transactions/products/milk';
 
 const LOGIN_PATH = '/actions/authenticate';
 
@@ -22,6 +21,14 @@ type CoreRequestMethod
   | 'HEAD'    // Timestamp
   ;
 
+// Validate config
+if (!Config.CORE_HOST || !Config.CORE_PORT) {
+  throw new Error(`
+    Failed to find required properties CORE_HOST or CORE_PORT
+    Please check your .env file, or make one using the example.env file
+  `);
+}
+
 /**
  * API for interacting with the core
  */
@@ -29,7 +36,7 @@ export default class CoreAPI {
   private url: string;
 
   constructor(path: CorePath) {
-    this.url = `${AGRICORE_URL}:${AGRICORE_PORT}${path}`;
+    this.url = `${Config.CORE_HOST}:${Config.CORE_PORT}${path}`;
   }
 
   /**
@@ -39,18 +46,18 @@ export default class CoreAPI {
    *
    * @returns
    */
-  public async get<Row>(uuid: string) {
+  public async get<T>(uuid: string): Promise<CoreRow<T>> {
     const url = `${this.url}/${uuid}`;
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));
 
-    return await this.coreFetch(request) as Row;
+    return await this.coreFetch(request) as CoreRow<T>;
   }
 
   /**
    * Get all of the specified resource
    */
-  public async getAll() {
+  public async getAll<T>(): Promise<CoreRow<T>[]> {
     const url = this.url;
     const method: CoreRequestMethod = 'GET';
     const request = new Request(url, this.getOptions(method));
@@ -63,7 +70,7 @@ export default class CoreAPI {
    *
    * @param row Information to overwrite
    */
-  public async update<T>(row: CoreUpdateRequest<T>) {
+  public async update<T>(row: CoreUpdateRequest<T>): Promise<CoreRow<T>> {
     const url = this.url;
     const method: CoreRequestMethod = 'PUT';
     const request = new Request(url, this.getOptions(method, row));
@@ -142,8 +149,8 @@ export default class CoreAPI {
    *
    * @return {boolean} Success status (true if successful)
    */
-  public static async login(username: string, password: string): Promise<boolean> {
-    const url = LOGIN_PATH;
+  public static async login(username: string, password: string): Promise<{ uuid: string, jwt: string }> {
+    const url = `${Config.CORE_HOST}:${Config.CORE_PORT}${LOGIN_PATH}`;
     const method: CoreRequestMethod = 'POST';
     const headers = new Headers({
       'content-type': 'application/json',
@@ -162,12 +169,15 @@ export default class CoreAPI {
 
     const response = await fetch(request);
 
-    // Check response
-    if (!response.ok) return false;
+    // tslint:disable-next-line:no-console
+    console.log(response);
 
-    const { jwt } = await response.json();
+    // Check response
+    if (!response.ok) throw new AuthenticationError();
+
+    const { token: jwt, uuid } = await response.json();
     store.dispatch(sensitiveActions.setJwt(jwt));
 
-    return true;
+    return { uuid, jwt };
   }
 }

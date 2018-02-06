@@ -33,6 +33,7 @@ export const getActiveFarmer = createSelector(
         status: 'clean',
         lastModified: '',
         uuid: '',
+        paymentFrequency: '',
       };
       return empty;
     }

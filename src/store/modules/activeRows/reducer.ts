@@ -29,13 +29,15 @@ const activeRowReducer: Reducer<ActiveRowsState> = (state = initialState, action
         activeMilkEntryUUID : '',
       };
     }
-    case 'UPDATE_CURRENT_TRADER': {
+    case 'LOGIN': {
+      const { uuid } = action.payload;
+
       return {
         ...state,
-        activeTraderUUID : action.currentTraderUUID,
+        activeTraderUUID : uuid,
       };
     }
-    case 'CLEAR_CURRENT_TRADER': {
+    case 'LOGOUT': {
       return {
         ...state,
         activeTraderUUID : '',

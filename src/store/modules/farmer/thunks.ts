@@ -1,11 +1,10 @@
-import { createThunks, CoreModule } from '../../../utils/CoreModule';
-import { CorePath } from '../../../utils/CoreAPI/index';
+import { createThunks } from '../../../utils/CoreModule';
 import { Farmer } from './types';
 
 const {
   createRow: createFarmer,
   updateRow: updateFarmer,
-} = createThunks<Farmer>(CoreModule.FARMER, CorePath.FARMERS);
+} = createThunks<Farmer>('farmer');
 
 export default {
   createFarmer,

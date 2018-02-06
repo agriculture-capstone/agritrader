@@ -1,11 +1,10 @@
-import { createThunks, CoreModule } from '../../../utils/CoreModule';
-import { CorePath } from '../../../utils/CoreAPI/index';
+import { createThunks } from '../../../utils/CoreModule';
 import { MilkEntry } from './types';
 
 const {
   createRow: createMilkEntry,
   updateRow: updateMilkEntry,
-} = createThunks<MilkEntry>(CoreModule.MILK, CorePath.MILK);
+} = createThunks<MilkEntry>('milk');
 
 export default {
   createMilkEntry,
