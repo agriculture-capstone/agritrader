@@ -32,6 +32,9 @@ interface OwnStateType {
   lastName: string;
   phoneNumber: string;
   notes: string;
+  validFirstName: boolean;
+  validLastName: boolean;
+  validPhoneNumber: boolean;
 }
 
 /**
@@ -52,8 +55,12 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       lastName: '',
       phoneNumber: '',
       notes: '',
+      validFirstName: false,
+      validLastName: false,
+      validPhoneNumber: false,
     };
   }
+
 
   /** Create page buttons */
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
@@ -82,13 +89,54 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     Keyboard.dismiss();
   }
 
-
+  private allValid = () => (
+    this.state.validFirstName 
+    && this.state.validLastName 
+    // && this.state.validPhoneNumber
+  )
+ 
   /**
    * Handle farmer details changes, update local state
    */
-  private onChangeFirstName = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
-  private onChangeLastName = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
-  private onChangePhoneNumber = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
+  private onChangeFirstName = (newFirstName: string) => {
+    if (!newFirstName) {
+      this.setState(state => ({ validFirstName: false }));
+    } else {
+      this.setState(state => ({ firstName: newFirstName, validFirstName: true }));
+    }
+  } 
+
+  private onChangeLastName = (newLastName: string) => { 
+    if (!newLastName) {
+      this.setState(state => ({ validLastName: false }));
+    } else {
+      this.setState(state => ({ lastName: newLastName, validLastName: true }));
+    }
+  }
+
+  /**
+   * @requires phone number to be all numeric and be 10 digits (optional)
+   * 
+   * @source: https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
+   * Valid phone formats:
+   *    (123) 456-7890
+   *    (123)456-7890
+   *    123-456-7890
+   *    123.456.7890
+   *    1234567890
+   *    +31636363634
+   *    075-63546725
+   */
+  private onChangePhoneNumber = (newPhone: string) => { 
+    // let numbers = /^[0-9]+$/;
+    let numbers = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    if (!newPhone || !newPhone.match(numbers)) {
+      this.setState(state => ({ validPhoneNumber: false }));
+    } else {
+      this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
+    }
+  }
+
   private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
   /**
@@ -98,27 +146,37 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderFields() {
     return (
       <Form>
-      <Item floatingLabel>
+      <Item success={this.state.validFirstName} error={!this.state.validFirstName} floatingLabel>
         <Label>First Name</Label>
         <Input autoCapitalize="words" onChangeText={this.onChangeFirstName} />
       </Item>
-      <Item floatingLabel>
+      <Item success={this.state.validLastName} error={!this.state.validLastName} floatingLabel>
         <Label>Last Name</Label>
         <Input autoCapitalize="words" onChangeText={this.onChangeLastName} />
       </Item>
-      <Item floatingLabel last>
+      <Item success={this.state.validPhoneNumber} error={!this.state.validPhoneNumber} floatingLabel>
         <Label>Phone Number</Label>
         <Input onChangeText={this.onChangePhoneNumber} keyboardType={'numeric'}/>
       </Item>
