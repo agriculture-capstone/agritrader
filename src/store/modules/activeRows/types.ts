@@ -1,3 +1,5 @@
+import { RootAction } from '../../types';
+
 /*----------------------- State -----------------------*/
 /** currentFarmer & currentMilkEntryState*/
 export interface ActiveRowsState {
@@ -8,7 +10,7 @@ export interface ActiveRowsState {
 
 /*----------------------- Actions -----------------------*/
 /** currentFarmer & currentMilkEntry Action Types */
-export type Action = {
+export type Action = RootAction | {
   type: 'UPDATE_CURRENT_FARMER',
   currentFarmerUUID: string,
 } | {

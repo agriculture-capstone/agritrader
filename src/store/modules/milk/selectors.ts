@@ -25,13 +25,14 @@ export const getActiveMilkEntry = createSelector(
     // TODO: Re-evaluate this
     if (!maybeMilkEntry) {
       const empty: StoreMilkEntry = {
+        type: 'milk',
         datetime: '',
         toPersonUuid: '',
         fromPersonUuid: '',
         amountOfProduct: 0,
         costPerUnit: 0,
         currency: '',
-        quality: '',
+        milkQuality: '',
         status: 'clean',
         lastModified: '',
         uuid: '',
@@ -67,7 +68,7 @@ export const getFarmersTransactions = createSelector(
 
 /**
  * Selector to get all milk transactions for a specific farmer formatted for the collect page
- * if using with the DataTable ensure that the last element in the array is the milk transaction uuid. 
+ * if using with the DataTable ensure that the last element in the array is the milk transaction uuid.
  */
 export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],

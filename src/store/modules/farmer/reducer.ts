@@ -1,4 +1,4 @@
-import { createReducer, CoreModule } from '../../../utils/CoreModule';
+import { createReducer } from '../../../utils/CoreModule';
 import { Farmer } from './types';
 
-export default createReducer<Farmer>(CoreModule.FARMER);
+export default createReducer<Farmer>('farmer');

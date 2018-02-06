@@ -13,34 +13,70 @@ import {
   ThunkUpdateRow,
   CoreModuleState,
   Status,
+  CoreSyncUpdateRow,
+  CoreRow,
 } from '../../store/types';
 
 /*--------------------------------- Utility Types ---------------------------------*/
 
-/** Different core modules */
-export enum CoreModule {
-  FARMER = 'farmer',
-  MILK = 'milk',
+/** Different types of modules */
+export type CoreModuleName = 'farmer' | 'milk';
+
+/** Map for modules */
+export const CoreModuleNames: CoreModuleName[] = [
+  // FARMER MUST COME FIRST IN THE LIST, THIS ORDER SPECIFIES THE ORDER OF THE SYNC
+  'farmer',
+  'milk',
+];
+
+/**
+ * Get the module path for the specified module
+ *
+ * @param module Module to retrieve path for
+ */
+export function getModulePath(module: CoreModuleName): CorePath {
+  switch (module) {
+    case 'farmer': return '/people/farmers';
+
+    case 'milk': return '/transactions/products/milk';
+
+    default: throw new Error(`No such module/path mapping for module ${module}`);
+  }
 }
 
 /*-------------------------------- Generic Actions --------------------------------*/
 
-type CreateLocalPayload<Row> = { row: StoreLocalCreationRow<Row> };
-type CreateRemotePayload = { localUUID: string, coreUUID: string, lastModified: string };
-type UpdateLocalPayload<Row> = { row: StoreLocalUpdateRow<Row> };
-type UpdateRemotePayload = { uuid: string, lastModified: string };
 type EmptyPayload = {};
 
+type CreateLocalPayload<Row> = { row: StoreLocalCreationRow<Row> };
+type CreateRemotePayload = { uuid: string, lastModified: string };
+type UpdateLocalPayload<Row> = { row: StoreLocalUpdateRow<Row> };
+type UpdateRemotePayload<Row> = { row: CoreRow<Row> };
+type SetLastSyncedPayload = { lastSynced: string };
 
-type ActionPayload<Row>
+
+type SyncCreatePayload<Row> = { row: CoreRow<Row> };
+type SyncUpdatePayload<Row> = { row: CoreSyncUpdateRow<Row> };
+
+type ThunkActionPayload<Row>
   = CreateLocalPayload<Row>
   | CreateRemotePayload
   | UpdateLocalPayload<Row>
-  | UpdateRemotePayload
+  | UpdateRemotePayload<Row>
+  | SetLastSyncedPayload
   | EmptyPayload
   ;
 
-type Action<R> = ActionPayload<R> & ActionBase;
+type SyncActionPayload<Row>
+  = SyncCreatePayload<Row>
+  | SyncUpdatePayload<Row>
+  | EmptyPayload
+  ;
+
+/** Sync action type */
+export type SyncAction<Row> = SyncActionPayload<Row> & ActionBase;
+
+type ThunkAction<R> = ThunkActionPayload<R> & ActionBase;
 
 /*-------------------------------- Helper Functions -------------------------------*/
 
@@ -49,11 +85,15 @@ function isResponse(response: any): response is Response {
 }
 
 function isNetworkError(err: any): err is NetworkError {
-  return (err instanceof NetworkError);
+  return (err.name === NetworkError.name);
 }
 
 function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
   return (row === undefined);
+}
+
+function hasUUID<T>(row: ThunkCreationRow<T>): row is StoreLocalCreationRow<T> {
+  return typeof row.uuid !== 'undefined' && row.uuid !== null;
 }
 
 function deriveIsDirty<T>(rows: StoreRow<T>[]) {
@@ -64,27 +104,54 @@ function createInitialState<Row>(): CoreModuleState<Row> {
   return {
     isDirty: false,
     rows: [] as StoreRow<Row>[],
-    lastModified: UTCDate.OLD_DATE,
+    lastSynced: UTCDate.OLD_DATE,
   };
 }
 
+/*----------------------------------- Action Types ----------------------------------*/
+
+const createRowLocalType = (upperModule: string) => `CREATE_${upperModule}_ROW_LOCAL`;
+const createRowRemoteType = (upperModule: string) =>  `CREATE_${upperModule}_ROW_REMOTE`;
+const updateRowLocalType = (upperModule: string) =>  `UPDATE_${upperModule}_ROW_LOCAL`;
+const updateRowRemoteType = (upperModule: string) =>  `UPDATE_${upperModule}_ROW_REMOTE`;
+const setLastSyncedType = (upperModule: string) =>  `SET_${upperModule}_LAST_SYNCED`;
+
+const syncCreateRowType = (upperModule: string) => `SYNC_CREATE_${upperModule}_ROW`;
+const syncUpdateRowType = (upperModule: string) => `SYNC_UPDATE_${upperModule}_ROW`;
+
 /*------------------------------------- Actions ------------------------------------*/
 
-function createActions<Row>(name: CoreModule) {
-  const UPPER_NAME = name.toUpperCase();
+function createThunkActions<Row>(module: CoreModuleName) {
+  const upperModule = module.toUpperCase();
 
   return {
-    createRowLocal: (row: StoreLocalCreationRow<Row>): Action<Row> =>
-    ({ row, type: `CREATE_${UPPER_NAME}_LOCAL` }),
+    createRowLocal: (row: StoreLocalCreationRow<Row>): ThunkAction<Row> =>
+      ({ row, type: createRowLocalType(upperModule) }),
 
-    createRowRemote: (localUUID: string, coreUUID: string, lastModified: string): Action<Row> =>
-      ({ localUUID, coreUUID, lastModified, type: `CREATE_${UPPER_NAME}_REMOTE` }),
+    createRowRemote: (uuid: string, lastModified: string): ThunkAction<Row> =>
+      ({ uuid, lastModified, type: createRowRemoteType(upperModule) }),
 
-    updateRowLocal: (row: StoreLocalUpdateRow<Row>): Action<Row> =>
-      ({ row, type: `UPDATE_${UPPER_NAME}_LOCAL` }),
+    updateRowLocal: (row: StoreLocalUpdateRow<Row>): ThunkAction<Row> =>
+      ({ row, type: updateRowLocalType(upperModule) }),
 
-    updateRowRemote: (uuid: string, lastModified: string): Action<Row> =>
-      ({ uuid, lastModified, type: `UPDATE_${UPPER_NAME}_REMOTE` }),
+    updateRowRemote: (row: CoreRow<Row>): ThunkAction<Row> =>
+      ({ row, type: updateRowRemoteType(upperModule) }),
+
+    setLastSynced: (lastSynced: string): ThunkAction<Row> =>
+      ({ lastSynced, type: setLastSyncedType(upperModule) }),
+  };
+}
+
+/** Used to create async actions for core modules */
+export function createSyncActions<Row>(module: CoreModuleName) {
+  const upperModule = module.toUpperCase();
+
+  return {
+    syncCreateRow: (row: CoreRow<Row>): SyncAction<Row> =>
+      ({ row, type: syncCreateRowType(upperModule) }),
+
+    syncUpdateRow: (row: CoreSyncUpdateRow<Row>) =>
+      ({ row, type: syncUpdateRowType(upperModule) }),
   };
 }
 
@@ -96,15 +163,21 @@ function createActions<Row>(name: CoreModule) {
  * @param name Name of the module
  * @param initialState initialState for application
  */
-export function createReducer<Row>(name: CoreModule, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
-  const UPPER_NAME = name.toUpperCase();
+export function createReducer<Row>(name: CoreModuleName, initialState = createInitialState<Row>()): Reducer<CoreModuleState<Row>> {
+  const upperName = name.toUpperCase();
 
-  return (state = initialState, action: Action<Row>) => {
+  return (state = initialState, action: ThunkAction<Row>) => {
     let status: Status, isDirty: boolean;
 
     switch (action.type) {
 
-      case `CREATE_${UPPER_NAME}_LOCAL`: return (function (action: CreateLocalPayload<any>) {
+      case setLastSyncedType(upperName): return (function (action: SetLastSyncedPayload) {
+        const { lastSynced } = action;
+
+        return { ...state, lastSynced };
+      })(action as any);
+
+      case createRowLocalType(upperName): return (function (action: CreateLocalPayload<any>) {
         status = 'local';
         isDirty = true;
         const row = { ...action.row, status };
@@ -113,16 +186,16 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case `CREATE_${UPPER_NAME}_REMOTE`: return (function (action: CreateRemotePayload) {
+      case createRowRemoteType(upperName): return (function (action: CreateRemotePayload) {
         status = 'clean';
-        const { coreUUID: uuid, lastModified } = action;
-        const rows = state.rows.map(r => r.uuid === action.localUUID ? { ...(r as any), uuid, lastModified } : r);
+        const { uuid, lastModified } = action;
+        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), lastModified, status } : r);
         isDirty = deriveIsDirty(rows);
 
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case `UPDATE_${UPPER_NAME}_LOCAL`: return (function (action: UpdateLocalPayload<any>) {
+      case updateRowLocalType(upperName): return (function (action: UpdateLocalPayload<{}>) {
         status = 'modified';
         isDirty = true;
         const { row: tempRow, row: { uuid } } = action;
@@ -132,11 +205,29 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
         return { ...state, rows, isDirty };
       })(action as any);
 
-      case `UPDATE_${UPPER_NAME}_REMOTE`: return (function (action: UpdateRemotePayload) {
+      case updateRowRemoteType(upperName): return (function (action: UpdateRemotePayload<{}>) {
         status = 'clean';
-        const { uuid, lastModified } = action;
-        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), uuid, lastModified, status } : r);
+        const { uuid } = action.row;
+        const row = { ...action.row, status };
+        const rows = state.rows.map(r => r.uuid === uuid ? { ...(r as any), row } : r);
+
         isDirty = deriveIsDirty(rows);
+
+        return { ...state, rows, isDirty };
+      })(action as any);
+
+      case syncCreateRowType(upperName): return (function (action: SyncCreatePayload<Row>) {
+        status = 'clean';
+        const newRow = { ...(action.row as CoreRow<{}>), status };
+        const rows = [...state.rows, newRow];
+
+        return { ...state, rows };
+      })(action as any);
+
+      case syncUpdateRowType(upperName): return (function (action: SyncUpdatePayload<Row>) {
+        status = 'clean';
+        const coreRow = { ...(action.row as CoreSyncUpdateRow<{}>), status };
+        const rows = state.rows.map(storeRow => storeRow.uuid === coreRow.uuid ? { ...(storeRow as StoreRow<{}>), ...coreRow } : storeRow);
 
         return { ...state, rows };
       })(action as any);
@@ -151,56 +242,63 @@ export function createReducer<Row>(name: CoreModule, initialState = createInitia
 /**
  * Utility to create store thunks for core module
  *
- * @param name Name of the module
+ * @param module Name of the module
  * @param path Path for the module on the core
  */
-export function createThunks<Row>(name: CoreModule, path: CorePath) {
-  const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createActions(name);
+export function createThunks<Row>(module: CoreModuleName) {
+  const { createRowLocal, createRowRemote, updateRowLocal, updateRowRemote } = createThunkActions(module);
+  const path = getModulePath(module);
 
   return {
 
     /** Create a new row */
     createRow: (newRow: ThunkCreationRow<Row>): CoreThunk => async (dispatch, getState, { CoreAPI }) => {
-      const storeCreationRow = StoreUtils.convertCreationRow(newRow);
-      const { uuid: localUUID } = storeCreationRow;
+      let creationRow: StoreLocalCreationRow<Row>;
 
-      // Store the local copy
-      dispatch(createRowLocal(storeCreationRow));
+      if (hasUUID(newRow)) {
+        // Already been created locally
+        creationRow = newRow;
+      } else {
+        creationRow = StoreUtils.convertCreationRow(newRow);
+
+        // Store the local copy
+        dispatch(createRowLocal(creationRow));
+      }
+
+      const { uuid } = creationRow;
+
 
       // Send the new row to the core
       const api = new CoreAPI(path);
-      const requestRow = StoreUtils.convertToCreateRequest(storeCreationRow);
 
       // Create new block for block scoped variables (let) to avoid errors
-      { let coreUUID: string, lastModified: string;
+      { let lastModified: string;
 
         // Attempt to create resource on core
         try {
-          ({ lastModified, uuid: coreUUID } = await api.create(requestRow));
+          ({ lastModified } = await api.create(creationRow));
         } catch (err) {
           // Failed to create resource on Core
           if (isResponse(err)) {
-            // TODO: Deal with different core errors
             const response = err;
             // tslint:disable-next-line:no-console
             console.log(response.status);
 
-            return localUUID;
+            return uuid;
           } else if (isNetworkError(err)) {
             // Currently no network, let request fail and allow sync service to resolve
-            return localUUID;
+            return uuid;
           } else {
             // Not a response error, should be logged
-            // TODO: Log me
             // tslint:disable-next-line:no-console
             console.log(err.message || err);
-            return localUUID;
+            return uuid;
           }
         }
 
         // Create updated model and update store
-        dispatch(createRowRemote(localUUID, coreUUID, lastModified));
-        return coreUUID;
+        dispatch(createRowRemote(uuid, lastModified));
+        return uuid;
       }
     },
 
@@ -210,14 +308,16 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
       const convertedRow = StoreUtils.convertUpdateRow(rowUpdate);
 
       // Update the row in store
+      // TODO: Only perform if it hasn't been updated in store already (optimization)
       dispatch(updateRowLocal(convertedRow));
 
       // Retrieve the updated row
-      const updatedRow = (getState() as any)[name].rows.find((f: StoreRow<Row>) => f.uuid === uuid);
+      const updatedRow = (getState() as any)[module].rows.find((f: StoreRow<Row>) => f.uuid === uuid);
 
       // Deal with no row found
       if (rowNotFound(updatedRow)) {
-        // TODO: Deal with me
+        // tslint:disable-next-line:no-console
+        console.log(`No such row found for uuid: ${uuid}`);
         return uuid;
       }
 
@@ -225,10 +325,10 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
       const api = new CoreAPI(path);
       const requestRow = StoreUtils.convertToUpdateRequest(updatedRow);
 
-      { let lastModified: string;
+      { let row: CoreRow<Row>;
 
         try {
-          ({ lastModified } = await api.update(requestRow));
+          ({ row } = await api.update(requestRow));
         } catch (err) {
           // Failed to create resource on Core
           if (isResponse(err)) {
@@ -249,8 +349,10 @@ export function createThunks<Row>(name: CoreModule, path: CorePath) {
           }
         }
 
+        // TODO: Should be getting the response from core w/ the value of the updated row
+
         // Create updated model and update store
-        dispatch(updateRowRemote(uuid, lastModified));
+        dispatch(updateRowRemote(row));
         return uuid;
       }
     },
