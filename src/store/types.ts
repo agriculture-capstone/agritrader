@@ -30,7 +30,15 @@ export type RootAction = {
   type: 'LOGOUT',
 } | {
   type: 'LOGIN',
+  payload: LoginPayload;
 };
+
+/** Root action models */
+
+export interface LoginPayload {
+  jwt: string;
+  uuid: string;
+}
 
 /** Combine module specific actions with RootAction */
 export type ModuleAction<T> = T | RootAction;
@@ -58,7 +66,7 @@ export type Status
 
 /** Base state for modules synced with core  */
 export interface CoreModuleState<T> {
-  lastModified: string;
+  lastSynced: string;
   isDirty: boolean;
   rows: StoreRow<T>[];
 }
@@ -74,6 +82,11 @@ interface LastModifiedData {
 interface UUIDData {
   uuid: string;
 }
+
+/**
+ * Row as returned by core
+ */
+export type CoreRow<T> = T & LastModifiedData & UUIDData;
 
 /**
  * Data model in store
@@ -97,11 +110,18 @@ export type StoreLocalCreationRow<T> = T & LastModifiedData & UUIDData;
 export type StoreLocalUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
 
 /**
+ * Data model for sync update
+ *
+ * @template T Data model for module
+ */
+export type CoreSyncUpdateRow<T> = Partial<T> & LastModifiedData & UUIDData;
+
+/**
  * Data model for sending creation request to core
  *
  * @template T Data model for module
  */
-export type CoreCreationRequest<T> = T & LastModifiedData;
+export type CoreCreationRequest<T> = T & LastModifiedData & UUIDData;
 
 /**
  * Data model for sending update request to core
@@ -115,7 +135,7 @@ export type CoreUpdateRequest<T> = Partial<T> & LastModifiedData & UUIDData;
  *
  * @template T Data model for module
  */
-export type ThunkCreationRow<T> = T;
+export type ThunkCreationRow<T> = T & Partial<UUIDData>;
 
 /**
  * Data model for thunk item update
@@ -129,9 +149,9 @@ export type ThunkUpdateRow<T> = Partial<T> & UUIDData;
  *
  * @template T Return type of thunk
  */
-export type Thunk<T> = ThunkAction<T, State, { CoreAPI: typeof CoreAPI }>;
+export type Thunk<T> = ThunkAction<Promise<T>, State, { CoreAPI: typeof CoreAPI }>;
 
 /**
  * Function definition for core module thunks
  */
-export type CoreThunk = Thunk<Promise<string>>;
+export type CoreThunk = Thunk<string>;

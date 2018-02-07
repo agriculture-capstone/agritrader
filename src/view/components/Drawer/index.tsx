@@ -6,7 +6,7 @@ import { State } from '../../../store/types';
 import drawerActions from '../../../store/modules/drawer/actions';
 import navActions from '../../../store/modules/nav/actions';
 import headerActions from '../../../store/modules/header/actions';
-// import rootActions from '../../../store/actions';
+import rootThunks from '../../../store/thunks';
 import DrawerContents from './DrawerContents';
 import { Route } from '../../navigation/navigator';
 
@@ -26,7 +26,7 @@ interface DispatchPropsType {
   openDrawer(): void;
   navigate(route: Route): void;
   showHeader(): void;
-  logout(): void;
+  logout(): Promise<void>;
 }
 
 /** Drawer props */
@@ -61,9 +61,8 @@ class Drawer extends React.Component<PropsType, OwnState> {
     this.props.closeDrawer();
   }
 
-  private onLogout() {
-    // TODO: Actually log people out (build a service for this)
-    this.props.logout();
+  private async onLogout() {
+    await this.props.logout();
   }
 
   private createDrawerContents() {
@@ -113,8 +112,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
     openDrawer: () => dispatch(drawerActions.setDrawerShown(true)),
     navigate: (route: Route) => dispatch(navActions.navigateToDrawerRoute(route)),
     showHeader: () => dispatch(headerActions.setHeaderShown(true)),
-    // logout: () => dispatch(rootActions.logout()),
-    logout: () => dispatch(navActions.navigateTo(Route.LOGIN)),
+    logout: async () => dispatch(rootThunks.logout()),
   };
 };
 

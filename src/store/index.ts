@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { persistStore } from 'redux-persist';
 
@@ -11,7 +10,6 @@ const composeEnhancers = (typeof window !== 'undefined' && (window as any).__RED
 
 const store = createStore<State>(rootReducer, composeEnhancers(
   applyMiddleware(
-    createLogger(),
     thunk.withExtraArgument({ CoreAPI }),
   ),
 ));

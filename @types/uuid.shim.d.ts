@@ -8,5 +8,3 @@ declare module 'uuid/v4' {
 
   export = v4;
 }
-
-
