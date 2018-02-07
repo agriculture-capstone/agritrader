@@ -12,19 +12,23 @@ import navActions from '../../../../../store/modules/nav/actions';
 
 
 interface OwnPropsType {
-}
-
-interface DispatchPropsType {
-  navigate(route: Route): void;
-  setActiveExportEntry(uuid: string): void;
-  navigateToExportEntry(): void;
-}
-
-interface StorePropsType {
   currentDayTotal: string;
   currentWeekTotal: string;
   currentMonthTotal: string;
   exportValues: any[];
+}
+
+interface DispatchPropsType {
+  // navigate(route: Route): void;
+  // setActiveExportEntry(uuid: string): void;
+  // navigateToExportEntry(): void;
+}
+
+interface StorePropsType {
+  // currentDayTotal: string;
+  // currentWeekTotal: string;
+  // currentMonthTotal: string;
+  // exportValues: any[];
 }
 
 interface OwnStateType {
@@ -43,7 +47,7 @@ class Export extends React.Component<PropsType, OwnStateType> {
     super(constructorProps);
   }
 
-  private onAddPress = () => this.props.navigate(Route.ADD_EXPORT_ENTRY);
+  // private onAddPress = () => this.props.navigate(Route.ADD_EXPORT_ENTRY);
   private onPressEntry = (uuid: string) => {
     return () => {
       // this.props.setActiveExportEntry(uuid);
@@ -54,7 +58,7 @@ class Export extends React.Component<PropsType, OwnStateType> {
 
   /** React componentDidMount */
   public componentDidMount() {
-    this.props.listenToFab(this.onAddPress);
+    // this.props.listenToFab(this.onAddPress);
   }
 
   /**
