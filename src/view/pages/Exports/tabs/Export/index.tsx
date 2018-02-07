@@ -12,17 +12,19 @@ import navActions from '../../../../../store/modules/nav/actions';
 
 
 interface OwnPropsType {
-  currentDayTotal: string;
-  currentWeekTotal: string;
-  currentMonthTotal: string;
-  exportValues: any[];
 }
 
 interface DispatchPropsType {
   navigate(route: Route): void;
+  setActiveExportEntry(uuid: string): void;
+  navigateToExportEntry(): void;
 }
 
 interface StorePropsType {
+  currentDayTotal: string;
+  currentWeekTotal: string;
+  currentMonthTotal: string;
+  exportValues: any[];
 }
 
 interface OwnStateType {
@@ -37,7 +39,24 @@ type PropsType = InjectedFabProps & NestedPropsType;
  * Container for Exports
  */
 class Export extends React.Component<PropsType, OwnStateType> {
-  // TODO need to connect this to the redux state
+  public constructor(constructorProps: PropsType) {
+    super(constructorProps);
+  }
+
+  private onAddPress = () => this.props.navigate(Route.ADD_EXPORT_ENTRY);
+  private onPressEntry = (uuid: string) => {
+    return () => {
+      // this.props.setActiveExportEntry(uuid);
+      // this.props.navigateToExportEntry();
+    };
+  }
+
+
+  /** React componentDidMount */
+  public componentDidMount() {
+    this.props.listenToFab(this.onAddPress);
+  }
+
   /**
    * Render method for Exports
    */
