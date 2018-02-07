@@ -134,7 +134,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
           </Col>
           <Col>
           <Item>
-            <Input autoCapitalize="words" onChangeText={onChangeText}>
+            <Input autoCapitalize="sentences" onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
