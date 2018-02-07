@@ -170,11 +170,11 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       <Form>
       <Item success={this.state.validFirstName} error={!this.state.validFirstName} floatingLabel>
         <Label>First Name</Label>
-        <Input autoCapitalize="words" onChangeText={this.onChangeFirstName} />
+        <Input autoCapitalize="sentences" onChangeText={this.onChangeFirstName} />
       </Item>
       <Item success={this.state.validLastName} error={!this.state.validLastName} floatingLabel>
         <Label>Last Name</Label>
-        <Input autoCapitalize="words" onChangeText={this.onChangeLastName} />
+        <Input autoCapitalize="sentences" onChangeText={this.onChangeLastName} />
       </Item>
       <Item success={this.state.validPhoneNumber} error={!this.state.validPhoneNumber} floatingLabel>
         <Label>Phone Number</Label>
@@ -182,7 +182,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
       </Item>
       <Item floatingLabel last>
         <Label>Notes</Label>
-        <Input autoCapitalize="words" onChangeText={this.onChangeNotes} />
+        <Input autoCapitalize="sentences" onChangeText={this.onChangeNotes} />
       </Item>
     </Form>
     );
