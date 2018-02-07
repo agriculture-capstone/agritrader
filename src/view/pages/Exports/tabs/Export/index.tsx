@@ -6,7 +6,10 @@ import styles from '../../style';
 import Composer from '../../../../hoc/PageComposer/index';
 import { Route } from '../../../../navigation/navigator';
 import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
-// import Page from '../../../../lib/baseComponents/Page/index';
+import { State } from '../../../../../store/types';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import navActions from '../../../../../store/modules/nav/actions';
+
 
 interface OwnPropsType {
   currentDayTotal: string;
@@ -20,10 +23,6 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  weeklybalance: string;
-  weeklyTotal: string;
-  dailyTotal: string;
-  collectTransactions: any[];
 }
 
 interface OwnStateType {
@@ -92,22 +91,16 @@ const ExportPage = new Composer<NestedPropsType>(Export)
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    weeklyTotal: getWeeklyFarmerMilkTotal(state),
-    dailyTotal: getFarmerDayTotal(state),
-    collectTransactions: getFormattedFarmersTransactions(state),
-    weeklybalance: getFarmerWeeklyBalance(state),
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
-    setActiveMilkEntry: (uuid: string) => dispatch(activeRowsActions.setActiveMilkEntry(uuid)),
-    navigateToMilkEntry: () => dispatch(navActions.navigateTo(Route.MILK_ENTRY_DETAILS)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CollectPage);
+)(ExportPage);
