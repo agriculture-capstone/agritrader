@@ -3,6 +3,9 @@ import { Grid, Row, Col, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import ProductCard from '../../components/ProductCard';
 import styles from '../../style';
+import Composer from '../../../../hoc/PageComposer/index';
+import { Route } from '../../../../navigation/navigator';
+import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
 // import Page from '../../../../lib/baseComponents/Page/index';
 
 interface OwnPropsType {
@@ -11,21 +14,30 @@ interface OwnPropsType {
   currentMonthTotal: string;
   exportValues: any[];
 }
+
 interface DispatchPropsType {
+  navigate(route: Route): void;
 }
 
 interface StorePropsType {
+  weeklybalance: string;
+  weeklyTotal: string;
+  dailyTotal: string;
+  collectTransactions: any[];
 }
-
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 
 interface OwnStateType {
 }
 
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** FarmerSearch PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
+
 /**
  * Container for Exports
  */
-export default class Export extends React.Component<PropsType, OwnStateType> {
+class Export extends React.Component<PropsType, OwnStateType> {
   // TODO need to connect this to the redux state
   /**
    * Render method for Exports
@@ -73,3 +85,29 @@ export default class Export extends React.Component<PropsType, OwnStateType> {
     );
   }
 }
+
+const ExportPage = new Composer<NestedPropsType>(Export)
+  .fab()
+  .page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    weeklyTotal: getWeeklyFarmerMilkTotal(state),
+    dailyTotal: getFarmerDayTotal(state),
+    collectTransactions: getFormattedFarmersTransactions(state),
+    weeklybalance: getFarmerWeeklyBalance(state),
+  };
+};
+
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    setActiveMilkEntry: (uuid: string) => dispatch(activeRowsActions.setActiveMilkEntry(uuid)),
+    navigateToMilkEntry: () => dispatch(navActions.navigateTo(Route.MILK_ENTRY_DETAILS)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CollectPage);
