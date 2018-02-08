@@ -11,6 +11,8 @@ import { SensitiveInfoState, Action as SensitiveAction } from './modules/sensiti
 import { FarmerState } from './modules/farmer/types';
 import { MilkState } from './modules/milk/types';
 import { ExportState } from './modules/export/types';
+import { LoanState } from './modules/loan/types';
+
 
 
 
@@ -26,6 +28,7 @@ export interface State {
   activeRows: ActiveRowsState;
   milk: MilkState;
   export: ExportState;
+  loan: LoanState;
 }
 
 /** Root actions for application */
