@@ -1,11 +1,16 @@
+interface ErrorType extends Function {
+  id: string;
+}
+
 /**
  * Base error class for custom errors
  */
 export class BaseError extends Error {
+  public id: string;
 
-  constructor(ErrorType: Function, message: string) {
+  constructor(error: ErrorType, message: string) {
     super(message);
-    this.name = ErrorType.prototype.constructor.name;
+    this.id = error.id;
     this.stack = (new Error(message)).stack;
   }
 }
