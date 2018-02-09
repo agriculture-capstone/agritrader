@@ -7,6 +7,7 @@ const DEFAULT_MSG = 'Failed to authenticate';
  */
 export class AuthenticationError extends BaseError {
 
+  /** Unique identifier for error */
   public static id = 'AuthenticationError';
 
   constructor(msg = DEFAULT_MSG) {

@@ -6,6 +6,8 @@ interface ErrorType extends Function {
  * Base error class for custom errors
  */
 export class BaseError extends Error {
+
+  /** Unique identifier for error */
   public id: string;
 
   constructor(error: ErrorType, message: string) {
