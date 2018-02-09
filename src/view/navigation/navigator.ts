@@ -1,6 +1,7 @@
 import { StackNavigator, NavigationRouteConfigMap } from 'react-navigation';
 import * as React from 'react';
 
+import store from '../../store';
 import HomePage from '../pages/Home';
 import FarmerPage from '../pages/Farmer';
 import ExportsPage from '../pages/Exports';
@@ -149,7 +150,7 @@ function toNavigatorRoutes(routesInfo: RouteInfo[]): NavigationRouteConfigMap {
 }
 
 /** Initial route for appplication */
-export const INITIAL_ROUTE = Route.LOGIN;
+export const INITIAL_ROUTE = store.getState().sensitiveInfo.jwt ? Route.HOME : Route.LOGIN;
 
 /** Top-level navigator for application */
 const navigator = StackNavigator(toNavigatorRoutes(routesInfo), {
