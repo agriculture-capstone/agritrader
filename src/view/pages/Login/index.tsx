@@ -39,11 +39,12 @@ interface OwnProps {
 }
 
 interface StoreProps {
-
+  loggedIn: boolean;
 }
 
 interface DispatchProps {
   login(payload: { uuid: string, jwt: string }): Promise<void>;
+  bypassLogin(): Promise<void>;
 }
 /**
  *Login Properties
@@ -104,6 +105,12 @@ class Login extends React.Component<PropsType, OwnState> {
         <Spinner color="red" style={styles.spinner} />
       </View>
     );
+  }
+
+  public componentWillMount() {
+    if (this.props.loggedIn) {
+      this.props.bypassLogin();
+    }
   }
 
   /**
@@ -169,12 +176,15 @@ class Login extends React.Component<PropsType, OwnState> {
 const LoginPage = new Composer<PropsType>(Login).page;
 
 const mapStateToProps: MapStateToProps<StoreProps, OwnProps, State> = (state) => {
-  return {};
+  return {
+    loggedIn: !!state.sensitiveInfo.jwt,
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => {
   return {
     login: async (payload: { uuid: string, jwt: string }) => dispatch(rootThunks.login(payload)),
+    bypassLogin: async () => dispatch(rootThunks.bypassLogin()),
   };
 };
 

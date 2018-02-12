@@ -8,7 +8,7 @@ import { createSelector } from 'reselect';
 import Composer from '../../hoc/PageComposer';
 import navActions from '../../../store/modules/nav/actions';
 import activeRowsActions from '../../../store/modules/activeRows/actions';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 import { State } from '../../../store/types';
 import { InjectedSearchProps } from '../../hoc/PageComposer/SearchPage/index';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';

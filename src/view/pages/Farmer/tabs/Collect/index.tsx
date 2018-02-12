@@ -8,9 +8,9 @@ import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import activeRowsActions from '../../../../../store/modules/activeRows/actions';
 import navActions from '../../../../../store/modules/nav/actions';
-import { Route } from '../../../../navigation/navigator';
+import { Route } from '../../../../navigation/routes';
 import { State } from '../../../../../store/types';
-import { dateSort } from '../../../../../utils/DateSort'; 
+import { dateSort } from '../../../../../utils/DateSort';
 import {
   getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,

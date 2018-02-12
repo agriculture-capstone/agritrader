@@ -8,7 +8,7 @@ import { State } from '../../../../store/types';
 import { Farmer } from '../../../../store/modules/farmer/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
 import Composer from '../../../hoc/PageComposer/index';
-import { Route } from '../../../navigation/navigator';
+import { Route } from '../../../navigation/routes';
 
 import styles from './style';
 
@@ -90,11 +90,11 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   }
 
   private allValid = () => (
-    this.state.validFirstName 
-    && this.state.validLastName 
+    this.state.validFirstName
+    && this.state.validLastName
     // && this.state.validPhoneNumber
   )
- 
+
   /**
    * Handle farmer details changes, update local state
    */
@@ -104,9 +104,9 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     } else {
       this.setState(state => ({ firstName: newFirstName, validFirstName: true }));
     }
-  } 
+  }
 
-  private onChangeLastName = (newLastName: string) => { 
+  private onChangeLastName = (newLastName: string) => {
     if (!newLastName) {
       this.setState(state => ({ validLastName: false }));
     } else {
@@ -116,7 +116,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
 
   /**
    * @requires phone number to be all numeric and be 10 digits (optional)
-   * 
+   *
    * @source: https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
    * Valid phone formats:
    *    (123) 456-7890
@@ -127,7 +127,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
    *    +31636363634
    *    075-63546725
    */
-  private onChangePhoneNumber = (newPhone: string) => { 
+  private onChangePhoneNumber = (newPhone: string) => {
     // let numbers = /^[0-9]+$/;
     let numbers = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
     if (!newPhone || !newPhone.match(numbers)) {

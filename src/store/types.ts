@@ -31,6 +31,8 @@ export type RootAction = {
 } | {
   type: 'LOGIN',
   payload: LoginPayload;
+} | {
+  type: 'BYPASS_LOGIN',
 };
 
 /** Root action models */
