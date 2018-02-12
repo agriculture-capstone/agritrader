@@ -84,12 +84,13 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
       amountOfProduct: this.state.amountOfProduct,
     };
     this.props.createExportEntry(newEntry);
-    this.props.navigate(Route.FARMER);
+    this.props.navigate(Route.EXPORTS);
   }
 
+  /** Return validity of required fields */
   private allValid = () => (
     this.state.validAmount 
-    && this.state.validRate
+    && this.state.validPlate
   )
 
   private onChangeAmount = (newAmount: string) => {
@@ -102,17 +103,11 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
     }
   }
 
-  private onChangeQuality = (newQuality: string) => {
-    this.setState(state => ({ quality: newQuality }));
-  }
-
-  private onChangeRate = (newRate: string) => {
-    const newRateInt = parseInt(newRate, radix);
-
-    if (!newRate.match(this.numbers) || newRateInt < 0) {
-      this.setState(state => ({ validRate: false }));
+  private onChangePlate = (newPlate: string) => {
+    if (newPlate.length < 1) {
+      this.setState(state => ({ validPlate: false }));
     } else {
-      this.setState(state => ({ costPerUnit : newRateInt, validRate: true }));
+      this.setState(state => ({ plate : newPlate, validPlate: true }));
     }
   }
 
@@ -146,11 +141,6 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <Grid>
         <Row style={Styles.headerRow}>
-          <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
-          </H1>
-        </Row>
-        <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {this.getDatetime('dddd, MMMM DD, YYYY')}
           </Text>
@@ -171,13 +161,9 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
           <Label>Amount (L)</Label>
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
-        <Item floatingLabel>
-          <Label>Quality</Label>
-          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
-        </Item>
-        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
-          <Label>Rate (UGX/L)</Label>
-          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
+        <Item success={this.state.validPlate} error={!this.state.validPlate} floatingLabel>
+          <Label>License Plate</Label>
+          <Input onChangeText={this.onChangePlate}/>
         </Item>
       </Form>
     );
@@ -210,17 +196,15 @@ const AddExportEntryPage = new Composer<PropsType>(AddExportEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmer: getActiveFarmer(state),
     activeTrader: state.activeRows.activeTraderUUID,
-    activeFarmer: state.activeRows.activeFarmerUUID,
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
+    createExportEntry: async (newEntry: ExportEntry) => dispatch(exportThunks.createExportEntry(newEntry)),
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createExportEntry: async (newEntry: ExportEntry) => dispatch(milkThunks.createExportEntry(newEntry)),
   };
 };
 

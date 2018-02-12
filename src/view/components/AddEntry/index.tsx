@@ -98,6 +98,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     this.props.navigate(Route.FARMER);
   }
 
+  /** Return validity of required fields */
   private allValid = () => (
     this.state.validAmount 
     && this.state.validRate
