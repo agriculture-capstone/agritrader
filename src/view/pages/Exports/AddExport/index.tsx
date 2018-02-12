@@ -77,7 +77,11 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
     const timeNow = moment().local().utc().toString();
 
     let newEntry: ExportEntry = {
-      // TODO
+      type: 'export',
+      datetime: timeNow,
+      fromPersonUuid: this.props.activeTrader,
+      licensePlate: this.state.plate,
+      amountOfProduct: this.state.amountOfProduct,
     };
     this.props.createExportEntry(newEntry);
     this.props.navigate(Route.FARMER);
