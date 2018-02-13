@@ -37,9 +37,9 @@ interface OwnStateType {
   lastName: string;
   phoneNumber: string;
   notes: string; // notes can be empty
-  validFirstName: false;
-  validLastName: false;
-  validPhoneNumber: false;
+  validFirstName: boolean;
+  validLastName: boolean;
+  validPhoneNumber: boolean;
 }
 
 /**
@@ -102,7 +102,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     if (!newFirstName) {
       this.setState(state => ({ validFirstName: false }));
     } else {
-      this.setState(state => ({ firstName: newFirstName , validFirstName: true }));
+      this.setState(state => ({ firstName: newFirstName, validFirstName: true }));
     }
   }
   
