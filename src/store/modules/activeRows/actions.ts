@@ -15,6 +15,13 @@ const activeRowsActions = {
   clearActiveMilkEntry: (): Action => ({
     type: 'CLEAR_CURRENT_MILK_ENTRY',
   }),
+  setActiveExportEntry: (currentExportEntryUUID: string): Action => ({
+    currentExportEntryUUID,
+    type: 'UPDATE_CURRENT_EXPORT_ENTRY',
+  }),
+  clearActiveExportEntry: (): Action => ({
+    type: 'CLEAR_CURRENT_EXPORT_ENTRY',
+  }),
   setActiveTrader: (currentTraderUUID: string): Action => ({
     currentTraderUUID,
     type: 'UPDATE_CURRENT_TRADER',
