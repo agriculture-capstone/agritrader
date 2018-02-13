@@ -6,10 +6,11 @@ export interface ActiveRowsState {
   activeTraderUUID: string;
   activeFarmerUUID: string;
   activeMilkEntryUUID: string;
+  activeExportEntryUUID: string;
 }
 
 /*----------------------- Actions -----------------------*/
-/** currentFarmer & currentMilkEntry Action Types */
+/** currentFarmer,  currentMilkEntry, currentTrader & currentExportEntry Action Types */
 export type Action = RootAction | {
   type: 'UPDATE_CURRENT_FARMER',
   currentFarmerUUID: string,
@@ -25,6 +26,11 @@ export type Action = RootAction | {
   currentTraderUUID: string,
 } | {
   type: 'CLEAR_CURRENT_TRADER',
+} | {
+  type: 'UPDATE_CURRENT_EXPORT_ENTRY',
+  currentExportEntryUUID: string,
+} | {
+  type: 'CLEAR_CURRENT_EXPORT_ENTRY',
 } | {
   type: 'DO_NOT_USE',
 };
