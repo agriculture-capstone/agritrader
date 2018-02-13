@@ -9,39 +9,25 @@ import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import { State } from '../../../store/types';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
+import activeRowsActions from '../../../store/modules/activeRows/actions';
+import {
+  getTodaysExportTotal,
+  getFormattedExportTransactions,
+} from '../../../store/modules/export/selectors';
 
-const demoExportValues = [
-  { date: 'Jan 18 17:31', plate:'BRI8932', vol: 10 }, 
-  { date: 'Jan 18 14:02', plate:'TJI6782', vol: 20 },
-  { date: 'Jan 17 16:36', plate:'BRI8932', vol: 15 }, 
-  { date: 'Jan 17 15:32', plate:'TJI6782', vol: 28 },
-];
-
-const fakeSummary = {
-  currentDayTotal: '6049',
-  currentWeekTotal: '60',
-  currentMonthTotal: '180',
-  exportValues: demoExportValues,
-};
 
 interface OwnPropsType {
-  currentDayTotal: string;
-  currentWeekTotal: string;
-  currentMonthTotal: string;
-  exportValues: any[];
 }
 
 interface DispatchPropsType {
-  // navigate(route: Route): void;
-  // setActiveExportEntry(uuid: string): void;
-  // navigateToExportEntry(): void;
+  navigate(route: Route): void;
+  setActiveExportEntry(uuid: string): void;
+  navigateToExportEntry(): void;
 }
 
 interface StorePropsType {
-  // currentDayTotal: string;
-  // currentWeekTotal: string;
-  // currentMonthTotal: string;
-  // exportValues: any[];
+  currentDayTotal: string;
+  exportValues: any[];
 }
 
 interface OwnStateType {
@@ -60,18 +46,18 @@ class Export extends React.Component<PropsType, OwnStateType> {
     super(constructorProps);
   }
 
-  // private onAddPress = () => this.props.navigate(Route.ADD_EXPORT_ENTRY);
+  private onAddPress = () => this.props.navigate(Route.ADD_EXPORT_ENTRY);
   private onPressEntry = (uuid: string) => {
     return () => {
-      // this.props.setActiveExportEntry(uuid);
-      // this.props.navigateToExportEntry();
+      this.props.setActiveExportEntry(uuid);
+      this.props.navigateToExportEntry();
     };
   }
 
 
   /** React componentDidMount */
   public componentDidMount() {
-    // this.props.listenToFab(this.onAddPress);
+    this.props.listenToFab(this.onAddPress);
   }
 
   /**
@@ -81,14 +67,6 @@ class Export extends React.Component<PropsType, OwnStateType> {
     const testData = [{
       label: 'Today',
       value: this.props.currentDayTotal,
-      units: 'L',
-    },                {
-      label: 'This Week',
-      value: this.props.currentWeekTotal,
-      units: 'L',
-    },                {
-      label: 'This Month',
-      value: this.props.currentMonthTotal,
       units: 'L',
     },
     ];
@@ -128,10 +106,8 @@ const ExportPage = new Composer<NestedPropsType>(Export)
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     // TODO uncomment this after selectors are in place    
-    // currentDayTotal: getCurrentDayTotal(state),
-    // currentWeekTotal: getCurrentWeekTotal(state),
-    // currentMonthTotal: getCurrentMonthTotal(state),
-    // exportValues: getExportValues(state),
+    currentDayTotal: getTodaysExportTotal(state),
+    exportValues: getFormattedExportTransactions(state),
   };
 };
 
@@ -139,8 +115,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     // TODO uncomment this after selectors are in place
-    // setActiveExportEntry: (uuid: string) => dispatch(activeRowsActions.setActiveExportEntry(uuid)),
-    // navigateToExportEntry: () => dispatch(navActions.navigateTo(Route.EXPORT_ENTRY_DETAILS)),
+    setActiveExportEntry: (uuid: string) => dispatch(activeRowsActions.setActiveExportEntry(uuid)),
+    navigateToExportEntry: () => dispatch(navActions.navigateTo(Route.EXPORT_ENTRY_DETAILS)),
   };
 };
 

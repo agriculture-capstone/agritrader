@@ -6,7 +6,8 @@ import FarmerPage from '../pages/Farmer';
 import ExportsPage from '../pages/Exports';
 import LoginPage from '../pages/Login';
 import FarmerSearch from '../pages/FarmerSearch';
-import AddEntryPage from '../components/AddEntry';
+import AddMilkEntryPage from '../components/AddEntry';
+import AddExportEntryPage from '../pages/Exports/AddExport';
 import EditEntryPage from '../components/EditEntry';
 import MilkEntryDetails from '../components/EntryDetails';
 import AddFarmerPage from '../pages/Farmer/AddFarmer';
@@ -61,6 +62,7 @@ export enum Route {
   EDIT_MILK_ENTRY = 'EditMilkEntry',
   EDIT_FARMER = 'EditFarmer',
   ADD_FARMER = 'AddFarmer',
+  ADD_EXPORT_ENTRY = 'AddExportEntry',
 }
 
 /** App route information */
@@ -110,7 +112,7 @@ export const routesInfo: RouteInfo[] = [
   {
     route: Route.ADD_MILK_ENTRY,
     name: 'Add Milk Entry',
-    component: AddEntryPage,
+    component: AddMilkEntryPage,
     type: 'back',
   },
   {
@@ -137,6 +139,12 @@ export const routesInfo: RouteInfo[] = [
     component: EditFarmerPage,
     type: 'back',
   },
+  {
+    route: Route.ADD_EXPORT_ENTRY,
+    name: 'Add Export Entry',
+    component: AddExportEntryPage,
+    type: 'back',
+  },
 ];
 
 /** Convert IRoute[] to a NavigationRouteConfigMap for consumtion by StackNavigator */
@@ -149,7 +157,7 @@ function toNavigatorRoutes(routesInfo: RouteInfo[]): NavigationRouteConfigMap {
 }
 
 /** Initial route for appplication */
-export const INITIAL_ROUTE = Route.LOGIN;
+export const INITIAL_ROUTE = Route.HOME;
 
 /** Top-level navigator for application */
 const navigator = StackNavigator(toNavigatorRoutes(routesInfo), {
