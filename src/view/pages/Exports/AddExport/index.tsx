@@ -10,6 +10,7 @@ import Composer from '../../../hoc/PageComposer/index';
 import { State } from '../../../../store/types';
 
 import Styles from './style';
+import { ExportEntry } from '../../../../store/modules/export/types';
 
 interface OwnPropsType {
 }
@@ -80,7 +81,7 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
       type: 'export',
       datetime: timeNow,
       fromPersonUuid: this.props.activeTrader,
-      licensePlate: this.state.plate,
+      transportId: this.state.plate,
       amountOfProduct: this.state.amountOfProduct,
     };
     this.props.createExportEntry(newEntry);
