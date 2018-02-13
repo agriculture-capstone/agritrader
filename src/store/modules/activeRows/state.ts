@@ -4,6 +4,7 @@ const initialState: ActiveRowsState = {
   activeFarmerUUID: '',
   activeMilkEntryUUID: '',
   activeTraderUUID: '',
+  activeExportEntryUUID: '',
 };
 
 export default initialState;
