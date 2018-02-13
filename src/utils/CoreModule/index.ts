@@ -88,7 +88,7 @@ function isResponse(response: any): response is Response {
 }
 
 function isNetworkError(err: any): err is NetworkError {
-  return (err.name === NetworkError.name);
+  return (err.id === NetworkError.id);
 }
 
 function rowNotFound<T>(row?: StoreRow<T>): row is undefined {
