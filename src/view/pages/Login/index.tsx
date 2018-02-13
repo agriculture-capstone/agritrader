@@ -83,7 +83,7 @@ class Login extends React.Component<PropsType, OwnState> {
         // If unsuccessful, stop spinner and check error
         .catch((e) => {
           this.setState(state => ({ loggingIn: null }));
-          if (e.name === AuthenticationError.name) {
+          if (e.id === AuthenticationError.id) {
             this.setState(state => ({ showError: true }));
           } else {
             throw e;
