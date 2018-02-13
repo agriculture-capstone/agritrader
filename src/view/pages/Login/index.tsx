@@ -107,6 +107,7 @@ class Login extends React.Component<PropsType, OwnState> {
     );
   }
 
+  /** React componentWillMount */
   public componentWillMount() {
     if (this.props.loggedIn) {
       this.props.bypassLogin();
