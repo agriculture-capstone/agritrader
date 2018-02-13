@@ -131,11 +131,11 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
     // let numbers = /^[0-9]+$/;
     // TODO uncomment the following lines when phone number is required
     // let numbers = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-    // if (!newPhone || !newPhone.match(numbers)) {
-      // this.setState(state => ({ validPhoneNumber: false }));
-    // } else {
-    this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
-    // }
+    if (!newPhone) {
+      this.setState(state => ({ validPhoneNumber: false }));
+    } else {
+      this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
+    }
   }
 
   private onChangeNotes = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
