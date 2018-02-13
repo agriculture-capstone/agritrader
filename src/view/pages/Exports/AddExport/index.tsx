@@ -11,6 +11,7 @@ import { State } from '../../../../store/types';
 
 import Styles from './style';
 import { ExportEntry } from '../../../../store/modules/export/types';
+import exportThunks from '../../../../store/modules/export/thunks';
 
 interface OwnPropsType {
 }
