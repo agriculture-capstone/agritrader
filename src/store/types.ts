@@ -12,8 +12,6 @@ import { FarmerState } from './modules/farmer/types';
 import { MilkState } from './modules/milk/types';
 import { ExportState } from './modules/export/types';
 
-
-
 /** Global redux state */
 export interface State {
   drawer: DrawerState;

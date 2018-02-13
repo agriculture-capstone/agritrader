@@ -55,7 +55,8 @@ export const getFormattedExportTransactions = createSelector(
     ({
       datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MMM DD'),
       licencePlate: entry.transportId,
-      amountOfProduct: entry.amountOfProduct, uuid: entry.uuid,
+      amountOfProduct: entry.amountOfProduct, 
+      uuid: entry.uuid,
     }),
   ),
 );
