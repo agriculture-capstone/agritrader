@@ -105,7 +105,6 @@ const ExportPage = new Composer<NestedPropsType>(Export)
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    // TODO uncomment this after selectors are in place    
     currentDayTotal: getTodaysExportTotal(state),
     exportValues: getFormattedExportTransactions(state),
   };
@@ -114,7 +113,6 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
-    // TODO uncomment this after selectors are in place
     setActiveExportEntry: (uuid: string) => dispatch(activeRowsActions.setActiveExportEntry(uuid)),
     navigateToExportEntry: () => dispatch(navActions.navigateTo(Route.EXPORT_ENTRY_DETAILS)),
   };
