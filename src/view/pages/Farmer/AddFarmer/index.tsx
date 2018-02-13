@@ -92,7 +92,7 @@ class AddFarmer extends React.Component<PropsType, OwnStateType> {
   private allValid = () => (
     this.state.validFirstName 
     && this.state.validLastName 
-    // && this.state.validPhoneNumber
+    && this.state.validPhoneNumber
   )
  
   /**
