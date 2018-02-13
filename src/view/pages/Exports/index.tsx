@@ -114,7 +114,9 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     setActiveExportEntry: (uuid: string) => dispatch(activeRowsActions.setActiveExportEntry(uuid)),
-    navigateToExportEntry: () => dispatch(navActions.navigateTo(Route.EXPORT_ENTRY_DETAILS)),
+    // TODO uncomment the following line and remove the EXPORT nav after details are in place
+    // navigateToExportEntry: () => dispatch(navActions.navigateTo(Route.EXPORT_ENTRY_DETAILS)),
+    navigateToExportEntry: () => dispatch(navActions.navigateTo(Route.EXPORTS)),
   };
 };
 
