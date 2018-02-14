@@ -1,22 +1,18 @@
 import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
 
-import { Farmer } from '../../../store/modules/farmer/types';
-import { MilkEntry } from '../../../store/modules/milk/types';
-import { Route } from '../../navigation/navigator';
-
+import { ExportEntry } from '../../../../store/modules/export/types';
+import { Route } from '../../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
-import navActions from '../../../store/modules/nav/actions';
-import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
-import Composer from '../../hoc/PageComposer/index';
-import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
-
-import milkThunks from '../../../store/modules/milk/thunks';
+import navActions from '../../../../store/modules/nav/actions';
+import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
+import Composer from '../../../hoc/PageComposer/index';
+import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
+import milkThunks from '../../../../store/modules/milk/thunks';
+import { getActiveExportEntry } from '../../../../store/modules/export/selectors';
+import * as moment from 'moment';
 
 import Styles from './style';
-import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
-import { getActiveMilkEntry } from '../../../store/modules/milk/selectors';
-import * as moment from 'moment';
 
 
 interface OwnPropsType {
@@ -25,12 +21,11 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  updateMilkEntry(newEntry: ThunkUpdateRow<MilkEntry>): void;
+  updateExportEntry(newEntry: ThunkUpdateRow<ExportEntry>): void;
 }
 
 interface StorePropsType {
-  farmer: Farmer;
-  milkEntry: StoreRow<MilkEntry>;
+  exportEntry: StoreRow<ExportEntry>;
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
@@ -40,8 +35,9 @@ type PropsType = InjectedFabProps & NestedPropsType;
 
 interface OwnStateType {
   amountOfProduct: number;
-  quality: string;
-  costPerUnit: number;
+  licencePlate: string;
+  validAmount: boolean;
+  validPlate: boolean;
 }
 
 /**
@@ -57,9 +53,10 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      amountOfProduct: this.props.milkEntry.amountOfProduct,
-      quality: this.props.milkEntry.milkQuality,
-      costPerUnit: this.props.milkEntry.costPerUnit,
+      amountOfProduct: this.props.exportEntry.amountOfProduct,
+      licencePlate: this.props.exportEntry.transportId,
+      validAmount: false,
+      validPlate: false,
     };
   }
 
@@ -72,17 +69,13 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing save button */
   private onSavePress = () => {
-    let newEntry: ThunkUpdateRow<MilkEntry> = {
-      uuid: this.props.milkEntry.uuid,
-      toPersonUuid: this.props.milkEntry.toPersonUuid,
-      fromPersonUuid: this.props.milkEntry.fromPersonUuid,
+    let newEntry: ThunkUpdateRow<ExportEntry> = {
+      uuid: this.props.exportEntry.uuid,
+      transportId: this.state.licencePlate,
       amountOfProduct: this.state.amountOfProduct,
-      costPerUnit: this.state.costPerUnit,
-      currency: 'UGX',
-      milkQuality: this.state.quality,
     };
-    this.props.updateMilkEntry(newEntry);
-    this.props.navigate(Route.FARMER);
+    this.props.updateExportEntry(newEntry);
+    this.props.navigate(Route.EXPORTS);
   }
 
   /**
@@ -118,7 +111,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.milkEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
@@ -147,9 +140,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Quality', this.props.milkEntry.milkQuality, this.onQualityChange)}
-        {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange)}
+        {this.formatEditRow('Amount (L)', this.props.exportEntry.amountOfProduct, this.onAmountChange)}
+        {this.formatEditRow('Quality', this.props.exportEntry.milkQuality, this.onQualityChange)}
+        {this.formatEditRow('Rate (UGX/L)', this.props.exportEntry.costPerUnit, this.onRateChange)}
       </View>
     );
   }
@@ -182,7 +175,7 @@ const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     farmer: getActiveFarmer(state),
-    milkEntry: getActiveMilkEntry(state),
+    ExportEntry: getActiveExportEntry(state),
   };
 };
 
@@ -190,7 +183,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateMilkEntry: async (newEntry: ThunkUpdateRow<MilkEntry>) => dispatch(milkThunks.updateMilkEntry(newEntry)),
+    updateExportEntry: async (newEntry: ThunkUpdateRow<ExportEntry>) => dispatch(milkThunks.updateExportEntry(newEntry)),
   };
 };
 
