@@ -164,7 +164,7 @@ class AddExportEntry extends React.Component<PropsType, OwnStateType> {
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
         <Item success={this.state.validPlate} error={!this.state.validPlate} floatingLabel>
-          <Label>License Plate</Label>
+          <Label>Licence Plate</Label>
           <Input onChangeText={this.onChangePlate}/>
         </Item>
       </Form>
