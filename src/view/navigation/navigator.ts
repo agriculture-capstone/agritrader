@@ -12,6 +12,8 @@ import EditEntryPage from '../components/EditEntry';
 import MilkEntryDetails from '../components/EntryDetails';
 import AddFarmerPage from '../pages/Farmer/AddFarmer';
 import EditFarmerPage from '../pages/Farmer/EditFarmer';
+import ExportEntryDetails from '../pages/Exports/ExportEntryDetails';
+import EditExportEntryPage from '../pages/Exports/EditExportEntry';
 
 /** Different types of pages */
 export type PageType = 'menu' | 'back' | 'empty';
@@ -63,6 +65,8 @@ export enum Route {
   EDIT_FARMER = 'EditFarmer',
   ADD_FARMER = 'AddFarmer',
   ADD_EXPORT_ENTRY = 'AddExportEntry',
+  EXPORT_ENTRY_DETAILS = 'ExportEntryDetails',
+  EDIT_EXPORT_ENTRY = 'EditExportEntry',
 }
 
 /** App route information */
@@ -143,6 +147,18 @@ export const routesInfo: RouteInfo[] = [
     route: Route.ADD_EXPORT_ENTRY,
     name: 'Add Export Entry',
     component: AddExportEntryPage,
+    type: 'back',
+  },
+  {
+    route: Route.EXPORT_ENTRY_DETAILS,
+    name: 'Export Entry Details',
+    component: ExportEntryDetails,
+    type: 'back',
+  },
+  {
+    route: Route.EDIT_EXPORT_ENTRY,
+    name: 'Edit export entry',
+    component: EditExportEntryPage,
     type: 'back',
   },
 ];
