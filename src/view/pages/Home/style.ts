@@ -4,8 +4,8 @@ import { MATERIAL_COLORS, COLORS } from '../../../native-base-theme/variables/st
 
 export default StyleSheet.create({
   menuButtons: {
-    marginRight: 10,
-    marginLeft: 10,
+    marginRight: 5,
+    marginLeft: 5,
   },
   label: {
     textAlign: 'center',
