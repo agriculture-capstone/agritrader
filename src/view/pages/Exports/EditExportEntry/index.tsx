@@ -8,7 +8,7 @@ import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
 import Composer from '../../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
-import milkThunks from '../../../../store/modules/milk/thunks';
+import exportThunks from '../../../../store/modules/export/thunks';
 import { getActiveExportEntry } from '../../../../store/modules/export/selectors';
 import * as moment from 'moment';
 
@@ -145,7 +145,29 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any) {
+  private formatEditRow(label: string, 
+                        value: number | string, 
+                        onChangeText: any,
+                        isNumeric: boolean,
+                        validField?: boolean) {
+    if (isNumeric) {
+      return (
+        <Grid>
+          <Row>
+            <Col>
+              <Text>{label}</Text>
+            </Col>
+            <Col>
+            <Item success={validField} error={!validField}>
+              <Input keyboardType={'numeric'} onChangeText={onChangeText}>
+                <Text>{value}</Text>
+              </Input>
+            </Item>
+            </Col>
+          </Row>
+        </Grid>
+      );
+    }
     return (
       <Grid>
         <Row>
@@ -153,8 +175,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
             <Text>{label}</Text>
           </Col>
           <Col>
-          <Item>
-            <Input onChangeText={onChangeText} keyboardType={'numeric'}>
+          <Item success={validField} error={!validField}>
+            <Input onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -167,9 +189,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.exportEntry.amountOfProduct, this.onChangeAmount)}
-        {this.formatEditRow('Licence Plate', this.props.exportEntry.transportId, this.onChangePlate)}
-        </View>
+        {this.formatEditRow('Amount (L)', this.props.exportEntry.amountOfProduct, this.onChangeAmount, true, this.state.validAmount)}
+        {this.formatEditRow('Licence Plate', this.props.exportEntry.transportId, this.onChangePlate, false, this.state.validPlate)}
+      </View>
     );
   }
 
@@ -200,8 +222,7 @@ const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmer: getActiveFarmer(state),
-    ExportEntry: getActiveExportEntry(state),
+    exportEntry: getActiveExportEntry(state),
   };
 };
 
@@ -209,7 +230,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateExportEntry: async (newEntry: ThunkUpdateRow<ExportEntry>) => dispatch(milkThunks.updateExportEntry(newEntry)),
+    updateExportEntry: async (newEntry: ThunkUpdateRow<ExportEntry>) => dispatch(exportThunks.updateExportEntry(newEntry)),
   };
 };
 
