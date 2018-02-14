@@ -22,7 +22,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  ExportEntry: ExportEntry;
+  exportEntry: ExportEntry;
 }
 
 /** ExportEntryDetails PropsType */
@@ -80,7 +80,7 @@ class ExportEntryDetails extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-          {moment(this.props.ExportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
+          {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
           </H1>
         </Row>
       </Grid>
@@ -106,10 +106,10 @@ class ExportEntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <List>
         <ListItem>
-          {this.formatRow('Amount (L)', this.props.ExportEntry.amountOfProduct)}
+          {this.formatRow('Amount (L)', this.props.exportEntry.amountOfProduct)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Licence Plate', this.props.ExportEntry.transportId)}
+          {this.formatRow('Licence Plate', this.props.exportEntry.transportId)}
         </ListItem>
       </List>
     );
@@ -137,7 +137,7 @@ const ExportEntryDetailsPage = new Composer<PropsType>(ExportEntryDetails).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    ExportEntry: getActiveExportEntry(state),
+    exportEntry: getActiveExportEntry(state),
   };
 };
 
