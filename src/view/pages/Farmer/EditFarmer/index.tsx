@@ -37,6 +37,9 @@ interface OwnStateType {
   lastName: string;
   phoneNumber: string;
   notes: string; // notes can be empty
+  validFirstName: boolean;
+  validLastName: boolean;
+  validPhoneNumber: boolean;
 }
 
 /**
@@ -60,6 +63,9 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
       lastName: this.props.farmer.lastName,
       phoneNumber: this.props.farmer.phoneNumber,
       notes: this.props.farmer.notes,
+      validFirstName: false,
+      validLastName: false,
+      validPhoneNumber: false,
     };
   }
 
@@ -83,12 +89,39 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     this.props.navigateToFarmer();
   }
 
+  private allValid = () => (
+    this.state.validFirstName 
+    && this.state.validLastName 
+    && this.state.validPhoneNumber
+  )
+
   /**
    * Handle farmer details changes, update local state
    */
-  private onFirstNameChange = (newFirstName: string) => this.setState(state => ({ firstName: newFirstName }));
-  private onLastNameChange = (newLastName: string) => this.setState(state => ({ lastName: newLastName }));
-  private onPhoneChange = (newPhone: string) => this.setState(state => ({ phoneNumber: newPhone }));
+  private onChangeFirstName = (newFirstName: string) => {
+    if (!newFirstName) {
+      this.setState(state => ({ validFirstName: false }));
+    } else {
+      this.setState(state => ({ firstName: newFirstName, validFirstName: true }));
+    }
+  }
+  
+  private onChangeLastName = (newLastName: string) => { 
+    if (!newLastName) {
+      this.setState(state => ({ validLastName: false }));
+    } else {
+      this.setState(state => ({ lastName: newLastName, validLastName: true }));
+    }
+  }
+
+  private onChangePhoneNumber = (newPhone: string) => { 
+    if (!newPhone) {
+      this.setState(state => ({ validPhoneNumber: false }));
+    } else {
+      this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
+    }
+  }
+
   private onNotesChange = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
 
   /**
@@ -98,16 +131,30 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={Styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={Styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any, isNumeric: boolean) {
+  private formatEditRow(label: string, 
+                        value: number | string, 
+                        onChangeText: any, 
+                        isNumeric: boolean,
+                        validField?: boolean) {
     if (isNumeric) {
       return (
         <Grid>
@@ -116,7 +163,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
               <Text>{label}</Text>
             </Col>
             <Col>
-            <Item>
+            <Item success={validField} error={!validField}>
               <Input keyboardType={'numeric'} onChangeText={onChangeText}>
                 <Text>{value}</Text>
               </Input>
@@ -133,7 +180,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
             <Text>{label}</Text>
           </Col>
           <Col>
-          <Item>
+          <Item success={validField} error={!validField}>
             <Input autoCapitalize="sentences" onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
@@ -147,9 +194,9 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onFirstNameChange, false)}
-        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onLastNameChange, false)}
-        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onPhoneChange, true)}
+        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onChangeFirstName, false, this.state.validFirstName)}
+        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onChangeLastName, false, this.state.validLastName)}
+        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onChangePhoneNumber, true, this.state.validPhoneNumber)}
         {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange, false)}
       </View>
     );
