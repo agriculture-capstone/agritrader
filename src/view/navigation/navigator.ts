@@ -164,6 +164,8 @@ export const routesInfo: RouteInfo[] = [
     drawerInfo: {
       icon: 'person',
     },
+  },
+  {
     route: Route.ADD_EXPORT_ENTRY,
     name: 'Add Export Entry',
     component: AddExportEntryPage,
