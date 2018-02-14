@@ -45,11 +45,14 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
+let radix: number = 10;
+
 /**
  * Page for EditEntry
  */
 class EditEntry extends React.Component<PropsType, OwnStateType> {
 
+  private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     this.state = {
@@ -78,13 +81,32 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     this.props.navigate(Route.EXPORTS);
   }
 
+  /** Return validity of required fields */
+  private allValid = () => (
+    this.state.validAmount 
+    && this.state.validPlate
+  )
+
   /**
    * Handle entry changes, update local state
    */
-  private onAmountChange = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
-  private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onRateChange = (newCostPerUnit: string) => this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
+  private onChangeAmount = (newAmount: string) => {
+    const newAmountInt = parseInt(newAmount, radix);
 
+    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+      this.setState(state => ({ validAmount: false }));
+    } else {
+      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
+    }
+  }
+
+  private onChangePlate = (newPlate: string) => {
+    if (newPlate.length < 1) {
+      this.setState(state => ({ validPlate: false }));
+    } else {
+      this.setState(state => ({ licencePlate : newPlate, validPlate: true }));
+    }
+  }
   /**
    * Returns a button with text, color, and onPress callback specified
    */
@@ -92,13 +114,23 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={Styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={Styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderHeader() {
@@ -106,13 +138,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
+          {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
           </H1>
-        </Row>
-        <Row style={Styles.headerRow}>
-          <Text style={Styles.header}>
-            {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
-          </Text>
         </Row>
       </Grid>
     );
@@ -140,10 +167,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.exportEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Quality', this.props.exportEntry.milkQuality, this.onQualityChange)}
-        {this.formatEditRow('Rate (UGX/L)', this.props.exportEntry.costPerUnit, this.onRateChange)}
-      </View>
+        {this.formatEditRow('Amount (L)', this.props.exportEntry.amountOfProduct, this.onChangeAmount)}
+        {this.formatEditRow('Licence Plate', this.props.exportEntry.transportId, this.onChangePlate)}
+        </View>
     );
   }
 
