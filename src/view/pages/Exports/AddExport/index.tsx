@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, Button, Input, Form, Item, Label } from 'native-base';
 import * as moment from 'moment';
 
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Grid, Row, Col, Content, Button, Text } from 'native-base';
+import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../components/CardSummary';
-import ProductCard from './components/ProductCard';
 import styles from './style';
 import Composer from '../../hoc/PageComposer/index';
 import { Route } from '../../navigation/navigator';

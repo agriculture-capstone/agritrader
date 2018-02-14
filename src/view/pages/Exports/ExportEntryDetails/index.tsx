@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, Button } from 'native-base';
 
 import { ExportEntry } from '../../../../store/modules/export/types';
 import { Route } from '../../../navigation/navigator';
