@@ -10,7 +10,7 @@ import { ActiveRowsState, Action as ActiveRowsAction } from './modules/activeRow
 import { SensitiveInfoState, Action as SensitiveAction } from './modules/sensitive/types';
 import { FarmerState } from './modules/farmer/types';
 import { MilkState } from './modules/milk/types';
-
+import { ExportState } from './modules/export/types';
 
 /** Global redux state */
 export interface State {
@@ -23,6 +23,7 @@ export interface State {
   farmer: FarmerState;
   activeRows: ActiveRowsState;
   milk: MilkState;
+  export: ExportState;
 }
 
 /** Root actions for application */
