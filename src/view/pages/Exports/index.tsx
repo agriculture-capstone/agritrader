@@ -85,15 +85,6 @@ class Export extends React.Component<PropsType, OwnStateType> {
             />
           </Row>
         </Grid>
-        <Row style={styles.addEntryButton}>
-          <Col>
-            <Button block info >
-              <Text>
-                ADD ENTRY
-            </Text>
-            </Button>
-          </Col>
-        </Row>
       </Content>
     );
   }
