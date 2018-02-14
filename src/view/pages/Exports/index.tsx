@@ -56,7 +56,6 @@ class Export extends React.Component<PropsType, OwnStateType> {
     };
   }
 
-
   /** React componentDidMount */
   public componentDidMount() {
     this.props.listenToFab(this.onAddPress);
