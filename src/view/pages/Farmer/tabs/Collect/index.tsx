@@ -67,7 +67,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
   }
 
   /**
-   * Render method for Farmer
+   * Render method for Collect
    */
   public render() {
     const dataSummary = [{
