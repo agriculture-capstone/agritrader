@@ -3,6 +3,7 @@ import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
+import * as _ from 'lodash';
 
 import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
@@ -10,7 +11,7 @@ import activeRowsActions from '../../../../../store/modules/activeRows/actions';
 import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/navigator';
 import { State } from '../../../../../store/types';
-import { dateSort } from '../../../../../utils/DateSort'; 
+import { dateSort } from '../../../../../utils/DateSort';
 import {
   getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,
@@ -36,6 +37,7 @@ interface StorePropsType {
 }
 
 interface OwnStateType {
+
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
@@ -52,6 +54,11 @@ class Collect extends React.Component<PropsType, OwnStateType> {
     super(constructorProps);
   }
 
+
+  private debounceOnAddPress = () => _.debounce(this.onAddPress, 2000);
+
+  private debounceOnPressEntry = () => _.debounce(this.onPressEntry, 2000);
+
   private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
   private onPressEntry = (uuid: string) => {
     return () => {
@@ -60,10 +67,9 @@ class Collect extends React.Component<PropsType, OwnStateType> {
     };
   }
 
-
   /** React componentDidMount */
   public componentDidMount() {
-    this.props.listenToFab(this.onAddPress);
+    this.props.listenToFab(this.debounceOnAddPress);
   }
 
   /**
@@ -97,7 +103,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Volume (L)', 'Value (UGX)']}
               values={dateSort.sortDescending(this.props.collectTransactions)}
-              onPressEntry={this.onPressEntry}
+              onPressEntry={this.debounceOnPressEntry}
             />
           </Row>
         </Grid>
