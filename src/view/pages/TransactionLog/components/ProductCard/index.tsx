@@ -17,7 +17,7 @@ interface OwnStateType {
 }
 
 
-const PRODUCT_CARD_HEADERS = ['Date/Time', 'Licence Plate #', 'Volume (L)'];
+const PRODUCT_CARD_HEADERS = ['Date/Time', 'Type', 'Quantity'];
 
 /**
 * Container for Product Card
