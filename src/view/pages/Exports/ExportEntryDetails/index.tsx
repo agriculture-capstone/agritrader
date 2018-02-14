@@ -79,9 +79,9 @@ class ExportEntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <Grid>
         <Row style={Styles.headerRow}>
-          <H1>
-          {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
-          </H1>
+          <Text style={Styles.header}>
+            {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
+          </Text>
         </Row>
       </Grid>
     );

@@ -58,8 +58,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     this.state = {
       amountOfProduct: this.props.exportEntry.amountOfProduct,
       licencePlate: this.props.exportEntry.transportId,
-      validAmount: false,
-      validPlate: false,
+      validAmount: true,
+      validPlate: true,
     };
   }
 
@@ -137,9 +137,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <Grid>
         <Row style={Styles.headerRow}>
-          <H1>
+          <Text style={Styles.header}>
           {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
-          </H1>
+          </Text>
         </Row>
       </Grid>
     );

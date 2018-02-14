@@ -14,6 +14,8 @@ import {
   getTodaysExportTotal,
   getFormattedExportTransactions,
 } from '../../../store/modules/export/selectors';
+import DataTable from '../../components/DataTable';
+import { dateSort } from '../../../utils/DateSort';
 
 
 interface OwnPropsType {
@@ -64,7 +66,7 @@ class Export extends React.Component<PropsType, OwnStateType> {
    * Render method for Exports
    */
   public render() {
-    const testData = [{
+    const dataSummary = [{
       label: 'Today',
       value: this.props.currentDayTotal,
       units: 'L',
@@ -76,12 +78,14 @@ class Export extends React.Component<PropsType, OwnStateType> {
         <Grid style={styles.contents}>
           <Row>
             <CardSummary
-              data={testData}
+              data={dataSummary}
             />
           </Row>
           <Row>
-            <ProductCard
-              values={this.props.exportValues}
+            <DataTable
+              headers={['Date', 'Plate #', 'Volume (L)']}
+              values={dateSort.sortDescending(this.props.exportValues)}
+              onPressEntry={this.onPressEntry}
             />
           </Row>
         </Grid>
