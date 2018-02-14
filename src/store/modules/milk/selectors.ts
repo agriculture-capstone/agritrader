@@ -76,7 +76,8 @@ export const getFormattedFarmersTransactions = createSelector(
     ({
       datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MMM DD'),
       amountOfProduct: entry.amountOfProduct.toFixed(decimals),
-      milkValue: (entry.costPerUnit * entry.amountOfProduct).toFixed(decimals), uuid: entry.uuid,
+      milkValue: Math.ceil((entry.costPerUnit * entry.amountOfProduct)).toFixed(0), 
+      uuid: entry.uuid,
     }),
   ),
 );
