@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ListItem, Icon, Text, Left, Body } from 'native-base';
 
-import { Route } from '../../../navigation/navigator';
+import { Route } from '../../../navigation/routes';
 import styles from './style';
 
 /** DrawerItem props */

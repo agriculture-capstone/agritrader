@@ -6,7 +6,7 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import CardButton from '../../components/CardButton';
 import Panel from '../../components/Panel';
 import StatisicsBlock from '../../components/StatisticsBlock';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
 import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';

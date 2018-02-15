@@ -3,7 +3,7 @@ import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button } from 'nativ
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { MilkEntry } from '../../../store/modules/milk/types';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';

@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { Farmer } from '../../../store/modules/farmer/types';
 import { MilkEntry } from '../../../store/modules/milk/types';
 
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
 import Composer from '../../hoc/PageComposer/index';
@@ -56,7 +56,7 @@ let radix: number = 10;
  */
 
 class AddEntry extends React.Component<PropsType, OwnStateType> {
-  
+
   private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
@@ -100,7 +100,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Return validity of required fields */
   private allValid = () => (
-    this.state.validAmount 
+    this.state.validAmount
     && this.state.validRate
   )
 
@@ -134,7 +134,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
-    
+
     if (isPrimary) {
       return (
         <Col style={Styles.button}>

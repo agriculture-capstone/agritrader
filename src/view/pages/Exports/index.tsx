@@ -3,7 +3,7 @@ import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../components/CardSummary';
 import styles from './style';
 import Composer from '../../hoc/PageComposer/index';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import { State } from '../../../store/types';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';

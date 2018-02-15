@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, Button, Input, Item } from 'native-base';
 
 import { ExportEntry } from '../../../../store/modules/export/types';
-import { Route } from '../../../navigation/navigator';
+import { Route } from '../../../navigation/routes';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
@@ -83,7 +83,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Return validity of required fields */
   private allValid = () => (
-    this.state.validAmount 
+    this.state.validAmount
     && this.state.validPlate
   )
 
@@ -138,15 +138,15 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       <Grid>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-          {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
+          {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
     );
   }
 
-  private formatEditRow(label: string, 
-                        value: number | string, 
+  private formatEditRow(label: string,
+                        value: number | string,
                         onChangeText: any,
                         isNumeric: boolean,
                         validField?: boolean) {
