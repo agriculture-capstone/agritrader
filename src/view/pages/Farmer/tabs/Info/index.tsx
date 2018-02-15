@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { H1, Content, Grid, Row, Col, Button, Text, List, ListItem } from 'native-base';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import Composer from '../../../../hoc/PageComposer';
 import { StoreRow, State } from '../../../../../store/types';
 import { Farmer } from '../../../../../store/modules/farmer/types';
-import { Route } from '../../../../navigation/navigator';
-import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import { Route } from '../../../../navigation/routes';
 import navActions from '../../../../../store/modules/nav/actions';
 
 import styles from './style';

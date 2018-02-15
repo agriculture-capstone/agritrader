@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Content, List, Button, Text } from 'native-base';
 
-import { routesInfo, RouteInfo, Route, DrawerRouteInfo } from '../../../navigation/navigator';
+import { routesInfo, RouteInfo, Route, DrawerRouteInfo } from '../../../navigation/routes';
 import style from './style';
 import DrawerItem from '../DrawerItem';
 import DrawerHeader from '../DrawerHeader';

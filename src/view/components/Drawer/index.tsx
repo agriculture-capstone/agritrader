@@ -8,7 +8,7 @@ import navActions from '../../../store/modules/nav/actions';
 import headerActions from '../../../store/modules/header/actions';
 import rootThunks from '../../../store/thunks';
 import DrawerContents from './DrawerContents';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 
 /** Drawer OwnPropsType */
 export interface OwnPropsType {}
