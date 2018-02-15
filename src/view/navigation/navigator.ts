@@ -56,7 +56,7 @@ interface SearchInfo {
 export enum Route {
   HOME = 'Home',
   LOGIN = 'Login',
-  EXPORTS = 'Exports',
+  EXPORTS = 'Deliveries',
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmers',
   ADD_MILK_ENTRY = 'AddMilkEntry',
@@ -64,9 +64,9 @@ export enum Route {
   EDIT_MILK_ENTRY = 'EditMilkEntry',
   EDIT_FARMER = 'EditFarmer',
   ADD_FARMER = 'AddFarmer',
-  ADD_EXPORT_ENTRY = 'AddExportEntry',
-  EXPORT_ENTRY_DETAILS = 'ExportEntryDetails',
-  EDIT_EXPORT_ENTRY = 'EditExportEntry',
+  ADD_EXPORT_ENTRY = 'AddDeliveryEntry',
+  EXPORT_ENTRY_DETAILS = 'DeliveryEntryDetails',
+  EDIT_EXPORT_ENTRY = 'EditDeliveryEntry',
 }
 
 /** App route information */
