@@ -1,44 +1,39 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, Button, Input, Form, Item, Label } from 'native-base';
 import * as moment from 'moment';
 
-import { Farmer } from '../../../store/modules/farmer/types';
-import { MilkEntry } from '../../../store/modules/milk/types';
 
-import { Route } from '../../navigation/routes';
+import { Route } from '../../../navigation/navigator';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
-import navActions from '../../../store/modules/nav/actions';
-import Composer from '../../hoc/PageComposer/index';
-import { State } from '../../../store/types';
-import milkThunks from '../../../store/modules/milk/thunks';
+import navActions from '../../../../store/modules/nav/actions';
+import Composer from '../../../hoc/PageComposer/index';
+import { State } from '../../../../store/types';
 
 import Styles from './style';
-import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
+import { ExportEntry } from '../../../../store/modules/export/types';
+import exportThunks from '../../../../store/modules/export/thunks';
 
 interface OwnPropsType {
 }
 
 interface DispatchPropsType {
+  createExportEntry(newEntry: ExportEntry): Promise<string>;
   navigate(route: Route): void;
   goBack(): void;
-  createMilkEntry(newEntry: MilkEntry): Promise<string>;
 }
 
 interface StorePropsType {
-  farmer: Farmer;
   activeTrader: any;
-  activeFarmer: any;
 }
 
-/** AddEntry PropsType */
+/** AddExportEntry PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 interface OwnStateType {
   amountOfProduct: number;
-  quality: string;
-  costPerUnit: number;
+  plate: string;
   validAmount: boolean;
-  validRate: boolean;
+  validPlate: boolean;
 }
 
 /**
@@ -49,24 +44,23 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 let radix: number = 10;
 
 /**
- * AddEntry page
+ * AddExportEntry page
  * @example
- *             <AddEntry
+ *             <AddExportEntry
  *             />
  */
 
-class AddEntry extends React.Component<PropsType, OwnStateType> {
-
+class AddExportEntry extends React.Component<PropsType, OwnStateType> {
+  
   private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     /** Init state */
     this.state = {
       amountOfProduct: 0,
-      quality: '0',
-      costPerUnit: 0,
+      plate: '',
       validAmount: false,
-      validRate: false,
+      validPlate: false,
     };
   }
   /** Get current datetime in specified format */
@@ -84,24 +78,21 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
 
-    let newEntry: MilkEntry = {
-      type: 'milk',
+    let newEntry: ExportEntry = {
+      type: 'export',
       datetime: timeNow,
-      toPersonUuid: 'a2b121fd-1a1f-4425-97db-876af3c5bd2f',
-      fromPersonUuid: this.props.activeFarmer,
+      fromPersonUuid: this.props.activeTrader,
+      transportId: this.state.plate,
       amountOfProduct: this.state.amountOfProduct,
-      costPerUnit: this.state.costPerUnit,
-      currency: 'UGX',
-      milkQuality: this.state.quality,
     };
-    this.props.createMilkEntry(newEntry);
-    this.props.navigate(Route.FARMER);
+    this.props.createExportEntry(newEntry);
+    this.props.navigate(Route.EXPORTS);
   }
 
   /** Return validity of required fields */
   private allValid = () => (
-    this.state.validAmount
-    && this.state.validRate
+    this.state.validAmount 
+    && this.state.validPlate
   )
 
   private onChangeAmount = (newAmount: string) => {
@@ -114,17 +105,11 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     }
   }
 
-  private onChangeQuality = (newQuality: string) => {
-    this.setState(state => ({ quality: newQuality }));
-  }
-
-  private onChangeRate = (newRate: string) => {
-    const newRateInt = parseInt(newRate, radix);
-
-    if (!newRate.match(this.numbers) || newRateInt < 0) {
-      this.setState(state => ({ validRate: false }));
+  private onChangePlate = (newPlate: string) => {
+    if (newPlate.length < 1) {
+      this.setState(state => ({ validPlate: false }));
     } else {
-      this.setState(state => ({ costPerUnit : newRateInt, validRate: true }));
+      this.setState(state => ({ plate : newPlate, validPlate: true }));
     }
   }
 
@@ -134,7 +119,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
-
+    
     if (isPrimary) {
       return (
         <Col style={Styles.button}>
@@ -158,11 +143,6 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <Grid>
         <Row style={Styles.headerRow}>
-          <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
-          </H1>
-        </Row>
-        <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
             {this.getDatetime('dddd, MMMM DD, YYYY')}
           </Text>
@@ -183,20 +163,16 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
           <Label>Amount (L)</Label>
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
-        <Item floatingLabel>
-          <Label>Quality</Label>
-          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
-        </Item>
-        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
-          <Label>Rate (UGX/L)</Label>
-          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
+        <Item success={this.state.validPlate} error={!this.state.validPlate} floatingLabel>
+          <Label>Licence Plate</Label>
+          <Input onChangeText={this.onChangePlate}/>
         </Item>
       </Form>
     );
   }
 
   /**
-   * Render method for AddEntry
+   * Render method for AddExportEntry
    */
   public render() {
     return (
@@ -218,25 +194,23 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const AddEntryPage = new Composer<PropsType>(AddEntry).page;
+const AddExportEntryPage = new Composer<PropsType>(AddExportEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmer: getActiveFarmer(state),
     activeTrader: state.activeRows.activeTraderUUID,
-    activeFarmer: state.activeRows.activeFarmerUUID,
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
+    createExportEntry: async (newEntry: ExportEntry) => dispatch(exportThunks.createExportEntry(newEntry)),
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createMilkEntry: async (newEntry: MilkEntry) => dispatch(milkThunks.createMilkEntry(newEntry)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddEntryPage);
+)(AddExportEntryPage);

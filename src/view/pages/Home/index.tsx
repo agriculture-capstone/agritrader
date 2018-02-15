@@ -54,10 +54,6 @@ class Home extends React.Component<PropsType, {}> {
           <Text style={[styles.betaContents, styles.betaTitle]}>
             Welcome to the Beta Version of Agritrader!
           </Text>
-          <Text style={styles.betaContents}>
-            This application is continuously being developed to provide users
-            like you with rich features to ease your workflow.
-          </Text>
           </Body>
           </CardItem>
           </Card>
@@ -69,7 +65,6 @@ class Home extends React.Component<PropsType, {}> {
             <Row>
               <StatisicsBlock value={this.props.dayTotal} units="L" label="Today" />
               <StatisicsBlock value={this.props.avgDayTotal} units="L" label="Average Daily" />
-
             </Row>
           </Grid>
         </Panel>

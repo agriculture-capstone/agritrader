@@ -29,6 +29,19 @@ const activeRowReducer: Reducer<ActiveRowsState> = (state = initialState, action
         activeMilkEntryUUID : '',
       };
     }
+    case 'UPDATE_CURRENT_EXPORT_ENTRY': {
+      return {
+        ...state,
+        activeExportEntryUUID : action.currentExportEntryUUID,
+      };
+    }
+    case 'CLEAR_CURRENT_EXPORT_ENTRY': {
+      return {
+        ...state,
+        activeExportEntryUUID : '',
+      };
+    }
+    
     case 'LOGIN': {
       const { uuid } = action.payload;
 

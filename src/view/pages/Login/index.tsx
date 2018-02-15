@@ -19,6 +19,7 @@ import {
 } from 'native-base';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
+import colors from '../../../native-base-theme/variables/commonColor';
 import { images } from '../../assets/';
 import styles from './style';
 import { State, LoginPayload } from '../../../store/types';
@@ -102,7 +103,7 @@ class Login extends React.Component<PropsType, OwnState> {
   private spinnerOverlay = () => {
     return (
       <View style={styles.spinnerContainer}>
-        <Spinner color="red" style={styles.spinner} />
+        <Spinner color={colors.defaultSpinnerColor} style={styles.spinner} />
       </View>
     );
   }

@@ -1,43 +1,43 @@
 import * as React from 'react';
-import { Content, View, Text, Grid, Row, Col, Button, Input, Item } from 'native-base';
-import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import { Content, List, View, ListItem, Text, Grid, Row, Col, Button, Input, Item } from 'native-base';
 
-import { Farmer } from '../../../../store/modules/farmer/types';
-import { Route } from '../../../navigation/routes';
+import { ExportEntry } from '../../../../store/modules/export/types';
+import { Route } from '../../../navigation/navigator';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
 import Composer from '../../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
-import farmerThunks from '../../../../store/modules/farmer/thunks';
+import exportThunks from '../../../../store/modules/export/thunks';
+import { getActiveExportEntry } from '../../../../store/modules/export/selectors';
+import * as moment from 'moment';
+
 import Styles from './style';
-import { getActiveFarmer } from '../../../../store/modules/farmer/selectors';
+
 
 interface OwnPropsType {
 }
 
 interface DispatchPropsType {
-  navigateToFarmer(): void;
+  navigate(route: Route): void;
   goBack(): void;
-  updateFarmer(newFarmer: ThunkUpdateRow<Farmer>): void;
+  updateExportEntry(newEntry: ThunkUpdateRow<ExportEntry>): void;
 }
 
 interface StorePropsType {
-  farmer: StoreRow<Farmer>;
+  exportEntry: StoreRow<ExportEntry>;
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
-/** EditFarmer PropsType */
+/** EditEntry PropsType */
 type PropsType = InjectedFabProps & NestedPropsType;
 
 interface OwnStateType {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  notes: string; // notes can be empty
-  validFirstName: boolean;
-  validLastName: boolean;
-  validPhoneNumber: boolean;
+  amountOfProduct: number;
+  licencePlate: string;
+  validAmount: boolean;
+  validPlate: boolean;
 }
 
 /**
@@ -45,25 +45,21 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-/**
- * Page for EditFarmer
- *
- * @example
- *          <EditFarmer
- *          />
- */
-class EditFarmer extends React.Component<PropsType, OwnStateType> {
+let radix: number = 10;
 
+/**
+ * Page for EditEntry
+ */
+class EditEntry extends React.Component<PropsType, OwnStateType> {
+
+  private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      firstName: this.props.farmer.firstName,
-      lastName: this.props.farmer.lastName,
-      phoneNumber: this.props.farmer.phoneNumber,
-      notes: this.props.farmer.notes,
-      validFirstName: false,
-      validLastName: false,
-      validPhoneNumber: false,
+      amountOfProduct: this.props.exportEntry.amountOfProduct,
+      licencePlate: this.props.exportEntry.transportId,
+      validAmount: true,
+      validPlate: true,
     };
   }
 
@@ -76,54 +72,43 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing save button */
   private onSavePress = () => {
-    let newFarmer: ThunkUpdateRow<Farmer> = {
-      uuid: this.props.farmer.uuid,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      phoneNumber: this.state.phoneNumber,
-      notes: this.state.notes,
+    let newEntry: ThunkUpdateRow<ExportEntry> = {
+      uuid: this.props.exportEntry.uuid,
+      transportId: this.state.licencePlate,
+      amountOfProduct: this.state.amountOfProduct,
     };
-    this.props.updateFarmer(newFarmer);
-    this.props.navigateToFarmer();
+    this.props.updateExportEntry(newEntry);
+    this.props.navigate(Route.EXPORTS);
   }
 
+  /** Return validity of required fields */
   private allValid = () => (
-    this.state.validFirstName 
-    && this.state.validLastName 
-    && this.state.validPhoneNumber
+    this.state.validAmount 
+    && this.state.validPlate
   )
 
   /**
-   * Handle farmer details changes, update local state
+   * Handle entry changes, update local state
    */
-  private onChangeFirstName = (newFirstName: string) => {
-    if (!newFirstName) {
-      this.setState(state => ({ validFirstName: false }));
+  private onChangeAmount = (newAmount: string) => {
+    const newAmountInt = parseInt(newAmount, radix);
+
+    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+      this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ firstName: newFirstName, validFirstName: true }));
-    }
-  }
-  
-  private onChangeLastName = (newLastName: string) => { 
-    if (!newLastName) {
-      this.setState(state => ({ validLastName: false }));
-    } else {
-      this.setState(state => ({ lastName: newLastName, validLastName: true }));
+      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
     }
   }
 
-  private onChangePhoneNumber = (newPhone: string) => { 
-    if (!newPhone) {
-      this.setState(state => ({ validPhoneNumber: false }));
+  private onChangePlate = (newPlate: string) => {
+    if (newPlate.length < 1) {
+      this.setState(state => ({ validPlate: false }));
     } else {
-      this.setState(state => ({ phoneNumber: newPhone, validPhoneNumber: true }));
+      this.setState(state => ({ licencePlate : newPlate, validPlate: true }));
     }
   }
-
-  private onNotesChange = (newNotes: string) => this.setState(state => ({ notes: newNotes }));
-
   /**
-   * Returns a button with text specified
+   * Returns a button with text, color, and onPress callback specified
    */
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
@@ -148,9 +133,21 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
     }
   }
 
+  private renderHeader() {
+    return (
+      <Grid>
+        <Row style={Styles.headerRow}>
+          <Text style={Styles.header}>
+          {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}            
+          </Text>
+        </Row>
+      </Grid>
+    );
+  }
+
   private formatEditRow(label: string, 
                         value: number | string, 
-                        onChangeText: any, 
+                        onChangeText: any,
                         isNumeric: boolean,
                         validField?: boolean) {
     if (isNumeric) {
@@ -179,7 +176,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
           </Col>
           <Col>
           <Item success={validField} error={!validField}>
-            <Input autoCapitalize="sentences" onChangeText={onChangeText}>
+            <Input onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -192,20 +189,23 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('First Name', this.props.farmer.firstName, this.onChangeFirstName, false, this.state.validFirstName)}
-        {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onChangeLastName, false, this.state.validLastName)}
-        {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onChangePhoneNumber, true, this.state.validPhoneNumber)}
-        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange, false)}
+        {this.formatEditRow('Amount (L)', this.props.exportEntry.amountOfProduct, this.onChangeAmount, true, this.state.validAmount)}
+        {this.formatEditRow('Licence Plate', this.props.exportEntry.transportId, this.onChangePlate, false, this.state.validPlate)}
       </View>
     );
   }
 
   /**
-   * Render method for EditFarmer
+   * Render method for EditEntry
    */
   public render() {
     return(
       <Content padder style={{ backgroundColor: 'white' }}>
+      <List>
+        <ListItem>
+          {this.renderHeader()}
+        </ListItem>
+      </List>
       {this.renderEditFields()}
       <Grid>
         <Row style={Styles.buttonRow}>
@@ -218,24 +218,23 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const EditFarmerPage = new Composer<NestedPropsType>(EditFarmer).page;
+const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
-
   return {
-    farmer: getActiveFarmer(state),
+    exportEntry: getActiveExportEntry(state),
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigateToFarmer: () => dispatch(navActions.navigateToWithoutHistory(Route.FARMER)),
+    navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateFarmer: async (newFarmer: ThunkUpdateRow<Farmer>) => dispatch(farmerThunks.updateFarmer(newFarmer)),
+    updateExportEntry: async (newEntry: ThunkUpdateRow<ExportEntry>) => dispatch(exportThunks.updateExportEntry(newEntry)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditFarmerPage);
+)(EditEntryPage);
