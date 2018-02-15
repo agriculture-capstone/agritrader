@@ -38,7 +38,7 @@ interface SearchInfo {
 export enum Route {
   HOME = 'Home',
   LOGIN = 'Login',
-  EXPORTS = 'Exports',
+  EXPORTS = 'Deliveries',
   FARMER = 'Farmer',
   SEARCH_FARMER = 'SearchFarmers',
   ADD_MILK_ENTRY = 'AddMilkEntry',
