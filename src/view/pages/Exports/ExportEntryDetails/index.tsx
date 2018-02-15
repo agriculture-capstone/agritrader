@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, Button } from 'native-base';
 
 import { ExportEntry } from '../../../../store/modules/export/types';
-import { Route } from '../../../navigation/navigator';
+import { Route } from '../../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../../store/modules/nav/actions';
