@@ -93,7 +93,7 @@ export const routesInfo: RouteInfo[] = [
   },
   {
     route: Route.EXPORTS,
-    name: 'Exports',
+    name: 'Deliveries',
     component: ExportsPage,
     type: 'menu',
     drawerInfo: {
