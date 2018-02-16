@@ -63,8 +63,8 @@ class Home extends React.Component<PropsType, {}> {
               <Col><Text style={styles.label}> {moment().local().format('dddd, MMMM DD, YYYY').toUpperCase()}</Text></Col>
             </Row>
             <Row>
-              <StatisicsBlock value={this.props.dayTotal} units="L" label="Today" />
-              <StatisicsBlock value={this.props.avgDayTotal} units="L" label="Average Daily" />
+              <StatisicsBlock value={this.props.dayTotal} units="L" label="Collected Today" />
+              <StatisicsBlock value={this.props.avgDayTotal} units="L" label="Milk Inventory" />
             </Row>
           </Grid>
         </Panel>

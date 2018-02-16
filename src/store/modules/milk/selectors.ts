@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
-import { MilkEntry, StoreMilkEntry } from './types';
+import { MilkEntry, StoreMilkEntry} from './types';
+import { ExportEntry} from '../export/types';
 import { State } from '../../types';
 
 import * as moment from 'moment';
 
 const getMilkEntries = (state: State) => state.milk.rows;
+const getExportEntries = (state: State) => state.export.rows;
 const getCurrentMilkEntryUUID = (state: State) => state.activeRows.activeMilkEntryUUID;
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
@@ -56,6 +58,16 @@ export const getAvgDaysMilkTotal = createSelector(
   (milkEntries: MilkEntry[]) => {
     return calculateAverage(groupBy(milkEntries.map(entry =>
       ({ ...(entry as any), dateID: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').utc().format() })), 'dateID'));
+  },
+);
+
+/**Selector to calculate the Milk on hand (what hasn't been exported yet) */
+export const getMilkInventory = createSelector(
+  [getMilkEntries, getExportEntries],
+  (milkEntries: MilkEntry[], exportEntries: ExportEntry[]) => {
+      let milkSum = milkEntries.reduce((sum: number, entry: MilkEntry) =>sum + entry.amountOfProduct, 0)
+      let exportSum = exportEntries.reduce((sum: number, entry: ExportEntry) =>sum + entry.amountOfProduct, 0)
+      return milkSum - exportSum;
   },
 );
 
