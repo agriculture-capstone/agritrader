@@ -79,7 +79,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
       value: this.props.weeklyTotal,
       units: 'L',
     },                   {
-      label: 'Weekly Balance',
+      label: 'Balance',
       value: this.props.weeklybalance,
       units: 'UGX',
     },
