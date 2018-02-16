@@ -15,6 +15,8 @@ import sensitiveInfoReducer from './modules/sensitive/reducer';
 import farmerReducer from './modules/farmer/reducer';
 import activeRowsReducer from './modules/activeRows/reducer';
 import milkReducer from './modules/milk/reducer';
+import exportReducer from './modules/export/reducer';
+
 
 // Whitelist the core modules
 const whitelist = [...CoreModuleNames, 'activeRows'];
@@ -36,6 +38,7 @@ const reducer = combineReducers<State>({
   farmer: farmerReducer,
   activeRows: activeRowsReducer,
   milk: milkReducer,
+  export: exportReducer,
 }) as BaseReducer<State, Action>;
 
 export default createPersistedReducer(persistConfig, reducer);

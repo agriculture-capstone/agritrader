@@ -6,7 +6,7 @@ import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import CardButton from '../../components/CardButton';
 import Panel from '../../components/Panel';
 import StatisicsBlock from '../../components/StatisticsBlock';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
 import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';
@@ -54,10 +54,6 @@ class Home extends React.Component<PropsType, {}> {
           <Text style={[styles.betaContents, styles.betaTitle]}>
             Welcome to the Beta Version of Agritrader!
           </Text>
-          <Text style={styles.betaContents}>
-            This application is continuously being developed to provide users
-            like you with rich features to ease your workflow.
-          </Text>
           </Body>
           </CardItem>
           </Card>
@@ -69,7 +65,6 @@ class Home extends React.Component<PropsType, {}> {
             <Row>
               <StatisicsBlock value={this.props.dayTotal} units="L" label="Today" />
               <StatisicsBlock value={this.props.avgDayTotal} units="L" label="Average Daily" />
-
             </Row>
           </Grid>
         </Panel>

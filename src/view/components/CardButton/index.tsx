@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, Card, Body, CardItem, Icon, Right, Left } from 'native-base';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 import styles from './style';
 
 interface OwnPropsType {
@@ -18,8 +18,8 @@ interface DispatchPropsType {
 interface StorePropsType {
 
 }
- 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType; 
+
+type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 
 interface OwnStateType {
 
@@ -39,11 +39,11 @@ export default class CardButton extends React.Component<PropsType, OwnStateType>
   }
 
   /**
-   * Render method 
+   * Render method
    */
   public render() {
     const iconStyle = [
-      styles.icon, 
+      styles.icon,
       this.props.iconColor ? { color: this.props.iconColor } : styles.iconColor,
     ];
     return (
