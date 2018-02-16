@@ -3,8 +3,8 @@ import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
-import * as _ from 'lodash';
 
+import ClickHandler from '../../../../../utils/ClickHandler';
 import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage/index';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import activeRowsActions from '../../../../../store/modules/activeRows/actions';
@@ -49,27 +49,23 @@ type PropsType = InjectedFabProps & NestedPropsType;
  * Collect Tab Component
  */
 class Collect extends React.Component<PropsType, OwnStateType> {
-
+  private clickHandler : ClickHandler;
   public constructor(constructorProps: PropsType) {
     super(constructorProps);
+    // Blocking Event Handlers
+    this.clickHandler = new ClickHandler();
+    this.onAddPress = this.clickHandler.createEventHandler(this.onAddPress);
   }
 
-
-  private debounceOnAddPress = () => _.debounce(this.onAddPress, 2000);
-
-  private debounceOnPressEntry = () => _.debounce(this.onPressEntry, 2000);
-
-  private onAddPress = () => this.props.navigate(Route.ADD_MILK_ENTRY);
-  private onPressEntry = (uuid: string) => {
-    return () => {
-      this.props.setActiveMilkEntry(uuid);
-      this.props.navigateToMilkEntry();
-    };
-  }
+  private onAddPress = async() => this.props.navigate(Route.ADD_MILK_ENTRY);
+  private onPressEntry = (uuid: string) => this.clickHandler.createEventHandler(async() => {
+    this.props.setActiveMilkEntry(uuid);
+    this.props.navigateToMilkEntry();
+  })
 
   /** React componentDidMount */
   public componentDidMount() {
-    this.props.listenToFab(this.debounceOnAddPress);
+    this.props.listenToFab(this.onAddPress);
   }
 
   /**
@@ -103,7 +99,7 @@ class Collect extends React.Component<PropsType, OwnStateType> {
             <DataTable
               headers={['Date', 'Volume (L)', 'Value (UGX)']}
               values={dateSort.sortDescending(this.props.collectTransactions)}
-              onPressEntry={this.debounceOnPressEntry}
+              onPressEntry={this.onPressEntry}
             />
           </Row>
         </Grid>
