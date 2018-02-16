@@ -148,7 +148,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <View style={Styles.editView}>
         {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Quality', this.props.milkEntry.milkQuality, this.onQualityChange)}
+        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange)}
         {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange)}
       </View>
     );
