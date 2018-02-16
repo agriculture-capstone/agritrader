@@ -22,19 +22,11 @@ export default class App extends React.Component {
     (ActionSheet as any).actionsheetInstance = null;
   }
 
-  /** React componentWillMount */
-  public componentWillMount() {
-    // If logged in, start sync service
-    if (store.getState().sensitiveInfo.jwt) {
-      SyncService().start();
-    }
-  }
-
   /** Render the application */
   public render() {
     return (
       <Root>
-        <PersistGate persistor={persistor} loading={<Spinner color="red" />} >
+        <PersistGate persistor={persistor} loading={<Spinner color="red" style={{ flex: 1 }} />} >
           <Provider store={store}>
               <NavContainer />
           </Provider>

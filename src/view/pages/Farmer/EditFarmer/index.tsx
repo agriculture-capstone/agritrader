@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { Content, View, Text, Grid, Row, Col, Button, Input, Item } from 'native-base';
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 
 import { Farmer } from '../../../../store/modules/farmer/types';
-import { Route } from '../../../navigation/navigator';
-
-import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import { Route } from '../../../navigation/routes';
 import navActions from '../../../../store/modules/nav/actions';
 import { InjectedFabProps } from '../../../hoc/PageComposer/FabPage/index';
 import Composer from '../../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../../store/types';
 import farmerThunks from '../../../../store/modules/farmer/thunks';
-
 import Styles from './style';
 import { getActiveFarmer } from '../../../../store/modules/farmer/selectors';
 

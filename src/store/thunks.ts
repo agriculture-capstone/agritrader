@@ -22,6 +22,14 @@ const rootThunks = {
       type: 'LOGOUT',
     });
   },
+
+  bypassLogin: (): Thunk<void> => async (dispatch) => {
+    dispatch({
+      type: 'BYPASS_LOGIN',
+    });
+
+    SyncService().start();
+  },
 };
 
 export default rootThunks;

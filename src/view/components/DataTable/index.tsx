@@ -3,7 +3,7 @@ import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
 import * as moment from 'moment';
 
 import styles from './style';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 
 
 interface OwnPropsType {
