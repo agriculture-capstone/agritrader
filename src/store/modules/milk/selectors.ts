@@ -65,8 +65,8 @@ export const getAvgDaysMilkTotal = createSelector(
 export const getMilkInventory = createSelector(
   [getMilkEntries, getExportEntries],
   (milkEntries: MilkEntry[], exportEntries: ExportEntry[]) => {
-    let milkSum = milkEntries.reduce((sum: number, entry: MilkEntry) => sum + entry.amountOfProduct, 0)
-    let exportSum = exportEntries.reduce((sum: number, entry: ExportEntry) => sum + entry.amountOfProduct, 0)
+    let milkSum = milkEntries.reduce((sum: number, entry: MilkEntry) => sum + entry.amountOfProduct, 0);
+    let exportSum = exportEntries.reduce((sum: number, entry: ExportEntry) => sum + entry.amountOfProduct, 0);
     return (milkSum - exportSum).toFixed(0);
   },
 );
