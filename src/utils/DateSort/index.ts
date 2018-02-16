@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 
+const dateFormat = 'MMM DD';
 /**
  * Methods for sorting object arrays by datetime
  */
@@ -9,8 +10,8 @@ export const dateSort = {
   */
   sortAscending(array: any[]): any[] {
     return array.sort(function (a, b) {
-      let d1 = moment(a.datetime, 'MMM DD[\n]h:mm a');
-      let d2 =  moment(b.datetime, 'MMM DD[\n]h:mm a');
+      let d1 = moment(a.datetime, dateFormat);
+      let d2 =  moment(b.datetime, dateFormat);
       return d1 > d2 ? 1 : d1 < d2 ? -1 : 0;
     });
   },
@@ -19,8 +20,8 @@ export const dateSort = {
   */
   sortDescending(array: any[]): any[] {
     return array.sort(function (a, b) {
-      let d1 = moment(a.datetime, 'MMM DD[\n]h:mm a');
-      let d2 =  moment(b.datetime, 'MMM DD[\n]h:mm a');
+      let d1 = moment(a.datetime, dateFormat);
+      let d2 =  moment(b.datetime, dateFormat);
       return d1 > d2 ? -1 : d1 < d2 ? 1 : 0;
     });
   },
