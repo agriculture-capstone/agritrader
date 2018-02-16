@@ -69,7 +69,7 @@ class Home extends React.Component<PropsType, {}> {
           </Grid>
         </Panel>
           <CardButton title="Farmers" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
-          <CardButton title="Exports" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
+          <CardButton title="Deliveries" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
           <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
           <CardButton title="View Records" iconName="stats" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
         </View>
