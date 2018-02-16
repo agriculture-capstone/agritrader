@@ -184,7 +184,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
         </Item>
         <Item floatingLabel>
-          <Label>Quality</Label>
+          <Label>Lactometer</Label>
           <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
         </Item>
         <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
