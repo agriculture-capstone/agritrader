@@ -43,16 +43,16 @@ export enum Route {
   LOGIN = 'Login',
   EXPORTS = 'Exports',
   FARMER = 'Farmer',
-  SEARCH_FARMER = 'SearchFarmers',
-  ADD_MILK_ENTRY = 'AddMilkEntry',
-  MILK_ENTRY_DETAILS = 'MilkEntryDetails',
-  EDIT_MILK_ENTRY = 'EditMilkEntry',
-  EDIT_FARMER = 'EditFarmer',
-  ADD_FARMER = 'AddFarmer',
-  ADD_EXPORT_ENTRY = 'AddExportEntry',
-  EXPORT_ENTRY_DETAILS = 'ExportEntryDetails',
-  EDIT_EXPORT_ENTRY = 'EditExportEntry',
-  TRANSACTION_LOGS = 'TransactionLog',
+  SEARCH_FARMER = 'Search Farmers',
+  ADD_MILK_ENTRY = 'Add Milk Entry',
+  MILK_ENTRY_DETAILS = 'Milk Entry Details',
+  EDIT_MILK_ENTRY = 'Edit Milk Entry',
+  EDIT_FARMER = 'Edit Farmer',
+  ADD_FARMER = 'Add Farmer',
+  ADD_EXPORT_ENTRY = 'Add Export Entry',
+  EXPORT_ENTRY_DETAILS = 'Export Entry Details',
+  EDIT_EXPORT_ENTRY = 'Edit Export Entry',
+  TRANSACTION_LOGS = 'Transaction Log',
   WAREHOUSE = 'Warehouse',
 }
 
@@ -101,21 +101,21 @@ export const routesInfo: RouteInfo[] = [
     },
   },
   {
-    route: Route.TRANSACTION_LOGS,
-    name: 'Transaction Logs',
-    component: TransactionLogPage,
-    type: 'menu',
-    drawerInfo: {
-      icon: 'paper',
-    },
-  },
-  {
     route: Route.WAREHOUSE,
     name: 'Warehouse',
     component: WarehousePage,
     type: 'menu',
     drawerInfo: {
-      icon: 'cube',
+      icon: 'cart',
+    },
+  },
+  {
+    route: Route.TRANSACTION_LOGS,
+    name: 'Transaction Logs',
+    component: TransactionLogPage,
+    type: 'menu',
+    drawerInfo: {
+      icon: 'stats',
     },
   },
   {
