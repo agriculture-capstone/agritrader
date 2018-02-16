@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
 import { MilkEntry, StoreMilkEntry } from './types';
+import { ExportEntry } from '../export/types';
 import { State } from '../../types';
 
 import * as moment from 'moment';
 
 const getMilkEntries = (state: State) => state.milk.rows;
+const getExportEntries = (state: State) => state.export.rows;
 const getCurrentMilkEntryUUID = (state: State) => state.activeRows.activeMilkEntryUUID;
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
@@ -59,6 +61,16 @@ export const getAvgDaysMilkTotal = createSelector(
   },
 );
 
+/**Selector to calculate the Milk on hand (what hasn't been exported yet) */
+export const getMilkInventory = createSelector(
+  [getMilkEntries, getExportEntries],
+  (milkEntries: MilkEntry[], exportEntries: ExportEntry[]) => {
+    let milkSum = milkEntries.reduce((sum: number, entry: MilkEntry) => sum + entry.amountOfProduct, 0);
+    let exportSum = exportEntries.reduce((sum: number, entry: ExportEntry) => sum + entry.amountOfProduct, 0);
+    return (milkSum - exportSum).toFixed(0);
+  },
+);
+
 /************Selectors for a specific farmer ***************/
 
 /**Selector to get all milk transactions for a specific farmer  */
@@ -76,7 +88,7 @@ export const getFormattedFarmersTransactions = createSelector(
     ({
       datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MMM DD'),
       amountOfProduct: entry.amountOfProduct.toFixed(decimals),
-      milkValue: Math.ceil((entry.costPerUnit * entry.amountOfProduct)).toFixed(0), 
+      milkValue: Math.ceil((entry.costPerUnit * entry.amountOfProduct)).toFixed(0),
       uuid: entry.uuid,
     }),
   ),
@@ -169,7 +181,7 @@ function groupBy<T>(array: T[], prop: string) {
   }, {});
 }
 
-function numberFormatter(num : number) {
+function numberFormatter(num: number) {
   const thousand = 1000;
   const million = 1000000;
   const billion = 1000000000;
