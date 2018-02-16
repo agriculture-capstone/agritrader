@@ -12,6 +12,9 @@ import EditFarmerPage from '../pages/Farmer/EditFarmer';
 import AddExportEntryPage from '../pages/Exports/AddExport';
 import ExportEntryDetails from '../pages/Exports/ExportEntryDetails';
 import EditExportEntryPage from '../pages/Exports/EditExportEntry';
+import TransactionLogPage from '../pages/TransactionLog';
+import WarehousePage from '../pages/Warehouse';
+
 
 /** Different types of pages */
 export type PageType = 'menu' | 'back' | 'empty';
@@ -40,6 +43,8 @@ export enum Route {
   LOGIN = 'Login',
   EXPORTS = 'Deliveries',
   FARMER = 'Farmer',
+  TRANSACTION_LOGS = 'Transaction Log',
+  WAREHOUSE = 'Warehouse',
   SEARCH_FARMER = 'SearchFarmers',
   ADD_MILK_ENTRY = 'AddMilkEntry',
   MILK_ENTRY_DETAILS = 'MilkEntryDetails',
@@ -92,7 +97,25 @@ export const routesInfo: RouteInfo[] = [
     component: ExportsPage,
     type: 'menu',
     drawerInfo: {
-      icon: 'person',
+      icon: 'car',
+    },
+  },
+  {
+    route: Route.WAREHOUSE,
+    name: 'Warehouse',
+    component: WarehousePage,
+    type: 'menu',
+    drawerInfo: {
+      icon: 'cart',
+    },
+  },
+  {
+    route: Route.TRANSACTION_LOGS,
+    name: 'Transaction Logs',
+    component: TransactionLogPage,
+    type: 'menu',
+    drawerInfo: {
+      icon: 'stats',
     },
   },
   {
