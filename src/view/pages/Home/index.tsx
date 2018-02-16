@@ -9,7 +9,7 @@ import StatisicsBlock from '../../components/StatisticsBlock';
 import { Route } from '../../navigation/routes';
 import { State } from '../../../store/types';
 import navActions from '../../../store/modules/nav/actions';
-import { getAvgDaysMilkTotal, getDaysMilkTotal } from '../../../store/modules/milk/selectors';
+import { getDaysMilkTotal, getMilkInventory } from '../../../store/modules/milk/selectors';
 import Composer from '../../hoc/PageComposer';
 import styles from './style';
 import * as moment from 'moment';
@@ -19,7 +19,7 @@ interface OwnPropsType { }
 
 interface StorePropsType {
   dayTotal: string;
-  avgDayTotal: string;
+  milkInventory: string;
 }
 
 interface DispatchPropsType {
@@ -63,15 +63,15 @@ class Home extends React.Component<PropsType, {}> {
               <Col><Text style={styles.label}> {moment().local().format('dddd, MMMM DD, YYYY').toUpperCase()}</Text></Col>
             </Row>
             <Row>
-              <StatisicsBlock value={this.props.dayTotal} units="L" label="Today" />
-              <StatisicsBlock value={this.props.avgDayTotal} units="L" label="Average Daily" />
+              <StatisicsBlock value={this.props.dayTotal} units="L" label="Collected Today" />
+              <StatisicsBlock value={this.props.milkInventory} units="L" label="Milk Inventory" />
             </Row>
           </Grid>
         </Panel>
           <CardButton title="Farmers" iconName="people" iconColor="#383838" route={Route.SEARCH_FARMER} onPress={this.onCardPress} />
           <CardButton title="Deliveries" iconName="car" iconColor="#383838" route={Route.EXPORTS} onPress={this.onCardPress} />
-          <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
-          <CardButton title="View Records" iconName="stats" iconColor="#383838" route={Route.HOME} onPress={this.onCardPress} />
+          <CardButton title="Warehouse Products" iconName="cart" iconColor="#383838" route={Route.WAREHOUSE} onPress={this.onCardPress} />
+          <CardButton title="View Records" iconName="stats" iconColor="#383838" route={Route.TRANSACTION_LOGS} onPress={this.onCardPress} />
         </View>
       </Content>
     );
@@ -83,7 +83,7 @@ const HomePage = new Composer<PropsType>(Home).page;
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     dayTotal: getDaysMilkTotal(state),
-    avgDayTotal: getAvgDaysMilkTotal(state),
+    milkInventory: getMilkInventory(state),
   };
 };
 
