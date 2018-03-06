@@ -20,7 +20,7 @@ import {
 /*--------------------------------- Utility Types ---------------------------------*/
 
 /** Different types of modules */
-export type CoreModuleName = 'farmer' | 'milk' | 'export';
+export type CoreModuleName = 'farmer' | 'milk' | 'export' | 'loan';
 
 /** Map for modules */
 export const CoreModuleNames: CoreModuleName[] = [
@@ -28,6 +28,7 @@ export const CoreModuleNames: CoreModuleName[] = [
   'farmer',
   'milk',
   'export',
+  'loan',
 ];
 
 /**
@@ -42,6 +43,8 @@ export function getModulePath(module: CoreModuleName): CorePath {
     case 'milk': return '/transactions/products/milk';
 
     case 'export': return '/transactions/products/export';
+
+    case 'loan': return '/transactions/money/loan';
 
     default: throw new Error(`No such module/path mapping for module ${module}`);
   }

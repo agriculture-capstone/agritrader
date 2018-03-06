@@ -16,6 +16,8 @@ import farmerReducer from './modules/farmer/reducer';
 import activeRowsReducer from './modules/activeRows/reducer';
 import milkReducer from './modules/milk/reducer';
 import exportReducer from './modules/export/reducer';
+import loanReducer from './modules/loan/reducer';
+
 
 
 // Whitelist the core modules
@@ -39,6 +41,7 @@ const reducer = combineReducers<State>({
   activeRows: activeRowsReducer,
   milk: milkReducer,
   export: exportReducer,
+  loan: loanReducer,
 }) as BaseReducer<State, Action>;
 
 export default createPersistedReducer(persistConfig, reducer);
