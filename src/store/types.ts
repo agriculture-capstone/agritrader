@@ -14,8 +14,6 @@ import { ExportState } from './modules/export/types';
 import { LoanState } from './modules/loan/types';
 
 
-
-
 /** Global redux state */
 export interface State {
   drawer: DrawerState;
@@ -37,6 +35,8 @@ export type RootAction = {
 } | {
   type: 'LOGIN',
   payload: LoginPayload;
+} | {
+  type: 'BYPASS_LOGIN',
 };
 
 /** Root action models */

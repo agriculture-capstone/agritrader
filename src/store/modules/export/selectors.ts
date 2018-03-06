@@ -40,7 +40,7 @@ export const getActiveExportEntry = createSelector(
 );
 
 /**Selector to calculate the current days exports */
-export const getDaysExportTotal = createSelector(
+export const getTodaysExportTotal = createSelector(
   [getExportEntries],
   (exportEntries: ExportEntry[]) => exportEntries.reduce((sum: number, entry: ExportEntry) =>
     inSameDay(entry.datetime) ? sum + entry.amountOfProduct : sum + 0, 0).toFixed(decimals));
@@ -49,13 +49,14 @@ export const getDaysExportTotal = createSelector(
  * Selector to get all export transactions formatted for the export page
  * if using with the DataTable ensure that the last element in the array is the export transaction uuid.
  */
-export const getFormattedFarmersTransactions = createSelector(
+export const getFormattedExportTransactions = createSelector(
   [getExportEntries],
   (exportEntries: StoreExportEntry[]) => exportEntries.map(entry =>
     ({
       datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MMM DD'),
       licencePlate: entry.transportId,
-      amountOfProduct: entry.amountOfProduct, uuid: entry.uuid,
+      amountOfProduct: entry.amountOfProduct, 
+      uuid: entry.uuid,
     }),
   ),
 );

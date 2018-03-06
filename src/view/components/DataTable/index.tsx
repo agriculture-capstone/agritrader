@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { List, ListItem, Text, Grid, Col, Card } from 'native-base';
+import { List, ListItem, Text, Grid, Col, Card, Icon } from 'native-base';
 import * as moment from 'moment';
 
 import styles from './style';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 
 
 interface OwnPropsType {
@@ -67,7 +67,7 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
   private formatHeaderValues(values: any[]) {
     return values.map((value, index) => {
       return (
-        <Col key={moment().format() + index} style={{ justifyContent: 'center' }}>
+        <Col key={moment().format() + index} style={{ justifyContent: 'center', right:10 }}>
           <Text style={styles.values}>
             {value}
           </Text>
@@ -81,6 +81,12 @@ export default class DataTable extends React.Component<PropsType, OwnStateType> 
       <ListItem style={{ justifyContent: 'center' }} button={true} onPress={this.props.onPressEntry(item.uuid)}>
         <Grid style={{ justifyContent: 'center' }}>
           {this.formatTableValues(Object.values(item))}
+          <Col style={{ width: 10 }}>
+            <Icon
+              name="ios-arrow-forward"
+              style={{ fontSize: 20 }}
+            />
+          </Col>
         </Grid>
       </ListItem>
     );

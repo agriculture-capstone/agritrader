@@ -3,7 +3,8 @@ import * as R from 'ramda';
 
 import { NavState, Action } from './types';
 import initialState from './state';
-import Navigator, { Route } from '../../../view/navigation/navigator';
+import { Route } from '../../../view/navigation/routes';
+import Navigator from '../../../view/navigation/navigator';
 import { NavigationActions, NavigationState } from 'react-navigation';
 
 const navReducer: Reducer<NavState> = (state = initialState, action: Action) => {
@@ -18,6 +19,7 @@ const navReducer: Reducer<NavState> = (state = initialState, action: Action) => 
       return { ...state, routes, index };
     }
 
+    case 'BYPASS_LOGIN':
     case 'LOGIN': {
       let navigateAction = NavigationActions.navigate({ routeName: Route.HOME });
       let nextState = Navigator.router.getStateForAction(navigateAction, state) as NavigationState;

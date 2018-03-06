@@ -1,6 +1,6 @@
 import { NavigationState, NavigationAction } from 'react-navigation';
 import { RootAction } from '../../types';
-import { Route } from '../../../view/navigation/navigator';
+import { Route } from '../../../view/navigation/routes';
 
 /*----------------------- State -----------------------*/
 

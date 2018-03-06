@@ -3,7 +3,7 @@ import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input,
 
 import { Farmer } from '../../../store/modules/farmer/types';
 import { MilkEntry } from '../../../store/modules/milk/types';
-import { Route } from '../../navigation/navigator';
+import { Route } from '../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
@@ -148,7 +148,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <View style={Styles.editView}>
         {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Quality', this.props.milkEntry.milkQuality, this.onQualityChange)}
+        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange)}
         {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange)}
       </View>
     );

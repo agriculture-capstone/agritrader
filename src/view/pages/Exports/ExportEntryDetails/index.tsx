@@ -1,18 +1,16 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button } from 'native-base';
+import { Content, List, ListItem, Text, Grid, Row, Col, Button } from 'native-base';
 
-import { Farmer } from '../../../store/modules/farmer/types';
-import { MilkEntry } from '../../../store/modules/milk/types';
-import { Route } from '../../navigation/routes';
+import { ExportEntry } from '../../../../store/modules/export/types';
+import { Route } from '../../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
-import navActions from '../../../store/modules/nav/actions';
-import Composer from '../../hoc/PageComposer/index';
-import { State } from '../../../store/types';
+import navActions from '../../../../store/modules/nav/actions';
+import Composer from '../../../hoc/PageComposer/index';
+import { State } from '../../../../store/types';
 
 import Styles from './style';
-import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
-import { getActiveMilkEntry } from '../../../store/modules/milk/selectors';
+import { getActiveExportEntry } from '../../../../store/modules/export/selectors';
 import * as moment from 'moment';
 
 
@@ -24,11 +22,10 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  farmer: Farmer;
-  milkEntry: MilkEntry;
+  exportEntry: ExportEntry;
 }
 
-/** EntryDetails PropsType */
+/** ExportEntryDetails PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 interface OwnStateType {
@@ -40,15 +37,15 @@ interface OwnStateType {
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
- * Page for EntryDetails
+ * Page for ExportEntryDetails
  * @requires farmer
- * @requires milkEntry
+ * @requires ExportEntry
  *
  * @example
- *          <EntryDetails
+ *          <ExportEntryDetails
  *          />
  */
-class EntryDetails extends React.Component<PropsType, OwnStateType> {
+class ExportEntryDetails extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
@@ -60,7 +57,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Handle pressing edit button */
-  private onEditPress = () => this.props.navigate(Route.EDIT_MILK_ENTRY);
+  private onEditPress = () => this.props.navigate(Route.EDIT_EXPORT_ENTRY);
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -82,13 +79,8 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <Grid>
         <Row style={Styles.headerRow}>
-          <H1>
-            {this.props.farmer.firstName} {this.props.farmer.lastName}
-          </H1>
-        </Row>
-        <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.milkEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.exportEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
@@ -114,20 +106,17 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <List>
         <ListItem>
-          {this.formatRow('Amount (L)', this.props.milkEntry.amountOfProduct)}
+          {this.formatRow('Amount (L)', this.props.exportEntry.amountOfProduct)}
         </ListItem>
         <ListItem>
-          {this.formatRow('Lactometer', this.props.milkEntry.milkQuality)}
-        </ListItem>
-        <ListItem>
-          {this.formatRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit)}
+          {this.formatRow('Licence Plate', this.props.exportEntry.transportId)}
         </ListItem>
       </List>
     );
   }
 
   /**
-   * Render method for EntryDetails
+   * Render method for ExportEntryDetails
    */
   public render() {
     return(
@@ -144,12 +133,11 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const EntryDetailsPage = new Composer<PropsType>(EntryDetails).page;
+const ExportEntryDetailsPage = new Composer<PropsType>(ExportEntryDetails).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmer: getActiveFarmer(state),
-    milkEntry: getActiveMilkEntry(state),
+    exportEntry: getActiveExportEntry(state),
   };
 };
 
@@ -162,4 +150,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EntryDetailsPage);
+)(ExportEntryDetailsPage);
