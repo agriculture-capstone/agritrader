@@ -87,7 +87,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     let newEntry: MilkEntry = {
       type: 'milk',
       datetime: timeNow,
-      toPersonUuid: 'a2b121fd-1a1f-4425-97db-876af3c5bd2f',
+      toPersonUuid: this.props.activeTrader,
       fromPersonUuid: this.props.activeFarmer,
       amountOfProduct: this.state.amountOfProduct,
       costPerUnit: this.state.costPerUnit,
