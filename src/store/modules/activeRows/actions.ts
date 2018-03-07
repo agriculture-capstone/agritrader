@@ -22,6 +22,13 @@ const activeRowsActions = {
   clearActiveExportEntry: (): Action => ({
     type: 'CLEAR_CURRENT_EXPORT_ENTRY',
   }),
+  setActiveLoanEntry: (currentLoanEntryUUID: string): Action => ({
+    currentLoanEntryUUID,
+    type: 'UPDATE_CURRENT_LOAN_ENTRY',
+  }),
+  clearActiveLoanEntry: (): Action => ({
+    type: 'CLEAR_CURRENT_LOAN_ENTRY',
+  }),
   setActiveTrader: (currentTraderUUID: string): Action => ({
     currentTraderUUID,
     type: 'UPDATE_CURRENT_TRADER',

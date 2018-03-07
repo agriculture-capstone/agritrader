@@ -9,7 +9,7 @@ import { NetworkError } from '../../errors/NetworkError';
 import { AuthenticationError } from '../../errors/AuthenticationError';
 
 /** Paths on Core for specific data tables */
-export type CorePath = '/people/farmers' | '/transactions/products/milk' | '/transactions/products/export';
+export type CorePath = '/people/farmers' | '/transactions/products/milk' | '/transactions/products/export' | '/transactions/money/loan';
 
 const LOGIN_PATH = '/actions/authenticate';
 
