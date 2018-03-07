@@ -6,7 +6,6 @@ import store from '../../store';
 import { CoreModuleState } from '../../store/types';
 import CoreAPI from '../../utils/CoreAPI/index';
 
-
 /**
  * Promise representing the job taking place
  */
@@ -121,9 +120,6 @@ async function createJob(module: CoreModuleName): Job {
   const thunks = createThunks(module);
 
   return new Promise(async (resolve, reject) => {
-    if (R.contains(module, ['milk']) && activeModuleJobs['farmer']) {
-      await activeModuleJobs['farmer'];
-    }
 
     // Go through store and update local data
     // TODO: Optimize
@@ -224,11 +220,6 @@ function createSyncService(): SyncServiceInstance {
       const currentJob = activeModuleJobs[module];
       if (currentJob) {
         return currentJob;
-      }
-
-      // Deal with dependencies
-      if (R.contains(module, ['milk'])) {
-        await instance.syncModule('farmer');
       }
 
       const job = createJob(module);
