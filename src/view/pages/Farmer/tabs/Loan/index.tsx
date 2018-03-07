@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Grid, Row, Content, Button, Text } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
-import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
+
+import styles from './style';
+import {InjectedFabProps} from "../../../../hoc/PageComposer/FabPage";
 
 interface OwnPropsType {
   farmerName: string;
@@ -18,15 +20,19 @@ interface DispatchPropsType {
 interface StorePropsType {
 }
 
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
+
 
 interface OwnStateType {
 }
 
-/**
-* Buy Tab Component
-*/
-class Buy extends React.Component<PropsType, OwnStateType> {
+/** Loan NestedPropsType */
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+
+/** Loan PropsType */
+type PropsType = NestedPropsType & InjectedFabProps;
+
+/** Loan Tab Component */
+class Loan extends React.Component<PropsType, OwnStateType> {
 
   private onPressEntry = (uuid: string) => {
     return () => {
@@ -36,7 +42,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
     };
   }
   /**
-  * Render method for Buy
+  * Render method for Loan
   */
   public render() {
     const testData = [{
@@ -73,6 +79,6 @@ class Buy extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-export default new Composer<PropsType>(Buy)
+export default new Composer<PropsType>(Loan)
   .comingSoon()
   .page;
