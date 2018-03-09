@@ -68,7 +68,7 @@ export const getFormattedFarmersTransactions = createSelector(
 export const getFarmerBalance = createSelector(
   [getFarmersTransactions],
   (loanEntries: LoanEntry[]) => loanEntries.reduce((sum: number, entry: LoanEntry) =>
-    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0)).toString();
+    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0).toString());
 
 /************Helper Methods************/
 
