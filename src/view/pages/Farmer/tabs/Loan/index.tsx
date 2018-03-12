@@ -12,7 +12,8 @@ import { Route } from '../../../../navigation/routes';
 import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort';
 import {
-  getFarmerBalance,
+  getFarmerLoanBalance,
+  getFarmerTotalBalance,
   getFormattedFarmersTransactions,
 } from '../../../../../store/modules/loan/selectors'
 import styles from './style';
@@ -27,7 +28,8 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  farmerBalance: string;
+  farmerLoanBalance: string;
+  farmerTotalBalance: string;
   loanTransactions: any[];
 }
 
@@ -62,13 +64,12 @@ class Loan extends React.Component<PropsType, OwnStateType> {
   public render() {
     /** A brief summary at the top of the page */
     const loanDataSummary = [{
-      label: 'Total Balance',
-      value: this.props.farmerBalance,
+      label: 'Total Loan Balance',
+      value: this.props.farmerLoanBalance,
       units: 'UGX',
     },                {
-      label: 'Total Weekly Payment',
-      //TODO: this should be implemented in loan/selectors
-      value: this.props.farmerBalance,
+      label: 'Weekly Balance Including Loans',
+      value: this.props.farmerTotalBalance,
       units: 'UGX',
     },
     ];
@@ -83,7 +84,7 @@ class Loan extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Remaining Balance', 'Weekly Payment']}
+              headers={['Date', 'Loan Amount']}
               values={dateSort.sortDescending(this.props.loanTransactions)}
               onPressEntry={this.onPressEntry}
             />
@@ -100,11 +101,9 @@ const LoanPage = new Composer<NestedPropsType>(Loan)
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmerBalance: getFarmerBalance(state),
+    farmerLoanBalance: getFarmerLoanBalance(state),
     loanTransactions: getFormattedFarmersTransactions(state),
-    //TODO: should be implemented in loans/selectors
-    totalRemainingBalance: getFarmerBalance(state),
-    totalWeeklyPaymentBalance: getFarmerBalance(state),
+    farmerTotalBalance: getFarmerTotalBalance(state),
   };
 };
   
