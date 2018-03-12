@@ -10,6 +10,7 @@ const getCurrentLoanEntryUUID = (state: State) => state.activeRows.activeLoanEnt
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
 const decimals = 1;
+const radix = 10;
 
 const maybeGetActiveLoanEntry = createSelector(
   getCurrentLoanEntryUUID,
@@ -72,7 +73,7 @@ export const getFormattedFarmersTransactions = createSelector(
 export const getFarmerLoanBalance = createSelector(
   [getFarmersTransactions],
   (loanEntries: LoanEntry[]) => loanEntries.reduce((sum: number, entry: LoanEntry) =>
-    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0).toString()
+    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0).toString(),
   );
 
 /**
@@ -82,9 +83,8 @@ export const getFarmerLoanBalance = createSelector(
  */
 export const getFarmerTotalBalance = createSelector(
   [getFarmerLoanBalance, getFarmerDairyBalance],
-  (loanBalance: string, dairyBalance: string) => (
-      (parseInt(dairyBalance) - parseInt(loanBalance)).toString()
-  )
+  (loanBalance: string, dairyBalance: string) => 
+  ((parseInt(dairyBalance, radix) - parseInt(loanBalance, radix)).toString()),
 );
 
 

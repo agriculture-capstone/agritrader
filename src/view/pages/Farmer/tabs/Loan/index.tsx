@@ -4,7 +4,7 @@ import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
 import Composer from '../../../../hoc/PageComposer';
 
-import {InjectedFabProps} from "../../../../hoc/PageComposer/FabPage";
+import { InjectedFabProps } from '../../../../hoc/PageComposer/FabPage';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import activeRowsActions from '../../../../../store/modules/activeRows/actions';
 import navActions from '../../../../../store/modules/nav/actions';
@@ -15,7 +15,7 @@ import {
   getFarmerLoanBalance,
   getFarmerTotalBalance,
   getFormattedFarmersTransactions,
-} from '../../../../../store/modules/loan/selectors'
+} from '../../../../../store/modules/loan/selectors';
 import styles from './style';
 
 interface OwnPropsType {
@@ -63,15 +63,17 @@ class Loan extends React.Component<PropsType, OwnStateType> {
   */
   public render() {
     /** A brief summary at the top of the page */
-    const loanDataSummary = [{
-      label: 'Total Loan Balance',
-      value: this.props.farmerLoanBalance,
-      units: 'UGX',
-    },                {
-      label: 'Weekly Balance Including Loans',
-      value: this.props.farmerTotalBalance,
-      units: 'UGX',
-    },
+    const loanDataSummary = [
+      {
+        label: 'Total Loan Balance',
+        value: this.props.farmerLoanBalance,
+        units: 'UGX',
+      },
+      {
+        label: 'Weekly Balance Including Loans',
+        value: this.props.farmerTotalBalance,
+        units: 'UGX',
+      },
     ];
 
     return (
