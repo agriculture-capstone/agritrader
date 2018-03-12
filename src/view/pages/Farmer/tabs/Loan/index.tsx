@@ -1,78 +1,121 @@
 import * as React from 'react';
-import { Grid, Row, Content, Button, Text } from 'native-base';
+import { Grid, Row, Content } from 'native-base';
 import CardSummary from '../../../../components/CardSummary';
 import DataTable from '../../../../components/DataTable';
-import styles from './style';
 import Composer from '../../../../hoc/PageComposer';
 
+import {InjectedFabProps} from "../../../../hoc/PageComposer/FabPage";
+import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
+import activeRowsActions from '../../../../../store/modules/activeRows/actions';
+import navActions from '../../../../../store/modules/nav/actions';
+import { Route } from '../../../../navigation/routes';
+import { State } from '../../../../../store/types';
+import { dateSort } from '../../../../../utils/DateSort';
+import {
+  getFarmerLoanBalance,
+  getFarmerTotalBalance,
+  getFormattedFarmersTransactions,
+} from '../../../../../store/modules/loan/selectors'
+import styles from './style';
+
 interface OwnPropsType {
-  farmerName: string;
-  totalRemainingBalance: string;
-  totalWeeklyPaymentBalence: string;
-  loanTransactions: any[];
 }
 
 interface DispatchPropsType {
+  navigate(route: Route): void;
+  setActiveLoanEntry(uuid: string): void;
+  navigateToLoanEntry(): void;
 }
 
 interface StorePropsType {
+  farmerLoanBalance: string;
+  farmerTotalBalance: string;
+  loanTransactions: any[];
 }
-
-type PropsType = OwnPropsType & DispatchPropsType & StorePropsType;
 
 interface OwnStateType {
 }
 
-/**
-* Buy Tab Component
-*/
-class Buy extends React.Component<PropsType, OwnStateType> {
+/** Loan NestedPropsType */
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
+/** Loan PropsType */
+type PropsType = NestedPropsType & InjectedFabProps;
+
+/** Loan Tab Component */
+class Loan extends React.Component<PropsType, OwnStateType> {
+
+  private onAddPress = () => this.props.navigate(Route.ADD_LOAN_ENTRY);
   private onPressEntry = (uuid: string) => {
     return () => {
-      // example from collect
-      // this.props.setActiveMilkEntry(uuid);
-      // this.props.navigateToMilkEntry();
+      this.props.setActiveLoanEntry(uuid);
+      this.props.navigateToLoanEntry();
     };
   }
+
+  /** React componentDidMount */
+  public componentDidMount() {
+    this.props.listenToFab(this.onAddPress);
+  }
+
   /**
-  * Render method for Buy
+  * Render method for Loan
   */
   public render() {
-    const testData = [{
-      label: 'Total Balance',
-      value: this.props.totalRemainingBalance,
+    /** A brief summary at the top of the page */
+    const loanDataSummary = [{
+      label: 'Total Loan Balance',
+      value: this.props.farmerLoanBalance,
       units: 'UGX',
     },                {
-      label: 'Total Weekly Payment',
-      value: this.props.totalWeeklyPaymentBalence,
+      label: 'Weekly Balance Including Loans',
+      value: this.props.farmerTotalBalance,
       units: 'UGX',
     },
     ];
+
     return (
       <Content style={styles.container}>
         <Grid style={styles.content}>
           <Row>
             <CardSummary
-              data={testData}
+              data={loanDataSummary}
             />
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Remaining Balance', 'Weekly Payment']}
-              values={this.props.loanTransactions}
+              headers={['Date', 'Loan Amount']}
+              values={dateSort.sortDescending(this.props.loanTransactions)}
               onPressEntry={this.onPressEntry}
             />
           </Row>
         </Grid>
-        <Button primary block style={{ margin: 5 }}>
-          <Text style={{ color: 'white' }}> ADD LOAN </Text>
-        </Button>
       </Content>
     );
   }
 }
 
-export default new Composer<PropsType>(Buy)
-  .comingSoon()
+const LoanPage = new Composer<NestedPropsType>(Loan)
+  .fab()
   .page;
+
+const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
+  return {
+    farmerLoanBalance: getFarmerLoanBalance(state),
+    loanTransactions: getFormattedFarmersTransactions(state),
+    farmerTotalBalance: getFarmerTotalBalance(state),
+  };
+};
+  
+const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
+  return {
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    setActiveLoanEntry: (uuid: string) => dispatch(activeRowsActions.setActiveLoanEntry(uuid)),
+    navigateToLoanEntry: () => dispatch(navActions.navigateTo(Route.LOAN_ENTRY_DETAILS)),
+  };
+};
+  
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoanPage);

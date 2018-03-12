@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { LoanEntry, StoreLoanEntry } from './types';
 import { State } from '../../types';
+import { getFarmerWeeklyBalanceNoFormat as getFarmerDairyBalance } from '../milk/selectors';
 
 import * as moment from 'moment';
 
@@ -64,11 +65,28 @@ export const getFormattedFarmersTransactions = createSelector(
   ),
 );
 
-/**Selector for the farmer account balance */
-export const getFarmerBalance = createSelector(
+/**
+ * Selector for the farmer loan account balance
+ * Note: This returns loans only from a week before the current date
+ */
+export const getFarmerLoanBalance = createSelector(
   [getFarmersTransactions],
   (loanEntries: LoanEntry[]) => loanEntries.reduce((sum: number, entry: LoanEntry) =>
-    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0)).toString();
+    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0).toString()
+  );
+
+/**
+ * Selector for the farmer total balance for the week
+ * Includes loans and dairy transactions
+ * TODO: Functionality for payments as well
+ */
+export const getFarmerTotalBalance = createSelector(
+  [getFarmerLoanBalance, getFarmerDairyBalance],
+  (loanBalance: string, dairyBalance: string) => (
+      (parseInt(dairyBalance) - parseInt(loanBalance)).toString()
+  )
+);
+
 
 /************Helper Methods************/
 

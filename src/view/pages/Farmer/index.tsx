@@ -9,21 +9,8 @@ const createCollect = () => (
   <Collect />
 );
 
-const demoLoanTransactions = [
-  { date:'Jan 19', remainingBalance: '25', weeklyPayment: '5' },
-  { date:'Jan 18', remainingBalance: '10', weeklyPayment: '10' },
-  { date:'Jan 17', remainingBalance: '10', weeklyPayment: '50' },
-  { date:'Jan 16', remainingBalance: '20', weeklyPayment: '5' },
-  { date:'Jan 15', remainingBalance: '10', weeklyPayment: '12' },
-];
-
 const createLoan = () => (
-  <Loan
-    farmerName="Bradley the Farmer"
-    totalWeeklyPaymentBalence="5"
-    totalRemainingBalance="35"
-    loanTransactions={demoLoanTransactions}
-  />
+  <Loan />
 );
 
 const demoPurchaseTransactions = [

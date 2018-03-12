@@ -28,7 +28,7 @@ interface OwnStateType {
 }
 
 /**
- * Buy Tab Component
+ * Loan Tab Component
  */
 class Buy extends React.Component<PropsType, OwnStateType> {
 
@@ -40,7 +40,7 @@ class Buy extends React.Component<PropsType, OwnStateType> {
     };
   }
   /**
-   * Render method for Buy
+   * Render method for Loan
    */
   public render() {
     const testData = [{
@@ -85,5 +85,5 @@ createComingSoonOverlay(Buy);
 export default connect(
 )(ProductComingSoonPage);
 
-// export default new Composer<PropsType>(Buy)
+// export default new Composer<PropsType>(Loan)
 //   .page;
