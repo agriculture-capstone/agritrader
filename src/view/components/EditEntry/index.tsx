@@ -104,7 +104,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
     }
   }
+  
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
+  
   private onRateChange = (newCostPerUnit: string) => {
     if (!newCostPerUnit) {
       this.setState(state => ({ validRate: false }));
@@ -120,13 +122,23 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={Styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={Styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderHeader() {
