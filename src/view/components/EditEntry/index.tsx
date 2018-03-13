@@ -105,7 +105,13 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     }
   }
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onRateChange = (newCostPerUnit: string) => this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
+  private onRateChange = (newCostPerUnit: string) => {
+    if (!newCostPerUnit) {
+      this.setState(state => ({ validRate: false }));
+    } else {
+      this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
+    }
+  }
 
   /**
    * Returns a button with text, color, and onPress callback specified
