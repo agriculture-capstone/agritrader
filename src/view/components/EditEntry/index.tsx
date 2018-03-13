@@ -44,6 +44,7 @@ interface OwnStateType {
   costPerUnit: number;
   validAmount: boolean;
   validRate: boolean;
+  validQuality: boolean;
 }
 
 /**
@@ -64,6 +65,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       costPerUnit: this.props.milkEntry.costPerUnit,
       validAmount: true,
       validRate: true,
+      validQuality: true,
     };
   }
 
@@ -203,7 +205,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <View style={Styles.editView}>
         {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange, true, this.state.validAmount)}
-        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange, true)}
+        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange, true, this.state.validQuality)}
         {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange, true, this.state.validRate)}
       </View>
     );
