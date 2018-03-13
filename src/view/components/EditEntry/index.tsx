@@ -158,7 +158,29 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any) {
+  private formatEditRow(label: string, 
+                        value: number | string, 
+                        onChangeText: any,
+                        isNumeric: boolean,
+                        validField?: boolean) {
+    if (isNumeric) {
+      return (
+        <Grid>
+          <Row>
+            <Col>
+              <Text>{label}</Text>
+            </Col>
+            <Col>
+            <Item success={validField} error={!validField}>
+              <Input keyboardType={'numeric'} onChangeText={onChangeText}>
+                <Text>{value}</Text>
+              </Input>
+            </Item>
+            </Col>
+          </Row>
+        </Grid>
+      );
+    }
     return (
       <Grid>
         <Row>
@@ -166,8 +188,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
             <Text>{label}</Text>
           </Col>
           <Col>
-          <Item>
-            <Input onChangeText={onChangeText} keyboardType={'numeric'}>
+          <Item success={validField} error={!validField}>
+            <Input autoCapitalize="sentences" onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -180,9 +202,9 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange)}
-        {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange)}
+        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange, true, this.state.validAmount)}
+        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange, true)}
+        {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange, true, this.state.validRate)}
       </View>
     );
   }
