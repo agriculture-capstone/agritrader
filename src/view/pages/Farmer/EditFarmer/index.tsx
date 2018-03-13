@@ -38,6 +38,7 @@ interface OwnStateType {
   validFirstName: boolean;
   validLastName: boolean;
   validPhoneNumber: boolean;
+  validNotes: boolean;
 }
 
 /**
@@ -61,9 +62,10 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
       lastName: this.props.farmer.lastName,
       phoneNumber: this.props.farmer.phoneNumber,
       notes: this.props.farmer.notes,
-      validFirstName: false,
-      validLastName: false,
-      validPhoneNumber: false,
+      validFirstName: true,
+      validLastName: true,
+      validPhoneNumber: true,
+      validNotes: true,
     };
   }
 
@@ -195,7 +197,7 @@ class EditFarmer extends React.Component<PropsType, OwnStateType> {
         {this.formatEditRow('First Name', this.props.farmer.firstName, this.onChangeFirstName, false, this.state.validFirstName)}
         {this.formatEditRow('Last Name', this.props.farmer.lastName, this.onChangeLastName, false, this.state.validLastName)}
         {this.formatEditRow('Phone Number', this.props.farmer.phoneNumber, this.onChangePhoneNumber, true, this.state.validPhoneNumber)}
-        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange, false)}
+        {this.formatEditRow('Notes', this.props.farmer.notes, this.onNotesChange, false, this.state.validNotes)}
       </View>
     );
   }
