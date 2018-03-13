@@ -42,6 +42,8 @@ interface OwnStateType {
   amountOfProduct: number;
   quality: string;
   costPerUnit: number;
+  validAmount: boolean;
+  validRate: boolean;
 }
 
 /**
@@ -60,6 +62,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
       amountOfProduct: this.props.milkEntry.amountOfProduct,
       quality: this.props.milkEntry.milkQuality,
       costPerUnit: this.props.milkEntry.costPerUnit,
+      validAmount: true,
+      validRate: true,
     };
   }
 
@@ -85,10 +89,21 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     this.props.navigate(Route.FARMER);
   }
 
+  private allValid = () => (
+    this.state.validAmount
+    && this.state.validRate
+  )
+
   /**
    * Handle entry changes, update local state
    */
-  private onAmountChange = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
+  private onAmountChange = (newAmount: string) => {
+    if (!newAmount) {
+      this.setState(state => ({ validAmount: false }));
+    } else {
+      this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
+    }
+  }
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
   private onRateChange = (newCostPerUnit: string) => this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
 
