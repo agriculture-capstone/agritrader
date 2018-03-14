@@ -2,7 +2,7 @@ import * as React from 'react';
 import createTabManager from '../../hoc/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
-import Buy from './tabs/Buy';
+//import Buy from './tabs/Buy';
 import Info from './tabs/Info';
 
 const createCollect = () => (
@@ -21,15 +21,15 @@ const demoPurchaseTransactions = [
   { date:'Jan 15', product: 'Soap', quantity: '1', price: '3.00' },
 ];
 
-const createBuy = () => (
-  <Buy
-    farmerName="Bradley the Farmer"
-    currentDayTotal="1001.01"
-    currentWeekTotal="50"
-    currentMonthTotal="405.50"
-    purchaseTransactions={demoPurchaseTransactions}
-  />
-);
+// const createBuy = () => (
+//   <Buy
+//     farmerName="Bradley the Farmer"
+//     currentDayTotal="1001.01"
+//     currentWeekTotal="50"
+//     currentMonthTotal="405.50"
+//     purchaseTransactions={demoPurchaseTransactions}
+//   />
+// );
 
 const createInfo = () => (
   <Info />
@@ -45,10 +45,10 @@ export default createTabManager(
       name: 'Loan',
       element: createLoan,
     },
-    {
-      name: 'Shop',
-      element: createBuy,
-    },
+    // {
+    //   name: 'Shop',
+    //   element: createBuy,
+    // },
     {
       name: 'Info',
       element: createInfo,
