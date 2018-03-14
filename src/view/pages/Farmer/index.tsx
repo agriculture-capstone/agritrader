@@ -2,7 +2,7 @@ import * as React from 'react';
 import createTabManager from '../../hoc/TabManager';
 import Collect from './tabs/Collect';
 import Loan from './tabs/Loan';
-//import Buy from './tabs/Buy';
+// import Buy from './tabs/Buy';
 import Info from './tabs/Info';
 
 const createCollect = () => (
