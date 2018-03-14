@@ -8,6 +8,7 @@ export interface ActiveRowsState {
   activeMilkEntryUUID: string;
   activeExportEntryUUID: string;
   activeLoanEntryUUID: string;
+  activePaymentEntryUUID: string;
 }
 
 /*----------------------- Actions -----------------------*/
@@ -37,6 +38,11 @@ export type Action = RootAction | {
   currentLoanEntryUUID: string,
 } | {
   type: 'CLEAR_CURRENT_LOAN_ENTRY',
+} | {
+  type: 'UPDATE_CURRENT_PAYMENT_ENTRY',
+  currentLoanEntryUUID: string,
+} | {
+  type: 'CLEAR_CURRENT_PAYMENT_ENTRY',
 } | {
   type: 'DO_NOT_USE',
 };
