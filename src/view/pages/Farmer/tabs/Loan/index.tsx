@@ -70,7 +70,7 @@ class Loan extends React.Component<PropsType, OwnStateType> {
         units: 'UGX',
       },
       {
-        label: 'Weekly Balance Including Loans',
+        label: 'Weekly Balance',
         value: this.props.farmerTotalBalance,
         units: 'UGX',
       },
@@ -86,7 +86,7 @@ class Loan extends React.Component<PropsType, OwnStateType> {
           </Row>
           <Row>
             <DataTable
-              headers={['Date', 'Loan Amount']}
+              headers={['Date', 'Amount']}
               values={dateSort.sortDescending(this.props.loanTransactions)}
               onPressEntry={this.onPressEntry}
             />
