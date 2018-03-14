@@ -103,7 +103,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     if (!newAmount) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
+      this.setState(state => ({ amountOfProduct: parseFloat(newAmount), validAmount: true }));
     }
   }
   
@@ -113,7 +113,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
     if (!newCostPerUnit) {
       this.setState(state => ({ validRate: false }));
     } else {
-      this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
+      this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit), validRate: true }));
     }
   }
 
