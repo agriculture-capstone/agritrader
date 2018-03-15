@@ -133,7 +133,7 @@ export default class CoreAPI {
         // tslint:disable-next-line:no-console
         attempts && console.log('request failed with 500, making another attempt');
         response = await fetch(request);
-      } while (response.status === HTTPCode.INTERNAL_SERVER_ERROR && attempts < maxAttempts);
+      } while (response.status === HTTPCode.INTERNAL_SERVER_ERROR && attempts++ < maxAttempts);
     }
 
     if (!response.ok) throw response;
