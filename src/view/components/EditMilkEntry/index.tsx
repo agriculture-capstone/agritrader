@@ -42,6 +42,9 @@ interface OwnStateType {
   amountOfProduct: number;
   quality: string;
   costPerUnit: number;
+  validAmount: boolean;
+  validRate: boolean;
+  validQuality: boolean;
 }
 
 /**
@@ -60,6 +63,9 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
       amountOfProduct: this.props.milkEntry.amountOfProduct,
       quality: this.props.milkEntry.milkQuality,
       costPerUnit: this.props.milkEntry.costPerUnit,
+      validAmount: true,
+      validRate: true,
+      validQuality: true,
     };
   }
 
@@ -85,12 +91,31 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
     this.props.navigate(Route.FARMER);
   }
 
+  private allValid = () => (
+    this.state.validAmount
+    && this.state.validRate
+  )
+
   /**
    * Handle entry changes, update local state
    */
-  private onAmountChange = (newAmount: string) => this.setState(state => ({ amountOfProduct: parseFloat(newAmount) }));
+  private onAmountChange = (newAmount: string) => {
+    if (!newAmount) {
+      this.setState(state => ({ validAmount: false }));
+    } else {
+      this.setState(state => ({ amountOfProduct: parseFloat(newAmount), validAmount: true }));
+    }
+  }
+  
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  private onRateChange = (newCostPerUnit: string) => this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit) }));
+  
+  private onRateChange = (newCostPerUnit: string) => {
+    if (!newCostPerUnit) {
+      this.setState(state => ({ validRate: false }));
+    } else {
+      this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit), validRate: true }));
+    }
+  }
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -99,13 +124,23 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={Styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={Styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderHeader() {
@@ -125,7 +160,29 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
     );
   }
 
-  private formatEditRow(label: string, value: number | string, onChangeText: any) {
+  private formatEditRow(label: string, 
+                        value: number | string, 
+                        onChangeText: any,
+                        isNumeric: boolean,
+                        validField?: boolean) {
+    if (isNumeric) {
+      return (
+        <Grid>
+          <Row>
+            <Col>
+              <Text>{label}</Text>
+            </Col>
+            <Col>
+            <Item success={validField} error={!validField}>
+              <Input keyboardType={'numeric'} onChangeText={onChangeText}>
+                <Text>{value}</Text>
+              </Input>
+            </Item>
+            </Col>
+          </Row>
+        </Grid>
+      );
+    }
     return (
       <Grid>
         <Row>
@@ -133,8 +190,8 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
             <Text>{label}</Text>
           </Col>
           <Col>
-          <Item>
-            <Input onChangeText={onChangeText} keyboardType={'numeric'}>
+          <Item success={validField} error={!validField}>
+            <Input autoCapitalize="sentences" onChangeText={onChangeText}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -147,9 +204,9 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange)}
-        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange)}
-        {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange)}
+        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange, true, this.state.validAmount)}
+        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange, true, this.state.validQuality)}
+        {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange, true, this.state.validRate)}
       </View>
     );
   }
