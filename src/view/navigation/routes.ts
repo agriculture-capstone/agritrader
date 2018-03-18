@@ -139,8 +139,7 @@ export const routesInfo: RouteInfo[] = [
   {
     route: Route.MILK_ENTRY_DETAILS,
     name: 'Milk Entry Details',
-    component: MilkEntryDetailsPage
-    ,
+    component: MilkEntryDetailsPage,
     type: 'back',
   },
   {

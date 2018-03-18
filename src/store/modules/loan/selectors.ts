@@ -87,7 +87,6 @@ export const getFarmerTotalBalance = createSelector(
   ((parseInt(dairyBalance, radix) - parseInt(loanBalance, radix)).toString()),
 );
 
-
 /************Helper Methods************/
 
 function inLastWeek(date: string) {

@@ -147,8 +147,8 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
         element: () => <Loan />,
       },
       {
-        name: 'Loan',
-        element: () => <Loan />,
+        name: 'Payment',
+        element: () => <Payment />,
       },
       {
         name: 'Info',
