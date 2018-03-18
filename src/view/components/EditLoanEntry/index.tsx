@@ -58,13 +58,13 @@ let radix: number = 10;
  */
 class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
 
-  //Variable used to verify input
+  // Variable used to verify input
   private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     this.state = {
       loanAmount: this.props.loanEntry.amount,
-      //Set state to true initially as it will have a valid amount
+      // Set state to true initially as it will have a valid amount
       validAmount: true,
     };
   }
