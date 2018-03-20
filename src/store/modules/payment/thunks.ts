@@ -9,4 +9,4 @@ const {
 export default {
   createPaymentEntry,
   updatePaymentEntry,
-}
+};

@@ -6,6 +6,7 @@ const initialState: ActiveRowsState = {
   activeTraderUUID: '',
   activeExportEntryUUID: '',
   activeLoanEntryUUID: '',
+  activePaymentEntryUUID: '',
 };
 
 export default initialState;

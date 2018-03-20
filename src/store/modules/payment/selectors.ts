@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 import { PaymentEntry, StorePaymentEntry } from './types';
 import { State } from '../../types';
+import { getFarmerWeeklyBalanceNoFormat as getFarmerDairyBalance } from '../milk/selectors';
+import { getFarmerLoanBalance } from '../loan/selectors';
 
 import * as moment from 'moment';
 
@@ -9,6 +11,7 @@ const getCurrentPaymentEntryUUID = (state: State) => state.activeRows.activePaym
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
 const decimals = 1;
+const radix = 10;
 
 const maybeGetActivePaymentEntry = createSelector(
   getCurrentPaymentEntryUUID,
@@ -43,7 +46,7 @@ export const getActivePaymentEntry = createSelector(
 /** Selector to get all payment transactions for a specific farmer */
 export const getFarmersTransactions = createSelector(
   [getPaymentEntries, getCurrentFarmerUUID],
-  (paymentEntries: StorePaymentEntry[], farmerUUID: string) => paymentEntries.filter(entry => !entry.fromPersonUuid.localeCompare(farmerUUID))
+  (paymentEntries: StorePaymentEntry[], farmerUUID: string) => paymentEntries.filter(entry => !entry.toPersonUuid.localeCompare(farmerUUID)),
 );
 
 /** 
@@ -69,6 +72,16 @@ export const getFarmerPaymentBalance = createSelector(
   [getFarmersTransactions],
   (paymentEntries: PaymentEntry[]) => paymentEntries.reduce((sum: number, entry: PaymentEntry) =>
   (inLastWeek(entry.datetime)) ? sum + entry.amount : sum + 0, 0).toString(),
+);
+
+/**
+ * Selector for the farmer total balance for the week
+ * Includes payments, loans, and dairy transactions
+ */
+export const getFarmerTotalBalance = createSelector(
+  [getFarmerPaymentBalance, getFarmerLoanBalance, getFarmerDairyBalance],
+  (paymentBalance: string, loanBalance: string, dairyBalance: string) => 
+  ((parseInt(dairyBalance, radix) - parseInt(paymentBalance, radix) - parseInt(loanBalance, radix)).toString()),
 );
 
 /*************** Helper Methods ***************/

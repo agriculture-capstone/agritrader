@@ -40,7 +40,7 @@ export type Action = RootAction | {
   type: 'CLEAR_CURRENT_LOAN_ENTRY',
 } | {
   type: 'UPDATE_CURRENT_PAYMENT_ENTRY',
-  currentLoanEntryUUID: string,
+  currentPaymentEntryUUID: string,
 } | {
   type: 'CLEAR_CURRENT_PAYMENT_ENTRY',
 } | {

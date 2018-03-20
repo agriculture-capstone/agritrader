@@ -10,6 +10,9 @@ import MilkEntryDetailsPage from '../components/MilkEntryDetails';
 import AddLoanEntryPage from '../components/AddLoanEntry';
 import EditLoanEntryPage from '../components/EditLoanEntry';
 import LoanEntryDetailsPage from '../components/LoanEntryDetails';
+import AddPaymentEntryPage from '../components/AddPaymentEntry';
+import EditPaymentEntryPage from '../components/EditPaymentEntry';
+import PaymentEntryDetailsPage from '../components/PaymentEntryDetails';
 import AddFarmerPage from '../pages/Farmer/AddFarmer';
 import EditFarmerPage from '../pages/Farmer/EditFarmer';
 import AddExportEntryPage from '../pages/Exports/AddExport';
@@ -52,18 +55,12 @@ export enum Route {
   ADD_MILK_ENTRY = 'Add Milk Entry',
   MILK_ENTRY_DETAILS = 'Milk Entry Details',
   EDIT_MILK_ENTRY = 'Edit Milk Entry',
-<<<<<<< HEAD
-<<<<<<< HEAD
   ADD_LOAN_ENTRY = 'Add Loan Entry',
   LOAN_ENTRY_DETAILS = 'Loan Entry Details',
   EDIT_LOAN_ENTRY = 'Edit Loan Entry',
-=======
->>>>>>> master
-=======
-  ADD_LOAN_ENTRY = 'Add Loan Entry',
-  LOAN_ENTRY_DETAILS = 'Loan Entry Details',
-  EDIT_LOAN_ENTRY = 'Edit Loan Entry',
->>>>>>> nicholascassar/AT-194/fix-loans-ui
+  ADD_PAYMENT_ENTRY = 'Add Payment Entry',
+  EDIT_PAYMENT_ENTRY = 'Edit Payment Entry',
+  PAYMENT_ENTRY_DETAILS = 'Payment Entry Details',
   EDIT_FARMER = 'Edit Farmer',
   ADD_FARMER = 'Add Farmer',
   ADD_EXPORT_ENTRY = 'Add Delivery Entry',
@@ -148,7 +145,8 @@ export const routesInfo: RouteInfo[] = [
   {
     route: Route.MILK_ENTRY_DETAILS,
     name: 'Milk Entry Details',
-    component: MilkEntryDetailsPage,
+    component: MilkEntryDetailsPage
+    ,
     type: 'back',
   },
   {
@@ -167,6 +165,24 @@ export const routesInfo: RouteInfo[] = [
     route: Route.LOAN_ENTRY_DETAILS,
     name: 'Loan Entry Details',
     component: LoanEntryDetailsPage,
+    type: 'back',
+  },
+  {
+    route: Route.ADD_PAYMENT_ENTRY,
+    name: 'Add Payment Entry',
+    component: AddPaymentEntryPage,
+    type: 'back',
+  },
+  {
+    route: Route.LOAN_ENTRY_DETAILS,
+    name: 'Edit Payment Entry',
+    component: EditPaymentEntryPage,
+    type: 'back',
+  },
+  {
+    route: Route.PAYMENT_ENTRY_DETAILS,
+    name: 'Payment Entry Details',
+    component: PaymentEntryDetailsPage,
     type: 'back',
   },
   {

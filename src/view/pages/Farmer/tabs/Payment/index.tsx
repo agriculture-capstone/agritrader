@@ -12,42 +12,48 @@ import { Route } from '../../../../navigation/routes';
 import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort';
 import {
-  getFarmerLoanBalance,
+  getFarmerPaymentBalance,
+  getFarmerTotalBalance,
   getFormattedFarmersTransactions,
-} from '../../../../../store/modules/loan/selectors';
+} from '../../../../../store/modules/payment/selectors';
 import styles from './style';
 
+/** Payment OwnPropsType */
 interface OwnPropsType {
 }
 
+/** Payment DispatchPropsType */
 interface DispatchPropsType {
   navigate(route: Route): void;
-  setActiveLoanEntry(uuid: string): void;
-  navigateToLoanEntry(): void;
+  setActivePaymentEntry(uuid: string): void;
+  navigateToPaymentEntry(): void;
 }
 
+/** Payment StorePropsType */
 interface StorePropsType {
-  farmerLoanBalance: string;
-  loanTransactions: any[];
+  farmerPaymentBalance: string;
+  farmerTotalBalance: string;
+  paymentTransactions: any[];
 }
 
+/** Payment OwnStateType */
 interface OwnStateType {
 }
 
-/** Loan NestedPropsType */
+/** Payment NestedPropsType */
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
-/** Loan PropsType */
+/** Payment PropsType */
 type PropsType = NestedPropsType & InjectedFabProps;
 
-/** Loan Tab Component */
-class Loan extends React.Component<PropsType, OwnStateType> {
+/** Payment Tab Component */
+class Payment extends React.Component<PropsType, OwnStateType> {
 
-  private onAddPress = () => this.props.navigate(Route.ADD_LOAN_ENTRY);
+  private onAddPress = () => this.props.navigate(Route.ADD_PAYMENT_ENTRY);
   private onPressEntry = (uuid: string) => {
     return () => {
-      this.props.setActiveLoanEntry(uuid);
-      this.props.navigateToLoanEntry();
+      this.props.setActivePaymentEntry(uuid);
+      this.props.navigateToPaymentEntry();
     };
   }
 
@@ -56,15 +62,13 @@ class Loan extends React.Component<PropsType, OwnStateType> {
     this.props.listenToFab(this.onAddPress);
   }
 
-  /**
-  * Render method for Loan
-  */
+  /** Render method for Payment */
   public render() {
     /** A brief summary at the top of the page */
-    const loanDataSummary = [
+    const paymentDataSummary = [
       {
         label: 'Balance',
-        value: this.props.farmerLoanBalance,
+        value: this.props.farmerTotalBalance,
         units: 'UGX',
       },
     ];
@@ -74,13 +78,13 @@ class Loan extends React.Component<PropsType, OwnStateType> {
         <Grid style={styles.content}>
           <Row>
             <CardSummary
-              data={loanDataSummary}
+              data={paymentDataSummary}
             />
           </Row>
           <Row>
             <DataTable
               headers={['Date', 'Amount']}
-              values={dateSort.sortDescending(this.props.loanTransactions)}
+              values={dateSort.sortDescending(this.props.paymentTransactions)}
               onPressEntry={this.onPressEntry}
             />
           </Row>
@@ -90,26 +94,28 @@ class Loan extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const LoanPage = new Composer<NestedPropsType>(Loan)
+const PaymentPage = new Composer<NestedPropsType>(Payment)
   .fab()
   .page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmerLoanBalance: getFarmerLoanBalance(state),
-    loanTransactions: getFormattedFarmersTransactions(state),
+    farmerPaymentBalance: getFarmerPaymentBalance(state),
+    paymentTransactions: getFormattedFarmersTransactions(state),
+    // TODO: Make selector for total balance including payments
+    farmerTotalBalance: getFarmerTotalBalance(state),
   };
 };
   
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
-    setActiveLoanEntry: (uuid: string) => dispatch(activeRowsActions.setActiveLoanEntry(uuid)),
-    navigateToLoanEntry: () => dispatch(navActions.navigateTo(Route.LOAN_ENTRY_DETAILS)),
+    setActivePaymentEntry: (uuid: string) => dispatch(activeRowsActions.setActivePaymentEntry(uuid)),
+    navigateToPaymentEntry: () => dispatch(navActions.navigateTo(Route.PAYMENT_ENTRY_DETAILS)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LoanPage);
+)(PaymentPage);
