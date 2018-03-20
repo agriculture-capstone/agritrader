@@ -77,8 +77,8 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
     let newEntry: LoanEntry = {
       type: 'loan',
       datetime: timeNow,
-      toPersonUuid: this.props.activeTrader,
-      fromPersonUuid: this.props.activeFarmer,
+      toPersonUuid: this.props.activeFarmer,
+      fromPersonUuid: this.props.activeTrader,
       amount: this.state.loanAmount,
       currency: 'UGX',
     };

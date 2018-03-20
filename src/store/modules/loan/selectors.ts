@@ -49,7 +49,7 @@ export const getActiveLoanEntry = createSelector(
 /**Selector to get all loan transactions for a specific farmer  */
 export const getFarmersTransactions = createSelector(
   [getLoanEntries, getCurrentFarmerUUID],
-  (loanEntries: StoreLoanEntry[], farmerUUID: string) => loanEntries.filter(entry => !entry.fromPersonUuid.localeCompare(farmerUUID)));
+  (loanEntries: StoreLoanEntry[], farmerUUID: string) => loanEntries.filter(entry => !entry.toPersonUuid.localeCompare(farmerUUID)));
 
 /**
  * Selector to get all loan transactions for a specific farmer formatted for the loans page
