@@ -52,9 +52,12 @@ export enum Route {
   ADD_MILK_ENTRY = 'Add Milk Entry',
   MILK_ENTRY_DETAILS = 'Milk Entry Details',
   EDIT_MILK_ENTRY = 'Edit Milk Entry',
+<<<<<<< HEAD
   ADD_LOAN_ENTRY = 'Add Loan Entry',
   LOAN_ENTRY_DETAILS = 'Loan Entry Details',
   EDIT_LOAN_ENTRY = 'Edit Loan Entry',
+=======
+>>>>>>> master
   EDIT_FARMER = 'Edit Farmer',
   ADD_FARMER = 'Add Farmer',
   ADD_EXPORT_ENTRY = 'Add Delivery Entry',
