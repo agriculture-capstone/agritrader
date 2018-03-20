@@ -13,14 +13,6 @@ const createLoan = () => (
   <Loan />
 );
 
-// const demoPurchaseTransactions = [
-//   { date:'Jan 19', product: 'Cow Feed', quantity: '2', price: '6.50' },
-//   { date:'Jan 18', product: 'Soap', quantity: '2', price: '6.00' },
-//   { date:'Jan 17', product: 'Cow Feed', quantity: '2', price: '6.50' },
-//   { date:'Jan 16', product: 'Soap', quantity: '2', price: '6.00' },
-//   { date:'Jan 15', product: 'Soap', quantity: '1', price: '3.00' },
-// ];
-
 // const createBuy = () => (
 //   <Buy
 //     farmerName="Bradley the Farmer"

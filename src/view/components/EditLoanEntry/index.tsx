@@ -42,7 +42,8 @@ type PropsType = InjectedFabProps & NestedPropsType;
 
 /** EditLoanEntry OwnStateType */
 interface OwnStateType {
-  amountOfLoan: number;
+  loanAmount: number;
+  validAmount: boolean;
 }
 
 /**
@@ -50,15 +51,21 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
+let radix: number = 10;
+
 /**
  * Page for EditLoanEntry
  */
 class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
 
+  // Variable used to verify input
+  private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      amountOfLoan: this.props.loanEntry.amount,
+      loanAmount: this.props.loanEntry.amount,
+      // Set state to true initially as it will have a valid amount
+      validAmount: true,
     };
   }
 
@@ -75,17 +82,31 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
       uuid: this.props.loanEntry.uuid,
       toPersonUuid: this.props.loanEntry.toPersonUuid,
       fromPersonUuid: this.props.loanEntry.fromPersonUuid,
-      amount: this.state.amountOfLoan,
+      amount: this.state.loanAmount,
       currency: 'UGX',
     };
     this.props.updateLoanEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
 
-  /**
-   * Handle entry changes, update local state
+  /** Return validity of required fields */
+  private allValid = () => (
+    this.state.validAmount
+  )
+
+  /** 
+   * Checks when the amount field has something in it 
+   * and verifies that it is a are real and positive number
    */
-  private onAmountChange = (newAmount: string) => this.setState(state => ({ amountOfLoan: parseFloat(newAmount) }));
+  private onChangeAmount = (newAmount: string) => {
+    const newAmountInt = parseInt(newAmount, radix);
+
+    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+      this.setState(state => ({ validAmount: false }));
+    } else {
+      this.setState(state => ({ loanAmount: newAmountInt, validAmount: true }));
+    }
+  }
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -94,13 +115,23 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    return (
-      <Col style={Styles.button}>
-        <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
-          <Text>{text}</Text>
-        </Button>
-      </Col>
-    );
+    if (isPrimary) {
+      return (
+        <Col style={Styles.button}>
+          <Button disabled={!this.allValid()} block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    } else {
+      return (
+        <Col style={Styles.button}>
+          <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
+            <Text>{text}</Text>
+          </Button>
+        </Col>
+      );
+    }
   }
 
   private renderHeader() {
@@ -128,8 +159,8 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
             <Text>{label}</Text>
           </Col>
           <Col>
-          <Item>
-            <Input onChangeText={onChangeText} keyboardType={'numeric'}>
+          <Item success={this.state.validAmount} error={!this.state.validAmount}>
+            <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -142,7 +173,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (UGX)', this.props.loanEntry.amount, this.onAmountChange)}
+        {this.formatEditRow('Amount (UGX)', this.props.loanEntry.amount, this.onChangeAmount)}
       </View>
     );
   }
@@ -150,7 +181,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
   /** Render method for EditLoanEntry */
   public render() {
     return(
-      <Content padder style={{ backgroundColor: 'white' }}>
+      <Content padder style={Styles.content}>
       <List>
         <ListItem>
           {this.renderHeader()}

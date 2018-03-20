@@ -53,11 +53,17 @@ export enum Route {
   MILK_ENTRY_DETAILS = 'Milk Entry Details',
   EDIT_MILK_ENTRY = 'Edit Milk Entry',
 <<<<<<< HEAD
+<<<<<<< HEAD
   ADD_LOAN_ENTRY = 'Add Loan Entry',
   LOAN_ENTRY_DETAILS = 'Loan Entry Details',
   EDIT_LOAN_ENTRY = 'Edit Loan Entry',
 =======
 >>>>>>> master
+=======
+  ADD_LOAN_ENTRY = 'Add Loan Entry',
+  LOAN_ENTRY_DETAILS = 'Loan Entry Details',
+  EDIT_LOAN_ENTRY = 'Edit Loan Entry',
+>>>>>>> nicholascassar/AT-194/fix-loans-ui
   EDIT_FARMER = 'Edit Farmer',
   ADD_FARMER = 'Add Farmer',
   ADD_EXPORT_ENTRY = 'Add Delivery Entry',
@@ -142,8 +148,7 @@ export const routesInfo: RouteInfo[] = [
   {
     route: Route.MILK_ENTRY_DETAILS,
     name: 'Milk Entry Details',
-    component: MilkEntryDetailsPage
-    ,
+    component: MilkEntryDetailsPage,
     type: 'back',
   },
   {

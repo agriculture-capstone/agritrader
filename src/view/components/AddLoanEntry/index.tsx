@@ -30,11 +30,11 @@ interface StorePropsType {
   activeFarmer: any;
 }
 
-/** AddEntry PropsType */
+/** AddLoanEntry PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 interface OwnStateType {
-  amountOfLoan: number;
+  loanAmount: number;
   validAmount: boolean;
 }
 
@@ -54,7 +54,7 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
     super(props);
     /** Init state */
     this.state = {
-      amountOfLoan: 0.0,
+      loanAmount: 0.0,
       validAmount: false,
     };
   }
@@ -77,9 +77,9 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
     let newEntry: LoanEntry = {
       type: 'loan',
       datetime: timeNow,
-      toPersonUuid: this.props.activeTrader,
-      fromPersonUuid: this.props.activeFarmer,
-      amount: this.state.amountOfLoan,
+      toPersonUuid: this.props.activeFarmer,
+      fromPersonUuid: this.props.activeTrader,
+      amount: this.state.loanAmount,
       currency: 'UGX',
     };
     this.props.createLoanEntry(newEntry);
@@ -101,7 +101,7 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
     if (!newAmount.match(this.numbers) || newAmountInt < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfLoan: newAmountInt, validAmount: true }));
+      this.setState(state => ({ loanAmount: newAmountInt, validAmount: true }));
     }
   }
 
@@ -168,7 +168,7 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
   }
 
   /**
-   * Render method for AddEntry
+   * Render method for AddLoanEntry
    */
   public render() {
     return (

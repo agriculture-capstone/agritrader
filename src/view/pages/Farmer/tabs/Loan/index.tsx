@@ -65,12 +65,7 @@ class Loan extends React.Component<PropsType, OwnStateType> {
     /** A brief summary at the top of the page */
     const loanDataSummary = [
       {
-        label: 'Total Loan Balance',
-        value: this.props.farmerLoanBalance,
-        units: 'UGX',
-      },
-      {
-        label: 'Weekly Balance',
+        label: 'Balance',
         value: this.props.farmerTotalBalance,
         units: 'UGX',
       },
@@ -116,7 +111,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
     navigateToLoanEntry: () => dispatch(navActions.navigateTo(Route.LOAN_ENTRY_DETAILS)),
   };
 };
-  
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
