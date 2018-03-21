@@ -7,6 +7,7 @@ import { Route } from '../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
+import tabActions from '../../../store/modules/tabs/actions';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
@@ -17,6 +18,8 @@ import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
 import { getActiveLoanEntry } from '../../../store/modules/loan/selectors';
 import * as moment from 'moment';
+
+import { NavigationActions } from 'react-navigation';
 
 
 interface OwnPropsType {
@@ -83,6 +86,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
     };
     this.props.updateLoanEntry(newEntry);
     this.props.navigate(Route.FARMER);
+    
   }
 
   /** Return validity of required fields */
@@ -204,7 +208,12 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    navigate: (route: Route) => dispatch(NavigationActions.navigate({
+      route: route,
+      action: {
+        tabActions.setActiveTab( { name: 'Loan' })
+      }
+    })),
     goBack: () => dispatch(navActions.goBack()),
     updateLoanEntry: async (newEntry: ThunkUpdateRow<LoanEntry>) => dispatch(loanThunks.updateLoanEntry(newEntry)),
   };
