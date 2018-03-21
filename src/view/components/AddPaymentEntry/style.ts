@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-/** Add Loan Entry stylesheet */
+/** Add Payment Entry stylesheet */
 export default StyleSheet.create({
   content: {
     backgroundColor: 'white',

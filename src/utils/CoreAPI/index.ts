@@ -14,8 +14,7 @@ export type CorePath =
   '/transactions/products/milk' | 
   '/transactions/products/export' | 
   '/transactions/money/loan' | 
-  '/transactions/money/payment'
-;
+  '/transactions/money/payment';
 
 const LOGIN_PATH = '/actions/authenticate';
 
