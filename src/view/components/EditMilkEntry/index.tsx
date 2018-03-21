@@ -55,7 +55,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 /**
  * Page for EditMilkEntry
  */
-class EditEntry extends React.Component<PropsType, OwnStateType> {
+class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
@@ -234,7 +234,7 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const EditMilkEntryPage = new Composer<NestedPropsType>(EditEntry).page;
+const EditMilkEntryPage = new Composer<NestedPropsType>(EditMilkEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
