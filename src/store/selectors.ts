@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { getFarmerWeeklyBalanceNoFormat as getFarmerDairyBalance } from './modules/milk/selectors';
+import { getFarmerDairyBalanceNoFormat as getFarmerDairyBalance } from './modules/milk/selectors';
 import { getFarmerLoanBalance } from './modules/loan/selectors';
 import { getFarmerPaymentBalance } from './modules/payment/selectors';
 

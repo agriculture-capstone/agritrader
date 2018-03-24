@@ -74,7 +74,7 @@ export const getFormattedFarmersTransactions = createSelector(
 export const getFarmerLoanBalance = createSelector(
   [getFarmersTransactions],
   (loanEntries: LoanEntry[]) => loanEntries.reduce((sum: number, entry: LoanEntry) =>
-    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0).toString(),
+    sum +  entry.amount, 0).toString(),
   );
 
 /**
@@ -87,7 +87,7 @@ export const getFarmerLoanBalance = createSelector(
 //   (parseInt(farmerBalance, radix)).toString(),
 // );
 
-/************Helper Methods************/
-function inLastWeek(date: string) {
-  return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
-}
+// /************Helper Methods************/
+// function inLastWeek(date: string) {
+//   return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
+// }

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { PaymentEntry, StorePaymentEntry } from './types';
 import { State } from '../../types';
-import { getFarmerWeeklyBalanceNoFormat as getFarmerDairyBalance } from '../milk/selectors';
+import { getFarmerDairyBalanceNoFormat as getFarmerDairyBalance } from '../milk/selectors';
 import { getFarmerLoanBalance } from '../loan/selectors';
 
 import * as moment from 'moment';
@@ -71,7 +71,7 @@ export const getFormattedFarmersTransactions = createSelector(
 export const getFarmerPaymentBalance = createSelector(
   [getFarmersTransactions],
   (paymentEntries: PaymentEntry[]) => paymentEntries.reduce((sum: number, entry: PaymentEntry) =>
-  (inLastWeek(entry.datetime)) ? sum + entry.amount : sum + 0, 0).toString(),
+  sum + entry.amount, 0).toString(),
 );
 
 /**
@@ -84,7 +84,7 @@ export const getFarmerTotalBalance = createSelector(
   ((parseInt(dairyBalance, radix) - parseInt(paymentBalance, radix) - parseInt(loanBalance, radix)).toString()),
 );
 
-/*************** Helper Methods ***************/
-function inLastWeek(date: string) {
-  return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
-}
+// /*************** Helper Methods ***************/
+// function inLastWeek(date: string) {
+//   return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
+// }
