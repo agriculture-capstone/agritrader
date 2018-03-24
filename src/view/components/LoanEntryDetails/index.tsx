@@ -146,7 +146,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
   };
 };
 
