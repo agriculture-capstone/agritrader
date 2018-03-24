@@ -50,8 +50,6 @@ interface OwnStateType {
 /** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-let radix: number = 10;
-
 /** Page for EditPaymentEntry */
 class EditPaymentEntry extends React.Component<PropsType, OwnStateType> {
 
