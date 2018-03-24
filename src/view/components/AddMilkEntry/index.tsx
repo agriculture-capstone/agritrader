@@ -46,8 +46,6 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-let radix: number = 10;
-
 /**
  * AddEntry page
  * @example
@@ -105,12 +103,12 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
   )
 
   private onChangeAmount = (newAmount: string) => {
-    const newAmountInt = parseInt(newAmount, radix);
+    const newAmountFloat = Number(newAmount);
 
-    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+    if (!newAmount.match(this.numbers) || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
+      this.setState(state => ({ amountOfProduct: newAmountFloat, validAmount: true }));
     }
   }
 
@@ -119,12 +117,12 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
   }
 
   private onChangeRate = (newRate: string) => {
-    const newRateInt = parseInt(newRate, radix);
+    const newRateFloat = Number(newRate);
 
-    if (!newRate.match(this.numbers) || newRateInt < 0) {
+    if (!newRate.match(this.numbers) || newRateFloat < 0) {
       this.setState(state => ({ validRate: false }));
     } else {
-      this.setState(state => ({ costPerUnit : newRateInt, validRate: true }));
+      this.setState(state => ({ costPerUnit : newRateFloat, validRate: true }));
     }
   }
 

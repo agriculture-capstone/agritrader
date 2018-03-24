@@ -76,18 +76,3 @@ export const getFarmerLoanBalance = createSelector(
   (loanEntries: LoanEntry[]) => loanEntries.reduce((sum: number, entry: LoanEntry) =>
     sum +  entry.amount, 0).toString(),
   );
-
-/**
- * Selector for the farmer total balance for the week
- * Includes payments, loans, and dairy transactions
- */
-// export const getFarmerTotalBalance = createSelector(
-//   [getFarmerBalance],
-//   (farmerBalance: string) => 
-//   (parseInt(farmerBalance, radix)).toString(),
-// );
-
-// /************Helper Methods************/
-// function inLastWeek(date: string) {
-//   return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
-// }

@@ -96,12 +96,12 @@ class EditPaymentEntry extends React.Component<PropsType, OwnStateType> {
    * and verifies that it is a are real and positive number
    */
   private onChangeAmount = (newAmount: string) => {
-    const newAmountInt = parseInt(newAmount, radix);
+    const newAmountFloat = Number(newAmount);
 
-    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+    if (!newAmount.match(this.numbers) || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ paymentAmount: newAmountInt, validAmount: true }));
+      this.setState(state => ({ paymentAmount: newAmountFloat, validAmount: true }));
     }
   }
 
