@@ -19,8 +19,6 @@ import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
 import { getActiveLoanEntry } from '../../../store/modules/loan/selectors';
 import * as moment from 'moment';
 
-import { NavigationActions } from 'react-navigation';
-
 
 interface OwnPropsType {
 }
@@ -86,6 +84,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
     };
     this.props.updateLoanEntry(newEntry);
     this.props.navigate(Route.FARMER);
+    tabActions.setActiveTab({ name: 'Loans' });
     
   }
 
@@ -208,12 +207,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(NavigationActions.navigate({
-      route: route,
-      action: {
-        tabActions.setActiveTab( { name: 'Loan' })
-      }
-    })),
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
     updateLoanEntry: async (newEntry: ThunkUpdateRow<LoanEntry>) => dispatch(loanThunks.updateLoanEntry(newEntry)),
   };
