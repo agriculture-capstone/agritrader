@@ -45,8 +45,6 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-let radix: number = 10;
-
 /**
  * Page for EditEntry
  */
