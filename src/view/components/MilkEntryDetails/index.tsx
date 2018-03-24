@@ -48,7 +48,7 @@ type ButtonColor = 'PRIMARY' | 'INFO';
  *          <EntryDetails
  *          />
  */
-class EntryDetails extends React.Component<PropsType, OwnStateType> {
+class MilkEntryDetails extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
@@ -144,7 +144,7 @@ class EntryDetails extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const EntryDetailsPage = new Composer<PropsType>(EntryDetails).page;
+const MilkEntryDetailsPage = new Composer<PropsType>(MilkEntryDetails).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
@@ -162,4 +162,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EntryDetailsPage);
+)(MilkEntryDetailsPage);

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { LoanEntry, StoreLoanEntry } from './types';
 import { State } from '../../types';
+import { getFarmerWeeklyBalanceNoFormat as getFarmerDairyBalance } from '../milk/selectors';
 
 import * as moment from 'moment';
 
@@ -9,6 +10,7 @@ const getCurrentLoanEntryUUID = (state: State) => state.activeRows.activeLoanEnt
 const getCurrentFarmerUUID = (state: State) => state.activeRows.activeFarmerUUID;
 
 const decimals = 1;
+const radix = 10;
 
 const maybeGetActiveLoanEntry = createSelector(
   getCurrentLoanEntryUUID,
@@ -47,7 +49,7 @@ export const getActiveLoanEntry = createSelector(
 /**Selector to get all loan transactions for a specific farmer  */
 export const getFarmersTransactions = createSelector(
   [getLoanEntries, getCurrentFarmerUUID],
-  (loanEntries: StoreLoanEntry[], farmerUUID: string) => loanEntries.filter(entry => !entry.fromPersonUuid.localeCompare(farmerUUID)));
+  (loanEntries: StoreLoanEntry[], farmerUUID: string) => loanEntries.filter(entry => !entry.toPersonUuid.localeCompare(farmerUUID)));
 
 /**
  * Selector to get all loan transactions for a specific farmer formatted for the loans page
@@ -64,11 +66,26 @@ export const getFormattedFarmersTransactions = createSelector(
   ),
 );
 
-/**Selector for the farmer account balance */
-export const getFarmerBalance = createSelector(
+/**
+ * Selector for the farmer loan account balance
+ * Note: This returns loans only from a week before the current date
+ */
+export const getFarmerLoanBalance = createSelector(
   [getFarmersTransactions],
   (loanEntries: LoanEntry[]) => loanEntries.reduce((sum: number, entry: LoanEntry) =>
-    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0)).toString();
+    (inLastWeek(entry.datetime)) ? sum +  entry.amount : sum + 0, 0).toString(),
+  );
+
+/**
+ * Selector for the farmer total balance for the week
+ * Includes loans and dairy transactions
+ * TODO: Functionality for payments as well
+ */
+export const getFarmerTotalBalance = createSelector(
+  [getFarmerLoanBalance, getFarmerDairyBalance],
+  (loanBalance: string, dairyBalance: string) => 
+  ((parseInt(dairyBalance, radix) - parseInt(loanBalance, radix)).toString()),
+);
 
 /************Helper Methods************/
 

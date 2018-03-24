@@ -2,70 +2,67 @@ import * as React from 'react';
 import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { MilkEntry } from '../../../store/modules/milk/types';
+import { LoanEntry } from '../../../store/modules/loan/types';
 import { Route } from '../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
+import tabActions from '../../../store/modules/tabs/actions';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
 
-import milkThunks from '../../../store/modules/milk/thunks';
+import loanThunks from '../../../store/modules/loan/thunks';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
-import { getActiveMilkEntry } from '../../../store/modules/milk/selectors';
+import { getActiveLoanEntry } from '../../../store/modules/loan/selectors';
 import * as moment from 'moment';
 
 
 interface OwnPropsType {
 }
 
+/** EditLoanEntry DispatchPropsType */
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  updateMilkEntry(newEntry: ThunkUpdateRow<MilkEntry>): void;
+  updateLoanEntry(newEntry: ThunkUpdateRow<LoanEntry>): void;
 }
 
+/** EditLoanEntry StorePropsType */
 interface StorePropsType {
   farmer: Farmer;
-  milkEntry: StoreRow<MilkEntry>;
+  loanEntry: StoreRow<LoanEntry>;
 }
 
 type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
-/** EditEntry PropsType */
+/** EditLoanEntry PropsType */
 type PropsType = InjectedFabProps & NestedPropsType;
 
+/** EditLoanEntry OwnStateType */
 interface OwnStateType {
-  amountOfProduct: number;
-  quality: string;
-  costPerUnit: number;
+  loanAmount: number;
   validAmount: boolean;
-  validRate: boolean;
-  validQuality: boolean;
 }
 
-/**
- * Button color
- */
+/** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-/**
- * Page for EditEntry
- */
-class EditEntry extends React.Component<PropsType, OwnStateType> {
+let radix: number = 10;
 
+/** Page for Edit Loan Entry */
+class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
+
+  // Variable used to verify input
+  private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      amountOfProduct: this.props.milkEntry.amountOfProduct,
-      quality: this.props.milkEntry.milkQuality,
-      costPerUnit: this.props.milkEntry.costPerUnit,
+      loanAmount: this.props.loanEntry.amount,
+      // Set state to true initially as it will have a valid amount
       validAmount: true,
-      validRate: true,
-      validQuality: true,
     };
   }
 
@@ -78,51 +75,39 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing save button */
   private onSavePress = () => {
-    let newEntry: ThunkUpdateRow<MilkEntry> = {
-      uuid: this.props.milkEntry.uuid,
-      toPersonUuid: this.props.milkEntry.toPersonUuid,
-      fromPersonUuid: this.props.milkEntry.fromPersonUuid,
-      amountOfProduct: this.state.amountOfProduct,
-      costPerUnit: this.state.costPerUnit,
+    let newEntry: ThunkUpdateRow<LoanEntry> = {
+      uuid: this.props.loanEntry.uuid,
+      toPersonUuid: this.props.loanEntry.toPersonUuid,
+      fromPersonUuid: this.props.loanEntry.fromPersonUuid,
+      amount: this.state.loanAmount,
       currency: 'UGX',
-      milkQuality: this.state.quality,
     };
-    this.props.updateMilkEntry(newEntry);
+    this.props.updateLoanEntry(newEntry);
     this.props.navigate(Route.FARMER);
+    tabActions.setActiveTab({ name: 'Loans' });
+    
   }
 
+  /** Return validity of required fields */
   private allValid = () => (
     this.state.validAmount
-    && this.state.validRate
   )
 
-  /**
-   * Handle entry changes, update local state
+  /** 
+   * Checks when the amount field has something in it 
+   * and verifies that it is a are real and positive number
    */
-  private onAmountChange = (newAmount: string) => {
-    const newAmountFloat = Number(newAmount);
-    if (!newAmountFloat || newAmountFloat < 0) {
+  private onChangeAmount = (newAmount: string) => {
+    const newAmountInt = parseInt(newAmount, radix);
+
+    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: newAmountFloat, validAmount: true }));
-    }
-  }
-  
-  private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
-  
-  private onRateChange = (newCostPerUnit: string) => {
-    const newRateFloat = Number(newCostPerUnit);
-    
-    if (!newRateFloat || newRateFloat < 0) {
-      this.setState(state => ({ validRate: false }));
-    } else {
-      this.setState(state => ({ costPerUnit: newRateFloat, validRate: true }));
+      this.setState(state => ({ loanAmount: newAmountInt, validAmount: true }));
     }
   }
 
-  /**
-   * Returns a button with text, color, and onPress callback specified
-   */
+  /** Returns a button with text, color, and onPress callback specified */
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
@@ -156,36 +141,14 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.milkEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.loanEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
     );
   }
 
-  private formatEditRow(label: string, 
-                        value: number | string, 
-                        onChangeText: any,
-                        isNumeric: boolean,
-                        validField?: boolean) {
-    if (isNumeric) {
-      return (
-        <Grid>
-          <Row>
-            <Col>
-              <Text>{label}</Text>
-            </Col>
-            <Col>
-            <Item success={validField} error={!validField}>
-              <Input keyboardType={'numeric'} onChangeText={onChangeText}>
-                <Text>{value}</Text>
-              </Input>
-            </Item>
-            </Col>
-          </Row>
-        </Grid>
-      );
-    }
+  private formatEditRow(label: string, value: number | string, onChangeText: any) {
     return (
       <Grid>
         <Row>
@@ -193,8 +156,8 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
             <Text>{label}</Text>
           </Col>
           <Col>
-          <Item success={validField} error={!validField}>
-            <Input autoCapitalize="sentences" onChangeText={onChangeText}>
+          <Item success={this.state.validAmount} error={!this.state.validAmount}>
+            <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'}>
               <Text>{value}</Text>
             </Input>
           </Item>
@@ -207,19 +170,15 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   private renderEditFields() {
     return (
       <View style={Styles.editView}>
-        {this.formatEditRow('Amount (L)', this.props.milkEntry.amountOfProduct, this.onAmountChange, true, this.state.validAmount)}
-        {this.formatEditRow('Lactometer', this.props.milkEntry.milkQuality, this.onQualityChange, true, this.state.validQuality)}
-        {this.formatEditRow('Rate (UGX/L)', this.props.milkEntry.costPerUnit, this.onRateChange, true, this.state.validRate)}
+        {this.formatEditRow('Amount (UGX)', this.props.loanEntry.amount, this.onChangeAmount)}
       </View>
     );
   }
 
-  /**
-   * Render method for EditEntry
-   */
+  /** Render method for EditLoanEntry */
   public render() {
     return(
-      <Content padder style={{ backgroundColor: 'white' }}>
+      <Content padder style={Styles.content}>
       <List>
         <ListItem>
           {this.renderHeader()}
@@ -237,24 +196,24 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const EditEntryPage = new Composer<NestedPropsType>(EditEntry).page;
+const EditLoanEntryPage = new Composer<NestedPropsType>(EditLoanEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     farmer: getActiveFarmer(state),
-    milkEntry: getActiveMilkEntry(state),
+    loanEntry: getActiveLoanEntry(state),
   };
 };
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
-    updateMilkEntry: async (newEntry: ThunkUpdateRow<MilkEntry>) => dispatch(milkThunks.updateMilkEntry(newEntry)),
+    updateLoanEntry: async (newEntry: ThunkUpdateRow<LoanEntry>) => dispatch(loanThunks.updateLoanEntry(newEntry)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditEntryPage);
+)(EditLoanEntryPage);

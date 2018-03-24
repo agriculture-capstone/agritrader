@@ -3,14 +3,14 @@ import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form,
 import * as moment from 'moment';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { MilkEntry } from '../../../store/modules/milk/types';
+import { LoanEntry } from '../../../store/modules/loan/types';
 
 import { Route } from '../../navigation/routes';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
-import milkThunks from '../../../store/modules/milk/thunks';
+import loanThunks from '../../../store/modules/loan/thunks';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
@@ -21,7 +21,7 @@ interface OwnPropsType {
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  createMilkEntry(newEntry: MilkEntry): Promise<string>;
+  createLoanEntry(newEntry: LoanEntry): Promise<string>;
 }
 
 interface StorePropsType {
@@ -30,15 +30,12 @@ interface StorePropsType {
   activeFarmer: any;
 }
 
-/** AddEntry PropsType */
+/** AddLoanEntry PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
 interface OwnStateType {
-  amountOfProduct: number;
-  quality: string;
-  costPerUnit: number;
+  loanAmount: number;
   validAmount: boolean;
-  validRate: boolean;
 }
 
 /**
@@ -48,25 +45,17 @@ type ButtonColor = 'PRIMARY' | 'INFO';
 
 let radix: number = 10;
 
-/**
- * AddEntry page
- * @example
- *             <AddEntry
- *             />
- */
+/** AddLoanEntry page */
 
-class AddEntry extends React.Component<PropsType, OwnStateType> {
+class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
 
   private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     /** Init state */
     this.state = {
-      amountOfProduct: 0,
-      quality: '0',
-      costPerUnit: 0,
+      loanAmount: 0.0,
       validAmount: false,
-      validRate: false,
     };
   }
   /** Get current datetime in specified format */
@@ -84,47 +73,35 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
 
-    let newEntry: MilkEntry = {
-      type: 'milk',
+    /** Create a new Loan Entry */
+    let newEntry: LoanEntry = {
+      type: 'loan',
       datetime: timeNow,
-      toPersonUuid: 'a2b121fd-1a1f-4425-97db-876af3c5bd2f',
-      fromPersonUuid: this.props.activeFarmer,
-      amountOfProduct: this.state.amountOfProduct,
-      costPerUnit: this.state.costPerUnit,
+      toPersonUuid: this.props.activeFarmer,
+      fromPersonUuid: this.props.activeTrader,
+      amount: this.state.loanAmount,
       currency: 'UGX',
-      milkQuality: this.state.quality,
     };
-    this.props.createMilkEntry(newEntry);
+    this.props.createLoanEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
 
   /** Return validity of required fields */
   private allValid = () => (
     this.state.validAmount
-    && this.state.validRate
   )
 
+  /** 
+   * Checks when the amount field has something in it 
+   * and verifies that it is a are real and positive number
+   */
   private onChangeAmount = (newAmount: string) => {
     const newAmountInt = parseInt(newAmount, radix);
 
     if (!newAmount.match(this.numbers) || newAmountInt < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
-    }
-  }
-
-  private onChangeQuality = (newQuality: string) => {
-    this.setState(state => ({ quality: newQuality }));
-  }
-
-  private onChangeRate = (newRate: string) => {
-    const newRateInt = parseInt(newRate, radix);
-
-    if (!newRate.match(this.numbers) || newRateInt < 0) {
-      this.setState(state => ({ validRate: false }));
-    } else {
-      this.setState(state => ({ costPerUnit : newRateInt, validRate: true }));
+      this.setState(state => ({ loanAmount: newAmountInt, validAmount: true }));
     }
   }
 
@@ -135,6 +112,8 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
+    // Render the primary button and set onPress to save any loans
+    // entered and navigate to the main farmer screen
     if (isPrimary) {
       return (
         <Col style={Styles.button}>
@@ -145,6 +124,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
       );
     } else {
       return (
+        // Render the cancel button
         <Col style={Styles.button}>
           <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
             <Text>{text}</Text>
@@ -180,23 +160,15 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <Form>
         <Item success={this.state.validAmount} error={!this.state.validAmount} floatingLabel>
-          <Label>Amount (L)</Label>
+          <Label>Amount (UGX)</Label>
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
-        </Item>
-        <Item floatingLabel>
-          <Label>Lactometer</Label>
-          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
-        </Item>
-        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
-          <Label>Rate (UGX/L)</Label>
-          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
         </Item>
       </Form>
     );
   }
 
   /**
-   * Render method for AddEntry
+   * Render method for AddLoanEntry
    */
   public render() {
     return (
@@ -218,7 +190,7 @@ class AddEntry extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const AddEntryPage = new Composer<PropsType>(AddEntry).page;
+const AddLoanEntryPage = new Composer<PropsType>(AddLoanEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
@@ -232,11 +204,11 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createMilkEntry: async (newEntry: MilkEntry) => dispatch(milkThunks.createMilkEntry(newEntry)),
+    createLoanEntry: async (newEntry: LoanEntry) => dispatch(loanThunks.createLoanEntry(newEntry)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddEntryPage);
+)(AddLoanEntryPage);
