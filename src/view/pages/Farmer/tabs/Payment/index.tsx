@@ -13,9 +13,9 @@ import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort';
 import {
   getFarmerPaymentBalance,
-  getFarmerTotalBalance,
   getFormattedFarmersTransactions,
 } from '../../../../../store/modules/payment/selectors';
+import { getFarmerTotalBalance } from '../../../../../store/selectors';
 import styles from './style';
 
 /** Payment OwnPropsType */
@@ -102,7 +102,6 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
   return {
     farmerPaymentBalance: getFarmerPaymentBalance(state),
     paymentTransactions: getFormattedFarmersTransactions(state),
-    // TODO: Make selector for total balance including payments
     farmerTotalBalance: getFarmerTotalBalance(state),
   };
 };

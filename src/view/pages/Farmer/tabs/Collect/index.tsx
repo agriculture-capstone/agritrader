@@ -15,8 +15,8 @@ import {
   getWeeklyFarmerMilkTotal,
   getFormattedFarmersTransactions,
   getFarmerDayTotal,
-  getFarmerWeeklyBalance,
 } from '../../../../../store/modules/milk/selectors';
+import { getFarmerTotalBalance } from '../../../../../store/selectors';
 import styles from './style';
 
 interface OwnPropsType {
@@ -115,7 +115,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
     weeklyTotal: getWeeklyFarmerMilkTotal(state),
     dailyTotal: getFarmerDayTotal(state),
     collectTransactions: getFormattedFarmersTransactions(state),
-    weeklybalance: getFarmerWeeklyBalance(state),
+    weeklybalance: getFarmerTotalBalance(state),
   };
 };
 

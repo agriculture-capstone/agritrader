@@ -141,7 +141,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.loanEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.loanEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>

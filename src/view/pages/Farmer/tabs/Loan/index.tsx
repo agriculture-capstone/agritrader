@@ -11,10 +11,8 @@ import navActions from '../../../../../store/modules/nav/actions';
 import { Route } from '../../../../navigation/routes';
 import { State } from '../../../../../store/types';
 import { dateSort } from '../../../../../utils/DateSort';
-import {
-  getFarmerLoanBalance,
-  getFormattedFarmersTransactions,
-} from '../../../../../store/modules/loan/selectors';
+import { getFormattedFarmersTransactions } from '../../../../../store/modules/loan/selectors';
+import { getFarmerTotalBalance } from '../../../../../store/selectors';
 import styles from './style';
 
 interface OwnPropsType {
@@ -27,7 +25,7 @@ interface DispatchPropsType {
 }
 
 interface StorePropsType {
-  farmerLoanBalance: string;
+  farmerTotalBalance: string;
   loanTransactions: any[];
 }
 
@@ -64,7 +62,7 @@ class Loan extends React.Component<PropsType, OwnStateType> {
     const loanDataSummary = [
       {
         label: 'Balance',
-        value: this.props.farmerLoanBalance,
+        value: this.props.farmerTotalBalance,
         units: 'UGX',
       },
     ];
@@ -96,7 +94,7 @@ const LoanPage = new Composer<NestedPropsType>(Loan)
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
-    farmerLoanBalance: getFarmerLoanBalance(state),
+    farmerTotalBalance: getFarmerTotalBalance(state),
     loanTransactions: getFormattedFarmersTransactions(state),
   };
 };

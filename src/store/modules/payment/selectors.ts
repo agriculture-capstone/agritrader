@@ -57,7 +57,7 @@ export const getFormattedFarmersTransactions = createSelector(
   [getFarmersTransactions],
   (paymentEntries: StorePaymentEntry[]) => paymentEntries.map(entry =>
     ({
-      datetime: moment(entry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').format('MMM DD'),
+      datetime: moment(entry.datetime).utc().format('MMM DD'),
       paymentValue: entry.amount.toFixed(decimals),
       uuid: entry.uuid,
     }),
@@ -86,5 +86,5 @@ export const getFarmerTotalBalance = createSelector(
 
 /*************** Helper Methods ***************/
 function inLastWeek(date: string) {
-  return moment(date, 'ddd MMM DD Y kk:mm:ss ZZ').local().isSame(moment().local(), 'week') ? true : false;
+  return moment(date).utc().isSame(moment().local(), 'week') ? true : false;
 }
