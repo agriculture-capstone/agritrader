@@ -7,6 +7,7 @@ import { Route } from '../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
+import tabActions from '../../../store/modules/tabs/actions';
 import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
 import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
@@ -46,16 +47,12 @@ interface OwnStateType {
   validAmount: boolean;
 }
 
-/**
- * Button color
- */
+/** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 let radix: number = 10;
 
-/**
- * Page for EditLoanEntry
- */
+/** Page for Edit Loan Entry */
 class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
 
   // Variable used to verify input
@@ -87,6 +84,8 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
     };
     this.props.updateLoanEntry(newEntry);
     this.props.navigate(Route.FARMER);
+    tabActions.setActiveTab({ name: 'Loans' });
+    
   }
 
   /** Return validity of required fields */
@@ -108,9 +107,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
     }
   }
 
-  /**
-   * Returns a button with text, color, and onPress callback specified
-   */
+  /** Returns a button with text, color, and onPress callback specified */
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
@@ -210,7 +207,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
+    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
     goBack: () => dispatch(navActions.goBack()),
     updateLoanEntry: async (newEntry: ThunkUpdateRow<LoanEntry>) => dispatch(loanThunks.updateLoanEntry(newEntry)),
   };

@@ -100,20 +100,23 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
    * Handle entry changes, update local state
    */
   private onAmountChange = (newAmount: string) => {
-    if (!newAmount) {
+    const newAmountFloat = Number(newAmount);
+    if (!newAmountFloat || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: parseFloat(newAmount), validAmount: true }));
+      this.setState(state => ({ amountOfProduct: newAmountFloat, validAmount: true }));
     }
   }
   
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
   
   private onRateChange = (newCostPerUnit: string) => {
-    if (!newCostPerUnit) {
+    const newRateFloat = Number(newCostPerUnit);
+    
+    if (!newRateFloat || newRateFloat < 0) {
       this.setState(state => ({ validRate: false }));
     } else {
-      this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit), validRate: true }));
+      this.setState(state => ({ costPerUnit: newRateFloat, validRate: true }));
     }
   }
 
@@ -153,7 +156,7 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.milkEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.milkEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>

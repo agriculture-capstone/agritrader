@@ -45,8 +45,6 @@ interface OwnStateType {
  */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-let radix: number = 10;
-
 /**
  * Page for EditEntry
  */
@@ -91,12 +89,12 @@ class EditEntry extends React.Component<PropsType, OwnStateType> {
    * Handle entry changes, update local state
    */
   private onChangeAmount = (newAmount: string) => {
-    const newAmountInt = parseInt(newAmount, radix);
+    const newAmountFloat = Number(newAmount);    
 
-    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+    if (!newAmount.match(this.numbers) || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: newAmountInt, validAmount: true }));
+      this.setState(state => ({ amountOfProduct: newAmountFloat, validAmount: true }));
     }
   }
 
