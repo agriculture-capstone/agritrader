@@ -100,20 +100,23 @@ class EditMilkEntry extends React.Component<PropsType, OwnStateType> {
    * Handle entry changes, update local state
    */
   private onAmountChange = (newAmount: string) => {
-    if (!newAmount) {
+    const newAmountFloat = Number(newAmount);
+    if (!newAmountFloat || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: parseFloat(newAmount), validAmount: true }));
+      this.setState(state => ({ amountOfProduct: newAmountFloat, validAmount: true }));
     }
   }
   
   private onQualityChange = (newQuality: string) => this.setState(state => ({ quality: newQuality }));
   
   private onRateChange = (newCostPerUnit: string) => {
-    if (!newCostPerUnit) {
+    const newRateFloat = Number(newCostPerUnit);
+    
+    if (!newRateFloat || newRateFloat < 0) {
       this.setState(state => ({ validRate: false }));
     } else {
-      this.setState(state => ({ costPerUnit: parseFloat(newCostPerUnit), validRate: true }));
+      this.setState(state => ({ costPerUnit: newRateFloat, validRate: true }));
     }
   }
 
