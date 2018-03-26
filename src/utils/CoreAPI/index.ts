@@ -12,7 +12,7 @@ import { AuthenticationError } from '../../errors/AuthenticationError';
 export type CorePath =
   '/people/farmers' | 
   '/transactions/products/milk' | 
-  '/transactions/productsExport' | 
+  '/transactions/productExports' | 
   '/transactions/money/loans' | 
   '/transactions/money/productPayments';
 

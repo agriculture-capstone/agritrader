@@ -43,7 +43,7 @@ export function getModulePath(module: CoreModuleName): CorePath {
 
     case 'milk': return '/transactions/products/milk';
 
-    case 'export': return '/transactions/productsExport';
+    case 'export': return '/transactions/productExports';
 
     case 'loan': return '/transactions/money/loans';
 
