@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button } from 'native-base';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { LoanEntry } from '../../../store/modules/loan/types';
+import { PaymentEntry } from '../../../store/modules/payment/types';
 import { Route } from '../../navigation/routes';
 
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
@@ -12,40 +12,41 @@ import { State } from '../../../store/types';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
-import { getActiveLoanEntry } from '../../../store/modules/loan/selectors';
+import { getActivePaymentEntry } from '../../../store/modules/payment/selectors';
 import * as moment from 'moment';
 
-
+/** PaymentEntryDetails OwnPropsType */
 interface OwnPropsType {
 }
 
+/** PaymentEntryDetails DispatchPropsType */
 interface DispatchPropsType {
   navigate(route: Route): void;
 }
 
+/** PaymentEntryDetails StorePropsType */
 interface StorePropsType {
   farmer: Farmer;
-  loanEntry: LoanEntry;
+  paymentEntry: PaymentEntry;
 }
 
-/** EntryDetails PropsType */
+/** PaymentEntryDetails PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
+/** PaymentEntryDetails OwnStateType */
 interface OwnStateType {
 }
 
-/**
- * Button color
- */
+/** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
 /**
- * Page for LoanEntryDetails
+ * Page for PaymentEntryDetails
  * @requires farmer
- * @requires loanEntry
+ * @requires paymentEntry
  *
  */
-class LoanEntryDetails extends React.Component<PropsType, OwnStateType> {
+class PaymentEntryDetails extends React.Component<PropsType, OwnStateType> {
 
   constructor(props: PropsType) {
     super(props);
@@ -57,7 +58,7 @@ class LoanEntryDetails extends React.Component<PropsType, OwnStateType> {
   }
 
   /** Handle pressing edit button */
-  private onEditPress = () => this.props.navigate(Route.EDIT_LOAN_ENTRY);
+  private onEditPress = () => this.props.navigate(Route.EDIT_PAYMENT_ENTRY);
 
   /**
    * Returns a button with text, color, and onPress callback specified
@@ -85,7 +86,7 @@ class LoanEntryDetails extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.loanEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.paymentEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
@@ -111,14 +112,14 @@ class LoanEntryDetails extends React.Component<PropsType, OwnStateType> {
     return (
       <List>
         <ListItem>
-          {this.formatRow('Amount (UGX)', this.props.loanEntry.amount)}
+          {this.formatRow('Amount (UGX)', this.props.paymentEntry.amount)}
         </ListItem>
       </List>
     );
   }
 
   /**
-   * Render method for LoanEntryDetails
+   * Render method for PaymentEntryDetails
    */
   public render() {
     return(
@@ -135,12 +136,12 @@ class LoanEntryDetails extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const LoanEntryDetailsPage = new Composer<PropsType>(LoanEntryDetails).page;
+const PaymentEntryDetailsPage = new Composer<PropsType>(PaymentEntryDetails).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     farmer: getActiveFarmer(state),
-    loanEntry: getActiveLoanEntry(state),
+    paymentEntry: getActivePaymentEntry(state),
   };
 };
 
@@ -153,4 +154,4 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LoanEntryDetailsPage);
+)(PaymentEntryDetailsPage);

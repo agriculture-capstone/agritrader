@@ -50,8 +50,6 @@ interface OwnStateType {
 /** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-let radix: number = 10;
-
 /** Page for Edit Loan Entry */
 class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
 
@@ -98,12 +96,12 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
    * and verifies that it is a are real and positive number
    */
   private onChangeAmount = (newAmount: string) => {
-    const newAmountInt = parseInt(newAmount, radix);
+    const newAmountFloat = Number(newAmount);
 
-    if (!newAmount.match(this.numbers) || newAmountInt < 0) {
+    if (!newAmount.match(this.numbers) || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ loanAmount: newAmountInt, validAmount: true }));
+      this.setState(state => ({ loanAmount: newAmountFloat, validAmount: true }));
     }
   }
 
@@ -141,7 +139,7 @@ class EditLoanEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {moment(this.props.loanEntry.datetime, 'ddd MMM DD Y kk:mm:ss ZZ').local().format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(this.props.loanEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
@@ -207,7 +205,7 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
-    navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
+    navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
     updateLoanEntry: async (newEntry: ThunkUpdateRow<LoanEntry>) => dispatch(loanThunks.updateLoanEntry(newEntry)),
   };

@@ -29,6 +29,13 @@ const activeRowsActions = {
   clearActiveLoanEntry: (): Action => ({
     type: 'CLEAR_CURRENT_LOAN_ENTRY',
   }),
+  setActivePaymentEntry: (currentPaymentEntryUUID: string): Action => ({
+    currentPaymentEntryUUID,
+    type: 'UPDATE_CURRENT_PAYMENT_ENTRY',
+  }),
+  clearActivePaymentEntry: (): Action => ({
+    type: 'CLEAR_CURRENT_LOAN_ENTRY',
+  }),
   setActiveTrader: (currentTraderUUID: string): Action => ({
     currentTraderUUID,
     type: 'UPDATE_CURRENT_TRADER',

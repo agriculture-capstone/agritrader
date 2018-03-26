@@ -12,6 +12,7 @@ import { FarmerState } from './modules/farmer/types';
 import { MilkState } from './modules/milk/types';
 import { ExportState } from './modules/export/types';
 import { LoanState } from './modules/loan/types';
+import { PaymentState } from './modules/payment/types';
 
 
 /** Global redux state */
@@ -27,6 +28,7 @@ export interface State {
   milk: MilkState;
   export: ExportState;
   loan: LoanState;
+  payment: PaymentState;
 }
 
 /** Root actions for application */

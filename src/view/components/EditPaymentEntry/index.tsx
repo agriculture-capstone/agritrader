@@ -1,62 +1,68 @@
 import * as React from 'react';
-import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form, Item, Label } from 'native-base';
-import * as moment from 'moment';
+import { Content, List, View, ListItem, Text, Grid, Row, Col, H1, Button, Input, Item } from 'native-base';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { LoanEntry } from '../../../store/modules/loan/types';
-
+import { PaymentEntry } from '../../../store/modules/payment/types';
 import { Route } from '../../navigation/routes';
+
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
+import { InjectedFabProps } from '../../hoc/PageComposer/FabPage/index';
 import Composer from '../../hoc/PageComposer/index';
-import { State } from '../../../store/types';
-import loanThunks from '../../../store/modules/loan/thunks';
+import { State, ThunkUpdateRow, StoreRow } from '../../../store/types';
+
+import paymentThunks from '../../../store/modules/payment/thunks';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
+import { getActivePaymentEntry } from '../../../store/modules/payment/selectors';
+import * as moment from 'moment';
 
+/** EditPaymentEntry OwnPropsType */
 interface OwnPropsType {
 }
 
+/** EditPaymentEntry DispatchPropsType */
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  createLoanEntry(newEntry: LoanEntry): Promise<string>;
+  updatePaymentEntry(newEntry: ThunkUpdateRow<PaymentEntry>): void;
 }
 
+/** EditPaymentEntry StorePropsType */
 interface StorePropsType {
   farmer: Farmer;
-  activeTrader: any;
-  activeFarmer: any;
+  paymentEntry: StoreRow<PaymentEntry>;
 }
 
-/** AddLoanEntry PropsType */
-type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
+/** EditPaymentEntry NestedPropsType */
+type NestedPropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
+/** EditPaymentEntry PropsType */
+type PropsType = InjectedFabProps & NestedPropsType;
+
+/** EditPaymentEntry OwnStateType */
 interface OwnStateType {
-  loanAmount: number;
+  paymentAmount: number;
   validAmount: boolean;
 }
 
-/**
- * Button color
- */
+/** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-/** AddLoanEntry page */
-class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
+/** Page for EditPaymentEntry */
+class EditPaymentEntry extends React.Component<PropsType, OwnStateType> {
 
+  // Variable used to verify input
   private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
-    /** Init state */
     this.state = {
-      loanAmount: 0.0,
-      validAmount: false,
+      paymentAmount: this.props.paymentEntry.amount,
+      // Set state to true initially as it will have a valid amount
+      validAmount: true,
     };
   }
-  /** Get current datetime in specified format */
-  private getDatetime = (format: string) => moment().format(format);
 
   /** Create page buttons */
   private renderCancelButton = () => this.renderButton('Cancel', 'INFO', this.onCancelPress);
@@ -67,19 +73,14 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
 
   /** Handle pressing save button */
   private onSavePress = () => {
-    // @TODO change time format to match core
-    const timeNow = moment().local().utc().toString();
-
-    /** Create a new Loan Entry */
-    let newEntry: LoanEntry = {
-      type: 'loan',
-      datetime: timeNow,
-      toPersonUuid: this.props.activeFarmer,
-      fromPersonUuid: this.props.activeTrader,
-      amount: this.state.loanAmount,
+    let newEntry: ThunkUpdateRow<PaymentEntry> = {
+      uuid: this.props.paymentEntry.uuid,
+      toPersonUuid: this.props.paymentEntry.toPersonUuid,
+      fromPersonUuid: this.props.paymentEntry.fromPersonUuid,
+      amount: this.state.paymentAmount,
       currency: 'UGX',
     };
-    this.props.createLoanEntry(newEntry);
+    this.props.updatePaymentEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
 
@@ -98,19 +99,15 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
     if (!newAmount.match(this.numbers) || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ loanAmount: newAmountFloat, validAmount: true }));
+      this.setState(state => ({ paymentAmount: newAmountFloat, validAmount: true }));
     }
   }
 
-  /**
-   * Returns a button with text, color, and onPress callback specified
-   */
+  /** Returns a button with text, color, and onPress callback specified */
   private renderButton(text: string, color: ButtonColor, onPress: any) {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
-    // Render the primary button and set onPress to save any loans
-    // entered and navigate to the main farmer screen
     if (isPrimary) {
       return (
         <Col style={Styles.button}>
@@ -121,7 +118,6 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
       );
     } else {
       return (
-        // Render the cancel button
         <Col style={Styles.button}>
           <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
             <Text>{text}</Text>
@@ -141,59 +137,67 @@ class AddLoanEntry extends React.Component<PropsType, OwnStateType> {
         </Row>
         <Row style={Styles.headerRow}>
           <Text style={Styles.header}>
-            {this.getDatetime('dddd, MMMM DD, YYYY')}
-          </Text>
-        </Row>
-        <Row style={Styles.headerRow}>
-          <Text style={Styles.header}>
-            {this.getDatetime('kk:mm')}
+            {moment(this.props.paymentEntry.datetime).utc().format('MMMM Do YYYY, h:mm:ss a')}
           </Text>
         </Row>
       </Grid>
     );
   }
 
-  private renderFields() {
+  private formatEditRow(label: string, value: number | string, onChangeText: any) {
     return (
-      <Form>
-        <Item success={this.state.validAmount} error={!this.state.validAmount} floatingLabel>
-          <Label>Amount (UGX)</Label>
-          <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
-        </Item>
-      </Form>
+      <Grid>
+        <Row>
+          <Col>
+            <Text>{label}</Text>
+          </Col>
+          <Col>
+          <Item success={this.state.validAmount} error={!this.state.validAmount}>
+            <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'}>
+              <Text>{value}</Text>
+            </Input>
+          </Item>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 
-  /**
-   * Render method for AddLoanEntry
-   */
-  public render() {
+  private renderEditFields() {
     return (
+      <View style={Styles.editView}>
+        {this.formatEditRow('Amount (UGX)', this.props.paymentEntry.amount, this.onChangeAmount)}
+      </View>
+    );
+  }
+
+  /** Render method for EditPaymentEntry */
+  public render() {
+    return(
       <Content padder style={Styles.content}>
-        <List>
-          <ListItem>
-            {this.renderHeader()}
-          </ListItem>
-        </List>
-        {this.renderFields()}
-        <Grid>
-          <Row style={Styles.buttonRow}>
-            {this.renderCancelButton()}
-            {this.renderSaveButton()}
-          </Row>
-        </Grid>
-      </Content>
+      <List>
+        <ListItem>
+          {this.renderHeader()}
+        </ListItem>
+      </List>
+      {this.renderEditFields()}
+      <Grid>
+        <Row style={Styles.buttonRow}>
+          {this.renderCancelButton()}
+          {this.renderSaveButton()}
+        </Row>
+      </Grid>
+    </Content>
     );
   }
 }
 
-const AddLoanEntryPage = new Composer<PropsType>(AddLoanEntry).page;
+const EditPaymentEntryPage = new Composer<NestedPropsType>(EditPaymentEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
     farmer: getActiveFarmer(state),
-    activeTrader: state.activeRows.activeTraderUUID,
-    activeFarmer: state.activeRows.activeFarmerUUID,
+    paymentEntry: getActivePaymentEntry(state),
   };
 };
 
@@ -201,11 +205,11 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createLoanEntry: async (newEntry: LoanEntry) => dispatch(loanThunks.createLoanEntry(newEntry)),
+    updatePaymentEntry: async (newEntry: ThunkUpdateRow<PaymentEntry>) => dispatch(paymentThunks.updatePaymentEntry(newEntry)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddLoanEntryPage);
+)(EditPaymentEntryPage);

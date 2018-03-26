@@ -95,16 +95,16 @@ export const getFormattedFarmersTransactions = createSelector(
 );
 
 /**Selector for the weekly farmer account balance */
-export const getFarmerWeeklyBalance = createSelector(
+export const getFarmerDairyBalance = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => numberFormatter(milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inLastWeek(entry.datetime)) ? sum + (entry.costPerUnit * entry.amountOfProduct) : sum + 0, 0)).toString());
+    sum + (entry.costPerUnit * entry.amountOfProduct), 0)).toString());
 
 /** Selector for the weekly balance without number formatting */
-export const getFarmerWeeklyBalanceNoFormat = createSelector(
+export const getFarmerDairyBalanceNoFormat = createSelector(
   [getFarmersTransactions],
   (milkEntries: MilkEntry[]) => milkEntries.reduce((sum: number, entry: MilkEntry) =>
-    (inLastWeek(entry.datetime)) ? sum + (entry.costPerUnit * entry.amountOfProduct) : sum + 0, 0).toString());
+    sum + (entry.costPerUnit * entry.amountOfProduct), 0).toString());
 
 /**Selector to calculate the current days milk collection */
 export const getFarmerDayTotal = createSelector(

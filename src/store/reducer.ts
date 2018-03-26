@@ -17,6 +17,7 @@ import activeRowsReducer from './modules/activeRows/reducer';
 import milkReducer from './modules/milk/reducer';
 import exportReducer from './modules/export/reducer';
 import loanReducer from './modules/loan/reducer';
+import paymentReducer from './modules/payment/reducer';
 
 
 
@@ -42,6 +43,7 @@ const reducer = combineReducers<State>({
   milk: milkReducer,
   export: exportReducer,
   loan: loanReducer,
+  payment: paymentReducer,
 }) as BaseReducer<State, Action>;
 
 export default createPersistedReducer(persistConfig, reducer);

@@ -3,68 +3,58 @@ import { Content, List, ListItem, Text, Grid, Row, Col, H1, Button, Input, Form,
 import * as moment from 'moment';
 
 import { Farmer } from '../../../store/modules/farmer/types';
-import { MilkEntry } from '../../../store/modules/milk/types';
+import { PaymentEntry } from '../../../store/modules/payment/types';
 
 import { Route } from '../../navigation/routes';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
 import Composer from '../../hoc/PageComposer/index';
 import { State } from '../../../store/types';
-import milkThunks from '../../../store/modules/milk/thunks';
+import paymentThunks from '../../../store/modules/payment/thunks';
 
 import Styles from './style';
 import { getActiveFarmer } from '../../../store/modules/farmer/selectors';
 
+/** AddPaymentEntry OwnPropsType */
 interface OwnPropsType {
 }
 
+/** AddPaymentEntry DispatchPropsType */
 interface DispatchPropsType {
   navigate(route: Route): void;
   goBack(): void;
-  createMilkEntry(newEntry: MilkEntry): Promise<string>;
+  createPaymentEntry(newEntry: PaymentEntry): Promise<string>;
 }
 
+/** AddPaymentEntry StorePropsType */
 interface StorePropsType {
   farmer: Farmer;
   activeTrader: any;
   activeFarmer: any;
 }
 
-/** AddEntry PropsType */
+/** AddPaymentEntry PropsType */
 type PropsType = StorePropsType & DispatchPropsType & OwnPropsType;
 
+/** AddPaymentEntry OwnStateType */
 interface OwnStateType {
-  amountOfProduct: number;
-  quality: string;
-  costPerUnit: number;
+  paymentAmount: number;
   validAmount: boolean;
-  validRate: boolean;
 }
 
-/**
- * Button color
- */
+/** Button color */
 type ButtonColor = 'PRIMARY' | 'INFO';
 
-/**
- * AddEntry page
- * @example
- *             <AddEntry
- *             />
- */
-
-class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
+/** AddPaymentEntry page */
+class AddPaymentEntry extends React.Component<PropsType, OwnStateType> {
 
   private numbers = /^[0-9]+$/;
   constructor(props: PropsType) {
     super(props);
     /** Init state */
     this.state = {
-      amountOfProduct: 0,
-      quality: '0',
-      costPerUnit: 0,
+      paymentAmount: 0.0,
       validAmount: false,
-      validRate: false,
     };
   }
   /** Get current datetime in specified format */
@@ -82,47 +72,35 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
     // @TODO change time format to match core
     const timeNow = moment().local().utc().toString();
 
-    let newEntry: MilkEntry = {
-      type: 'milk',
+    /** Create a new Payment Entry */
+    let newEntry: PaymentEntry = {
+      type: 'payment',
       datetime: timeNow,
-      toPersonUuid: this.props.activeTrader,
-      fromPersonUuid: this.props.activeFarmer,
-      amountOfProduct: this.state.amountOfProduct,
-      costPerUnit: this.state.costPerUnit,
+      toPersonUuid: this.props.activeFarmer,
+      fromPersonUuid: this.props.activeTrader,
+      amount: this.state.paymentAmount,
       currency: 'UGX',
-      milkQuality: this.state.quality,
     };
-    this.props.createMilkEntry(newEntry);
+    this.props.createPaymentEntry(newEntry);
     this.props.navigate(Route.FARMER);
   }
 
   /** Return validity of required fields */
   private allValid = () => (
     this.state.validAmount
-    && this.state.validRate
   )
 
+  /** 
+   * Checks when the amount field has something in it 
+   * and verifies that it is a are real and positive number
+   */
   private onChangeAmount = (newAmount: string) => {
     const newAmountFloat = Number(newAmount);
 
     if (!newAmount.match(this.numbers) || newAmountFloat < 0) {
       this.setState(state => ({ validAmount: false }));
     } else {
-      this.setState(state => ({ amountOfProduct: newAmountFloat, validAmount: true }));
-    }
-  }
-
-  private onChangeQuality = (newQuality: string) => {
-    this.setState(state => ({ quality: newQuality }));
-  }
-
-  private onChangeRate = (newRate: string) => {
-    const newRateFloat = Number(newRate);
-
-    if (!newRate.match(this.numbers) || newRateFloat < 0) {
-      this.setState(state => ({ validRate: false }));
-    } else {
-      this.setState(state => ({ costPerUnit : newRateFloat, validRate: true }));
+      this.setState(state => ({ paymentAmount: newAmountFloat, validAmount: true }));
     }
   }
 
@@ -133,6 +111,7 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
     const isInfo = color === 'INFO';
     const isPrimary = color === 'PRIMARY';
 
+    // Render the primary button and set onPress to save any payments entered and navigate to the main farmer screen
     if (isPrimary) {
       return (
         <Col style={Styles.button}>
@@ -143,6 +122,7 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
       );
     } else {
       return (
+        // Render the cancel button
         <Col style={Styles.button}>
           <Button block info={isInfo} primary={isPrimary} onPress={onPress}>
             <Text>{text}</Text>
@@ -178,24 +158,14 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
     return (
       <Form>
         <Item success={this.state.validAmount} error={!this.state.validAmount} floatingLabel>
-          <Label>Amount (L)</Label>
+          <Label>Amount (UGX)</Label>
           <Input onChangeText={this.onChangeAmount} keyboardType={'numeric'} />
-        </Item>
-        <Item floatingLabel>
-          <Label>Lactometer</Label>
-          <Input onChangeText={this.onChangeQuality} keyboardType={'numeric'} />
-        </Item>
-        <Item success={this.state.validRate} error={!this.state.validRate} floatingLabel>
-          <Label>Rate (UGX/L)</Label>
-          <Input onChangeText={this.onChangeRate} keyboardType={'numeric'}/>
         </Item>
       </Form>
     );
   }
 
-  /**
-   * Render method for AddEntry
-   */
+  /** Render method for AddPaymentEntry */
   public render() {
     return (
       <Content padder style={Styles.content}>
@@ -216,7 +186,7 @@ class AddMilkEntry extends React.Component<PropsType, OwnStateType> {
   }
 }
 
-const AddMilkEntryPage = new Composer<PropsType>(AddMilkEntry).page;
+const AddPaymentEntryPage = new Composer<PropsType>(AddPaymentEntry).page;
 
 const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (state) => {
   return {
@@ -230,11 +200,11 @@ const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = 
   return {
     navigate: (route: Route) => dispatch(navActions.navigateToWithoutHistory(route)),
     goBack: () => dispatch(navActions.goBack()),
-    createMilkEntry: async (newEntry: MilkEntry) => dispatch(milkThunks.createMilkEntry(newEntry)),
+    createPaymentEntry: async (newEntry: PaymentEntry) => dispatch(paymentThunks.createPaymentEntry(newEntry)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddMilkEntryPage);
+)(AddPaymentEntryPage);

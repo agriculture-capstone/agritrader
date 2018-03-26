@@ -53,6 +53,18 @@ const activeRowReducer: Reducer<ActiveRowsState> = (state = initialState, action
         activeLoanEntryUUID : '',
       };
     }
+    case 'UPDATE_CURRENT_PAYMENT_ENTRY': {
+      return {
+        ...state,
+        activePaymentEntryUUID : action.currentPaymentEntryUUID,
+      };
+    }
+    case 'CLEAR_CURRENT_PAYMENT_ENTRY': {
+      return {
+        ...state,
+        activePaymentEntryUUID : '',
+      };
+    }
     case 'LOGIN': {
       const { uuid } = action.payload;
 
