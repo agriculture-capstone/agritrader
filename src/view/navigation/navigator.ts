@@ -12,9 +12,7 @@ function toNavigatorRoutes(routesInfo: RouteInfo[]): NavigationRouteConfigMap {
 }
 
 /** Initial route for appplication */
-// export const INITIAL_ROUTE = Route.LOGIN;
 export const INITIAL_ROUTE = Route.LOGIN;
-
 
 /** Top-level navigator for application */
 const navigator = StackNavigator(toNavigatorRoutes(routesInfo), {
