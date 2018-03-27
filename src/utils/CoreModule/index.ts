@@ -43,11 +43,11 @@ export function getModulePath(module: CoreModuleName): CorePath {
 
     case 'milk': return '/transactions/products/milk';
 
-    case 'export': return '/transactions/products/export';
+    case 'export': return '/transactions/productExports';
 
-    case 'loan': return '/transactions/money/loan';
+    case 'loan': return '/transactions/money/loans';
 
-    case 'payment': return '/transactions/money/payment';
+    case 'payment': return '/transactions/money/productPayments';
 
     default: throw new Error(`No such module/path mapping for module ${module}`);
   }

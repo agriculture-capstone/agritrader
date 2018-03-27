@@ -12,9 +12,9 @@ import { AuthenticationError } from '../../errors/AuthenticationError';
 export type CorePath =
   '/people/farmers' | 
   '/transactions/products/milk' | 
-  '/transactions/products/export' | 
-  '/transactions/money/loan' | 
-  '/transactions/money/payment';
+  '/transactions/productExports' | 
+  '/transactions/money/loans' | 
+  '/transactions/money/productPayments';
 
 const LOGIN_PATH = '/actions/authenticate';
 
