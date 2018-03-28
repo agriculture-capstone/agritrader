@@ -38,7 +38,27 @@ export const getActivePaymentEntry = createSelector(
   },
 );
 
-/****************Selectors for a specific farmer ***************/
+/**************** Selectors for all farmers *********************/
+
+/** Selector to get all payment transactions for all farmers */
+export const getAllFarmersPaymentTransactions = createSelector(
+  [getPaymentEntries],
+  (paymentEntries: StorePaymentEntry[]) => paymentEntries);
+
+/** Selector to get all payment transactions for all farmers with specifc formatting for TransactionLog Page */
+export const getAllFormattedFarmersPaymentsTransactions = createSelector(
+  [getAllFarmersPaymentTransactions],
+  (paymentEntries: StorePaymentEntry[]) => paymentEntries.map(entry =>
+    ({
+      datetime: moment(entry.datetime).utc().format('MMM DD'),
+      type: entry.type,
+      paymentValue: entry.amount.toFixed(decimals),
+      uuid: entry.uuid,
+    }),
+  ),
+);
+
+/**************** Selectors for a specific farmer ***************/
 
 /** Selector to get all payment transactions for a specific farmer */
 export const getFarmersTransactions = createSelector(
@@ -55,6 +75,7 @@ export const getFormattedFarmersTransactions = createSelector(
   (paymentEntries: StorePaymentEntry[]) => paymentEntries.map(entry =>
     ({
       datetime: moment(entry.datetime).utc().format('MMM DD'),
+      type: entry.type,
       paymentValue: entry.amount.toFixed(decimals),
       uuid: entry.uuid,
     }),

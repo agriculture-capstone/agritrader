@@ -46,6 +46,7 @@ export const getActiveMilkEntry = createSelector(
 );
 
 /************Selectors for all milk entries (used on Home page) ***************/
+
 /**Selector to calculate the current days milk collection */
 export const getDaysMilkTotal = createSelector(
   [getMilkEntries],
@@ -61,7 +62,7 @@ export const getAvgDaysMilkTotal = createSelector(
   },
 );
 
-/**Selector to calculate the Milk on hand (what hasn't been exported yet) */
+/** Selector to calculate the Milk on hand (what hasn't been exported yet) */
 export const getMilkInventory = createSelector(
   [getMilkEntries, getExportEntries],
   (milkEntries: MilkEntry[], exportEntries: ExportEntry[]) => {
@@ -71,7 +72,27 @@ export const getMilkInventory = createSelector(
   },
 );
 
-/************Selectors for a specific farmer ***************/
+/************ Selectors for all farmers *********************/
+
+/**Selector to get all milk transactions for a specific farmer  */
+export const getAllFarmersMilkTransactions = createSelector(
+  [getMilkEntries],
+  (milkEntries: StoreMilkEntry[]) => milkEntries);
+
+/** Selector to get all milk transactions for all farmers with specific formatting for TransactionLog Page */
+export const getAllFormattedFarmersMilkTransactions = createSelector(
+  [getAllFarmersMilkTransactions],
+  (milkEntries: StoreMilkEntry[]) => milkEntries.map(entry =>
+    ({
+      datetime: moment(entry.datetime).utc().format('MMM DD'),
+      type: entry.type,
+      milkValue: Math.ceil((entry.costPerUnit * entry.amountOfProduct)).toFixed(0),
+      uuid: entry.uuid,
+    }),
+  ),
+);
+
+/************ Selectors for a specific farmer ***************/
 
 /**Selector to get all milk transactions for a specific farmer  */
 export const getFarmersTransactions = createSelector(

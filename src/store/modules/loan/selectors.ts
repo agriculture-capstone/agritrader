@@ -44,10 +44,29 @@ export const getActiveLoanEntry = createSelector(
   },
 );
 
+/************ Selectors for all farmers *********************/
 
-/************Selectors for a specific farmer ***************/
+/** Selector to get all loan transactions for all farmers */
+export const getAllFarmersLoanTransactions = createSelector(
+  [getLoanEntries],
+  (loanEntries: StoreLoanEntry[]) => loanEntries);
 
-/**Selector to get all loan transactions for a specific farmer  */
+/** Selector to get all loan transactions for all farmers with specific formatting for TransactionLog Page */
+export const getAllFormattedFarmersLoanTransactions = createSelector(
+  [getAllFarmersLoanTransactions],
+  (loanEntries: StoreLoanEntry[]) => loanEntries.map(entry =>
+    ({
+      datetime: moment(entry.datetime).utc().format('MMM DD'),
+      type: entry.type,
+      loanValue: entry.amount.toFixed(decimals), 
+      uuid: entry.uuid,
+    }),
+  ),
+);
+
+/************ Selectors for a specific farmer ***************/
+
+/** Selector to get all loan transactions for a specific farmer  */
 export const getFarmersTransactions = createSelector(
   [getLoanEntries, getCurrentFarmerUUID],
   (loanEntries: StoreLoanEntry[], farmerUUID: string) => loanEntries.filter(entry => !entry.toPersonUuid.localeCompare(farmerUUID)));
