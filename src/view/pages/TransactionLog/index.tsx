@@ -7,8 +7,8 @@ import DataTable from '../../components/DataTable';
 import { State } from '../../../store/types';
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import navActions from '../../../store/modules/nav/actions';
-//import activeRowsActions from '../../../store/modules/activeRows/actions';
-import { getAllFormattedTransactions } from '../../../store/selectors'
+// import activeRowsActions from '../../../store/modules/activeRows/actions';
+import { getAllFormattedTransactions } from '../../../store/selectors';
 import { dateSort } from '../../../utils/DateSort';
 
 /** TransactionLog OwnPropsType */
@@ -17,10 +17,10 @@ interface OwnPropsType {}
 /** TransactionLog DispatchPropsType */
 interface DispatchPropsType {
   navigate(route: Route): void;
-  //navigate to entry
-  //navigateToEntry(): void;
-  //setActiveEntry(uuid: string): void
-  //setActiveFarmer(uuid: string): void
+  // navigate to entry
+  // navigateToEntry(): void;
+  // setActiveEntry(uuid: string): void
+  // setActiveFarmer(uuid: string): void
 }
 
 /** TransactionLog StorePropsType */
@@ -81,8 +81,8 @@ const mapStateToProps: MapStateToProps<StorePropsType, OwnPropsType, State> = (s
 const mapDispatchToProps: MapDispatchToProps<DispatchPropsType, OwnPropsType> = (dispatch) => {
   return {
     navigate: (route: Route) => dispatch(navActions.navigateTo(route)),
-    //setActiveEntry: (uuid: string) => dispatch(activeRowsActions.setActiveEntry(uuid)),
-    //navigateToEntry: () => dispatch(navActions.navigateTo(Route.ENTRY_DETAILS)),
+    // setActiveEntry: (uuid: string) => dispatch(activeRowsActions.setActiveEntry(uuid)),
+    // navigateToEntry: () => dispatch(navActions.navigateTo(Route.ENTRY_DETAILS)),
   };
 };
 
