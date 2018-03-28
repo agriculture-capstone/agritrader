@@ -1,10 +1,21 @@
 import { createSelector } from 'reselect';
 
-import { getFarmerDairyBalanceNoFormat as getFarmerDairyBalance } from './modules/milk/selectors';
-import { getFarmerLoanBalance } from './modules/loan/selectors';
-import { getFarmerPaymentBalance } from './modules/payment/selectors';
+import { getFarmerDairyBalanceNoFormat as getFarmerDairyBalance, getAllFormattedFarmersMilkTransactions } from './modules/milk/selectors';
+import { getFarmerLoanBalance, getAllFormattedFarmersLoanTransactions } from './modules/loan/selectors';
+import { getFarmerPaymentBalance, getAllFormattedFarmersPaymentsTransactions } from './modules/payment/selectors';
 
 const decimals = 1;
+
+/*************** Selectors for all farmers ****************/
+
+/** Selector to grab all transactions for all farmers */
+export const getAllFormattedTransactions = createSelector(
+  [getAllFormattedFarmersLoanTransactions, getAllFormattedFarmersMilkTransactions, getAllFormattedFarmersPaymentsTransactions],
+  (loanTransactions: any[], milkTransactions: any[], paymentTransactions: any[]) =>
+  loanTransactions.concat(milkTransactions).concat(paymentTransactions),
+);
+
+/*************** Selectors for a specific farmer **********/
 
 /**
  * Selector for the farmer total balance for the week
